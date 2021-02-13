@@ -9,10 +9,10 @@ class LoginView extends GetView<LoginController> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          Image.asset(
-            'assets/Profile.jpg',
-            fit: BoxFit.fill,
-          ),
+          // Image.asset(
+          //   'assets/Profile.jpg',
+          //   fit: BoxFit.fill,
+          // ),
           ListView(
             children: [
               Container(
