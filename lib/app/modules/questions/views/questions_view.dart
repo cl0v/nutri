@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/question_model.dart';
+import 'package:nutri/app/data/providers/user_data_provider.dart';
+import 'package:nutri/app/data/repositories/user_data_repository.dart';
 
 import 'package:nutri/app/modules/questions/controllers/questions_controller.dart';
 import 'package:nutri/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QuestionsView extends GetView<QuestionsController> {
   @override
@@ -15,9 +18,7 @@ class QuestionsView extends GetView<QuestionsController> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
-          FlatButton(
-              onPressed: controller.onSkipPressed,
-              child: Text('Pular'))
+          FlatButton(onPressed: controller.onSkipPressed, child: Text('Pular'))
         ],
       ),
       body: Stack(
@@ -50,13 +51,11 @@ class QuestionsView extends GetView<QuestionsController> {
                 // SizedBox(height: kDefaultPadding),
                 Expanded(
                   child: PageView.builder(
-                    // Block swipe to next qn
                     physics: NeverScrollableScrollPhysics(),
                     controller: controller.pageController,
-                    //     onPageChanged: _questionController.updateTheQnNum,
-                    //     itemCount: _questionController.questions.length,
+                    itemCount: controller.questions.length,
                     itemBuilder: (context, index) => QuestionCard(
-                      onPressed: controller.checkAns,
+                      onPressed: controller.onAnswerTapped,
                       question: controller.questions[index],
                     ),
                   ),
@@ -93,8 +92,6 @@ class QuestionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(25),
       ),
       child: ListView(
-        
-
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Center(
@@ -138,7 +135,7 @@ class Option extends StatelessWidget {
         init: QuestionsController(),
         builder: (controller) {
           Color getTheRightColor() {
-            if (controller.isAnswered.value) {
+            if (controller.isAnswered) {
               if (index == controller.index) return kGreenColor;
             }
             return kGrayColor;

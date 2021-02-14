@@ -12,11 +12,11 @@ class LoginController extends GetxController {
   }
 
   void onForgetPasswordPressed() {
-    //TODO: Implement forget password btn
+    //TODO: Implement onForgetPasswordPressed
   }
 
   void onEnterPressed() {
-    //TODO: Implement enter btn
+    //TODO: Implement onEnterPressed
     Get.offAllNamed(Routes.HOME);
   }
 }

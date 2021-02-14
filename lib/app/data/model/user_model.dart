@@ -4,8 +4,8 @@ import 'dart:convert';
 class UserModel {
   final String name;
   final int weight; //kg
-  final int height;
-  final int age; //cm// 1 - 4 (leve, moderado, frequente, intenso)
+  final int height; //cm
+  final int age; 
   //enum
   final Goal goal;
   //enum

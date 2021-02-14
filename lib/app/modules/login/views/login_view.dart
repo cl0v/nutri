@@ -78,7 +78,7 @@ class LoginView extends GetView<LoginController> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: RaisedButton(
-                        
+
                         //TODO: Modificar o botao de login
                         onPressed: controller.onEnterPressed,
                         child: Text(

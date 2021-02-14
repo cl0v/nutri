@@ -1,4 +1,3 @@
-
 class FoodModel {
   String imgUrl;
   String title;
