@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserDataProvider {
+class UserPreferencesProvider {
   final Future<SharedPreferences> prefs;
 
-  UserDataProvider({@required this.prefs});
+  UserPreferencesProvider({@required this.prefs});
 
   Future<Map<String, String>> getUserInfo() async {
     Map<String, String> map = Map();
