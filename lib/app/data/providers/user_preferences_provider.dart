@@ -16,10 +16,6 @@ class UserPreferencesProvider {
     return map;
   }
 
-  void setUserInfo(Map<String, String> answers) =>
-      answers.forEach((key, value) async {
-        print(key);
-        print(value);
-        return (await prefs).setString(key, value);
-      });
+  void setUserInfo(Map<String, String> answers) => answers
+      .forEach((key, value) async => (await prefs).setString(key, value));
 }

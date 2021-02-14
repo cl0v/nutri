@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/question_model.dart';
 import 'package:nutri/app/data/repositories/user_preferences_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
+
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:nutri/constants.dart';
 
 class QuestionsController extends GetxController {
   final UserPreferencesRepository userDataRepository;
@@ -17,11 +23,10 @@ class QuestionsController extends GetxController {
   List<Question> _questions = sample_data
       .map(
         (question) => Question(
-            id: question['id'],
-            pref: question['pref'],
-            question: question['question'],
-            options: question['options'],
-            answer: question['answer_index']),
+          pref: question['pref'],
+          question: question['question'],
+          options: question['options'],
+        ),
       )
       .toList();
 
@@ -30,13 +35,31 @@ class QuestionsController extends GetxController {
   var _isAnswered = false.obs;
   bool get isAnswered => _isAnswered.value;
 
-  int _index;
-  int get index => this._index;
+  final _index = RxInt();
+  int get index => this._index.value;
 
   @override
   void onInit() {
     super.onInit();
     _pageController = PageController();
+    // setQuestionList();
+  }
+
+  setQuestionList() async {
+    print('obvio q entrou aq ne meu');
+    // _questions.assignAll(await loadQuestionList()) ;
+    print(_questions);
+  }
+
+//TODO: Se eu clickar rapido, a pagination pode pular mais de uma pagina(2x click)
+  Future<List<Question>> loadQuestionList() async {
+    var data = await loadJson();
+    List jsonList = jsonDecode(data);
+    return jsonList.map((e) => Question.fromMap(e)).toList();
+  }
+
+  loadJson() async {
+    return await rootBundle.loadString('assets/jsons/questions.json');
   }
 
   @override
@@ -58,8 +81,7 @@ class QuestionsController extends GetxController {
   onAnswerTapped(Question question, int index) {
     _answers[question.pref] = question.options[index];
     _isAnswered.value = true;
-    _index = index;
-    update();
+    _index.value = index;
 
     Future.delayed(Duration(seconds: 1), () {
       _nextQuestion();
@@ -69,6 +91,13 @@ class QuestionsController extends GetxController {
   _saveAnswers(Map ans) {
     userDataRepository.setUserInfo(ans);
   }
+
+  Color getTheRightColor(idx) {
+      if (isAnswered) {
+        if (idx == this.index) return kGreenColor;
+      }
+      return kGrayColor;
+    }
 
   _nextQuestion() {
     if (pageController.page.round() != questions.length - 1) {

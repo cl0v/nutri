@@ -1,0 +1,43 @@
+[
+    {
+        "question": "De onde vem a sua comida",
+        "prefs": "foodIncome",
+        "options": [
+            "Eu cozinho",
+            "Costumo comer fora",
+            "Alguem cozinha",
+            "Outro"
+        ]
+    },
+    {
+        "question": "Você tem diabetes?",
+        "prefs": "diabetes",
+        "options": [
+            "Sim",
+            "Não",
+            "Não sei",
+            "Não responder"
+        ]
+    },
+    {
+        "question": "Você tem problemas de pressão",
+        "prefs": "pressao",
+        "options": [
+            "Sim, pressão alta",
+            "Sim, pressão baixa",
+            "Não",
+            "Não sei"
+        ],
+        "answer_index": 2
+    },
+    {
+        "question": "Já fez alguma dessas dietas?",
+        "prefs": "diets",
+        "options": [
+            "Dieta Low Carb",
+            "Dieta Low Fat",
+            "Apenas jejum intermitente",
+            "Nenhuma"
+        ]
+    }
+]
