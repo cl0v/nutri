@@ -20,15 +20,7 @@ class QuestionsController extends GetxController {
 
   PageController get pageController => this._pageController;
 
-  List<Question> _questions = sample_data
-      .map(
-        (question) => Question(
-          pref: question['pref'],
-          question: question['question'],
-          options: question['options'],
-        ),
-      )
-      .toList();
+  RxList<Question> _questions = <Question>[].obs;
 
   List<Question> get questions => this._questions;
 
@@ -42,12 +34,20 @@ class QuestionsController extends GetxController {
   void onInit() {
     super.onInit();
     _pageController = PageController();
-    // setQuestionList();
+    // _questions.assignAll(sample_data
+    //     .map(
+    //       (question) => Question(
+    //         pref: question['pref'],
+    //         question: question['question'],
+    //         options: question['options'],
+    //       ),
+    //     )
+    //     .toList());
+    setQuestionList();
   }
 
   setQuestionList() async {
-    print('obvio q entrou aq ne meu');
-    // _questions.assignAll(await loadQuestionList()) ;
+    _questions.assignAll(await loadQuestionList()) ;
     print(_questions);
   }
 
@@ -93,11 +93,11 @@ class QuestionsController extends GetxController {
   }
 
   Color getTheRightColor(idx) {
-      if (isAnswered) {
-        if (idx == this.index) return kGreenColor;
-      }
-      return kGrayColor;
+    if (isAnswered) {
+      if (idx == this.index) return kGreenColor;
     }
+    return kGrayColor;
+  }
 
   _nextQuestion() {
     if (pageController.page.round() != questions.length - 1) {

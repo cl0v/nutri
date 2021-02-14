@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nutri/app/modules/questions/components/question_card.dart';
 import 'package:nutri/app/modules/questions/controllers/questions_controller.dart';
 import 'package:nutri/constants.dart';
@@ -32,15 +33,15 @@ class QuestionViewBody extends StatelessWidget {
           Divider(thickness: 1.5),
           // SizedBox(height: kDefaultPadding),
           Expanded(
-            child: PageView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              controller: controller.pageController,
-              itemCount: controller.questions.length,
-              itemBuilder: (context, index) => QuestionCard(
+            child: Obx(() => PageView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  controller: controller.pageController,
+                  itemCount: controller.questions.length,
+                  itemBuilder: (context, index) => QuestionCard(
                     onTap: controller.onAnswerTapped,
                     question: controller.questions[index],
                   ),
-            ),
+                )),
           ),
           SizedBox(height: kDefaultPadding * 3),
         ],
