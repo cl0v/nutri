@@ -10,6 +10,6 @@ main() {
   });
 }
 
-Question q1 = Question(question: "De onde vem a sua comida");
+QuestionModel q1 = QuestionModel(question: "De onde vem a sua comida");
 
 //  "question": "De onde vem a sua comida",

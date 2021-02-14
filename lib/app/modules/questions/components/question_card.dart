@@ -11,8 +11,8 @@ class QuestionCard extends StatelessWidget {
     this.onTap,
   }) : super(key: key);
 
-  final Question question;
-  final Function(Question, int) onTap;
+  final QuestionModel question;
+  final Function(QuestionModel, int) onTap;
 
   @override
   Widget build(BuildContext context) {

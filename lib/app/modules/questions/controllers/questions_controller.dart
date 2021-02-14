@@ -20,9 +20,9 @@ class QuestionsController extends GetxController {
 
   PageController get pageController => this._pageController;
 
-  RxList<Question> _questions = <Question>[].obs;
+  RxList<QuestionModel> _questions = <QuestionModel>[].obs;
 
-  List<Question> get questions => this._questions;
+  List<QuestionModel> get questions => this._questions;
 
   var _isAnswered = false.obs;
   bool get isAnswered => _isAnswered.value;
@@ -52,10 +52,10 @@ class QuestionsController extends GetxController {
   }
 
 //TODO: Se eu clickar rapido, a pagination pode pular mais de uma pagina(2x click)
-  Future<List<Question>> loadQuestionList() async {
+  Future<List<QuestionModel>> loadQuestionList() async {
     var data = await loadJson();
     List jsonList = jsonDecode(data);
-    return jsonList.map((e) => Question.fromMap(e)).toList();
+    return jsonList.map((e) => QuestionModel.fromJson(e)).toList();
   }
 
   loadJson() async {
@@ -78,8 +78,8 @@ class QuestionsController extends GetxController {
 
   Map<String, String> _answers = {};
 
-  onAnswerTapped(Question question, int index) {
-    _answers[question.pref] = question.options[index];
+  onAnswerTapped(QuestionModel question, int index) {
+    _answers[question.prefs] = question.options[index];
     _isAnswered.value = true;
     _index.value = index;
 
