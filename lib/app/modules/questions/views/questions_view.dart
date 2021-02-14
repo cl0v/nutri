@@ -16,7 +16,7 @@ class QuestionsView extends GetView<QuestionsController> {
         elevation: 0,
         actions: [
           FlatButton(
-              onPressed: controller.onSkipPressed,
+              onPressed: controller.onSkipPressed(),
               child: Text('Pular'))
         ],
       ),
