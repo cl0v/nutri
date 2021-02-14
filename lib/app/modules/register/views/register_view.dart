@@ -22,10 +22,12 @@ class RegisterView extends GetView<RegisterController> {
               fit: BoxFit.cover,
             ),
           ),
-          SafeArea(
-            minimum: EdgeInsets.symmetric(vertical: 128),
-            child: Center(
+          // SafeArea(
+          //   minimum: EdgeInsets.symmetric(vertical: 128),
+            // child: 
+            Center(
               child: Container(
+                height: 450,
                 margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
                 padding: EdgeInsets.all(kDefaultPadding),
                 decoration: BoxDecoration(
@@ -40,7 +42,7 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                     Divider(),
                     Spacer(),
-                    TextField(
+                    TextFormField(
                       controller: controller.nameController,
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.person),
@@ -56,7 +58,12 @@ class RegisterView extends GetView<RegisterController> {
                     SizedBox(
                       height: 16,
                     ),
-                    TextField(
+                    TextFormField(
+                      validator: (s) {
+                        if (!GetUtils.isEmail(s)) return 'Email incorreto';
+                        return null;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.emailAddress,
                       controller: controller.emailController,
                       decoration: InputDecoration(
@@ -73,7 +80,7 @@ class RegisterView extends GetView<RegisterController> {
                     SizedBox(
                       height: 16,
                     ),
-                    TextField(
+                    TextFormField(
                       controller: controller.passwordController,
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.lock),
@@ -104,7 +111,7 @@ class RegisterView extends GetView<RegisterController> {
                 ),
               ),
             ),
-          ),
+          // ),
         ],
       ),
     );

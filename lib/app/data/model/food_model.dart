@@ -1,11 +1,13 @@
 class FoodModel {
   String title;
+  String text;
   String imgUrl;
   List<String> preparo;
   Tabela tabela;
 
   FoodModel({
     this.title,
+    this.text,
     this.imgUrl,
     this.preparo,
     this.tabela,
@@ -13,6 +15,7 @@ class FoodModel {
 
   FoodModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
+    text = json['text'];
     imgUrl = json['img'];
     preparo = json['preparo'].cast<String>();
     tabela =
@@ -22,6 +25,7 @@ class FoodModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['title'] = this.title;
+    data['text'] = this.text;
     data['img'] = this.imgUrl;
     data['preparo'] = this.preparo;
     if (this.tabela != null) {

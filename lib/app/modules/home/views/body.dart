@@ -1,8 +1,6 @@
-
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:nutri/app/data/model/temporary_model.dart';
+import 'package:nutri/app/data/model/food_model.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({
@@ -62,19 +60,19 @@ List<FoodModel> foodList = [
   FoodModel(
     imgUrl:
         'https://i.pinimg.com/474x/e2/fe/5c/e2fe5c199feb50e474ce4f2c98c5274b.jpg',
-    category: 'Café da manhã',
+    text: 'Café da manhã',
     title: 'Café preto',
   ),
   FoodModel(
     imgUrl:
         'https://i.pinimg.com/564x/e0/d1/08/e0d108f2b18bc168edc824bfab8399a2.jpg',
-    category: 'Almoço',
+    text: 'Almoço',
     title: 'Peito de frango',
   ),
   FoodModel(
     imgUrl:
         'https://i.pinimg.com/474x/de/58/f7/de58f749a33fb02aca97492b35e73382.jpg',
-    category: 'Jantar',
+    text: 'Jantar',
     title: 'Carne com brocolis',
   ),
 ];
@@ -128,7 +126,7 @@ class FoodCard extends StatelessWidget {
                     padding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                     child: Text(
-                      '${food.category} : ${food.title}',
+                      '${food.text} : ${food.title}',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20.0,

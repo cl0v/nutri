@@ -17,10 +17,12 @@ class LoginView extends GetView<LoginController> {
               fit: BoxFit.cover,
             ),
           ),
-          SafeArea(
-            minimum: EdgeInsets.symmetric(vertical: 128),
-            child: Center(
+          // SafeArea(
+          //   minimum: EdgeInsets.symmetric(vertical: 128),
+            // child:
+             Center(
               child: Container(
+                height: 450,
                 margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
                 padding: EdgeInsets.all(kDefaultPadding),
                 decoration: BoxDecoration(
@@ -35,7 +37,14 @@ class LoginView extends GetView<LoginController> {
                     ),
                     Divider(),
                     Spacer(),
-                    TextField(
+                    // TextFormField(),
+                    TextFormField(
+                      // autofocus: true,
+                      validator: (s) {
+                        if (!GetUtils.isEmail(s)) return 'Email incorreto';
+                        return null;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.emailAddress,
                       controller: controller.emailController,
                       decoration: InputDecoration(
@@ -52,7 +61,7 @@ class LoginView extends GetView<LoginController> {
                     SizedBox(
                       height: 16,
                     ),
-                    TextField(
+                    TextFormField(
                       controller: controller.passwordController,
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.lock),
@@ -78,7 +87,6 @@ class LoginView extends GetView<LoginController> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: RaisedButton(
-
                         //TODO: Modificar o botao de login
                         onPressed: controller.onEnterPressed,
                         child: Text(
@@ -115,7 +123,7 @@ class LoginView extends GetView<LoginController> {
                   ],
                 ),
               ),
-            ),
+            // ),
           ),
         ],
       ),

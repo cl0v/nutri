@@ -5,6 +5,7 @@ import 'package:nutri/app/routes/app_pages.dart';
 class LoginController extends GetxController {
 
   TextEditingController emailController = TextEditingController();
+  
   TextEditingController passwordController = TextEditingController();
 
   void onCreateAccountPressed() {

@@ -34,21 +34,11 @@ class QuestionsController extends GetxController {
   void onInit() {
     super.onInit();
     _pageController = PageController();
-    // _questions.assignAll(sample_data
-    //     .map(
-    //       (question) => Question(
-    //         pref: question['pref'],
-    //         question: question['question'],
-    //         options: question['options'],
-    //       ),
-    //     )
-    //     .toList());
     setQuestionList();
   }
 
   setQuestionList() async {
     _questions.assignAll(await loadQuestionList()) ;
-    print(_questions);
   }
 
 //TODO: Se eu clickar rapido, a pagination pode pular mais de uma pagina(2x click)
@@ -60,11 +50,6 @@ class QuestionsController extends GetxController {
 
   loadJson() async {
     return await rootBundle.loadString('assets/jsons/questions.json');
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   @override

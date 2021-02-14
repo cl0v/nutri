@@ -9,7 +9,7 @@ class UserModel {
   //enum
   final Goal goal;
   //enum
-  final Intensity intensity;
+  final Intensity intensity; //TODO: Remover tudo daqui e passar para as prefs
   final bool diabetes;
   final bool medications;
   final bool hypertensive;

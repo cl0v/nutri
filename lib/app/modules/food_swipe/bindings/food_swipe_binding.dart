@@ -6,7 +6,7 @@ class FoodSwipeBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<FoodSwipeController>(
-      () => FoodSwipeController(),
+       () => FoodSwipeController(),
     );
   }
 }
