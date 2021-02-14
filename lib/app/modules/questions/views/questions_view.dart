@@ -16,13 +16,12 @@ class QuestionsView extends GetView<QuestionsController> {
         elevation: 0,
         actions: [
           FlatButton(
-              onPressed: controller.onSkipPressed(),
+              onPressed: controller.onSkipPressed,
               child: Text('Pular'))
         ],
       ),
       body: Stack(
         children: [
-          // WebsafeSvg.asset("assets/background.svg", fit: BoxFit.fill),
           Container(
             height: double.infinity,
             width: double.infinity,
@@ -32,11 +31,9 @@ class QuestionsView extends GetView<QuestionsController> {
             ),
           ),
           SafeArea(
-            // minimum: EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // SizedBox(height: kDefaultPadding),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: Text.rich(
@@ -50,7 +47,7 @@ class QuestionsView extends GetView<QuestionsController> {
                   ),
                 ),
                 Divider(thickness: 1.5),
-                SizedBox(height: kDefaultPadding),
+                // SizedBox(height: kDefaultPadding),
                 Expanded(
                   child: PageView.builder(
                     // Block swipe to next qn
@@ -64,7 +61,7 @@ class QuestionsView extends GetView<QuestionsController> {
                     ),
                   ),
                 ),
-                SizedBox(height: kDefaultPadding),
+                SizedBox(height: kDefaultPadding * 3),
               ],
             ),
           ),
@@ -95,14 +92,19 @@ class QuestionCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(25),
       ),
-      child: Column(
+      child: ListView(
+        
+
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            question.question,
-            style: Theme.of(context)
-                .textTheme
-                .headline6
-                .copyWith(color: kBlackColor),
+          Center(
+            child: Text(
+              question.question,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  .copyWith(color: kBlackColor),
+            ),
           ),
           SizedBox(height: kDefaultPadding / 2),
           ...List.generate(

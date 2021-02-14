@@ -28,11 +28,11 @@ class _BlurBgImgCarrousselState extends State<BlurBgImgCarroussel> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: Text(
-          'PageView Example',
-        ),
-      ),
+      // appBar: AppBar(
+      //   title: Text(
+      //     'PageView Example',
+      //   ),
+      // ),
       body: Stack(
         children: [
           Container(

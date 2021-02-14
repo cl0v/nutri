@@ -1,109 +1,107 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/modules/register/controllers/register_controller.dart';
+import 'package:nutri/constants.dart';
 
 class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: ListView(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Color.fromRGBO(242, 196, 117, 1), Colors.white],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter),
-            ),
-            height: 240,
-            padding: EdgeInsets.all(48),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 32,
-                ),
-                Text(
-                  'Criar conta',
-                  style: Get.theme.textTheme.headline4,
-                ),
-                Text(
-                  'POR FAVOR PREENCHA OS CAMPOS',
-                  style: Get.theme.textTheme.subtitle1,
-                ),
-              ],
+            height: double.infinity,
+            width: double.infinity,
+            child: Image.asset(
+              'assets/Profile.jpg',
+              fit: BoxFit.cover,
             ),
           ),
           SafeArea(
-            minimum: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            minimum: EdgeInsets.symmetric(vertical: 128),
             child: Center(
-              child: Column(
-                children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.person),
-                      hintText: 'Nome completo',
-                      labelText: 'Nome completo',
-                      border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(99),
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                padding: EdgeInsets.all(kDefaultPadding),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      'Criar conta',
+                      style: Get.theme.textTheme.headline4,
+                    ),
+                    Divider(),
+                    Spacer(),
+                    TextField(
+                      controller: controller.nameController,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.person),
+                        hintText: 'Nome completo',
+                        labelText: 'Nome completo',
+                        border: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(99),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 32,
-                  ),
-                  TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.email),
-                      hintText: 'E-mail',
-                      labelText: 'E-mail',
-                      border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(99),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: controller.emailController,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.email),
+                        hintText: 'E-mail',
+                        labelText: 'E-mail',
+                        border: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(99),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 32),
-                  TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.lock),
-                      suffixIcon: Icon(Icons.remove_red_eye),
-                      hintText: 'Senha',
-                      labelText: 'Senha',
-                      border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(99),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    TextField(
+                      controller: controller.passwordController,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.lock),
+                        suffixIcon: Icon(Icons.remove_red_eye),
+                        hintText: 'Password',
+                        labelText: 'Password',
+                        border: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(99),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 38,
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: RaisedButton.icon(
-                      label: Text('Continuar'),
-                      icon: Icon(
-                        Icons.arrow_forward,
-                        size: 18,
+                    Spacer(),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: RaisedButton.icon(
+                        label: Text('Continuar'),
+                        icon: Icon(
+                          Icons.arrow_forward,
+                          size: 18,
+                        ),
+                        textTheme: Get.theme.buttonTheme.textTheme,
+                        onPressed: controller.onContinuePressed,
                       ),
-                      textTheme: Get.theme.buttonTheme.textTheme,
-                      // textColor: Colors.white,
-                      // color: Color.fromRGBO(244, 208, 120, 1),
-                      onPressed: controller.onContinuePressed,
-                      // shape: new RoundedRectangleBorder(
-                      //   borderRadius: new BorderRadius.circular(9.0),
-                      // ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

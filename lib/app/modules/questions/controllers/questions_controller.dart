@@ -30,6 +30,7 @@ class QuestionsController extends GetxController {
     _pageController = PageController();
   }
 
+//TODO: Implement get index from question
 //Pegar o index da resposta e fazer o card ficar colorido
   @override
   void onReady() {
@@ -61,7 +62,7 @@ class QuestionsController extends GetxController {
       _pageController.nextPage(
           duration: Duration(milliseconds: 250), curve: Curves.ease);
     } else {
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.FOOD_SWIPE);
     }
   }
 }
