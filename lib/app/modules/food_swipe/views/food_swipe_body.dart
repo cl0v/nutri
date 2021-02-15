@@ -26,7 +26,6 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
                 itemCount: controller.foodList.length,
                 itemBuilder: (context, index) => FoodCard(
                   converter: controller.getPreparoFormated,
-                  index: index,
                   food: controller.foodList[index],
                   onRatingTapped: controller.onRatingTapped,
                 ),

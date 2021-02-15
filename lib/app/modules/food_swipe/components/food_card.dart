@@ -5,9 +5,8 @@ import 'package:nutri/constants.dart';
 
 class FoodCard extends StatelessWidget {
   const FoodCard(
-      {this.food, this.index, this.converter, @required this.onRatingTapped});
+      {this.food, this.converter, @required this.onRatingTapped});
 
-  final int index; //TODO: Talvez eu nao precise do index
   final FoodModel food;
   final Function(List<String>) converter;
   final Function(FoodModel, double) onRatingTapped;
