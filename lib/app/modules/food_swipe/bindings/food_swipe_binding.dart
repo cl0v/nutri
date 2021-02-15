@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:nutri/app/data/providers/food_provider.dart';
 import 'package:nutri/app/data/providers/user_preferences_provider.dart';
+import 'package:nutri/app/data/repositories/food_repository.dart';
 import 'package:nutri/app/data/repositories/user_preferences_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,10 +13,13 @@ class FoodSwipeBinding extends Bindings {
     Get.lazyPut<FoodSwipeController>(
       () => FoodSwipeController(
           userPreferencesRepository: UserPreferencesRepository(
-        provider: UserPreferencesProvider(
-          sharedPreferences: SharedPreferences.getInstance(),
-        ),
-      )),
+            provider: UserPreferencesProvider(
+              sharedPreferences: SharedPreferences.getInstance(),
+            ),
+          ),
+          foodRepository: FoodRepository(
+            provider: FoodProvider(),
+          )),
     );
   }
 }

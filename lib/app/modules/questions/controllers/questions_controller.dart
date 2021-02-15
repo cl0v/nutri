@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/question_model.dart';
+import 'package:nutri/app/data/repositories/question_repository.dart';
 import 'package:nutri/app/data/repositories/user_preferences_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:nutri/constants.dart';
 
-const questionsJson = 'assets/jsons/questions.json';
-
 class QuestionsController extends GetxController {
   final UserPreferencesRepository userDataRepository;
+  final QuestionRepository questionRepository;
   QuestionsController({
     this.userDataRepository,
+    @required this.questionRepository,
   });
 
   PageController _pageController;
@@ -37,19 +38,10 @@ class QuestionsController extends GetxController {
   }
 
   setQuestionList() async {
-    _questions.assignAll(await loadQuestionList());
+    _questions.assignAll(await questionRepository.loadQuestionList());
   }
 
 //TODO: Se eu clickar rapido, a pagination pode pular mais de uma pagina(2x click)
-  Future<List<QuestionModel>> loadQuestionList() async {
-    var data = await _loadJson();
-    List jsonList = jsonDecode(data);
-    return jsonList.map((e) => QuestionModel.fromJson(e)).toList();
-  }
-
-  _loadJson() async {
-    return await rootBundle.loadString(questionsJson);
-  }
 
   @override
   void onClose() {

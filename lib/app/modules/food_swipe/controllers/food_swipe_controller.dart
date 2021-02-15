@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/data/repositories/food_repository.dart';
 import 'package:nutri/app/data/repositories/user_preferences_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
-const foodJson = 'assets/jsons/food_data.json';
-
 class FoodSwipeController extends GetxController {
   final UserPreferencesRepository userPreferencesRepository;
+  final FoodRepository foodRepository;
 
-  FoodSwipeController({this.userPreferencesRepository});
+  FoodSwipeController({this.userPreferencesRepository, @required this.foodRepository});
 
   RxList<FoodModel> _foodList = <FoodModel>[].obs;
   List<FoodModel> get foodList => _foodList;
@@ -40,20 +40,10 @@ class FoodSwipeController extends GetxController {
   }
 
   _fetchFoodsAvailable() async {
-    _foodList.assignAll(await loadFoodList());
+    _foodList.assignAll(await foodRepository.loadFoodList());
   }
 
 //TODO: Quando o usuario clica em alguma das opçoes de voto, a imagem deverá sumir e o valor fica salvo
-
-  _loadJson() async {
-    return await rootBundle.loadString(foodJson);
-  }
-
-  Future<List<FoodModel>> loadFoodList() async {
-    var data = await _loadJson();
-    List jsonList = jsonDecode(data);
-    return jsonList.map((e) => FoodModel.fromJson(e)).toList();
-  }
 
   String getPreparoFormated(List<String> prep) {
     var a = StringBuffer();

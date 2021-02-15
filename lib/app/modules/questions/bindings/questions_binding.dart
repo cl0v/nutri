@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:nutri/app/data/providers/question_provider.dart';
 import 'package:nutri/app/data/providers/user_preferences_provider.dart';
+import 'package:nutri/app/data/repositories/question_repository.dart';
 import 'package:nutri/app/data/repositories/user_preferences_repository.dart';
 
 import 'package:nutri/app/modules/questions/controllers/questions_controller.dart';
@@ -9,11 +11,14 @@ class QuestionsBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<QuestionsController>(
-      ()  => QuestionsController(
+      () => QuestionsController(
         userDataRepository: UserPreferencesRepository(
           provider: UserPreferencesProvider(
-            sharedPreferences:  SharedPreferences.getInstance(),
+            sharedPreferences: SharedPreferences.getInstance(),
           ),
+        ),
+        questionRepository: QuestionRepository(
+          provider: QuestionProvider(),
         ),
       ),
     );
