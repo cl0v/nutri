@@ -41,7 +41,7 @@ class QuestionsController extends GetxController {
     _questions.assignAll(await questionRepository.loadQuestionList());
   }
 
-//TODO: Se eu clickar rapido, a pagination pode pular mais de uma pagina(2x click)
+//TODO: BUGFIX: Se eu clickar rapido, a pagination pode pular mais de uma pagina(2x click)
 
   @override
   void onClose() {
