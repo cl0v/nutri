@@ -1,7 +1,7 @@
 [
   {
     "title": "Peito de Frango",
-    "img": "https://i.pinimg.com/564x/e0/d1/08/e0d108f2b18bc168edc824bfab8399a2.jpg",
+    "img": "assets/images/foods/peito_de_frango_grelhado.jpg",
     "preparo": [
       "Cozido",
       "Grelhado",
@@ -17,7 +17,7 @@
   },
   {
     "title": "Ovos",
-    "img": "https://i.pinimg.com/564x/9f/9c/d3/9f9cd3f3eb6ac148dcf424e89badbb00.jpg",
+    "img": "assets/images/foods/ovo_frito.jpg",
     "preparo": [
       "Cozido",
       "Frito"
@@ -32,7 +32,7 @@
   },
   {
     "title": "Café Preto",
-    "img": "https://i.pinimg.com/564x/78/e0/cf/78e0cfe7af4efc7e8d4af70833e2b15f.jpg",
+    "img": "assets/images/foods/cafe_preto.jpg",
     "preparo": [
       "Padrão"
     ],

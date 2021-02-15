@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nutri/app/data/model/food_model.dart';
@@ -17,7 +19,7 @@ class FoodCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         image: DecorationImage(
-          image: NetworkImage(food.img),
+          image: AssetImage(food.img),
           fit: BoxFit.cover,
         ),
       ),
