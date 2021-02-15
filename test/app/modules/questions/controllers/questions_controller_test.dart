@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/data/model/question_model.dart';
 import 'package:nutri/app/modules/questions/controllers/questions_controller.dart';
 
 main() {
+   TestWidgetsFlutterBinding.ensureInitialized();
   test('Getting questions from JSON and converting to question list', () async {
     QuestionsController controller = QuestionsController();
     var list = await controller.loadQuestionList();

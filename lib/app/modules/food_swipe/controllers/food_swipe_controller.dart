@@ -1,13 +1,64 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/routes/app_pages.dart';
+
+const foodJson = 'assets/jsons/food_data.json';
 
 class FoodSwipeController extends GetxController {
+  RxList<FoodModel> _foodList = <FoodModel>[].obs;
+  List<FoodModel> get foodList => _foodList;
 
-  List<FoodModel> foodList = itens.map((map) => FoodModel.fromJson(map)).toList();
+  PageController pageController;
+  final _currentPageValue = 0.0.obs;
+  double get currentPageValue => _currentPageValue.value;
 
   @override
   void onInit() {
     super.onInit();
+    _fetchFoodsAvailable();
+    pageController = PageController(viewportFraction: 0.8)
+      ..addListener(() {
+        _currentPageValue.value = pageController.page;
+      });
+  }
+
+  onSkipPressed() {
+    Get.offNamed(Routes.HOME);
+    //TODO: Implement onSkipPressed
+  }
+
+  _fetchFoodsAvailable() async {
+    _foodList.assignAll(await loadFoodList());
+  }
+
+//TODO: Quando o usuario clica em alguma das opçoes de voto, a imagem deverá sumir e o valor fica salvo
+
+  _loadJson() async {
+    return await rootBundle.loadString(foodJson);
+  }
+
+  Future<List<FoodModel>> loadFoodList() async {
+    var data = await _loadJson();
+    List jsonList = jsonDecode(data);
+    return jsonList.map((e) => FoodModel.fromJson(e)).toList();
+  }
+
+  String getPreparoFormated(List<String> prep) {
+    var a = StringBuffer();
+    prep.forEach((str) {
+      a.write('- $str\n');
+    });
+    return a.toString();
+  }
+
+  void onRatingTapped(FoodModel food, double rating) {
+    //
+    print(food);
+    print(rating);
+    //TODO: Implement onRatingTapped
   }
 
   @override
@@ -18,34 +69,3 @@ class FoodSwipeController extends GetxController {
   @override
   void onClose() {}
 }
-
-
-
-
-const itens = [
-  {
-    'title': 'Test',
-    'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam gravida venenatis diam, sed posuere turpis aliquam elementum. Vivamus at leo metus. Nunc faucibus bibendum turpis, a ornare ipsum.',
-    'image': 'https://images.unsplash.com/photo-1547721064-da6cfb341d50?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80',
-  },
-  {
-    'title': 'Test',
-    'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam gravida venenatis diam, sed posuere turpis aliquam elementum. Vivamus at leo metus. Nunc faucibus bibendum turpis, a ornare ipsum.',
-    'image': 'https://images.unsplash.com/photo-1552053831-71594a27632d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=624&q=80',
-  },
-  {
-    'title': 'Test',
-    'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam gravida venenatis diam, sed posuere turpis aliquam elementum. Vivamus at leo metus. Nunc faucibus bibendum turpis, a ornare ipsum.',
-    'image': 'https://images.unsplash.com/photo-1552728089-57bdde30beb3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=734&q=80',
-  },
-  {
-    'title': 'Test',
-    'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam gravida venenatis diam, sed posuere turpis aliquam elementum. Vivamus at leo metus. Nunc faucibus bibendum turpis, a ornare ipsum.',
-    'image': 'https://images.unsplash.com/photo-1561948955-570b270e7c36?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=518&q=80',
-  },
-  {
-    'title': 'Test',
-    'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam gravida venenatis diam, sed posuere turpis aliquam elementum. Vivamus at leo metus. Nunc faucibus bibendum turpis, a ornare ipsum.',
-    'image': 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-  },
-];

@@ -58,21 +58,21 @@ class HomeBody extends StatelessWidget {
 
 List<FoodModel> foodList = [
   FoodModel(
-    imgUrl:
+    img:
         'https://i.pinimg.com/474x/e2/fe/5c/e2fe5c199feb50e474ce4f2c98c5274b.jpg',
-    text: 'Café da manhã',
+    // texto: 'Café da manhã',
     title: 'Café preto',
   ),
   FoodModel(
-    imgUrl:
+    img:
         'https://i.pinimg.com/564x/e0/d1/08/e0d108f2b18bc168edc824bfab8399a2.jpg',
-    text: 'Almoço',
+    // texto: 'Almoço',
     title: 'Peito de frango',
   ),
   FoodModel(
-    imgUrl:
+    img:
         'https://i.pinimg.com/474x/de/58/f7/de58f749a33fb02aca97492b35e73382.jpg',
-    text: 'Jantar',
+    // texto: 'Jantar',
     title: 'Carne com brocolis',
   ),
 ];

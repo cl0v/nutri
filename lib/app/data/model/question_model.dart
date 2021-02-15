@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class QuestionModel {
   String question;
   String prefs;

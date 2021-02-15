@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import 'app/routes/app_pages.dart';
 
 void main() {
-  runApp(
-    GetMaterialApp(
-      title: "Application",
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
-      theme: theme,
-      debugShowCheckedModeBanner: false,
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+    (value) => runApp(
+      GetMaterialApp(
+        title: "Nutri Nest (Nutricionista Virtual)",
+        initialRoute: AppPages.INITIAL,
+        getPages: AppPages.routes,
+        theme: theme,
+        debugShowCheckedModeBanner: false,
+      ),
     ),
   );
 }

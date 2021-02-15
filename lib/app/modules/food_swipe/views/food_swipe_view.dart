@@ -9,8 +9,19 @@ class FoodSwipeView extends GetView<FoodSwipeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Text('Escolha o cardápio hoje'),
+        elevation: 0,
+        actions: [
+          FlatButton(
+            onPressed: controller.onSkipPressed,
+            child: Text('Pular'),
+          ),
+        ],
+      ),
       extendBodyBehindAppBar: true,
       body: BlurBgImgCarroussel(),
-      );
+    );
   }
 }
