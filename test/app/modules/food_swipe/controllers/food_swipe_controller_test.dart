@@ -9,6 +9,18 @@ main() {
     var list = await controller.loadFoodList();
     expect(list.first.title, f1.title);
   });
+  test('Creating map of prefs foods onRatingTapped', () async {
+    FoodSwipeController controller = FoodSwipeController();
+    var list = await controller.loadFoodList();
+    var cafe = list[list.indexWhere((element) => element.prefs == "cafe")];
+    controller.onRatingTapped(cafe, 4.0);
+    var prefs = controller.foodPrefs;
+    expect(
+      prefs, foodPrefs
+    );
+  });
 }
+
+Map<String, int> foodPrefs = {"cafe": 4};
 
 FoodModel f1 = FoodModel(title: "Peito de Frango");

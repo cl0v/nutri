@@ -2,6 +2,7 @@
   {
     "title": "Peito de Frango",
     "img": "assets/images/foods/peito_de_frango_grelhado.jpg",
+    "prefs" : "frango",
     "preparo": [
       "Cozido",
       "Grelhado",
@@ -18,6 +19,7 @@
   {
     "title": "Ovos",
     "img": "assets/images/foods/ovo_frito.jpg",
+    "prefs" : "ovos",
     "preparo": [
       "Cozido",
       "Frito"
@@ -32,6 +34,7 @@
   },
   {
     "title": "Café Preto",
+    "prefs" : "cafe",
     "img": "assets/images/foods/cafe_preto.jpg",
     "preparo": [
       "Padrão"

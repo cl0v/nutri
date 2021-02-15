@@ -3,17 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/data/repositories/user_preferences_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
 const foodJson = 'assets/jsons/food_data.json';
 
 class FoodSwipeController extends GetxController {
+  final UserPreferencesRepository userPreferencesRepository;
+
+  FoodSwipeController({this.userPreferencesRepository});
+
   RxList<FoodModel> _foodList = <FoodModel>[].obs;
   List<FoodModel> get foodList => _foodList;
 
   PageController pageController;
   final _currentPageValue = 0.0.obs;
   double get currentPageValue => _currentPageValue.value;
+
+  Map<String, int> foodPrefs = Map<String, int>();
 
   @override
   void onInit() {
@@ -26,7 +33,9 @@ class FoodSwipeController extends GetxController {
   }
 
   onSkipPressed() {
+    savePrefs();
     Get.offNamed(Routes.HOME);
+    //Possivelmente trocar para botao salvar e o usuário salvara as preferencias
     //TODO: Implement onSkipPressed
   }
 
@@ -55,10 +64,12 @@ class FoodSwipeController extends GetxController {
   }
 
   void onRatingTapped(FoodModel food, double rating) {
-    //
-    print(food);
-    print(rating);
-    //TODO: Implement onRatingTapped
+    foodPrefs[food.prefs] = rating.round();
+  }
+
+  void savePrefs() {
+    userPreferencesRepository.setFoodsPrefs(foodPrefs);
+    //TODO: Implement savePrefs
   }
 
   @override

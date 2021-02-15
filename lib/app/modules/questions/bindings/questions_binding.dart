@@ -12,7 +12,7 @@ class QuestionsBinding extends Bindings {
       ()  => QuestionsController(
         userDataRepository: UserPreferencesRepository(
           provider: UserPreferencesProvider(
-            prefs:  SharedPreferences.getInstance(),
+            sharedPreferences:  SharedPreferences.getInstance(),
           ),
         ),
       ),

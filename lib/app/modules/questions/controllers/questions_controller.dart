@@ -73,7 +73,7 @@ class QuestionsController extends GetxController {
   }
 
   _saveAnswers(Map ans) {
-    userDataRepository.setUserInfo(ans);
+    userDataRepository.setQuestionsPrefs(ans);
   }
 
   Color getTheRightColor(idx) {
