@@ -2,49 +2,98 @@
   {
     "title": "Peito de Frango",
     "img": "assets/images/foods/peito_de_frango_grelhado.jpg",
-    "prefs" : "frango",
-    "preparo": [
+    "prefs": "frango",
+    "meal": [
+      "lunch",
+      "tea",
+      "dinner"
+    ],
+    "cooking": [
       "Cozido",
       "Grelhado",
       "Assado"
     ],
-    "tabela": {
-      "calorias": 165.0,
-      "carboidrato": 0.0,
-      "fibra": 0.0,
-      "gordura": 3.6,
-      "proteina": 31.0
+    "nutrition": {
+      "calories": 165.0,
+      "carbohydrate": 0.0,
+      "fiber": 0.0,
+      "fat": 3.6,
+      "protein": 31.0
     }
   },
   {
     "title": "Ovos",
     "img": "assets/images/foods/ovo_frito.jpg",
-    "prefs" : "ovos",
-    "preparo": [
+    "prefs": "ovos",
+    "meal": [
+      "lunch",
+      "tea",
+      "dinner"
+    ],
+    "cooking": [
       "Cozido",
       "Frito"
     ],
-    "tabela": {
-      "calorias": 155.0,
-      "carboidrato": 1.1,
-      "fibra": 0.0,
-      "gordura": 11.0,
-      "proteina": 13.0
+    "nutrition": {
+      "calories": 155.0,
+      "carbohydrate": 1.1,
+      "fiber": 0.0,
+      "fat": 11.0,
+      "protein": 13.0
     }
   },
   {
     "title": "Café Preto",
-    "prefs" : "cafe",
+    "prefs": "cafe",
     "img": "assets/images/foods/cafe_preto.jpg",
-    "preparo": [
+    "cooking": [
       "Padrão"
     ],
-    "tabela": {
-      "calorias": 0.0,
-      "carboidrato": 0.0,
-      "fibra": 0.0,
-      "gordura": 0.0,
-      "proteina": 0.1
+    "meal": [
+      "breakfast"
+    ],
+    "nutrition": {
+      "calories": 0.0,
+      "carbohydrate": 0.0,
+      "fiber": 0.0,
+      "fat": 0.0,
+      "protein": 0.1
+    }
+  },
+  {
+    "title": "Chá",
+    "prefs": "cha",
+    "img": "assets/images/foods/cha.jpg",
+    "cooking": [
+      "Padão"
+    ],
+    "meal": [
+      "breakfast"
+    ],
+    "nutrition": {
+      "calories": 1.0,
+      "carbohydrate": 0.2,
+      "fiber": 0.0,
+      "fat": 0.0,
+      "protein": 0.1
+    }
+  },
+  {
+    "title": "Refrigerante sem açucar",
+    "prefs": "soda",
+    "img": "assets/images/foods/soda.jpg",
+    "cooking": [
+      
+    ],
+    "meal": [
+      "breakfast"
+    ],
+    "nutrition": {
+      "calories": 0.0,
+      "carbohydrate": 0.0,
+      "fiber": 0.0,
+      "fat": 0.0,
+      "protein": 0.0
     }
   }
 ]

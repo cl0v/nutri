@@ -32,13 +32,14 @@ class HomeBody extends StatelessWidget {
       ),
       SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.only( top: 16),
               child: Text(
-                'Modificar isso aqui:',
-                style: Get.theme.textTheme.headline5.copyWith(color: Colors.white),
+                'O que comer hoje',
+                style:
+                    Get.theme.textTheme.headline5.copyWith(color: Colors.white),
               ),
             ),
             CarouselSlider(
@@ -52,18 +53,59 @@ class HomeBody extends StatelessWidget {
               carouselController: controller.c,
               items: imageSliders,
             ),
-            Spacer(),
-            RaisedButton(
-              // padding: EdgeInsets.only(right: 30),
-              onPressed: () {},
-              child: Container(
-                child: Center(
-                  child: Text(
-                    'Remover esse botao',
-                    style: TextStyle(fontSize: 22),
+            Divider(),
+            Container(
+              height: 180,
+              margin: EdgeInsets.all(4.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    image: DecorationImage(
+                      image: AssetImage(
+                          'assets/images/foods/agua.jpg'), //Trocar por ASSETIMAGE
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(
+                          left: 4,
+                          right: 4,
+                          bottom: 0,
+                          top: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.3),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(15),
+                            bottomRight: Radius.circular(15),
+                          ),
+                        ),
+                        //TODO: Adicionar botao de informacoes Icon.info
+                        //TODO: Modificar os botoes concluido e 'passei'
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              'Beba água',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                width: double.infinity,
               ),
             ),
             // Text(

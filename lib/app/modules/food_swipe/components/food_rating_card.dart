@@ -1,25 +1,21 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/data/model/food_rating_card_model.dart';
 import 'package:nutri/constants.dart';
 
-class FoodCard extends StatelessWidget {
-  const FoodCard({
+class FoodRatingCard extends StatelessWidget {
+  final FoodRatingCardModel food;
+  final Function(FoodRatingCardModel, double) onRatingTapped;
+
+  const FoodRatingCard({
     this.food,
-    this.converter,
     @required this.onRatingTapped,
   });
 
-  final FoodModel food; 
-  
-  final Function(List<String>) converter;
-  final Function(FoodModel, double) onRatingTapped;
-
-
   @override
   Widget build(BuildContext context) {
+    // print(food.imgPath);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -30,7 +26,7 @@ class FoodCard extends StatelessWidget {
       ),
       margin: EdgeInsets.symmetric(
         horizontal: 10,
-        // vertical: 30, //TODO: Aqui eu altero o tamanho do card
+        // vertical: 30,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -60,7 +56,7 @@ class FoodCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  converter(food.preparo),
+                  food.prefs,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 12,

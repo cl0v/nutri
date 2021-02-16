@@ -2,24 +2,28 @@ class FoodModel {
   String title;
   String prefs;
   String img;
-  List<String> preparo;
-  Tabela tabela;
+  List<String> cooking;
+  List<String> meal;
+  Nutrition nutrition;
 
   FoodModel({
     this.title,
     this.prefs,
     this.img,
-    this.preparo,
-    this.tabela,
+    this.cooking,
+    this.meal,
+    this.nutrition,
   });
 
   FoodModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     prefs = json['prefs'];
     img = json['img'];
-    preparo = json['preparo'].cast<String>();
-    tabela =
-        json['tabela'] != null ? new Tabela.fromJson(json['tabela']) : null;
+    cooking = json['cooking'].cast<String>();
+    meal = json['meal'].cast<String>();
+    nutrition = json['nutrition'] != null
+        ? new Nutrition.fromJson(json['nutrition'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -27,44 +31,40 @@ class FoodModel {
     data['title'] = this.title;
     data['prefs'] = this.prefs;
     data['img'] = this.img;
-    data['preparo'] = this.preparo;
-    if (this.tabela != null) {
-      data['tabela'] = this.tabela.toJson();
+    data['cooking'] = this.cooking;
+    data['meal'] = this.meal;
+    if (this.nutrition != null) {
+      data['nutrition'] = this.nutrition.toJson();
     }
     return data;
   }
 }
 
-class Tabela {
-  double calorias;
-  double carboidrato;
-  double fibra;
-  double gordura;
-  double proteina;
+class Nutrition {
+  double calories;
+  double carbohydrate;
+  double fiber;
+  double fat;
+  double protein;
 
-  Tabela({
-    this.calorias,
-    this.carboidrato,
-    this.fibra,
-    this.gordura,
-    this.proteina,
-  });
+  Nutrition(
+      {this.calories, this.carbohydrate, this.fiber, this.fat, this.protein});
 
-  Tabela.fromJson(Map<String, dynamic> json) {
-    calorias = json['calorias'];
-    carboidrato = json['carboidrato'];
-    fibra = json['fibra'];
-    gordura = json['gordura'];
-    proteina = json['proteina'];
+  Nutrition.fromJson(Map<String, dynamic> json) {
+    calories = json['calories'];
+    carbohydrate = json['carbohydrate'];
+    fiber = json['fiber'];
+    fat = json['fat'];
+    protein = json['protein'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['calorias'] = this.calorias;
-    data['carboidrato'] = this.carboidrato;
-    data['fibra'] = this.fibra;
-    data['gordura'] = this.gordura;
-    data['proteina'] = this.proteina;
+    data['calories'] = this.calories;
+    data['carbohydrate'] = this.carbohydrate;
+    data['fiber'] = this.fiber;
+    data['fat'] = this.fat;
+    data['protein'] = this.protein;
     return data;
   }
 }

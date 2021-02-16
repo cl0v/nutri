@@ -2,10 +2,12 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/data/repositories/food_repository.dart';
 
 class HomeController extends GetxController {
-  // var foodList = <FoodModel>[].obs;
+  var _mealList = <MealModel>[].obs;
+//TODO: Receber a lista de meal
   List<FoodModel> foodList = fList;
 
   final FoodRepository foodRepository;
