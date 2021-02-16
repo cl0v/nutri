@@ -10,18 +10,8 @@ main() {
     var list = await repository.loadFoodList();
     expect(list.first.title, f1.title);
   });
-  test('Creating map of prefs foods onRatingTapped', () async {
-    FoodRepository repository = FoodRepository(
-      provider: FoodProvider()
-    );
-    var list = await repository.loadFoodList();
-    var cafe = list[list.indexWhere((element) => element.prefs == "cafe")];
-    // controller.onRatingTapped(cafe, 4.0);
-    // var prefs = controller.foodPrefs;
-    // expect(
-    //   prefs, foodPrefs
-    // );
-  }, skip: true);
+
+  test('Try mealModel', () {});
 }
 
 Map<String, int> foodPrefs = {"cafe": 4};

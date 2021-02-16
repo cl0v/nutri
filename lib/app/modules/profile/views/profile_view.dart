@@ -57,7 +57,6 @@ class ProfileView extends GetView<ProfileController> {
                       //   widthFactor: 1,
                       //   child: Icon(Icons.exit_to_app),
                       // ),
-                      //TODO: Juntar tudo e jogar em uma nested nav page( botar apenar um card perfil>(informacoes pesosais etc))
                       title: Text(
                           '${controller.user.toMap().keys.toList()[index].toUpperCase()}'),
                       subtitle: Text(
@@ -70,7 +69,7 @@ class ProfileView extends GetView<ProfileController> {
                   child: ListTile(
                     // dense: true,
                     onTap: () {
-                      //TODO:Implement tile
+                      
                     },
                     title: Text('Ajuda'),
                     trailing: Icon(Icons.help),
@@ -80,7 +79,6 @@ class ProfileView extends GetView<ProfileController> {
                   child: ListTile(
                     // dense: true,
                     onTap: () {
-                      //TODO:Implement tile
                     },
                     title: Text('Configurações'),
                     trailing: Icon(Icons.settings),
@@ -89,7 +87,6 @@ class ProfileView extends GetView<ProfileController> {
                 Card(
                   child: ListTile(
                     onTap: () {
-                      //TODO:Implement tile
                     },
                     title: Text('Sair'),
                     trailing: Icon(Icons.exit_to_app_sharp),

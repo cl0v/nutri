@@ -22,9 +22,6 @@ class RegisterView extends GetView<RegisterController> {
               fit: BoxFit.cover,
             ),
           ),
-          // SafeArea(
-          //   minimum: EdgeInsets.symmetric(vertical: 128),
-            // child: 
             Center(
               child: Container(
                 height: 450,
@@ -60,7 +57,7 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                     TextFormField(
                       validator: (s) {
-                        if (!GetUtils.isEmail(s)) return 'Email incorreto';
+                        if (!GetUtils.isEmail(s)) return 'Por favor insira um email valido';
                         return null;
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -111,7 +108,7 @@ class RegisterView extends GetView<RegisterController> {
                 ),
               ),
             ),
-          // ),
+          
         ],
       ),
     );

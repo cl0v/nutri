@@ -8,4 +8,14 @@ class MealModel {
     this.meal,
     this.food,
   });
+
+  static List<String> mealList = [
+    "breakfast",
+    "brunch",
+    "elevenses",
+    "lunch",
+    "tea",
+    "supper",
+    "dinner",
+  ];
 }

@@ -1,43 +1,33 @@
 [
     {
-        "question": "De onde vem a sua comida",
-        "prefs": "foodIncome",
+        "question": "Qual a sua pressão arterial",
+        "prefs": "pression",
         "options": [
-            "Eu cozinho",
-            "Costumo comer fora",
-            "Alguem cozinha",
-            "Outro"
+            "Pressão Normal (Saudável)",
+            "Pressão Alta (Hipertensão)",
+            "Pressão Baixa (Hipotensão)",
+            "Não sei"
         ]
     },
     {
         "question": "Você tem diabetes?",
         "prefs": "diabetes",
         "options": [
-            "Sim",
             "Não",
-            "Não sei",
-            "Não responder"
+            "Diabetes Tipo 1",
+            "Diabetes Tipo 2",
+            "Não sei"
         ]
     },
     {
-        "question": "Você tem problemas de pressão",
-        "prefs": "pressao",
+        "question": "Você faz atividade física?",
+        "prefs": "exercice",
         "options": [
-            "Sim, pressão alta",
-            "Sim, pressão baixa",
-            "Não",
-            "Não sei"
+            "Sim, um pouco",
+            "Sim, normal",
+            "Sim, com intensidade",
+            "Não"
         ],
         "answer_index": 2
-    },
-    {
-        "question": "Já fez alguma dessas dietas?",
-        "prefs": "diets",
-        "options": [
-            "Dieta Low Carb",
-            "Dieta Low Fat",
-            "Apenas jejum intermitente",
-            "Nenhuma"
-        ]
     }
 ]

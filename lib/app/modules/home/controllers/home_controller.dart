@@ -23,7 +23,7 @@ class HomeController extends GetxController {
   }
 
   fetchFoodList() async {
-    // foodList.assignAll(await foodRepository.loadFoodList());
+    // _mealList.assignAll(await foodRepository.loadFoodList());
   }
 
   onDonePressed() {

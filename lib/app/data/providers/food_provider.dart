@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/food_rating_card_model.dart';
+import 'package:nutri/app/data/model/meal_model.dart';
 
 const jsonPath = 'assets/jsons/food_data.json';
 
@@ -32,6 +33,12 @@ class FoodProvider {
         .toList();
     return foodRatinList;
   }
+
+  Future<List<MealModel>> loadMeals() async {
+    var foodList = await loadFoodList(); //TODO: Alterar isso
+    return foodList.map((food) => MealModel(meal: food.meal.first, food: food)).toList();
+  }
+
 
   String getPreparoFormated(List<String> prep) {
     var a = StringBuffer();
