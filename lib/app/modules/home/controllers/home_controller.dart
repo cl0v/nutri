@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
@@ -11,6 +12,8 @@ class HomeController extends GetxController {
 
   HomeController({@required this.foodRepository});
 
+  CarouselController c = CarouselController();
+
   @override
   void onInit() {
     super.onInit();
@@ -19,6 +22,15 @@ class HomeController extends GetxController {
 
   fetchFoodList() async {
     // foodList.assignAll(await foodRepository.loadFoodList());
+  }
+
+  onDonePressed() {
+    //TODO: Implement onDonePressed
+    c.nextPage();
+  }
+
+  onInfoPressed(){
+    //TODO: Implement on card info pressed
   }
   // @override
   // void onReady() {}
@@ -34,7 +46,7 @@ List<FoodModel> fList = [
         'https://i.pinimg.com/474x/e2/fe/5c/e2fe5c199feb50e474ce4f2c98c5274b.jpg',
     // texto: 'Café da manhã',
 
-    title: 'Café pretoao',
+    title: 'Café preto',
   ),
   FoodModel(
     img:

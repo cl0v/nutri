@@ -6,12 +6,17 @@ import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/constants.dart';
 
 class FoodCard extends StatelessWidget {
-  const FoodCard(
-      {this.food, this.converter, @required this.onRatingTapped});
+  const FoodCard({
+    this.food,
+    this.converter,
+    @required this.onRatingTapped,
+  });
 
-  final FoodModel food;
+  final FoodModel food; 
+  
   final Function(List<String>) converter;
   final Function(FoodModel, double) onRatingTapped;
+
 
   @override
   Widget build(BuildContext context) {
