@@ -15,5 +15,5 @@ class UserPreferencesRepository {
   void setFoodsPrefs(Map<String, int> foodPref) =>
       provider.setFoodsPrefs(foodPref);
       
-  Future<Map<String, int>> getFoodPrefs() => provider.getFoodsPrefs();
+  getFoodPrefs() => provider.getFoodsPrefs();
 }

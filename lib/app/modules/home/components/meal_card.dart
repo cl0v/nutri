@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/data/model/meal_model.dart';
+import 'package:nutri/app/routes/app_pages.dart';
 import 'package:nutri/constants.dart';
 
 // TODO: Criar botoes que quando a pessoa toca, remove a imagem da lista
 class MealCard extends StatelessWidget {
   final Function onConfirmedPressed;
-  final FoodModel food;
+  final MealModel meal;
 
   //TODO: Modificar para meal(vai ter um componente food)
   /*
@@ -13,84 +16,86 @@ class MealCard extends StatelessWidget {
   */
   //TODO: Create animate to paint everything with white
 
-  const MealCard({this.onConfirmedPressed, this.food});
+  const MealCard({this.onConfirmedPressed, this.meal});
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          margin: EdgeInsets.all(4.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                image: DecorationImage(
-                  image: NetworkImage(food.img), //Trocar por ASSETIMAGE
-                  fit: BoxFit.cover,
+    return Container(
+      margin: EdgeInsets.all(4.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            image: DecorationImage(
+              image: AssetImage(meal.food.img),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(
+                  left: 4,
+                  right: 4,
+                  bottom: 0,
+                  top: 2,
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(
-                      left: 4,
-                      right: 4,
-                      bottom: 0,
-                      top: 2,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.3),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15),
-                      ),
-                    ),
-                    //TODO: Adicionar botao de informacoes Icon.info
-                    //TODO: Modificar os botoes concluido e 'passei'
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.3),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                ),
+                //TODO: Adicionar botao de informacoes Icon.info
+                //TODO: Modificar os botoes concluido e 'passei'
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
                       children: [
                         Text(
-                          'Café da manhã:',
+                          meal.meal,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          ' • ${food.title}',
-                          style: TextStyle(
+                        Spacer(),
+                        IconButton(
+                          icon: Icon(
+                            Icons.info,
                             color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
                           ),
-                        ),
-                        MealCardButtons(onConfirmedPressed: onConfirmedPressed),
+                          onPressed: () {
+                            print('so pode ser brinks');
+                          },
+                        )
                       ],
                     ),
-                  ),
-                ],
+                    Text(
+                      '   • ${meal.food.title}',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    MealCardButtons(onConfirmedPressed: onConfirmedPressed),
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
-        Align(
-          alignment: Alignment.topRight,
-          child: IconButton(
-            icon: Icon(
-              Icons.info,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
@@ -131,12 +136,13 @@ class MealCardButtons extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: RaisedButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(Routes.FOOD_SWIPE);
+              },
               child: Text('Trocar'),
               // icon: Icon(Icons.clear,),
             ),
           ),
-
           // IconButton(icon: Icon(Icons.replay_outlined),onPressed: (),),
           ButtonTheme(
             height: 30,

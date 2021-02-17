@@ -42,3 +42,8 @@ var theme = ThemeData(
     ),
   ),
 );
+
+
+/*
+Definir prato principal + acompanhamento
+*/

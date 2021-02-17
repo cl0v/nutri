@@ -36,9 +36,10 @@ class FoodProvider {
 
   Future<List<MealModel>> loadMeals() async {
     var foodList = await loadFoodList(); //TODO: Alterar isso
-    return foodList.map((food) => MealModel(meal: food.meal.first, food: food)).toList();
+    return foodList
+        .map((food) => MealModel(meal: 'Café da manha', food: food)) //Temp
+        .toList();
   }
-
 
   String getPreparoFormated(List<String> prep) {
     var a = StringBuffer();

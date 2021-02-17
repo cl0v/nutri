@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/food_rating_card_model.dart';
 import 'package:nutri/app/data/repositories/food_repository.dart';
 import 'package:nutri/app/data/repositories/user_preferences_repository.dart';
@@ -10,8 +9,10 @@ class FoodSwipeController extends GetxController {
   final UserPreferencesRepository userPreferencesRepository;
   final FoodRepository foodRepository;
 
-  FoodSwipeController(
-      {this.userPreferencesRepository, @required this.foodRepository});
+  FoodSwipeController({
+    this.userPreferencesRepository,
+    @required this.foodRepository,
+  });
 
   RxList<FoodRatingCardModel> _foodList = <FoodRatingCardModel>[].obs;
   List<FoodRatingCardModel> get foodList => _foodList;
@@ -24,6 +25,7 @@ class FoodSwipeController extends GetxController {
 
   @override
   void onInit() {
+    //TODO: Receber os argumentos Get.argument(origem e objetivo (Trocar comida, trocar cardapio, etc))
     super.onInit();
     _fetchFoodsAvailable();
     pageController = PageController(viewportFraction: 0.8)
@@ -33,27 +35,31 @@ class FoodSwipeController extends GetxController {
   }
 
   onSkipPressed() {
-    savePrefs();
     Get.offNamed(Routes.HOME);
-    //Possivelmente trocar para botao salvar e o usuário salvara as preferencias
     //TODO: Implement onSkipPressed
   }
+
+
 
   _fetchFoodsAvailable() async {
     _foodList.assignAll(await foodRepository.loadAvailableFoods());
   }
 
-//TODO: Quando o usuario clica em alguma das opçoes de voto, a imagem deverá sumir e o valor fica salvo
+  //TODO: Fazer com que a food swipe informe para quando sera as refeicoes(Semana, Cafe da manha HOJE, etc)
 
- 
-
-  void onRatingTapped(food, rating) {
+  void onRatingTapped(FoodRatingCardModel food, double rating) {
     foodPrefs[food.prefs] = rating.round();
+    if (pageController.page.round() == foodList.length - 1) {
+      _savePrefs();
+      Get.toNamed(Routes.HOME);
+    }
+    pageController.nextPage(
+        duration: Duration(milliseconds: 100), curve: Curves.ease);
+    //TODO: Next image
   }
 
-  void savePrefs() {
+  void _savePrefs() {
     userPreferencesRepository.setFoodsPrefs(foodPrefs);
-    //TODO: Implement savePrefs
   }
 
   @override

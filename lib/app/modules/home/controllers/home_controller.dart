@@ -1,14 +1,28 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:nutri/app/data/model/extras_model.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/data/repositories/food_repository.dart';
 
 class HomeController extends GetxController {
-  var _mealList = <MealModel>[].obs;
-//TODO: Receber a lista de meal
+  RxList<MealModel> _mealList = <MealModel>[].obs;
+  List<MealModel> get mealList => _mealList;
+
+// TODO: Receber a lista de extras
+// TODO: Adicionar animaçao para quando tocar no acompanhamento
+
   List<FoodModel> foodList = fList;
+
+  var extras = <ExtraModel>[
+    ExtraModel(food: fList[1], amount: 2, unidade: 'unidades'),
+    ExtraModel(food: fList[0], amount: 1, unidade: 'chícara'),
+    ExtraModel(food: fList[2], amount: 3, unidade: 'porções'),
+    ExtraModel(food: fList[0], amount: 1, unidade: 'chícara'),
+    ExtraModel(food: fList[2], amount: 3, unidade: 'porções'),
+    ExtraModel(food: fList[1], amount: 2, unidade: 'unidades'),
+  ];
 
   final FoodRepository foodRepository;
 
@@ -23,7 +37,11 @@ class HomeController extends GetxController {
   }
 
   fetchFoodList() async {
-    // _mealList.assignAll(await foodRepository.loadFoodList());
+    _mealList.assignAll(await foodRepository.loadMeals());
+  }
+
+  onExtraTapped(ExtraModel ex) {
+    //  TODO: Implement onExtra Tapped
   }
 
   onDonePressed() {
@@ -31,7 +49,7 @@ class HomeController extends GetxController {
     c.nextPage();
   }
 
-  onInfoPressed(){
+  onInfoPressed() {
     //TODO: Implement on card info pressed
   }
   // @override

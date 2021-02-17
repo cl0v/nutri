@@ -1,7 +1,7 @@
 [
     {
         "question": "Qual a sua pressão arterial",
-        "prefs": "pression",
+        "prefs": "q_pression",
         "options": [
             "Pressão Normal (Saudável)",
             "Pressão Alta (Hipertensão)",
@@ -11,7 +11,7 @@
     },
     {
         "question": "Você tem diabetes?",
-        "prefs": "diabetes",
+        "prefs": "q_diabetes",
         "options": [
             "Não",
             "Diabetes Tipo 1",
@@ -21,7 +21,7 @@
     },
     {
         "question": "Você faz atividade física?",
-        "prefs": "exercice",
+        "prefs": "q_exercice",
         "options": [
             "Sim, um pouco",
             "Sim, normal",
