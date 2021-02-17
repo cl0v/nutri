@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:nutri/app/data/model/food_model.dart';
-import 'package:nutri/app/data/model/food_rating_card_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 
 const jsonPath = 'assets/jsons/food_data.json';
@@ -19,10 +18,10 @@ class FoodProvider {
     return jsonList.map((e) => FoodModel.fromJson(e)).toList();
   }
 
-  Future<List<FoodRatingCardModel>> loadAvailableFoods() async {
+  Future<List<FoodModel>> loadAvailableFoods() async {
     List<FoodModel> foodList = await loadFoodList();
     return foodList.map(
-      (food) => FoodRatingCardModel(
+      (food) => FoodModel(
           img: food.img,
           title: food.title,
           prefs: food.prefs,

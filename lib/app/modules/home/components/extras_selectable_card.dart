@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/data/model/extras_model.dart';
+import 'package:nutri/app/data/model/extras_card_model.dart';
 import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 
 class ExtrasSelectableCard extends StatelessWidget {
-  final ExtraModel extra;
+  final ExtraCardModel extra;
   final int index;
   final VoidCallback onTap;
 
@@ -59,7 +59,7 @@ class ExtrasSelectableCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  ExtraModel.unidadeToString(extra.unidade, extra.amount),
+                  ExtraCardModel.unidadeToString(extra.unidade, extra.amount),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 12,

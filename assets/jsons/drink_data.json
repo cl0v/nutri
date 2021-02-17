@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Café Preto",
+    "img": "assets/images/foods/café preto.jpg",
+    "desc": "Lembre-se de sempre adoçar com adoçante (Recomendo Stevia)."
+  },
+  {
+    "title": "Chá",
+    "img": "assets/images/foods/chá.jpg",
+    "desc": "Lembre-se de sempre adoçar com adoçante (Recomendo Stevia)."
+  },
+  {
+    "title": "Refrigerante sem açucar",
+    "img": "assets/images/foods/refrigerante sem açucar.jpg",
+    "desc": "Sim, você pode tomar refrigerante, desde que não tenha açucar."
+  }
+]

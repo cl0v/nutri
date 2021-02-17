@@ -1,11 +1,11 @@
 import 'package:nutri/app/data/model/food_model.dart';
 
-class ExtraModel {
+class ExtraCardModel {
   final FoodModel food;
   final int amount; //Provavelmente trocar
   final UnidadeType unidade;
 
-  ExtraModel({
+  ExtraCardModel({
     this.food,
     this.amount,
     this.unidade,

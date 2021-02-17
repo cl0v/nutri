@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/data/model/extras_model.dart';
+import 'package:nutri/app/data/model/extras_card_model.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/data/repositories/food_repository.dart';
@@ -14,16 +14,16 @@ class HomeController extends GetxController {
 
   List<FoodModel> foodList = fList;
 
-  var extras = <ExtraModel>[
-    ExtraModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
-    ExtraModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
-    ExtraModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
-    ExtraModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
-    ExtraModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
-    ExtraModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
-    ExtraModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
-    ExtraModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
-    ExtraModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
+  var extras = <ExtraCardModel>[
+    ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
+    ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
+    ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
+    ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
+    ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
+    ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
+    ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
+    ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
+    ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
   ];
 
   final FoodRepository foodRepository;
@@ -61,7 +61,7 @@ class HomeController extends GetxController {
     return false;
   }
 
-  onExtraTapped(ExtraModel extra, int idx) {
+  onExtraTapped(ExtraCardModel extra, int idx) {
     if (!_selectedExtrasList.contains(idx) && _selectedExtrasList.length < 3)
       _selectedExtrasList.add(idx);
     else

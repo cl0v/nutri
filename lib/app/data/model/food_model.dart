@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class FoodModel {
   String title;
   String prefs;
@@ -7,17 +5,17 @@ class FoodModel {
   String desc;
   //TODO: Add PE
   //enum
-  List<CookingType> cooking;
+  // List<CookingType> cooking;
   //enum
-  List<MealType> meal;
+  // List<MealType> meal;
 
   FoodModel({
     this.title,
     this.prefs,
     this.img,
     this.desc,
-    this.cooking,
-    this.meal,
+    // this.cooking,
+    // this.meal,
   });
 
   FoodModel.fromJson(Map<String, dynamic> json) {
@@ -25,8 +23,8 @@ class FoodModel {
     prefs = json['prefs'];
     img = json['img'];
     desc = json['desc'];
-    cooking = getCooking(json['cooking']); //TODO: Esse cara é um int -> enum
-    meal = getMeal(json['meal']);
+    // cooking = getCooking(json['cooking']); //TODO: Esse cara é um int -> enum
+    // meal = getMeal(json['meal']);
   }
 
   Map<String, dynamic> toJson() {
@@ -35,8 +33,8 @@ class FoodModel {
     data['prefs'] = this.prefs;
     data['img'] = this.img;
     data['desc'] = this.desc;
-    data['cooking'] = this.cooking;
-    data['meal'] = this.meal;
+    // data['cooking'] = this.cooking;
+    // data['meal'] = this.meal;
     return data;
   }
 

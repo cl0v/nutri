@@ -1,4 +1,4 @@
-import 'package:nutri/app/data/model/extras_model.dart';
+import 'package:nutri/app/data/model/extras_card_model.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 
 class MealModel {
@@ -6,7 +6,7 @@ class MealModel {
   //enum
   MealType meal;
   FoodModel food;
-  List<ExtraModel> extras;
+  List<ExtraCardModel> extras;
 
   //TODO: (123) val.toString().split("").forEach((val) => print(val));
 
@@ -18,7 +18,7 @@ class MealModel {
 
   factory MealModel.fromFoodModel(FoodModel f) {
     return MealModel(
-      meal: f.meal.first, //TODO: Decidir quando será a refeiçao
+      // meal: f.meal.first, //TODO: Decidir quando será a refeiçao
       food: f, 
       extras: [],
     );

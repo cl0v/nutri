@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:nutri/app/data/model/food_rating_card_model.dart';
+import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/constants.dart';
 
 class FoodRatingCard extends StatelessWidget {
-  final FoodRatingCardModel food;
-  final Function(FoodRatingCardModel, double) onRatingTapped;
+  final FoodModel food;
+  final Function(FoodModel, double) onRatingTapped;
 
   const FoodRatingCard({
     this.food,

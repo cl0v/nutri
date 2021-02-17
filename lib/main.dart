@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import 'app/routes/app_pages.dart';
-
+//TODO: Adicionar FAQ na appbar da home iconbtn icone interrogacao
+//TODO: Delete old jsons
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 

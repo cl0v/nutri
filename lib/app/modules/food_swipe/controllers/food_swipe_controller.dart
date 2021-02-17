@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/data/model/food_rating_card_model.dart';
+import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/repositories/food_repository.dart';
 import 'package:nutri/app/data/repositories/user_preferences_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
@@ -14,8 +14,8 @@ class FoodSwipeController extends GetxController {
     @required this.foodRepository,
   });
 
-  RxList<FoodRatingCardModel> _foodList = <FoodRatingCardModel>[].obs;
-  List<FoodRatingCardModel> get foodList => _foodList;
+  RxList<FoodModel> _foodList = <FoodModel>[].obs;
+  List<FoodModel> get foodList => _foodList;
 
   PageController pageController;
   final _currentPageValue = 0.0.obs;
@@ -47,7 +47,7 @@ class FoodSwipeController extends GetxController {
 
   //TODO: Fazer com que a food swipe informe para quando sera as refeicoes(Semana, Cafe da manha HOJE, etc)
 
-  void onRatingTapped(FoodRatingCardModel food, double rating) {
+  void onRatingTapped(FoodModel food, double rating) {
     foodPrefs[food.prefs] = rating.round();
     if (pageController.page.round() == foodList.length - 1) {
       _savePrefs();
