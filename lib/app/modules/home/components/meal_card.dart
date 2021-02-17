@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 import 'package:nutri/constants.dart';
@@ -59,7 +58,7 @@ class MealCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          meal.meal,
+                          MealModel.getTranslatedMeal(meal.meal),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
@@ -121,26 +120,30 @@ class MealCardButtons extends StatelessWidget {
             height: 30,
             buttonColor: kRedColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                bottomLeft: Radius.circular(15),
+              ),
             ),
-            child: RaisedButton(
-              onPressed: () {},
-              child: Text('Passei'),
-              // icon: Icon(Icons.clear,),
+            child: Expanded(
+              child: RaisedButton(
+                onPressed: () {},
+                child: Text('Passei'),
+                // icon: Icon(Icons.clear,),
+              ),
             ),
           ),
           ButtonTheme(
             height: 30,
             buttonColor: kGrayColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: RaisedButton(
-              onPressed: () {
-                Get.toNamed(Routes.FOOD_SWIPE);
-              },
-              child: Text('Trocar'),
-              // icon: Icon(Icons.clear,),
+            child: Expanded(
+              child: RaisedButton(
+                onPressed: () {
+                  Get.toNamed(Routes.FOOD_SWIPE);
+                },
+                child: Text('Trocar'),
+                // icon: Icon(Icons.clear,),
+              ),
             ),
           ),
           // IconButton(icon: Icon(Icons.replay_outlined),onPressed: (),),
@@ -148,14 +151,19 @@ class MealCardButtons extends StatelessWidget {
             height: 30,
             buttonColor: kGreenColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(15),
+                bottomRight: Radius.circular(15),
+              ),
             ),
-            child: RaisedButton(
-              onPressed: onConfirmedPressed,
-              child: Text('Concluído'),
-              // icon: Icon(
-              //   Icons.check,
-              // ),
+            child: Expanded(
+              child: RaisedButton(
+                onPressed: onConfirmedPressed,
+                child: Text('Concluído'),
+                // icon: Icon(
+                //   Icons.check,
+                // ),
+              ),
             ),
           ),
         ],

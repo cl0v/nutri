@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+//TODO: Criar usuario
 
 class UserModel {
   final String name;
@@ -9,7 +9,7 @@ class UserModel {
   //enum
   final Goal goal;
   //enum
-  final Intensity intensity; //TODO: Remover tudo daqui e passar para as prefs
+  final Intensity intensity;
   final bool diabetes;
   final bool medications;
   final bool hypertensive;

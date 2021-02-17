@@ -10,8 +10,7 @@ class HomeController extends GetxController {
   RxList<MealModel> _mealList = <MealModel>[].obs;
   List<MealModel> get mealList => _mealList;
 
-// TODO: Receber a lista de extras
-// TODO: Adicionar animaçao para quando tocar no acompanhamento
+// TODO: Receber a lista de extras por reatividade
 
   List<FoodModel> foodList = fList;
 
@@ -22,6 +21,9 @@ class HomeController extends GetxController {
     ExtraModel(food: fList[0], amount: 1, unidade: 'chícara'),
     ExtraModel(food: fList[2], amount: 3, unidade: 'porções'),
     ExtraModel(food: fList[1], amount: 2, unidade: 'unidades'),
+    ExtraModel(food: fList[2], amount: 3, unidade: 'porções'),
+    ExtraModel(food: fList[1], amount: 2, unidade: 'unidades'),
+    ExtraModel(food: fList[0], amount: 1, unidade: 'chícara'),
   ];
 
   final FoodRepository foodRepository;
@@ -33,15 +35,39 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchFoodList();
+    _fetchFoodList();
   }
 
-  fetchFoodList() async {
+  _fetchFoodList() async {
     _mealList.assignAll(await foodRepository.loadMeals());
   }
 
-  onExtraTapped(ExtraModel ex) {
-    //  TODO: Implement onExtra Tapped
+  _fetchMeal() {
+    //TODO: Implementar para fazer com que a meal seja uma lista de acompanhamentos + a comida principal
+  }
+
+  final _isSelected = false.obs;
+  bool get isSelected => _isSelected.value;
+
+  final _index = 0.obs;
+  int get index => _index.value;
+
+  final _selectedExtrasList = <int>[].obs;
+
+  getSelectedIndex(int idx) {
+    if (_selectedExtrasList.contains(idx)) {
+      return true;
+    }
+    return false;
+  }
+
+  onExtraTapped(ExtraModel extra, int idx) {
+    if (!_selectedExtrasList.contains(idx) && _selectedExtrasList.length < 3)
+      _selectedExtrasList.add(idx);
+    else
+      _selectedExtrasList.remove(idx);
+    print(_selectedExtrasList);
+    //TODO: Criar update no cardapio final(no icone i e na logica do calculo de proteinas);
   }
 
   onDonePressed() {

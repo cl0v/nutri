@@ -18,82 +18,43 @@ class Option extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => InkWell(
-          onTap: onTap,
-          child: Container(
-            margin: EdgeInsets.only(top: kDefaultPadding),
-            padding: EdgeInsets.all(kDefaultPadding),
-            decoration: BoxDecoration(
-              border: Border.all(color: controller.getTheRightColor(index)),
-              borderRadius: BorderRadius.circular(15),
-              // color: kGreenColor
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "$text",
-                  style: TextStyle(
-                      color: controller.getTheRightColor(index), fontSize: 16),
-                ),
-                Container(
-                  height: 26,
-                  width: 26,
-                  decoration: BoxDecoration(
-                    color: controller.getTheRightColor(index) == kGrayColor
-                        ? Colors.transparent
-                        : controller.getTheRightColor(index),
-                    borderRadius: BorderRadius.circular(50),
-                    border:
-                        Border.all(color: controller.getTheRightColor(index)),
-                  ),
-                  child: controller.getTheRightColor(index) == kGrayColor
-                      ? null
-                      : Icon(Icons.done, size: 16),
-                )
-              ],
-            ),
+    return Obx(
+      () => InkWell(
+        onTap: onTap,
+        child: Container(
+          margin: EdgeInsets.only(top: kDefaultPadding),
+          padding: EdgeInsets.all(kDefaultPadding),
+          decoration: BoxDecoration(
+            border: Border.all(color: controller.getTheRightColor(index)),
+            borderRadius: BorderRadius.circular(15),
+            // color: kGreenColor
           ),
-        ));
-
-    // return GetBuilder<QuestionsController>(
-    //     init: QuestionsController(),
-    //     builder: (controller) {
-    //       return InkWell(
-    //         onTap: onTap,
-    //         child: Container(
-    //           margin: EdgeInsets.only(top: kDefaultPadding),
-    //           padding: EdgeInsets.all(kDefaultPadding),
-    //           decoration: BoxDecoration(
-    //             border: Border.all(color: controller.getTheRightColor(index)),
-    //             borderRadius: BorderRadius.circular(15),
-    //             // color: kGreenColor
-    //           ),
-    //           child: Row(
-    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //             children: [
-    //               Text(
-    //                 "${index + 1}. $text",
-    //                 style: TextStyle(color: controller.getTheRightColor(index), fontSize: 16),
-    //               ),
-    //               Container(
-    //                 height: 26,
-    //                 width: 26,
-    //                 decoration: BoxDecoration(
-    //                   color: controller.getTheRightColor(index) == kGrayColor
-    //                       ? Colors.transparent
-    //                       : controller.getTheRightColor(index),
-    //                   borderRadius: BorderRadius.circular(50),
-    //                   border: Border.all(color: controller.getTheRightColor(index)),
-    //                 ),
-    //                 child: controller.getTheRightColor(index) == kGrayColor
-    //                     ? null
-    //                     : Icon(Icons.done, size: 16),
-    //               )
-    //             ],
-    //           ),
-    //         ),
-    //       );
-    //     });
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "$text",
+                style: TextStyle(
+                    color: controller.getTheRightColor(index), fontSize: 16),
+              ),
+              Container(
+                height: 26,
+                width: 26,
+                decoration: BoxDecoration(
+                  color: controller.getTheRightColor(index) == kGrayColor
+                      ? Colors.transparent
+                      : controller.getTheRightColor(index),
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(color: controller.getTheRightColor(index)),
+                ),
+                child: controller.getTheRightColor(index) == kGrayColor
+                    ? null
+                    : Icon(Icons.done, size: 16),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

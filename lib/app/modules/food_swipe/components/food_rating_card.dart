@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/food_rating_card_model.dart';
 import 'package:nutri/constants.dart';
 
