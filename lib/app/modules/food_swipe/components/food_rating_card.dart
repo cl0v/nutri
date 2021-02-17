@@ -55,7 +55,7 @@ class FoodRatingCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  food.prefs,
+                  food.desc,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 12,

@@ -1,13 +1,13 @@
 class FoodRatingCardModel {
   String img;
   String title;
-  String cooking;
   String prefs;
+  String desc;
 
   FoodRatingCardModel({
     this.img,
     this.title,
-    this.cooking,
     this.prefs,
+    this.desc,
   });
 }

@@ -21,22 +21,20 @@ class FoodProvider {
 
   Future<List<FoodRatingCardModel>> loadAvailableFoods() async {
     List<FoodModel> foodList = await loadFoodList();
-    var foodRatinList = foodList
-        .map(
-          (food) => FoodRatingCardModel(
-            cooking: getPreparoFormated(food.cooking),
-            img: food.img,
-            title: food.title,
-            prefs: food.prefs,
-          ),
-        )
-        .toList();
-    return foodRatinList;
+    return foodList.map(
+      (food) => FoodRatingCardModel(
+          img: food.img,
+          title: food.title,
+          prefs: food.prefs,
+          desc: food.desc,
+        ),
+    ).toList();
   }
 
-  Future<List<MealModel>> loadMeals() async {
-    var foodList = await loadFoodList(); //TODO: Alterar isso
+//TODO: Implementar sistema de decisao para quais refeições a pessoa deverá comer
 
+  Future<List<MealModel>> loadMeals() async {
+    var foodList = await loadFoodList();
     return foodList
         .map((food) => MealModel.fromFoodModel(food)) //Temp
         .toList();

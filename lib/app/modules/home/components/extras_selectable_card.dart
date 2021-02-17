@@ -59,7 +59,7 @@ class ExtrasSelectableCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  extra.unidade,
+                  ExtraModel.unidadeToString(extra.unidade, extra.amount),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 12,

@@ -1,0 +1,163 @@
+[
+  {
+    "title": "Peito de Frango",
+    "img": "assets/images/foods/peito de frango.jpg",
+    "prefs": "frango",
+    "desc" : "Peito de frango é uma alternativa excelente para perder peso e ganhar musculos.",
+    "meal": [
+      "lunch",
+      "tea",
+      "dinner"
+    ],
+    "cooking": [
+      "Cozido",
+      "Grelhado",
+      "Assado"
+    ],
+    "nutrition": {
+      "calories": 165.0,
+      "carbohydrate": 0.0,
+      "fiber": 0.0,
+      "fat": 3.6,
+      "protein": 31.0
+    }
+  },
+  {
+    "title": "Ovos",
+    "img": "assets/images/foods/ovo.jpg",
+    "prefs": "ovos",
+    "desc" : "Ovos, o segundo melhor alimento do mundo, rico em proteínas, coma quantos quiser",
+    "meal": [
+      "lunch",
+      "tea",
+      "dinner"
+    ],
+    "cooking": [
+      "Cozido",
+      "Frito"
+    ],
+    "nutrition": {
+      "calories": 155.0,
+      "carbohydrate": 1.1,
+      "fiber": 0.0,
+      "fat": 11.0,
+      "protein": 13.0
+    }
+  },
+  {
+    "title": "Brócolis",
+    "img": "assets/images/foods/brocolis.jpg",
+    "prefs": "brocolis",
+    "desc" : "Brócolis é ótimo para sua saúde",
+    "meal": [
+      "lunch",
+      "dinner"
+    ],
+    "cooking": [
+      "Cozido"
+    ],
+    "nutrition": {
+      "calories": 25.0,
+      "carbohydrate": 5.5,
+      "fiber": 3.4,
+      "fat": 0.2,
+      "protein": 2.1
+    }
+  },
+  {
+    "title": "Alface",
+    "img": "assets/images/foods/alface.jpg",
+    "prefs": "alface",
+    "desc" : "Folhas de alface são as alternativas muito saudáveis para seu prato",
+    "meal": [
+      "lunch",
+      "dinner"
+    ],
+    "cooking": [
+      "Cru"
+    ]
+  },
+  {
+    "title": "Espinafre",
+    "img": "assets/images/foods/espinafre.jpg",
+    "prefs": "espinafre",
+    "desc" : "Folhas de espinafre são as alternativas muito saudáveis para seu prato",
+    "meal": [
+      "lunch",
+      "dinner"
+    ],
+    "cooking": [
+      "Cozido"
+    ]
+  },
+  {
+    "title": "Tomate",
+    "img": "assets/images/foods/tomate.jpg",
+    "prefs": "tomate",
+    "desc" : "Um pouco de tomate é sempre bom, mas não abuse dessa fruta",
+    "meal": [
+      "lunch",
+      "dinner"
+    ],
+    "cooking": [
+      "Salada"
+    ]
+  },
+  {
+    "title": "Café Preto",
+    "prefs": "cafe",
+    "img": "assets/images/foods/cafe.jpg",
+    "desc" : "Lembre-se de sempre adoçar com adocante (Recomendo Stevia)",
+    "cooking": [
+      "Padrão"
+    ],
+    "meal": [
+      "breakfast"
+    ],
+    "nutrition": {
+      "calories": 0.0,
+      "carbohydrate": 0.0,
+      "fiber": 0.0,
+      "fat": 0.0,
+      "protein": 0.1
+    }
+  },
+  {
+    "title": "Chá",
+    "prefs": "cha",
+    "img": "assets/images/foods/cha.jpg",
+    "desc" : "Lembre-se de sempre adoçar com adocante (Recomendo Stevia)",
+    "cooking": [
+      "Padão"
+    ],
+    "meal": [
+      "breakfast"
+    ],
+    "nutrition": {
+      "calories": 1.0,
+      "carbohydrate": 0.2,
+      "fiber": 0.0,
+      "fat": 0.0,
+      "protein": 0.1
+    }
+  },
+  {
+    "title": "Refrigerante sem açucar",
+    "prefs": "soda",
+    "img": "assets/images/foods/soda.jpg",
+    "desc" : "Sim, você pode tomar refrigerante, desde que não tenha açucar",
+    "cooking": [
+      
+    ],
+    "meal": [
+      "breakfast"
+    ],
+    "nutrition": {
+      "calories": 0.0,
+      "carbohydrate": 0.0,
+      "fiber": 0.0,
+      "fat": 0.0,
+      "protein": 0.0
+    }
+  }
+]

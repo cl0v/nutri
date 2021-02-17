@@ -1,99 +1,74 @@
 [
   {
     "title": "Peito de Frango",
-    "img": "assets/images/foods/peito_de_frango_grelhado.jpg",
-    "prefs": "frango",
-    "meal": [
-      "lunch",
-      "tea",
-      "dinner"
-    ],
-    "cooking": [
-      "Cozido",
-      "Grelhado",
-      "Assado"
-    ],
-    "nutrition": {
-      "calories": 165.0,
-      "carbohydrate": 0.0,
-      "fiber": 0.0,
-      "fat": 3.6,
-      "protein": 31.0
-    }
+    "img": "assets/images/foods/peito de frango.jpg",
+    "prefs": "peito de frango",
+    "desc": "Peito de frango é uma alternativa excelente para perder peso e ganhar musculos.",
+    "meal": 346,
+    "cooking": 12
+  },
+  {
+    "title": "Brócolis",
+    "img": "assets/images/foods/brócolis.jpg",
+    "prefs": "brócolis",
+    "desc": "Brócolis é ótimo para sua saúde.",
+    "meal": 346,
+    "cooking": 2
   },
   {
     "title": "Ovos",
-    "img": "assets/images/foods/ovo_frito.jpg",
+    "img": "assets/images/foods/ovos.jpg",
     "prefs": "ovos",
-    "meal": [
-      "lunch",
-      "tea",
-      "dinner"
-    ],
-    "cooking": [
-      "Cozido",
-      "Frito"
-    ],
-    "nutrition": {
-      "calories": 155.0,
-      "carbohydrate": 1.1,
-      "fiber": 0.0,
-      "fat": 11.0,
-      "protein": 13.0
-    }
+    "desc": "Ovos, o segundo melhor alimento do mundo, rico em proteínas, coma quantos quiser.",
+    "meal": 346,
+    "cooking": 23
+  },
+  {
+    "title": "Alface",
+    "img": "assets/images/foods/alface.jpg",
+    "prefs": "alface",
+    "desc": "Folhas de alface são as alternativas muito saudáveis para seu prato.",
+    "meal": 36,
+    "cooking": 2
+  },
+  {
+    "title": "Espinafre",
+    "img": "assets/images/foods/espinafre.jpg",
+    "prefs": "espinafre",
+    "desc": "Folhas de espinafre são as alternativas muito saudáveis para seu prato.",
+    "meal": 36,
+    "cooking": 0
+  },
+  {
+    "title": "Tomate",
+    "img": "assets/images/foods/tomate.jpg",
+    "prefs": "tomate",
+    "desc": "Um pouco de tomate é sempre bom, mas não abuse dessa fruta",
+    "meal": 36,
+    "cooking": 0
   },
   {
     "title": "Café Preto",
-    "prefs": "cafe",
-    "img": "assets/images/foods/cafe_preto.jpg",
-    "cooking": [
-      "Padrão"
-    ],
-    "meal": [
-      "breakfast"
-    ],
-    "nutrition": {
-      "calories": 0.0,
-      "carbohydrate": 0.0,
-      "fiber": 0.0,
-      "fat": 0.0,
-      "protein": 0.1
-    }
+    "img": "assets/images/foods/café preto.jpg",
+    "prefs": "café preto",
+    "desc": "Lembre-se de sempre adoçar com adoçante (Recomendo Stevia).",
+    "meal": 0,
+    "cooking": 0
   },
   {
     "title": "Chá",
-    "prefs": "cha",
-    "img": "assets/images/foods/cha.jpg",
-    "cooking": [
-      "Padão"
-    ],
-    "meal": [
-      "breakfast"
-    ],
-    "nutrition": {
-      "calories": 1.0,
-      "carbohydrate": 0.2,
-      "fiber": 0.0,
-      "fat": 0.0,
-      "protein": 0.1
-    }
+    "img": "assets/images/foods/chá.jpg",
+    "prefs": "chá",
+    "desc": "Lembre-se de sempre adoçar com adoçante (Recomendo Stevia).",
+    "meal": 0,
+    "cooking": 0
   },
   {
     "title": "Refrigerante sem açucar",
-    "prefs": "soda",
-    "img": "assets/images/foods/soda.jpg",
-    "cooking": [
-      
-    ],
-    "meal": [
-      "breakfast"
-    ],
-    "nutrition": {
-      "calories": 0.0,
-      "carbohydrate": 0.0,
-      "fiber": 0.0,
-      "fat": 0.0,
-      "protein": 0.0
-    }
+    "img": "assets/images/foods/refrigerante sem açucar.jpg",
+    "prefs": "refrigerante sem açucar",
+    "desc": "Sim, você pode tomar refrigerante, desde que não tenha açucar.",
+    "meal": 0,
+    "cooking": 0
   }
 ]

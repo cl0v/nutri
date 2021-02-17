@@ -15,15 +15,15 @@ class HomeController extends GetxController {
   List<FoodModel> foodList = fList;
 
   var extras = <ExtraModel>[
-    ExtraModel(food: fList[1], amount: 2, unidade: 'unidades'),
-    ExtraModel(food: fList[0], amount: 1, unidade: 'chícara'),
-    ExtraModel(food: fList[2], amount: 3, unidade: 'porções'),
-    ExtraModel(food: fList[0], amount: 1, unidade: 'chícara'),
-    ExtraModel(food: fList[2], amount: 3, unidade: 'porções'),
-    ExtraModel(food: fList[1], amount: 2, unidade: 'unidades'),
-    ExtraModel(food: fList[2], amount: 3, unidade: 'porções'),
-    ExtraModel(food: fList[1], amount: 2, unidade: 'unidades'),
-    ExtraModel(food: fList[0], amount: 1, unidade: 'chícara'),
+    ExtraModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
+    ExtraModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
+    ExtraModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
+    ExtraModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
+    ExtraModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
+    ExtraModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
+    ExtraModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
+    ExtraModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
+    ExtraModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
   ];
 
   final FoodRepository foodRepository;

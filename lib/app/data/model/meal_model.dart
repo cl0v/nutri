@@ -2,10 +2,13 @@ import 'package:nutri/app/data/model/extras_model.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 
 class MealModel {
-  Meal meal; //Pode ser enum
+
+  //enum
+  MealType meal;
   FoodModel food;
   List<ExtraModel> extras;
-  //TODO: Lista de acompanhamentos
+
+  //TODO: (123) val.toString().split("").forEach((val) => print(val));
 
   MealModel({
     this.meal,
@@ -15,48 +18,27 @@ class MealModel {
 
   factory MealModel.fromFoodModel(FoodModel f) {
     return MealModel(
-      meal: setMeal(f.meal.first),
-      food: f, //TODO: Corrigir isso aq
+      meal: f.meal.first, //TODO: Decidir quando será a refeiçao
+      food: f, 
       extras: [],
     );
   }
 
-  static setMeal(String m) {
+  static getTranslatedMeal(MealType m) {
     switch (m) {
-      case "breakfast":
-        return Meal.breakfast;
-      case "brunch":
-        return Meal.brunch;
-      case "elevenses":
-        return Meal.elevenses;
-      case "lunch":
-        return Meal.lunch;
-      case "tea":
-        return Meal.tea;
-      case "supper":
-        return Meal.supper;
-      case "dinner":
-        return Meal.dinner;
-      default:
-        return null;
-    }
-  }
-
-  static getTranslatedMeal(Meal m) {
-    switch (m) {
-      case Meal.breakfast:
+      case MealType.breakfast:
         return "Café da manhã";
-      case Meal.brunch:
+      case MealType.brunch:
         return "brunch";
-      case Meal.elevenses:
+      case MealType.elevenses:
         return "elevenses";
-      case Meal.lunch:
+      case MealType.lunch:
         return "Almoço";
-      case Meal.tea:
+      case MealType.tea:
         return "Café da tarde";
-      case Meal.supper:
+      case MealType.supper:
         return "Jantar";
-      case Meal.dinner:
+      case MealType.dinner:
         return "Jantar";
 
       default:
@@ -64,26 +46,4 @@ class MealModel {
     }
   }
 
-  // static List<String> mealList = [
-  //   "breakfast",
-  //   "brunch",
-  //   "elevenses",
-  //   "lunch",
-  //   "tea",
-  //   "supper",
-  //   "dinner",
-  // ];
-
-  @override
-  String toString() => 'MealModel(meal: $meal)';
-}
-
-enum Meal {
-  breakfast,
-  brunch,
-  elevenses,
-  lunch,
-  tea,
-  supper,
-  dinner,
 }

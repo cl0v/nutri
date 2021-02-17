@@ -1,29 +1,32 @@
+import 'dart:convert';
+
 class FoodModel {
   String title;
   String prefs;
   String img;
-  List<String> cooking;
-  List<String> meal;
-  Nutrition nutrition;
+  String desc;
+  //TODO: Add PE
+  //enum
+  List<CookingType> cooking;
+  //enum
+  List<MealType> meal;
 
   FoodModel({
     this.title,
     this.prefs,
     this.img,
+    this.desc,
     this.cooking,
     this.meal,
-    this.nutrition,
   });
 
   FoodModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     prefs = json['prefs'];
     img = json['img'];
-    cooking = json['cooking'].cast<String>();
-    meal = json['meal'].cast<String>();
-    nutrition = json['nutrition'] != null
-        ? new Nutrition.fromJson(json['nutrition'])
-        : null;
+    desc = json['desc'];
+    cooking = getCooking(json['cooking']); //TODO: Esse cara é um int -> enum
+    meal = getMeal(json['meal']);
   }
 
   Map<String, dynamic> toJson() {
@@ -31,40 +34,35 @@ class FoodModel {
     data['title'] = this.title;
     data['prefs'] = this.prefs;
     data['img'] = this.img;
+    data['desc'] = this.desc;
     data['cooking'] = this.cooking;
     data['meal'] = this.meal;
-    if (this.nutrition != null) {
-      data['nutrition'] = this.nutrition.toJson();
-    }
     return data;
   }
+
+  List<CookingType> getCooking(int i) {
+    return i.toString().split("").map((String c) => CookingType.values[int.parse(c)]).toList();
+  }
+  
+  List<MealType> getMeal(int i) {
+    return i.toString().split("").map((String c) => MealType.values[int.parse(c)]).toList();
+  }
+
 }
 
-class Nutrition {
-  double calories;
-  double carbohydrate;
-  double fiber;
-  double fat;
-  double protein;
+enum MealType {
+  breakfast,
+  brunch,
+  elevenses,
+  lunch,
+  tea,
+  supper,
+  dinner,
+}
 
-  Nutrition(
-      {this.calories, this.carbohydrate, this.fiber, this.fat, this.protein});
-
-  Nutrition.fromJson(Map<String, dynamic> json) {
-    calories = json['calories'];
-    carbohydrate = json['carbohydrate'];
-    fiber = json['fiber'];
-    fat = json['fat'];
-    protein = json['protein'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['calories'] = this.calories;
-    data['carbohydrate'] = this.carbohydrate;
-    data['fiber'] = this.fiber;
-    data['fat'] = this.fat;
-    data['protein'] = this.protein;
-    return data;
-  }
+enum CookingType {
+  grelhado,
+  assado,
+  cozido,
+  frito,
 }
