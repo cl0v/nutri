@@ -14,16 +14,13 @@ class ExtraSelectableCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap
-      //TODO: Trocar a cor do item para verde com opacidade
-      ,
+      onTap: onTap,
       child: Container(
         margin: EdgeInsets.all(4.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
-            image: NetworkImage(
-              //TODO: Trocar para assets
+            image: AssetImage(
               extra.img,
             ),
             fit: BoxFit.cover,
@@ -41,8 +38,6 @@ class ExtraSelectableCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Center(
-                //   child:
                 Text(
                   extra.title,
                   textAlign: TextAlign.center,
@@ -65,7 +60,6 @@ class ExtraSelectableCard extends StatelessWidget {
                     fontSize: 12,
                   ),
                 ),
-                // ),
               ],
             ),
           ),

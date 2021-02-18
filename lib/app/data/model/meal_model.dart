@@ -5,7 +5,7 @@ class MealModel {
 
   //enum
   MealType meal;
-  FoodModel food;
+  FoodModel food; //TODO: BUG: Como o mealModel pede um foodmodel, nao posso colocar cafe, nem bebidas *
   List<ExtraModel> extras;
 
   MealModel({

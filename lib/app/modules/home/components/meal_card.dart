@@ -6,8 +6,8 @@ import 'package:nutri/constants.dart';
 
 // TODO: Criar botoes que quando a pessoa toca, remove a imagem da lista
 class MealCard extends StatelessWidget {
-  final Function onConfirmedPressed;
   final MealModel meal;
+  final VoidCallback onConfirmedPressed;
 
   //TODO: Modificar para meal(vai ter um componente food)
   /*

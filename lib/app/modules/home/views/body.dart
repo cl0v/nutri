@@ -31,37 +31,39 @@ class HomeBody extends GetView<HomeController> {
                     viewportFraction: 0.9,
                     enlargeCenterPage: true,
                   ),
-                  carouselController: controller.c,
+                  //TODO: Dar um jeito de saber quando o carrousel vai trocar
+                  carouselController: controller.carouselController,
                   items: controller.mealList
                       .map(
                         (meal) => MealCard(
                           meal: meal,
-                          onConfirmedPressed: controller.onDonePressed,
+                          onConfirmedPressed:()=> controller.onDonePressed(meal),
                         ),
                       )
                       .toList(),
                 ),
               ),
-              // Text(
-              //   'Selecione 3 acompanhamentos',
-              //   style: TextStyle(color: Colors.white),
-              // ),
-              // GridView.builder(
-              //   itemCount: controller.extras.length,
-              //   shrinkWrap: true,
-              //   scrollDirection: Axis.vertical,
-              //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //     crossAxisCount: 3,
-              //   ),
-              //   itemBuilder: (context, index) {
-              //     return ExtrasSelectableCard(
-              //       extra: controller.extras[index],
-              //       onTap: () => controller.onExtraTapped(
-              //           controller.extras[index], index),
-              //       index: index,
-              //     );
-              //   },
-              // ),
+              Text(
+                'Selecione 3 acompanhamentos',
+                style: TextStyle(color: Colors.white),
+              ),
+              Obx(
+                () => GridView.builder(
+                  itemCount: controller.extraList.length,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                  ),
+                  itemBuilder: (context, index) {
+                    return ExtraSelectableCard(
+                      extra: controller.extraList[index],
+                      onTap: () => controller.onExtraTapped(index),
+                      index: index,
+                    );
+                  },
+                ),
+              ),
               //TODO: Descomentar daqui pra cima para ativar os card de extra
 
 //TODO: Criar parte de card de ingredientes secundarios

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:nutri/app/data/model/extra_model.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/data/repositories/meal_repository.dart';
@@ -13,11 +14,11 @@ class HomeController extends GetxController {
   RxList<MealModel> _mealList = <MealModel>[].obs;
   List<MealModel> get mealList => _mealList;
 
+  CarouselController carouselController = CarouselController();
+
+  RxList<ExtraModel> _extraList = <ExtraModel>[].obs;
+  List<ExtraModel> get extraList => _extraList;
 // TODO: Receber a lista de extras por reatividade
-
-  List<FoodModel> foodList = fList;
-
-  CarouselController c = CarouselController();
 
   @override
   void onInit() {
@@ -28,10 +29,14 @@ class HomeController extends GetxController {
   //TODO: Implementar para fazer com que a meal seja uma lista de acompanhamentos + a comida principal
   _fetchMeals() async {
     //TODO: Implement _fetchMeals()
-    // _mealList.assignAll(await mealRepository.loadMealList());
+    _mealList.assignAll(await mealRepository.loadMeals());
+    _updateExtraList(_mealList.first.extras);
   }
 
-
+  _updateExtraList(List<ExtraModel> list) {
+    //TODO: BUG: Quando a pessoa rola sem apertar o botao, os extras nao atualizam
+    _extraList.assignAll(list);
+  }
 
   final _isSelected = false.obs;
   bool get isSelected => _isSelected.value;
@@ -56,9 +61,11 @@ class HomeController extends GetxController {
     //TODO: Criar update no cardapio final(no icone i e na logica do calculo de proteinas);
   }
 
-  onDonePressed() {
+  onDonePressed(MealModel meal) {
     //TODO: Implement onDonePressed
-    c.nextPage();
+    int idx = mealList.indexOf(meal);
+    _updateExtraList(mealList[idx + 1].extras);
+    carouselController.nextPage();
   }
 
   onInfoPressed() {
@@ -93,7 +100,6 @@ List<FoodModel> fList = [
     title: 'Carne com brocolis',
   ),
 ];
-
 
 /*
   var extras = <ExtraCardModel>[
