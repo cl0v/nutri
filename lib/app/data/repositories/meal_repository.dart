@@ -1,4 +1,3 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/data/providers/meal_provider.dart';
@@ -8,6 +7,8 @@ class MealRepository {
 
   MealRepository({@required this.provider});
 
-  Future<List<MealModel>> loadMeals() =>
-      provider.loadMeals();
+  Future<List<MealModel>> fetchMeals(int number) => provider.fetchMeals(number);
+
+  Future<List<MealModel>> buildMeal({int mealNumber, int foodNumber}) =>
+      provider.buildMeal(mealNumber, foodNumber);
 }

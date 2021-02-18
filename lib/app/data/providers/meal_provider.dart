@@ -1,31 +1,43 @@
 import 'package:nutri/app/data/model/extra_model.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
+import 'package:nutri/app/data/providers/extra_provider.dart';
+import 'package:nutri/app/data/providers/food_provider.dart';
+import 'package:nutri/app/data/repositories/extra_repository.dart';
+import 'package:nutri/app/data/repositories/food_repository.dart';
 
 class MealProvider {
   MealProvider();
 
-  Future<List<MealModel>> loadMeals() async {
-    await Future.delayed(Duration(seconds: 0));
-    var mockedList = [
-      MealModel(
-        extras: mockedExtras,
-        food: mockedFood,
-        meal: MealType.lunch,
+  //TODO: Escolher a melhor forma de organizar quais alimentos deverão aparecer;
+
+  FoodRepository _foodRepository = FoodRepository(provider: FoodProvider());
+  ExtraRepository _extraRepository = ExtraRepository(provider: ExtraProvider());
+
+//TODO: Separar em um provider helper ou coisa do tipo
+  buildMeal(int mealNumber, int foodNumber) {}
+
+  _fetchFoods() => _foodRepository.loadFoods();
+  _fetchSizedFoodList(amount) => _foodRepository.sizedFoodList(amount: amount);
+
+  _fetchExtras() => _extraRepository.loadExtras();
+  _fetchSizedExtraList(amount) => _extraRepository.sizedExtraList(amount: amount);
+
+  Future<List<MealModel>> fetchMeals(int number) async {
+    List foods = await _fetchSizedFoodList(number);
+    List extras = await _fetchSizedExtraList(number);
+    List meals = List<MealModel>();
+    foods.forEach(
+      (food) => meals.add(
+        MealModel(
+          food: food,
+          extras: extras,
+          meal: MealType.breakfast,
+        ),
       ),
-      MealModel(
-        extras: mockedExtras2,
-        food: mockedFood,
-        meal: MealType.breakfast,
-      ),
-      MealModel(
-        extras: mockedExtras,
-        food: mockedFood,
-        meal: MealType.dinner,
-      ),
-    ];
-    _sortMealListByMealOrder(mockedList);
-    return mockedList;
+    ); //entender como faz interable
+    _sortMealListByMealOrder(meals);
+    return meals;
   }
 
   _sortMealListByMealOrder(List<MealModel> m1) {

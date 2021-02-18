@@ -3,8 +3,8 @@ class ExtraModel {
   String title;
   String img;
   String desc;
-  //TODO: Implement unidade de medida(Tentar limitar a quantidade)
-  //TODO: Quantidade dos extras brocolis 2 unidades
+  //TODO: Implement unidade de medida comumente usada(Tentar limitar a quantidade)
+  //TODO: Quantidade dos extras (Ex: brocolis 2 unidades)
 
   ExtraModel({this.title, this.img, this.desc});
 

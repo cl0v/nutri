@@ -26,7 +26,7 @@ class HomeController extends GetxController {
   }
 
   _fetchMeals() async {
-    _mealList.assignAll(await mealRepository.loadMeals());
+    _mealList.assignAll(await mealRepository.fetchMeals(4));
     _updateExtraList(_mealList.first.extras);
   }
 

@@ -14,7 +14,7 @@ class QuestionsController extends GetxController {
     @required this.questionRepository,
   });
 
-  PageController _pageController;
+  PageController _pageController = PageController();
 
   PageController get pageController => this._pageController;
 
@@ -31,11 +31,10 @@ class QuestionsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _pageController = PageController();
-    setQuestionList();
+    _setQuestionList();
   }
 
-  setQuestionList() async {
+  _setQuestionList() async {
     _questions.assignAll(await questionRepository.loadQuestionList());
   }
 

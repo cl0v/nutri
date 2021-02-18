@@ -22,4 +22,17 @@ class DrinkModel {
     data['desc'] = this.desc;
     return data;
   }
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+  
+    return o is DrinkModel &&
+      o.title == title &&
+      o.img == img &&
+      o.desc == desc;
+  }
+
+  @override
+  int get hashCode => title.hashCode ^ img.hashCode ^ desc.hashCode;
 }

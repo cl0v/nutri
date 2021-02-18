@@ -36,24 +36,33 @@ class FoodModel {
     return data;
   }
 
-  List<CookingType> getCooking(int i) {
-    return i.toString().split("").map((String c) => CookingType.values[int.parse(c)]).toList();
-  }
+  // List<CookingType> getCooking(int i) {
+  //   return i.toString().split("").map((String c) => CookingType.values[int.parse(c)]).toList();
+  // }
   
-  List<MealType> getMeal(int i) {
-    return i.toString().split("").map((String c) => MealType.values[int.parse(c)]).toList();
+  // List<MealType> getMeal(int i) {
+  //   return i.toString().split("").map((String c) => MealType.values[int.parse(c)]).toList();
+  // }
+
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+  
+    return o is FoodModel &&
+      o.title == title &&
+      o.prefs == prefs &&
+      o.img == img &&
+      o.desc == desc;
   }
 
-}
-
-enum MealType {
-  breakfast,
-  brunch,
-  elevenses,
-  lunch,
-  tea,
-  supper,
-  dinner,
+  @override
+  int get hashCode {
+    return title.hashCode ^
+      prefs.hashCode ^
+      img.hashCode ^
+      desc.hashCode;
+  }
 }
 
 enum CookingType {

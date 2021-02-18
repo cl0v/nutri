@@ -50,7 +50,7 @@ class FoodSwipeController extends GetxController {
   }
 
   _fetchFoodsAvailable() async {
-    _foodList.assignAll(await foodRepository.loadFoodList());
+    _foodList.assignAll(await foodRepository.loadFoods());
   }
 
   void onRatingTapped(FoodModel food, double rating) {

@@ -7,7 +7,7 @@ main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   FoodRepository repository = FoodRepository(provider: FoodProvider());
   test('Getting all foods from JSON and converting to food list', () async {
-    var list = await repository.loadFoodList();
+    var list = await repository.loadFoods();
     expect(list.first.title, f1.title);
   });
 }

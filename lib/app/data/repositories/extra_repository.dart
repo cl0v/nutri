@@ -9,4 +9,6 @@ class ExtraRepository {
 
   Future<List<ExtraModel>> loadExtras() => provider.loadExtras();
 
+Future<List<ExtraModel>> sizedExtraList({int amount}) =>
+      provider.sizedExtraList(amount);
 }

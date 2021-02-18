@@ -7,14 +7,14 @@ const jsonPath = 'assets/jsons/food_data.json';
 class FoodProvider {
   FoodProvider();
 
-  _loadJson() async {
-    return await rootBundle.loadString(jsonPath);
+  Future<List> _loadJson() async =>
+      jsonDecode(await rootBundle.loadString(jsonPath));
+
+  Future<List<FoodModel>> loadFoods() async {
+    var json = await _loadJson();
+    return json.map((j) => FoodModel.fromJson(j)).toList();
   }
 
-  Future<List<FoodModel>> loadFoodList() async {
-    var data = await _loadJson();
-    List jsonList = jsonDecode(data);
-    return jsonList.map((e) => FoodModel.fromJson(e)).toList();
-  }
-
+  Future<List<FoodModel>> sizedFoodList(int amount) async =>
+      (await loadFoods()).take(amount).toList();
 }

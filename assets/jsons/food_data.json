@@ -10,5 +10,17 @@
     "img": "assets/images/foods/ovos.jpg",
     "prefs": "ovos",
     "desc": "Ovos, o segundo melhor alimento do mundo, rico em proteínas, coma quantos quiser."
+  },
+  {
+    "title": "Salmão",
+    "img": "assets/images/foods/salmão.jpg",
+    "prefs": "salmão",
+    "desc": "Esse saboroso peixe é rico em omega 3."
+  },
+  {
+    "title": "Picanha",
+    "img": "assets/images/foods/picanha.jpg",
+    "prefs": "picanha",
+    "desc": "Picanha é uma excelente carne para seu dia a dia, pegue a mais magra possível."
   }
 ]

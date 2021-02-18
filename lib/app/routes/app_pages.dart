@@ -18,7 +18,7 @@ import 'package:nutri/app/modules/splash/views/splash_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.FOOD_SWIPE;
 
   static final routes = [
     GetPage(
