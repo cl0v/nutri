@@ -35,6 +35,7 @@ class HomeController extends GetxController {
 
   _updateExtraList(List<ExtraModel> list) {
     //TODO: BUG: Quando a pessoa rola sem apertar o botao, os extras nao atualizam
+    //TODO: Quando a pessoa nao tem extras ou terminou as refeicoes do dia, mostra os card de agua??
     _extraList.assignAll(list);
   }
 
@@ -61,10 +62,17 @@ class HomeController extends GetxController {
     //TODO: Criar update no cardapio final(no icone i e na logica do calculo de proteinas);
   }
 
+//TODO: Quando chega no ultimo item, nao tem pra onde ir, o app trava
+
   onDonePressed(MealModel meal) {
     //TODO: Implement onDonePressed
-    int idx = mealList.indexOf(meal);
-    _updateExtraList(mealList[idx + 1].extras);
+    int idx = mealList.indexOf(meal) + 1;
+    // if (mealList.length - 1 > idx) {
+    if (idx < mealList.length) _updateExtraList(mealList[idx].extras);
+
+    // }
+    //Posso desativar o botao de concluido
+    //TODO: Fazer algo quando conclui o ultimo item
     carouselController.nextPage();
   }
 

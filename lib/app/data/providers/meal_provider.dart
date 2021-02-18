@@ -7,7 +7,7 @@ class MealProvider {
 
   Future<List<MealModel>> loadMeals() async {
     await Future.delayed(Duration(seconds: 0));
-    return [
+    var mockedList = [
       MealModel(
         extras: mockedExtras,
         food: mockedFood,
@@ -24,7 +24,14 @@ class MealProvider {
         meal: MealType.dinner,
       ),
     ];
+    sortMealListByMealOrder(mockedList);
+    return mockedList;
     //TODO: Implement
+  }
+
+  sortMealListByMealOrder(List<MealModel> m1) {
+    m1.sort((a, b) => a.meal.index.compareTo(b.meal.index));
+    return m1;
   }
 
 //TODO: Atualmente todas as responsabilidades da home deveriam estar aqui
