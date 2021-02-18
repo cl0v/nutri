@@ -47,24 +47,24 @@ class ProfileView extends GetView<ProfileController> {
                     size: 100,
                   ),
                 ),
-                ...List.generate(
-                  // 10,
-                  controller.user.toMap().keys.length,
-                  (index) => Card(
-                    child: ListTile(
-                      dense: true,
-                      // leading: Center(
-                      //   widthFactor: 1,
-                      //   child: Icon(Icons.exit_to_app),
-                      // ),
-                      title: Text(
-                          '${controller.user.toMap().keys.toList()[index].toUpperCase()}'),
-                      subtitle: Text(
-                          '${controller.user.toMap().values.toList()[index]}'),
-                      // trailing: Icon(Icons.arrow_forward_ios),
-                    ),
-                  ),
-                ),
+                // ...List.generate(
+                //   // 10,
+                //   controller.user.toMap().keys.length,
+                //   (index) => Card(
+                //     child: ListTile(
+                //       dense: true,
+                //       // leading: Center(
+                //       //   widthFactor: 1,
+                //       //   child: Icon(Icons.exit_to_app),
+                //       // ),
+                //       // title: Text(
+                //       //     '${controller.user.toMap().keys.toList()[index].toUpperCase()}'),
+                //       // subtitle: Text(
+                //       //     '${controller.user.toMap().values.toList()[index]}'),
+                //       // trailing: Icon(Icons.arrow_forward_ios),
+                //     ),
+                //   ),
+                // ),
                 Card(
                   child: ListTile(
                     // dense: true,

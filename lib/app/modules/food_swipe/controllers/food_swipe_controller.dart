@@ -14,6 +14,7 @@ class FoodSwipeController extends GetxController {
     @required this.foodRepository,
   });
 
+  //TODO: Esse model poderá ser substituido futuramente por algo parecido com sujested foods
   RxList<FoodModel> _foodList = <FoodModel>[].obs;
   List<FoodModel> get foodList => _foodList;
 
@@ -23,9 +24,15 @@ class FoodSwipeController extends GetxController {
 
   Map<String, int> foodPrefs = Map<String, int>();
 
+  final _isOkey = false.obs;
+  bool get isOkey => _isOkey.value;
+
   @override
   void onInit() {
-    //TODO: Receber os argumentos Get.argument(origem e objetivo (Trocar comida, trocar cardapio, etc))
+    //TODO: Tornar o food swipe uma pagina que será acessada varias vezes por fontes
+    //TODO: Informar o que está sendo escolhido(Cafe da manha, almoço, etc)
+    //TODO: Informar para quando está sendo escolhido(HOJE, SEMANA)
+
     super.onInit();
     _fetchFoodsAvailable();
     pageController = PageController(viewportFraction: 0.8)
@@ -35,27 +42,26 @@ class FoodSwipeController extends GetxController {
   }
 
   onSkipPressed() {
-    Get.offNamed(Routes.HOME);
-    //TODO: Implement onSkipPressed
+    Get.offAllNamed(Routes.HOME);
   }
 
-
+  onBuildCardapioPressed() {
+    _isOkey.value = true;
+    print(isOkey);
+  }
 
   _fetchFoodsAvailable() async {
-    _foodList.assignAll(await foodRepository.loadAvailableFoods());
+    _foodList.assignAll(await foodRepository.loadFoodList());
   }
-
-  //TODO: Fazer com que a food swipe informe para quando sera as refeicoes(Semana, Cafe da manha HOJE, etc)
 
   void onRatingTapped(FoodModel food, double rating) {
     foodPrefs[food.prefs] = rating.round();
     if (pageController.page.round() == foodList.length - 1) {
       _savePrefs();
-      Get.toNamed(Routes.HOME);
+      Get.offAllNamed(Routes.HOME);
     }
     pageController.nextPage(
-        duration: Duration(milliseconds: 100), curve: Curves.ease);
-    //TODO: Next image
+        duration: Duration(milliseconds: 10), curve: Curves.ease);
   }
 
   void _savePrefs() {

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/data/model/extras_card_model.dart';
+import 'package:nutri/app/data/model/extra_model.dart';
 import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 
-class ExtrasSelectableCard extends StatelessWidget {
-  final ExtraCardModel extra;
+class ExtraSelectableCard extends StatelessWidget {
+  final ExtraModel extra;
   final int index;
   final VoidCallback onTap;
 
-  ExtrasSelectableCard({Key key, this.extra, this.index, this.onTap});
+  ExtraSelectableCard({Key key, this.extra, this.index, this.onTap});
   final controller = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ExtrasSelectableCard extends StatelessWidget {
           image: DecorationImage(
             image: NetworkImage(
               //TODO: Trocar para assets
-              extra.food.img,
+              extra.img,
             ),
             fit: BoxFit.cover,
           ),
@@ -44,7 +44,7 @@ class ExtrasSelectableCard extends StatelessWidget {
                 // Center(
                 //   child:
                 Text(
-                  extra.food.title,
+                  extra.title,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
@@ -52,14 +52,14 @@ class ExtrasSelectableCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  extra.amount.toString(),
+                  '1', //TODO: Trocar isso
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                   ),
                 ),
                 Text(
-                  ExtraCardModel.unidadeToString(extra.unidade, extra.amount),
+                  'unidades', //TODO:Trocar isso
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 12,

@@ -11,7 +11,6 @@ class FoodSwipeView extends GetView<FoodSwipeController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text('Me diga seus gostos'),  //TODO: Alterar isso com base na origem (dia/semana/ alguma refeicao em especifica)
         elevation: 0,
         actions: [
           FlatButton(

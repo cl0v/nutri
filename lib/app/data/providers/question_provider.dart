@@ -11,8 +11,7 @@ class QuestionProvider {
   _loadJson() async {
     return await rootBundle.loadString(jsonPath);
   }
-
-
+  
   Future<List<QuestionModel>> loadQuestionList() async {
     var data = await _loadJson();
     List jsonList = jsonDecode(data);

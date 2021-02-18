@@ -9,5 +9,4 @@ class ExtraRepository {
 
   Future<List<ExtraModel>> loadExtras() => provider.loadExtras();
 
-  Future<List<ExtraModel>> sortedExtras() => provider.sortedExtras();
 }

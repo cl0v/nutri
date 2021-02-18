@@ -1,12 +1,15 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/data/model/extras_card_model.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
-import 'package:nutri/app/data/repositories/food_repository.dart';
+import 'package:nutri/app/data/repositories/meal_repository.dart';
 
 class HomeController extends GetxController {
+  final MealRepository mealRepository;
+
+  HomeController({@required this.mealRepository});
+
   RxList<MealModel> _mealList = <MealModel>[].obs;
   List<MealModel> get mealList => _mealList;
 
@@ -14,37 +17,21 @@ class HomeController extends GetxController {
 
   List<FoodModel> foodList = fList;
 
-  var extras = <ExtraCardModel>[
-    ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
-    ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
-    ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
-    ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
-    ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
-    ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
-    ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
-    ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
-    ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
-  ];
-
-  final FoodRepository foodRepository;
-
-  HomeController({@required this.foodRepository});
-
   CarouselController c = CarouselController();
 
   @override
   void onInit() {
     super.onInit();
-    _fetchFoodList();
+    _fetchMeals();
   }
 
-  _fetchFoodList() async {
-    _mealList.assignAll(await foodRepository.loadMeals());
+  //TODO: Implementar para fazer com que a meal seja uma lista de acompanhamentos + a comida principal
+  _fetchMeals() async {
+    //TODO: Implement _fetchMeals()
+    // _mealList.assignAll(await mealRepository.loadMealList());
   }
 
-  _fetchMeal() {
-    //TODO: Implementar para fazer com que a meal seja uma lista de acompanhamentos + a comida principal
-  }
+
 
   final _isSelected = false.obs;
   bool get isSelected => _isSelected.value;
@@ -61,12 +48,11 @@ class HomeController extends GetxController {
     return false;
   }
 
-  onExtraTapped(ExtraCardModel extra, int idx) {
+  onExtraTapped(int idx) {
     if (!_selectedExtrasList.contains(idx) && _selectedExtrasList.length < 3)
       _selectedExtrasList.add(idx);
     else
       _selectedExtrasList.remove(idx);
-    print(_selectedExtrasList);
     //TODO: Criar update no cardapio final(no icone i e na logica do calculo de proteinas);
   }
 
@@ -107,3 +93,18 @@ List<FoodModel> fList = [
     title: 'Carne com brocolis',
   ),
 ];
+
+
+/*
+  var extras = <ExtraCardModel>[
+    ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
+    ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
+    ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
+    ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
+    ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
+    ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
+    ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
+    ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
+    ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
+  ];
+*/

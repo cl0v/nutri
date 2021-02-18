@@ -42,26 +42,27 @@ class HomeBody extends GetView<HomeController> {
                       .toList(),
                 ),
               ),
-              Text(
-                'Selecione 3 acompanhamentos',
-                style: TextStyle(color: Colors.white),
-              ),
-              GridView.builder(
-                itemCount: controller.extras.length,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                ),
-                itemBuilder: (context, index) {
-                  return ExtrasSelectableCard(
-                    extra: controller.extras[index],
-                    onTap: () => controller.onExtraTapped(
-                        controller.extras[index], index),
-                    index: index,
-                  );
-                },
-              ),
+              // Text(
+              //   'Selecione 3 acompanhamentos',
+              //   style: TextStyle(color: Colors.white),
+              // ),
+              // GridView.builder(
+              //   itemCount: controller.extras.length,
+              //   shrinkWrap: true,
+              //   scrollDirection: Axis.vertical,
+              //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //     crossAxisCount: 3,
+              //   ),
+              //   itemBuilder: (context, index) {
+              //     return ExtrasSelectableCard(
+              //       extra: controller.extras[index],
+              //       onTap: () => controller.onExtraTapped(
+              //           controller.extras[index], index),
+              //       index: index,
+              //     );
+              //   },
+              // ),
+              //TODO: Descomentar daqui pra cima para ativar os card de extra
 
 //TODO: Criar parte de card de ingredientes secundarios
 //Tocar para marcar quais acompanhamentos serão usados

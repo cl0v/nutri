@@ -10,9 +10,4 @@ class FoodRepository {
 
   Future<List<FoodModel>> loadFoodList() => provider.loadFoodList();
 
-  Future<List<FoodModel>> loadAvailableFoods() =>
-      provider.loadAvailableFoods();
-
-  Future<List<MealModel>> loadMeals() => provider.loadMeals();
-
 }

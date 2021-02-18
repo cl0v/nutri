@@ -3,6 +3,7 @@ class ExtraModel {
   String title;
   String img;
   String desc;
+  //TODO: Implement unidade de medida(Tentar limitar a quantidade)
 
   ExtraModel({this.title, this.img, this.desc});
 
@@ -33,3 +34,33 @@ class ExtraModel {
   @override
   int get hashCode => title.hashCode ^ img.hashCode ^ desc.hashCode;
 }
+
+
+/*
+
+  static String unidadeToString(UnidadeType u, int a) {
+    switch (u) {
+      case UnidadeType.colher:
+        return (a > 1) ? 'colheres' : 'colher';
+      case UnidadeType.copo:
+        return (a > 1) ? 'copos' : 'copo';
+      case UnidadeType.porcao:
+        return (a > 1) ? 'porções' : 'porção';
+      case UnidadeType.unidade:
+        return (a > 1) ? 'unidades' : 'unidade';
+      case UnidadeType.xicara:
+        return (a > 1) ? 'xícaras' : 'xícara';
+      default:
+        return null;
+    }
+  }
+}
+
+enum UnidadeType {
+  porcao,
+  unidade,
+  colher,
+  xicara,
+  copo,
+}
+*/

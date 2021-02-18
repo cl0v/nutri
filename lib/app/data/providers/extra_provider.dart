@@ -17,8 +17,16 @@ class ExtraProvider {
     List jsonList = jsonDecode(data);
     return jsonList.map((e) => ExtraModel.fromJson(e)).toList();
   }
-
-  sortedExtras() {
-    
-  }
 }
+
+// var extras = <ExtraCardModel>[
+//   ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
+//   ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
+//   ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
+//   ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
+//   ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
+//   ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
+//   ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
+//   ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
+//   ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
+// ];
