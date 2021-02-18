@@ -14,6 +14,14 @@ class HomeView extends GetView<HomeController> {
         elevation: 0,
         title: Text('Comer hoje'),
         centerTitle: true,
+
+        //TODO: Pagina de FAQ
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.help),
+        //     onPressed: () {},
+        //   )
+        // ],
       ),
       // bottomNavigationBar: BottomAppBar(child: Row(children: [IconButton(icon: Icon(Icons.home,), onPressed: (){},),],),),
       body: HomeBody(),

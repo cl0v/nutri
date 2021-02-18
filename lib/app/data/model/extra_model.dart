@@ -4,6 +4,7 @@ class ExtraModel {
   String img;
   String desc;
   //TODO: Implement unidade de medida(Tentar limitar a quantidade)
+  //TODO: Quantidade dos extras brocolis 2 unidades
 
   ExtraModel({this.title, this.img, this.desc});
 

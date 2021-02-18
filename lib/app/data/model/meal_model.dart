@@ -7,7 +7,7 @@ class MealModel {
   MealType meal;
   FoodModel food; //TODO: BUG: Como o mealModel pede um foodmodel, nao posso colocar cafe, nem bebidas *
   List<ExtraModel> extras;
-  //TODO: Numero de acompanhamentos...
+  //TODO:ADD Numero de acompanhamentos... para aquela refeiçao? escolha ate 3 acompanhamentos
 
   MealModel({
     this.meal,

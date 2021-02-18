@@ -10,12 +10,5 @@ class UserPreferencesRepository {
       provider.setQuestionsPrefs(answers);
 
   Future<Map<String, String>> getQuestionsPrefs() =>
-      provider.getQuestionsPrefs();
-
-
-//TODO: Passar para o food_prefs_repository.dart
-  void setFoodsPrefs(Map<String, int> foodPref) =>
-      provider.setFoodsPrefs(foodPref);
-      
-  getFoodPrefs() => provider.getFoodsPrefs();
+      provider.getQuestionsPrefs();  
 }

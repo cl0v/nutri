@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/data/repositories/food_preferences_repository.dart';
 import 'package:nutri/app/data/repositories/food_repository.dart';
-import 'package:nutri/app/data/repositories/user_preferences_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
 class FoodSwipeController extends GetxController {
-  final UserPreferencesRepository userPreferencesRepository;
+  final FoodPreferencesRepository foodPreferencesRepository;
   final FoodRepository foodRepository;
 
   FoodSwipeController({
-    this.userPreferencesRepository,
+    this.foodPreferencesRepository,
     @required this.foodRepository,
   });
 
-  //TODO: Esse model poderá ser substituido futuramente por algo parecido com sujested foods
   RxList<FoodModel> _foodList = <FoodModel>[].obs;
   List<FoodModel> get foodList => _foodList;
 
@@ -65,7 +64,7 @@ class FoodSwipeController extends GetxController {
   }
 
   void _savePrefs() {
-    userPreferencesRepository.setFoodsPrefs(foodPrefs);
+    foodPreferencesRepository.setFoodsPrefs(foodPrefs);
   }
 
   @override

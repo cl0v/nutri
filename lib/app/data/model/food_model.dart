@@ -23,8 +23,6 @@ class FoodModel {
     prefs = json['prefs'];
     img = json['img'];
     desc = json['desc'];
-    // cooking = getCooking(json['cooking']); //TODO: Esse cara é um int -> enum
-    // meal = getMeal(json['meal']);
   }
 
   Map<String, dynamic> toJson() {

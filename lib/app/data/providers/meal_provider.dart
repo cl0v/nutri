@@ -24,18 +24,14 @@ class MealProvider {
         meal: MealType.dinner,
       ),
     ];
-    sortMealListByMealOrder(mockedList);
+    _sortMealListByMealOrder(mockedList);
     return mockedList;
-    //TODO: Implement
   }
 
-  sortMealListByMealOrder(List<MealModel> m1) {
+  _sortMealListByMealOrder(List<MealModel> m1) {
     m1.sort((a, b) => a.meal.index.compareTo(b.meal.index));
     return m1;
   }
-
-//TODO: Atualmente todas as responsabilidades da home deveriam estar aqui
-
 }
 
 final mockedFood = FoodModel(

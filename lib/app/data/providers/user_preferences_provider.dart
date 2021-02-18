@@ -17,21 +17,4 @@ class UserPreferencesProvider {
 
   void setQuestionsPrefs(Map<String, String> answers) => answers.forEach(
       (key, value) async => (await sharedPreferences).setString(key, value));
-
-
-//TODO: Criar FoodPrefs
-//TODO: FoodPrefs existirá, porém nao será assim
-  Future<Map<String, int>> getFoodsPrefs() async {
-    Map<String, int> map = Map<String, int>();
-    var p = await sharedPreferences;
-    p.getKeys().toList().where((key) => !key.contains('q_')).forEach((key) {
-      if (p.containsKey(key)) {
-        map[key] = p.getInt(key);
-      }
-    });
-    return map;
-  }
-
-  void setFoodsPrefs(Map<String, int> foodPref) => foodPref.forEach(
-      (key, value) async => (await sharedPreferences).setInt(key, value)); 
 }

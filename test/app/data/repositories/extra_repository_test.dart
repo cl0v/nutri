@@ -14,10 +14,6 @@ main() {
     expect(list.first.desc, ex1.desc);
   });
 
-  test('Receive list of extras based on requirements', () async {
-    // var list = await repository.sortedExtras(); //TODO: Implementar
-    // expect(list, [ex1, ex2, ex3]);
-  }, skip: true);
 }
 
 ExtraModel ex1 = ExtraModel(

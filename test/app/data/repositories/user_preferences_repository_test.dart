@@ -11,30 +11,5 @@ main() {
       sharedPreferences: SharedPreferences.getInstance(),
     ),
   );
-  test(
-    'Testing food rating pref getFoodPrefs() with no value',
-    () async {
-      var result = await repository.getFoodPrefs();
-      expect(result, {});
-    },
-  );
-  test(
-    'Testing food rating prefs',
-    () async {
-      repository.setFoodsPrefs(map);
-      var result = await repository.getFoodPrefs();
-      expect(result, map);
-    },
-  );
 }
 
-var map = {
-  'frango': 5,
-  'ovos': 4,
-  'cafe': 3,
-  'cha': 2,
-  'soda': 1,
-};
-
-// setFoodsPrefs
-// getFoodPrefs

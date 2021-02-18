@@ -17,7 +17,8 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
             fit: BoxFit.cover,
           ),
         ),
-        //TODO: Texto selecione até 7?
+        //TODO: Texto selecione até 7 dessas
+        //TODO: Remover as carinhas e colocar um ou dois botoes de sim ou nao para a semana
         Obx(
           () => controller.isOkey
               ? Center(

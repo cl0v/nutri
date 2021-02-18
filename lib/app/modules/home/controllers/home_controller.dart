@@ -18,7 +18,6 @@ class HomeController extends GetxController {
 
   RxList<ExtraModel> _extraList = <ExtraModel>[].obs;
   List<ExtraModel> get extraList => _extraList;
-// TODO: Receber a lista de extras por reatividade
 
   @override
   void onInit() {
@@ -26,9 +25,7 @@ class HomeController extends GetxController {
     _fetchMeals();
   }
 
-  //TODO: Implementar para fazer com que a meal seja uma lista de acompanhamentos + a comida principal
   _fetchMeals() async {
-    //TODO: Implement _fetchMeals()
     _mealList.assignAll(await mealRepository.loadMeals());
     _updateExtraList(_mealList.first.extras);
   }
@@ -59,19 +56,14 @@ class HomeController extends GetxController {
       _selectedExtrasList.add(idx);
     else
       _selectedExtrasList.remove(idx);
-    //TODO: Criar update no cardapio final(no icone i e na logica do calculo de proteinas);
   }
+    //TODO:IDEIA: Criar update no cardapio final(no icone i e na logica do calculo de proteinas);
 
 //TODO: Quando chega no ultimo item, nao tem pra onde ir, o app trava
 
   onDonePressed(MealModel meal) {
-    //TODO: Implement onDonePressed
     int idx = mealList.indexOf(meal) + 1;
-    // if (mealList.length - 1 > idx) {
     if (idx < mealList.length) _updateExtraList(mealList[idx].extras);
-
-    // }
-    //Posso desativar o botao de concluido
     //TODO: Fazer algo quando conclui o ultimo item
     carouselController.nextPage();
   }

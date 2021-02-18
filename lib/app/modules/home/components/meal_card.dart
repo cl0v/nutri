@@ -4,16 +4,12 @@ import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 import 'package:nutri/constants.dart';
 
-// TODO: Criar botoes que quando a pessoa toca, remove a imagem da lista
+// TODO: Pintar a imagem anterior (verde ou vermelho) para saber que foi concluido (ou remover a imagem da lista)
+// TODO: Desativar botoes quando a pessoa tiver concluido aquela refeiçao
+
 class MealCard extends StatelessWidget {
   final MealModel meal;
   final VoidCallback onConfirmedPressed;
-
-  //TODO: Modificar para meal(vai ter um componente food)
-  /*
-  MealModel(FoodModel food, String ou enum meal)
-  */
-  //TODO: Create animate to paint everything with white
 
   const MealCard({this.onConfirmedPressed, this.meal});
   @override
@@ -48,8 +44,6 @@ class MealCard extends StatelessWidget {
                     bottomRight: Radius.circular(15),
                   ),
                 ),
-                //TODO: Adicionar botao de informacoes Icon.info
-                //TODO: Modificar os botoes concluido e 'passei'
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
