@@ -25,6 +25,7 @@ dependencies:
   carousel_slider: ^3.0.0
   flutter_rating_bar: ^3.2.0+1
   shared_preferences: ^0.5.12+4
+  flip_card: ^0.4.4
   get: 3.24.0
   flutter:
     sdk: flutter

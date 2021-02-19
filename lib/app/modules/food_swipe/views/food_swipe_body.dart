@@ -7,6 +7,7 @@ import 'package:nutri/app/modules/food_swipe/controllers/food_swipe_controller.d
 class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
         Container(
@@ -17,14 +18,18 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
             fit: BoxFit.cover,
           ),
         ),
-        //TODO: Texto selecione até 7 dessas
+        //TODO: Texto selecione até 7 dessas(Calcular quantos deverei escolher)
+        //Criar model que tratará essas decisoes (quantidade, que alimentos sugerir com base nas questions, etc);
         //TODO: Remover as carinhas e colocar um ou dois botoes de sim ou nao para a semana
+        //Ou uma caixinha de selecao grande que quando marcado será de alguma forma mostrado para o usuario
+        //Ou Pintar de verde o fundo para itens selecionados da mesma forma do extraCard
+        
         Obx(
           () => controller.isOkey
               ? Center(
                   child: Obx(
                     () => Container(
-                      height: 450,
+                      height: (width/3)*3.5,
                       child: PageView.builder(
                         controller: controller.pageController,
                         itemCount: controller.foodList.length,

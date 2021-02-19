@@ -3,6 +3,7 @@ import 'package:nutri/app/data/model/extra_model.dart';
 import 'package:nutri/app/data/providers/extra_provider.dart';
 import 'package:nutri/app/data/repositories/extra_repository.dart';
 
+
 main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   ExtraRepository repository = ExtraRepository(provider: ExtraProvider());

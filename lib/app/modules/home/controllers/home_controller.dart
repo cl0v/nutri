@@ -2,17 +2,16 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/extra_model.dart';
-import 'package:nutri/app/data/model/food_model.dart';
-import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/data/repositories/meal_repository.dart';
+import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 
 class HomeController extends GetxController {
   final MealRepository mealRepository;
 
   HomeController({@required this.mealRepository});
 
-  RxList<MealModel> _mealList = <MealModel>[].obs;
-  List<MealModel> get mealList => _mealList;
+  RxList<Rx<MealCardModel>> _mealList = <Rx<MealCardModel>>[].obs;
+  List<Rx<MealCardModel>> get mealList => _mealList;
 
   CarouselController carouselController = CarouselController();
 
@@ -26,8 +25,14 @@ class HomeController extends GetxController {
   }
 
   _fetchMeals() async {
-    _mealList.assignAll(await mealRepository.fetchMeals(4));
-    _updateExtraList(_mealList.first.extras);
+    _mealList.assignAll((await mealRepository.fetchMeals(4))
+        .map(
+          (meal) =>
+              MealCardModel(mealModel: meal, mealCardState: MealCardState.None)
+                  .obs,
+        )
+        .toList());
+    _updateExtraList(_mealList.first.value.mealModel.extras);
   }
 
   _updateExtraList(List<ExtraModel> list) {
@@ -57,15 +62,39 @@ class HomeController extends GetxController {
     else
       _selectedExtrasList.remove(idx);
   }
-    //TODO:IDEIA: Criar update no cardapio final(no icone i e na logica do calculo de proteinas);
+  //TODO:IDEIA: Criar update no cardapio final(no icone i e na logica do calculo de proteinas);
 
-//TODO: Quando chega no ultimo item, nao tem pra onde ir, o app trava
+//TODO: CHECK: IMPORTANT: Quando chega no ultimo item, nao tem pra onde ir, o app trava
+//TODO:  Quando chega no ultimo item, nao tem pra onde ir, dar um feedback ou parabenizar a pessoa(pontos concluidos)
 
-  onDonePressed(MealModel meal) {
-    int idx = mealList.indexOf(meal) + 1;
-    if (idx < mealList.length) _updateExtraList(mealList[idx].extras);
+  onDonePressed(Rx<MealCardModel> mealCard) {
+    mealCard.value.mealCardState = MealCardState.Done;
+     _changeValues(mealCard);
+  }
+
+  _changeValues(Rx<MealCardModel> mealCard) {
+    //TODO: Rename
+    int idx = mealList.indexOf(mealCard) + 1;
+    if (idx < mealList.length)
+      _updateExtraList(mealList[idx].value.mealModel.extras);
+    //TODO: So está atualizando quando a lista termina
     //TODO: Fazer algo quando conclui o ultimo item
     carouselController.nextPage();
+  }
+
+  onSkipPressed(Rx<MealCardModel> mealCard) {
+    mealCard.value.mealCardState = MealCardState.Skiped;
+    _changeValues(mealCard);
+  }
+
+  onChangePressed(Rx<MealCardModel> mealCard) {
+    // int idx = mealList.indexOf(mealCard) + 1;
+    // mealCard.value.mealCardState = MealCardState.Done;
+    // if (idx < mealList.length)
+    //   _updateExtraList(mealList[idx].value.mealModel.extras);
+    // //TODO: So está atualizando quando a lista termina
+    // //TODO: Fazer algo quando conclui o ultimo item
+    // carouselController.nextPage();
   }
 
   onInfoPressed() {
@@ -78,39 +107,3 @@ class HomeController extends GetxController {
   // void onClose() {}
 
 }
-
-List<FoodModel> fList = [
-  FoodModel(
-    img:
-        'https://i.pinimg.com/474x/e2/fe/5c/e2fe5c199feb50e474ce4f2c98c5274b.jpg',
-    // texto: 'Café da manhã',
-
-    title: 'Café preto',
-  ),
-  FoodModel(
-    img:
-        'https://i.pinimg.com/564x/e0/d1/08/e0d108f2b18bc168edc824bfab8399a2.jpg',
-    // texto: 'Almoço',
-    title: 'Peito de frango',
-  ),
-  FoodModel(
-    img:
-        'https://i.pinimg.com/474x/de/58/f7/de58f749a33fb02aca97492b35e73382.jpg',
-    // texto: 'Jantar',
-    title: 'Carne com brocolis',
-  ),
-];
-
-/*
-  var extras = <ExtraCardModel>[
-    ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
-    ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
-    ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
-    ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
-    ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
-    ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
-    ExtraCardModel(food: fList[1], amount: 2, unidade: UnidadeType.unidade),
-    ExtraCardModel(food: fList[0], amount: 1, unidade: UnidadeType.xicara),
-    ExtraCardModel(food: fList[2], amount: 3, unidade: UnidadeType.porcao),
-  ];
-*/

@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
+import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 import 'package:nutri/constants.dart';
 
-// TODO: Pintar a imagem anterior (verde ou vermelho) para saber que foi concluido (ou remover a imagem da lista)
-// TODO: Desativar botoes quando a pessoa tiver concluido aquela refeiçao
-
 class MealCard extends StatelessWidget {
-  final MealModel meal;
+  final MealCardModel mealCardModel;
   final VoidCallback onConfirmedPressed;
+  final VoidCallback onSkippedPressed;
+  final VoidCallback onChangePressed;
 
-  const MealCard({this.onConfirmedPressed, this.meal});
+  const MealCard({
+    this.mealCardModel,
+    this.onConfirmedPressed,
+    this.onSkippedPressed,
+    this.onChangePressed,
+  });
   @override
   Widget build(BuildContext context) {
+    print(mealCardModel.mealCardState);
     return Container(
       margin: EdgeInsets.all(4.0),
       child: ClipRRect(
@@ -22,70 +28,90 @@ class MealCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             image: DecorationImage(
-              image: AssetImage(meal.food.img),
+              image: AssetImage(mealCardModel.mealModel.food.img),
               fit: BoxFit.cover,
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(
-                  left: 4,
-                  right: 4,
-                  bottom: 0,
-                  top: 2,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.3),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15),
+          child: Container(
+            decoration: BoxDecoration(
+              color: (mealCardModel.mealCardState == MealCardState.Done
+                      ? Colors.greenAccent
+                      : mealCardModel.mealCardState == MealCardState.Skiped
+                          ? Colors.redAccent
+                          : Colors.black)
+                  .withOpacity(0.6),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(
+                    left: 4,
+                    right: 4,
+                    bottom: 0,
+                    top: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.3),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            MealModel.getTranslatedMeal(
+                                mealCardModel.mealModel.meal),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Spacer(),
+                          IconButton(
+                            icon: Icon(
+                              Icons.info,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              print('so pode ser brinks');
+                            },
+                          )
+                        ],
+                      ),
+                      Text(
+                        '   • ${mealCardModel.mealModel.food.title}',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      MealCardButtons(
+                        onConfirmedPressed: onConfirmedPressed,
+                        onSkippedPressed: onSkippedPressed,
+                        onChangePressed: onChangePressed,
+                        onTapBlocked: (mealCardModel.mealCardState ==
+                                MealCardState.Done ||
+                            mealCardModel.mealCardState ==
+                                MealCardState.Skiped),
+                      ),
+                    ],
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          MealModel.getTranslatedMeal(meal.meal),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Spacer(),
-                        IconButton(
-                          icon: Icon(
-                            Icons.info,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            print('so pode ser brinks');
-                          },
-                        )
-                      ],
-                    ),
-                    Text(
-                      '   • ${meal.food.title}',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    MealCardButtons(onConfirmedPressed: onConfirmedPressed),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -97,9 +123,15 @@ class MealCardButtons extends StatelessWidget {
   const MealCardButtons({
     Key key,
     @required this.onConfirmedPressed,
+    @required this.onSkippedPressed,
+    @required this.onChangePressed,
+    this.onTapBlocked = false,
   }) : super(key: key);
 
-  final Function onConfirmedPressed;
+  final VoidCallback onConfirmedPressed;
+  final VoidCallback onSkippedPressed;
+  final VoidCallback onChangePressed;
+  final bool onTapBlocked;
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +153,7 @@ class MealCardButtons extends StatelessWidget {
             ),
             child: Expanded(
               child: RaisedButton(
-                onPressed: () {},
+                onPressed: onTapBlocked ? null : onSkippedPressed,
                 child: Text('Passei'),
                 // icon: Icon(Icons.clear,),
               ),
@@ -132,9 +164,11 @@ class MealCardButtons extends StatelessWidget {
             buttonColor: kGrayColor,
             child: Expanded(
               child: RaisedButton(
-                onPressed: () {
-                  Get.toNamed(Routes.FOOD_SWIPE);
-                },
+                onPressed: onTapBlocked
+                    ? null
+                    : () {
+                        Get.toNamed(Routes.FOOD_SWIPE);
+                      },
                 child: Text('Trocar'),
                 // icon: Icon(Icons.clear,),
               ),
@@ -152,7 +186,7 @@ class MealCardButtons extends StatelessWidget {
             ),
             child: Expanded(
               child: RaisedButton(
-                onPressed: onConfirmedPressed,
+                onPressed: onTapBlocked ? null : onConfirmedPressed,
                 child: Text('Concluído'),
                 // icon: Icon(
                 //   Icons.check,

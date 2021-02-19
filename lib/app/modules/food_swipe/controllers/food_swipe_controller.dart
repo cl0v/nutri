@@ -32,6 +32,7 @@ class FoodSwipeController extends GetxController {
     //TODO: Informar o que está sendo escolhido(Cafe da manha, almoço, etc)
     //TODO: Informar para quando está sendo escolhido(HOJE, SEMANA)
 
+
     super.onInit();
     _fetchFoodsAvailable();
     pageController = PageController(viewportFraction: 0.8)
@@ -46,7 +47,6 @@ class FoodSwipeController extends GetxController {
 
   onBuildCardapioPressed() {
     _isOkey.value = true;
-    print(isOkey);
   }
 
   _fetchFoodsAvailable() async {
