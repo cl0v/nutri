@@ -7,8 +7,12 @@ class FoodRepository {
 
   FoodRepository({@required this.provider});
 
-  Future<List<FoodModel>> loadFoods() => provider.loadFoods();
+  Future<List<FoodModel>> loadAllFoods() => provider.loadAllFoods();
+  Future<List<FoodModel>> loadMeats() => provider.loadMeats();
+  Future<List<FoodModel>> loadDrinks() => provider.loadDrinks();
+  Future<List<FoodModel>> loadFruits() => provider.loadFruits();
+  Future<List<FoodModel>> loadVegetables() => provider.loadVegetables();
 
-  Future<List<FoodModel>> sizedFoodList({int amount}) =>
-      provider.sizedFoodList(amount);
+  Future<List<FoodModel>> loadFoodsFromPreferences(List<String> list) =>
+      provider.loadFoodsFromPreferences(list); 
 }

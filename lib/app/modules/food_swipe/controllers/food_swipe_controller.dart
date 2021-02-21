@@ -78,7 +78,7 @@ class FoodSwipeController extends GetxController {
 
 
   _fetchFoodsAvailable() async {
-    _foodList.assignAll(await foodRepository.loadFoods());
+    _foodList.assignAll(await foodRepository.loadAllFoods());
   }
 
   @override

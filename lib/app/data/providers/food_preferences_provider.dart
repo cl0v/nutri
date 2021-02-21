@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const foodPrefsKey = 'foodPrefs';
 
+//TODO: Estou dando a possibilidade do usuario nao salvar nenhuma comida na foodswipe (Botao de pular)
+
 class FoodPreferencesProvider {
   final Future<SharedPreferences> sharedPreferences;
 

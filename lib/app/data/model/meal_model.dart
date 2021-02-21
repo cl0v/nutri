@@ -1,22 +1,20 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:nutri/app/data/model/extra_model.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 
 class MealModel {
-
   //enum
   MealType meal;
-  FoodModel food; //TODO: BUG: Como o mealModel pede um foodmodel, nao posso colocar cafe, nem bebidas *
-  List<ExtraModel> extras;
-  //TODO:ADD Numero de acompanhamentos... para aquela refeiçao? (Ex: escolha ate 3 acompanhamentos)
-
+  FoodModel
+      food; //TODO: BUG: Como o mealModel pede um foodmodel, nao posso colocar cafe, nem bebidas *
+  List<FoodModel> extras;
+  //TODO: ADD: Numero de acompanhamentos... para aquela refeiçao? (Ex: escolha ate 3 acompanhamentos)
+//O ALGORITMO PODE SORTEAR UM NUMERO ALEATORIO COM BASE NO FINAL DA DIETA
   MealModel({
     this.meal,
     this.food,
     this.extras,
   });
-
 
   static getTranslatedMeal(MealType m) {
     switch (m) {
@@ -43,11 +41,11 @@ class MealModel {
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
-  
+
     return o is MealModel &&
-      o.meal == meal &&
-      o.food == food &&
-      listEquals(o.extras, extras);
+        o.meal == meal &&
+        o.food == food &&
+        listEquals(o.extras, extras);
   }
 
   @override

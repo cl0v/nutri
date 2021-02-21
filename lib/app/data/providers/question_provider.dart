@@ -6,12 +6,13 @@ import 'package:nutri/app/data/model/question_model.dart';
 const jsonPath = 'assets/jsons/questions.json';
 
 class QuestionProvider {
-  QuestionProvider();
-
   _loadJson() async {
     return await rootBundle.loadString(jsonPath);
   }
-  
+
+  /**
+   * Recebe todas as questions cadastradas no banco de dados
+   */
   Future<List<QuestionModel>> loadQuestionList() async {
     var data = await _loadJson();
     List jsonList = jsonDecode(data);

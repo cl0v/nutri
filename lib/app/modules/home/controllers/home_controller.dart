@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/data/model/extra_model.dart';
+import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/repositories/meal_repository.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 
@@ -16,8 +16,8 @@ class HomeController extends GetxController {
 
   CarouselController carouselController = CarouselController();
 
-  RxList<ExtraModel> _extraList = <ExtraModel>[].obs;
-  List<ExtraModel> get extraList => _extraList;
+  RxList<FoodModel> _extraList = <FoodModel>[].obs;
+  List<FoodModel> get extraList => _extraList;
 
   @override
   void onInit() {
@@ -36,7 +36,7 @@ class HomeController extends GetxController {
     _updateExtraList(_mealList.first.value.mealModel.extras);
   }
 
-  _updateExtraList(List<ExtraModel> list) {
+  _updateExtraList(List<FoodModel> list) {
     //TODO: BUG: Quando a pessoa rola sem apertar o botao, os extras nao atualizam
     //TODO: Quando a pessoa nao tem extras ou terminou as refeicoes do dia, mostra os card de agua??
     _extraList.assignAll(list);

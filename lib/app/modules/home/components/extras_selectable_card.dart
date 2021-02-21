@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/data/model/extra_model.dart';
+import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 
 class ExtraSelectableCard extends StatelessWidget {
-  final ExtraModel extra;
+  final FoodModel extra;
   final int index;
   final VoidCallback onTap;
 
