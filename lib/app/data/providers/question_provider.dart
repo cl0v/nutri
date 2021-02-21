@@ -10,9 +10,9 @@ class QuestionProvider {
     return await rootBundle.loadString(jsonPath);
   }
 
-  /**
-   * Recebe todas as questions cadastradas no banco de dados
-   */
+
+   /// Recebe todas as questions cadastradas no banco de dados
+
   Future<List<QuestionModel>> loadQuestionList() async {
     var data = await _loadJson();
     List jsonList = jsonDecode(data);

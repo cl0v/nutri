@@ -76,7 +76,6 @@ class FoodRatingCard extends StatelessWidget {
                     iconSize: 64,
                     onPressed: onCheckTapped,
                   ),
-
                   Text(
                     '*Por favor marque o quanto você gostaria que esse alimento estivesse em seu cardápio.',
                     style: TextStyle(color: Colors.white, fontSize: 8),
@@ -90,10 +89,13 @@ class FoodRatingCard extends StatelessWidget {
       back: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: Colors.white),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(food.desc, textAlign: TextAlign.center,),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            food.desc,
+            textAlign: TextAlign.center,
           ),
+        ),
       ),
     );
   }

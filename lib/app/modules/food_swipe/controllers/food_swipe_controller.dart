@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/data/model/food_swipe_model.dart';
+import 'package:nutri/app/data/providers/food_swipe_provider.dart';
 import 'package:nutri/app/data/repositories/food_preferences_repository.dart';
 import 'package:nutri/app/data/repositories/food_repository.dart';
+import 'package:nutri/app/data/repositories/food_swipe_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
 class FoodSwipeController extends GetxController {
   final FoodPreferencesRepository foodPreferencesRepository;
   final FoodRepository foodRepository;
+
+  final FoodSwipeRepository foodSwipeRepository =
+      FoodSwipeRepository(foodSwipeProvider: FoodSwipeProvider());
 
   FoodSwipeController({
     this.foodPreferencesRepository,
@@ -16,6 +22,10 @@ class FoodSwipeController extends GetxController {
 
   RxList<FoodModel> _foodList = <FoodModel>[].obs;
   List<FoodModel> get foodList => _foodList;
+
+  List<FoodSwipeModel> _foodSwipeList = <FoodSwipeModel>[];
+  Rx<FoodSwipeModel> _showingFoodSwipeModel = FoodSwipeModel().obs;
+  FoodSwipeModel get showingFoodSwipeModel => _showingFoodSwipeModel.value;
 
   PageController pageController;
   final _currentPageValue = 0.0.obs;
@@ -33,6 +43,7 @@ class FoodSwipeController extends GetxController {
     //TODO: Checkar se está vindo de algum lugar com o arguments, se estiver nulo ou vazio, mostrar a primeira pagina
     super.onInit();
     _fetchFoodsAvailable();
+    _fetchSomethingToSwipe();
     pageController = PageController(viewportFraction: 0.8)
       ..addListener(
         () {
@@ -41,8 +52,22 @@ class FoodSwipeController extends GetxController {
       );
   }
 
+  _fetchSomethingToSwipe() async {
+    // TODO: Receber a origem do swipe
+    // if (Get.arguments)
+    //   return //TODO: Estou travando para que quando venha de outras origens nao carregue as comidas
+    //TODO: _fetchSomethingToSwipe.....
+    _foodSwipeList = await foodSwipeRepository.loadFoodSwipeList();
+    _setShowingFoodSwipe(_foodSwipeList.first);
+  }
+
+  _setShowingFoodSwipe(FoodSwipeModel foodSwipeModel) =>
+      _showingFoodSwipeModel.value = foodSwipeModel;
+
   onSkipPressed() {
     Get.offAllNamed(Routes.HOME);
+    //TODO: Pular a categoria *Proximo foodSwipe
+    //TODO: Caso seja a ultima, salvar e ir pra home
   }
 
   List<String> _foodPrefs = <String>[];
@@ -57,11 +82,13 @@ class FoodSwipeController extends GetxController {
       _foodPrefs.add(food.title);
     }
   }
-  
+
   onConfirmPressed() {
     //TODO: Implement onConfirmPressed
     _savePrefs();
     Get.offAllNamed(Routes.HOME);
+    //TODO: Pular a categoria *Proximo foodSwipe
+    //TODO: Caso seja a ultima, salvar e ir pra home
   }
 
   void _savePrefs() {
@@ -75,7 +102,6 @@ class FoodSwipeController extends GetxController {
   onBuildCardapioPressed() {
     _isOkey.value = true;
   }
-
 
   _fetchFoodsAvailable() async {
     _foodList.assignAll(await foodRepository.loadAllFoods());

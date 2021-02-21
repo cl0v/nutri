@@ -28,57 +28,64 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
         SafeArea(
           child: Obx(
             () => controller.isOkey
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Center(
-                          child: Text(
-                            'Escolha até 7 alimentos',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 28,
-                            ),
-                          ),
-                        ),
-                        flex: 1,
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child: Center(
-                          child: Container(
-                            height: width *
-                                1.16, //TODO: Possivelmente adicionar um carroussel, para rodar pras duas direçoes
-                            // Alem de deixar o visual mais bonito, ja que tem uma parte escura no lado esquerdo
-                            child: PageView.builder(
-                                controller: controller.pageController,
-                                itemCount: controller.foodList.length,
-                                itemBuilder: (context, index) => Obx(
-                                      () => FoodRatingCard(
-                                        food: controller.foodList[index],
-                                        isChecked: controller.isChecked(index),
-                                        onCheckTapped: () =>
-                                            controller.onCheckTapped(
-                                                controller.foodList[index],
-                                                index),
-                                      ),
-                                    )),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Center(
-                          child: RaisedButton(
-                            //TODO: Modificar esse botao
-                            onPressed: controller.onConfirmPressed,
+                ? Obx(
+                    () => Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Center(
                             child: Text(
-                              'Confirmar',
+                              controller.showingFoodSwipeModel.category,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 28,
+                              ),
+                            ),
+                          ),
+                          flex: 1,
+                        ),
+                        Expanded(
+                          flex: 6,
+                          child: Center(
+                            child: Container(
+                              height: width *
+                                  1.16, //TODO: Possivelmente adicionar um carroussel, para rodar pras duas direçoes
+                              // Alem de deixar o visual mais bonito, ja que tem uma parte escura no lado esquerdo
+                              child: PageView.builder(
+                                  controller: controller.pageController,
+                                  itemCount: controller
+                                      .showingFoodSwipeModel.foods.length,
+                                  itemBuilder: (context, index) => Obx(
+                                        () => FoodRatingCard(
+                                          food: controller.showingFoodSwipeModel
+                                              .foods[index],
+                                          isChecked:
+                                              controller.isChecked(index),
+                                          onCheckTapped: () =>
+                                              controller.onCheckTapped(
+                                            controller.showingFoodSwipeModel
+                                                .foods[index],
+                                            index,
+                                          ),
+                                        ),
+                                      )),
                             ),
                           ),
                         ),
-                      )
-                    ],
+                        Expanded(
+                          flex: 2,
+                          child: Center(
+                            child: RaisedButton(
+                              //TODO: Modificar esse botao
+                              onPressed: controller.onConfirmPressed,
+                              child: Text(
+                                'Confirmar',
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   )
                 : Container(),
           ),
@@ -90,29 +97,29 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
               ? GestureDetector(
                   onTap: controller.onBuildCardapioPressed,
                   behavior: HitTestBehavior.translucent,
-                  child:  Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 250,
-                            child: Text(
-                              'Vamos montar o cardápio da semana!',
-                              style: TextStyle(
-                                fontSize: 32,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w300,
-                              ),
-                              textAlign: TextAlign.center,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 250,
+                          child: Text(
+                            'Vamos montar o cardápio da semana!',
+                            style: TextStyle(
+                              fontSize: 32,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w300,
                             ),
+                            textAlign: TextAlign.center,
                           ),
-                          Text(
-                            'Toque aqui',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
+                        ),
+                        Text(
+                          'Toque aqui',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
                     ),
+                  ),
                 )
               : Container(),
         ),
