@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:nutri/app/modules/questions/controllers/questions_controller.dart';
-import 'body.dart';
+import 'package:nutri/app/modules/questions/views/questions_body.dart';
 
 class QuestionsView extends GetView<QuestionsController> {
   @override

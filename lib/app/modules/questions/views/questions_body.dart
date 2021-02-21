@@ -4,6 +4,9 @@ import 'package:nutri/app/modules/questions/components/question_card.dart';
 import 'package:nutri/app/modules/questions/controllers/questions_controller.dart';
 import 'package:nutri/constants.dart';
 
+//TODO: Escurecer a letra das respostas do question (Sugestao mae)
+
+
 class QuestionViewBody extends StatelessWidget {
   const QuestionViewBody({
     Key key,
