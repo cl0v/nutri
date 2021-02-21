@@ -18,6 +18,11 @@ class FoodRatingCard extends StatelessWidget {
     @required this.onCheckTapped,
   });
 
+  //TODO: Diminuir o espaço preto acima do titulo
+  //TODO: Trocar de lugar e mudar o estilo da fonte da informaçao para tocar na imagem pra ver desc
+  //TODO: Modificar o botao para melhorar o visual
+  //TODO: Melhorar o aviso na parte inferior
+
   @override
   Widget build(BuildContext context) {
     return FlipCard(
@@ -51,7 +56,7 @@ class FoodRatingCard extends StatelessWidget {
                 ),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     food.title,
@@ -62,26 +67,19 @@ class FoodRatingCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    food.desc,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                    ),
+                    'Toque na imagem para ver a descrição',
+                    style: TextStyle(color: Colors.white, fontSize: 8),
                   ),
-                  Center(
-                    child:  IconButton(
-                        icon: Icon(Icons.check_circle),
-                        color: !isChecked ? Colors.white : Colors.greenAccent,
-                        iconSize: 64,
-                        onPressed: onCheckTapped,
-                      ),
-                      // child: ratingBtns(),
-                    ),
-                  
+                  IconButton(
+                    icon: Icon(Icons.check_circle),
+                    color: !isChecked ? Colors.white : Colors.greenAccent,
+                    iconSize: 64,
+                    onPressed: onCheckTapped,
+                  ),
+
                   Text(
                     '*Por favor marque o quanto você gostaria que esse alimento estivesse em seu cardápio.',
                     style: TextStyle(color: Colors.white, fontSize: 8),
-                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
@@ -92,9 +90,10 @@ class FoodRatingCard extends StatelessWidget {
       back: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: Colors.white),
-        child: Center(
-          child: Text('Info : Texto nessa pagina'),
-        ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(food.desc, textAlign: TextAlign.center,),
+          ),
       ),
     );
   }

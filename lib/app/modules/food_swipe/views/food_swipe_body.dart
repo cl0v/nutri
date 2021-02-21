@@ -89,29 +89,30 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
           () => !controller.isOkey
               ? GestureDetector(
                   onTap: controller.onBuildCardapioPressed,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 250,
-                          child: Text(
-                            'Vamos montar o cardápio da semana!',
-                            style: TextStyle(
-                              fontSize: 32,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w300,
+                  behavior: HitTestBehavior.translucent,
+                  child:  Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 250,
+                            child: Text(
+                              'Vamos montar o cardápio da semana!',
+                              style: TextStyle(
+                                fontSize: 32,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w300,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                        ),
-                        Text(
-                          'Toque aqui',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
+                          Text(
+                            'Toque aqui',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                 )
               : Container(),
         ),
