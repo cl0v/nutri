@@ -51,7 +51,6 @@ class MealProvider {
 final mockedFood = FoodModel(
     title: "Peito de Frango",
     img: "assets/images/foods/peito de frango.jpg",
-    prefs: "peito de frango",
     desc:
         "Peito de frango é uma alternativa excelente para perder peso e ganhar musculos.");
 

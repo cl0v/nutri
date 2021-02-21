@@ -5,6 +5,8 @@ import 'package:nutri/app/modules/home/components/extras_selectable_card.dart';
 import 'package:nutri/app/modules/home/components/meal_card.dart';
 import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 
+//TODO:Escurecer a letra das respostas do question
+
 class HomeBody extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {

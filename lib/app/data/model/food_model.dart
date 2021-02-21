@@ -1,40 +1,16 @@
+import 'dart:convert';
+
 class FoodModel {
   String title;
-  String prefs;
   String img;
   String desc;
   //TODO: Add PE
-  //enum
-  // List<CookingType> cooking;
-  //enum
-  // List<MealType> meal;
 
   FoodModel({
     this.title,
-    this.prefs,
     this.img,
     this.desc,
-    // this.cooking,
-    // this.meal,
   });
-
-  FoodModel.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
-    prefs = json['prefs'];
-    img = json['img'];
-    desc = json['desc'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    data['prefs'] = this.prefs;
-    data['img'] = this.img;
-    data['desc'] = this.desc;
-    // data['cooking'] = this.cooking;
-    // data['meal'] = this.meal;
-    return data;
-  }
 
   // List<CookingType> getCooking(int i) {
   //   return i.toString().split("").map((String c) => CookingType.values[int.parse(c)]).toList();
@@ -51,23 +27,33 @@ class FoodModel {
   
     return o is FoodModel &&
       o.title == title &&
-      o.prefs == prefs &&
       o.img == img &&
       o.desc == desc;
   }
 
   @override
-  int get hashCode {
-    return title.hashCode ^
-      prefs.hashCode ^
-      img.hashCode ^
-      desc.hashCode;
+  int get hashCode => title.hashCode ^ img.hashCode ^ desc.hashCode;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'img': img,
+      'desc': desc,
+    };
   }
+
+  factory FoodModel.fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+  
+    return FoodModel(
+      title: map['title'],
+      img: map['img'],
+      desc: map['desc'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory FoodModel.fromJson(String source) => FoodModel.fromMap(json.decode(source));
 }
 
-enum CookingType {
-  grelhado,
-  assado,
-  cozido,
-  frito,
-}

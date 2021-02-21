@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:nutri/app/modules/home/controllers/home_controller.dart';
-import 'package:nutri/app/modules/home/views/body.dart';
+import 'package:nutri/app/modules/home/views/home_body.dart';
 
 class HomeView extends GetView<HomeController> {
   @override

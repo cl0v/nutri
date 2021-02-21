@@ -12,7 +12,7 @@ class FoodProvider {
 
   Future<List<FoodModel>> loadFoods() async {
     var json = await _loadJson();
-    return json.map((j) => FoodModel.fromJson(j)).toList();
+    return json.map((map) => FoodModel.fromMap(map)).toList();
   }
 
   Future<List<FoodModel>> sizedFoodList(int amount) async =>

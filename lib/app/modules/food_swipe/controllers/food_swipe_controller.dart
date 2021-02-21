@@ -51,10 +51,10 @@ class FoodSwipeController extends GetxController {
   void onCheckTapped(FoodModel food, int index) {
     if (isChecked(index)) {
       _checkedIndexes.remove(index);
-      _foodPrefs.remove(food.prefs);
+      _foodPrefs.remove(food.title);
     } else {
       _checkedIndexes.add(index);
-      _foodPrefs.add(food.prefs);
+      _foodPrefs.add(food.title);
     }
   }
   
