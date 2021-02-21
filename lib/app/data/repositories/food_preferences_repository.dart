@@ -6,8 +6,8 @@ class FoodPreferencesRepository {
 
   FoodPreferencesRepository({@required this.provider});
 
-  void setFoodsPrefs(Map<String, int> foodPref) =>
+  void setFoodsPrefs(List<String> foodPref) =>
       provider.setFoodsPrefs(foodPref);
       
-  getFoodPrefs() => provider.getFoodsPrefs();
+  Future<List<String>> getFoodPrefs() => provider.getFoodsPrefs();
 }

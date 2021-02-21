@@ -19,26 +19,38 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
           ),
         ),
         //TODO: Texto selecione até 7 dessas(Calcular quantos deverei escolher)
+        //TODO: Apos confirmar, Agora selecione alguns vegetais para acompanhamento(onde vou incluir ovos mds????)
+        //TODO: Apos confirmar, agora escolha uma bebida que te agrada no cafe da manha (somente com adoçante e sem acompanhamento PURO)
         //Criar model que tratará essas decisoes (quantidade, que alimentos sugerir com base nas questions, etc);
         //TODO: Remover as carinhas e colocar um ou dois botoes de sim ou nao para a semana
         //Ou uma caixinha de selecao grande que quando marcado será de alguma forma mostrado para o usuario
         //Ou Pintar de verde o fundo para itens selecionados da mesma forma do extraCard
         SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(child: Center(
-                child: Text('Escolha até 7 alimentos', style: TextStyle(color: Colors.white, fontSize: 28),),
-              ), flex: 1,),
-              Expanded(
-                flex: 6,
-                child: Obx(
-                  () => controller.isOkey
-                      ? Center(
+          child: Obx(
+            () => controller.isOkey
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            'Escolha até 7 alimentos',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 28,
+                            ),
+                          ),
+                        ),
+                        flex: 1,
+                      ),
+                      Expanded(
+                        flex: 6,
+                        child: Center(
                           child: Container(
-                            height: width * 1.16,
+                            height: width *
+                                1.16, //TODO: Possivelmente adicionar um carroussel, para rodar pras duas direçoes
+                            // Alem de deixar o visual mais bonito, ja que tem uma parte escura no lado esquerdo
                             child: PageView.builder(
-                              // pageSnapping: false,
                                 controller: controller.pageController,
                                 itemCount: controller.foodList.length,
                                 itemBuilder: (context, index) => Obx(
@@ -47,30 +59,28 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
                                         isChecked: controller.isChecked(index),
                                         onCheckTapped: () =>
                                             controller.onCheckTapped(
-                                                controller.foodList[index], index),
+                                                controller.foodList[index],
+                                                index),
                                       ),
                                     )),
                           ),
-                        )
-                      : Container(),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Center(
-                  child: Obx(
-                    () => controller.isOkey
-                        ?  RaisedButton(
-                                onPressed: () {},
-                                child: Text(
-                                  'Confirmar',
-                                ),
-                          )
-                        : Container(),
-                  ),
-                ),
-              ),
-            ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Center(
+                          child: RaisedButton(
+                            //TODO: Modificar esse botao
+                            onPressed: controller.onConfirmPressed,
+                            child: Text(
+                              'Confirmar',
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                : Container(),
           ),
         ),
 

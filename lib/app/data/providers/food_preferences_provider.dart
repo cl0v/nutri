@@ -1,22 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+const foodPrefsKey = 'foodPrefs';
+
 class FoodPreferencesProvider {
   final Future<SharedPreferences> sharedPreferences;
 
   FoodPreferencesProvider({@required this.sharedPreferences});
 
-  Future<Map<String, int>> getFoodsPrefs() async {
-    Map<String, int> map = Map<String, int>();
-    var p = await sharedPreferences;
-    p.getKeys().toList().where((key) => !key.contains('q_')).forEach((key) {
-      if (p.containsKey(key)) {
-        map[key] = p.getInt(key);
-      }
-    });
-    return map;
-  }
+  //TODO: Nao vou mais salvar a nota, vou salvar a comida, por enquanto, ja que dou a possibilidade de a pessoa trocar na home, nao preciso sortear com base na preferencia
 
-  void setFoodsPrefs(Map<String, int> foodPref) => foodPref.forEach(
-      (key, value) async => (await sharedPreferences).setInt(key, value)); 
+  Future<List<String>> getFoodsPrefs() async =>
+      (await sharedPreferences).getStringList(foodPrefsKey);
+
+  void setFoodsPrefs(List<String> foodPrefs) async =>
+      (await sharedPreferences).setStringList(foodPrefsKey, foodPrefs);
+  //TODO: Implement setFoodsPrefs
 }

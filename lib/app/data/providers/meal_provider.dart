@@ -17,6 +17,8 @@ class MealProvider {
 //TODO: Separar em um provider helper ou coisa do tipo
   buildMeal(int mealNumber, int foodNumber) {}
 
+
+//TODO: Estou dando a possibilidade do usuario nao salvar nenhuma comida na foodswipe (Botao de pular)
   _fetchFoods() => _foodRepository.loadFoods();
   _fetchSizedFoodList(amount) => _foodRepository.sizedFoodList(amount: amount);
 

@@ -10,6 +10,7 @@ class HomeController extends GetxController {
 
   HomeController({@required this.mealRepository});
 
+
   RxList<Rx<MealCardModel>> _mealList = <Rx<MealCardModel>>[].obs;
   List<Rx<MealCardModel>> get mealList => _mealList;
 
@@ -68,7 +69,7 @@ class HomeController extends GetxController {
 
   onDonePressed(Rx<MealCardModel> mealCard) {
     mealCard.value.mealCardState = MealCardState.Done;
-     _changeValues(mealCard);
+    _changeValues(mealCard);
   }
 
   _changeValues(Rx<MealCardModel> mealCard) {

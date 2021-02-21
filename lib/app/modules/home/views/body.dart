@@ -34,6 +34,7 @@ class HomeBody extends GetView<HomeController> {
                     ),
                     //TODO: Dar um jeito de saber quando o carrousel vai trocar
                     carouselController: controller.carouselController,
+                    
                     items: controller.mealList
                         .map(
                           (meal) => MealCard(
