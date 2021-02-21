@@ -31,18 +31,33 @@ class FoodSwipeController extends GetxController {
     //TODO: Tornar o food swipe uma pagina que será acessada varias vezes por fontes
     //TODO: Informar o que está sendo escolhido(Cafe da manha, almoço, etc)
     //TODO: Informar para quando está sendo escolhido(HOJE, SEMANA)
-
+    //TODO: BUG: Caso eu vire o card e arraste para duas cartas na frente, o estado do primeiro se perde e volta a parte frontal da carta
 
     super.onInit();
     _fetchFoodsAvailable();
     pageController = PageController(viewportFraction: 0.8)
-      ..addListener(() {
-        _currentPageValue.value = pageController.page;
-      });
+      ..addListener(
+        () {
+          _currentPageValue.value = pageController.page;
+        },
+      );
   }
 
   onSkipPressed() {
     Get.offAllNamed(Routes.HOME);
+  }
+
+  var _checkedIndexes = [].obs;
+
+  void onCheckTapped(FoodModel food, int index) {
+    if (isChecked(index))
+      _checkedIndexes.remove(index);
+    else
+      _checkedIndexes.add(index);
+  }
+
+  bool isChecked(int index) {
+    return _checkedIndexes.contains(index);
   }
 
   onBuildCardapioPressed() {

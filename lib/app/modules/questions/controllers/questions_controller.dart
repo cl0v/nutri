@@ -39,7 +39,7 @@ class QuestionsController extends GetxController {
   }
 
 //TODO: BUGFIX: Se eu clickar rapido, a pagination pode pular mais de uma pagina(2x click)
-
+//TODO: O Questions deve receber a altura e peso do cliente
   @override
   void onClose() {
     _pageController.dispose();

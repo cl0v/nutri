@@ -5,15 +5,11 @@ import 'app/routes/app_pages.dart';
 
 /*
 TODO: --- Sugestoes bacanas ---
--> Apenas deixar a pessoa escolher o que vai querer pra semana, depois jogar isso pruma dotolist de compra
+-> Apenas deixar a pessoa escolher o que vai querer pra semana, depois jogar isso pruma todolist de compra
 -> E sortear aleatoriamente as coisas para fazer o cardapio diario
 
 
 -----------========----------========-------------========-------------
-
-
--> Definir que tipo de alimento combina com qual tipo de combinaçao
--> Definir que tipo de alimento deve ser sugerido
 */
 
 

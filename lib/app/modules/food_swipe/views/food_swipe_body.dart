@@ -23,27 +23,58 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
         //TODO: Remover as carinhas e colocar um ou dois botoes de sim ou nao para a semana
         //Ou uma caixinha de selecao grande que quando marcado será de alguma forma mostrado para o usuario
         //Ou Pintar de verde o fundo para itens selecionados da mesma forma do extraCard
-        
-        Obx(
-          () => controller.isOkey
-              ? Center(
+        SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(child: Center(
+                child: Text('Escolha até 7 alimentos', style: TextStyle(color: Colors.white, fontSize: 28),),
+              ), flex: 1,),
+              Expanded(
+                flex: 6,
+                child: Obx(
+                  () => controller.isOkey
+                      ? Center(
+                          child: Container(
+                            height: width * 1.16,
+                            child: PageView.builder(
+                              // pageSnapping: false,
+                                controller: controller.pageController,
+                                itemCount: controller.foodList.length,
+                                itemBuilder: (context, index) => Obx(
+                                      () => FoodRatingCard(
+                                        food: controller.foodList[index],
+                                        isChecked: controller.isChecked(index),
+                                        onCheckTapped: () =>
+                                            controller.onCheckTapped(
+                                                controller.foodList[index], index),
+                                      ),
+                                    )),
+                          ),
+                        )
+                      : Container(),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Center(
                   child: Obx(
-                    () => Container(
-                      height: (width/3)*3.5,
-                      child: PageView.builder(
-                        controller: controller.pageController,
-                        itemCount: controller.foodList.length,
-                        itemBuilder: (context, index) => FoodRatingCard(
-                          food: controller.foodList[index],
-                          onRatingTapped: controller.onRatingTapped,
-                        ),
-                      ),
-                    ),
+                    () => controller.isOkey
+                        ?  RaisedButton(
+                                onPressed: () {},
+                                child: Text(
+                                  'Confirmar',
+                                ),
+                          )
+                        : Container(),
                   ),
-                )
-              : Container(),
+                ),
+              ),
+            ],
+          ),
         ),
 
+        //TODO: Em um celular que a tela é menor, pode dar bizu
         Obx(
           () => !controller.isOkey
               ? GestureDetector(

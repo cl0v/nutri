@@ -33,15 +33,17 @@ class QuestionViewBody extends StatelessWidget {
           Divider(thickness: 1.5),
           // SizedBox(height: kDefaultPadding),
           Expanded(
-            child: Obx(() => PageView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  controller: controller.pageController,
-                  itemCount: controller.questions.length,
-                  itemBuilder: (context, index) => QuestionCard(
-                    onTap: controller.onAnswerTapped,
-                    question: controller.questions[index],
-                  ),
-                )),
+            child: Obx(
+              () => PageView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                controller: controller.pageController,
+                itemCount: controller.questions.length,
+                itemBuilder: (context, index) => QuestionCard(
+                  onTap: controller.onAnswerTapped,
+                  question: controller.questions[index],
+                ),
+              ),
+            ),
           ),
           SizedBox(height: kDefaultPadding * 3),
         ],

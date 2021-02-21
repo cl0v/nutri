@@ -1,6 +1,7 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/constants.dart';
 
@@ -8,17 +9,18 @@ import 'package:nutri/constants.dart';
 
 class FoodRatingCard extends StatelessWidget {
   final FoodModel food;
-  final Function(FoodModel, double) onRatingTapped;
+  final bool isChecked;
+  final VoidCallback onCheckTapped;
 
   const FoodRatingCard({
     this.food,
-    @required this.onRatingTapped,
+    this.isChecked = false,
+    @required this.onCheckTapped,
   });
 
   @override
   Widget build(BuildContext context) {
     return FlipCard(
-      // key: cardKey,
       flipOnTouch: true,
       front: Container(
         decoration: BoxDecoration(
@@ -67,49 +69,15 @@ class FoodRatingCard extends StatelessWidget {
                     ),
                   ),
                   Center(
-                    child: Container(
-                      height: 42,
-                      decoration: BoxDecoration(
-                        color: kSecondaryColor,
-                        borderRadius: BorderRadius.circular(15),
+                    child:  IconButton(
+                        icon: Icon(Icons.check_circle),
+                        color: !isChecked ? Colors.white : Colors.greenAccent,
+                        iconSize: 64,
+                        onPressed: onCheckTapped,
                       ),
-                      child: RatingBar.builder(
-                        initialRating: 5,
-                        itemCount: 5,
-                        itemBuilder: (context, index) {
-                          switch (index) {
-                            case 0:
-                              return Icon(
-                                Icons.sentiment_very_dissatisfied,
-                                color: Colors.red,
-                              );
-                            case 1:
-                              return Icon(
-                                Icons.sentiment_dissatisfied,
-                                color: Colors.redAccent,
-                              );
-                            case 2:
-                              return Icon(
-                                Icons.sentiment_neutral,
-                                color: Colors.amber,
-                              );
-                            case 3:
-                              return Icon(
-                                Icons.sentiment_satisfied,
-                                color: Colors.lightGreen,
-                              );
-                            case 4:
-                              return Icon(
-                                Icons.sentiment_very_satisfied,
-                                color: Colors.green,
-                              );
-                          }
-                          return null;
-                        },
-                        onRatingUpdate: (r) => onRatingTapped(food, r),
-                      ),
+                      // child: ratingBtns(),
                     ),
-                  ),
+                  
                   Text(
                     '*Por favor marque o quanto você gostaria que esse alimento estivesse em seu cardápio.',
                     style: TextStyle(color: Colors.white, fontSize: 8),

@@ -62,7 +62,6 @@ class HomeController extends GetxController {
     else
       _selectedExtrasList.remove(idx);
   }
-  //TODO:IDEIA: Criar update no cardapio final(no icone i e na logica do calculo de proteinas);
 
 //TODO: CHECK: IMPORTANT: Quando chega no ultimo item, nao tem pra onde ir, o app trava
 //TODO:  Quando chega no ultimo item, nao tem pra onde ir, dar um feedback ou parabenizar a pessoa(pontos concluidos)
