@@ -33,7 +33,7 @@ class HomeController extends GetxController {
                   .obs,
         )
         .toList());
-    _updateExtraList(_mealList.first.value.mealModel.extras);
+    // _updateExtraList(_mealList.first.value.mealModel.extras);
   }
 
   _updateExtraList(List<FoodModel> list) {

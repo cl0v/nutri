@@ -17,9 +17,6 @@ class FoodSwipeBinding extends Bindings {
             sharedPreferences: SharedPreferences.getInstance(),
           ),
         ),
-        foodRepository: FoodRepository(
-          provider: FoodProvider(),
-        ),
       ),
     );
   }

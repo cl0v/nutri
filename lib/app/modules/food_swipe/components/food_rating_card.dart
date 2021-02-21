@@ -1,11 +1,7 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
-import 'package:nutri/constants.dart';
 
-// GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
 
 class FoodRatingCard extends StatelessWidget {
   final FoodModel food;

@@ -35,7 +35,7 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
                         Expanded(
                           child: Center(
                             child: Text(
-                              controller.showingFoodSwipeModel.category,
+                              '${controller.showingFoodSwipeModel.category} (${controller.amountSelected}/${controller.showingFoodSwipeModel.amount})',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 28,

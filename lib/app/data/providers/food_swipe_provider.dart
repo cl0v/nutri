@@ -14,12 +14,36 @@ class FoodSwipeProvider {
   Future<List<FoodSwipeModel>> _buildFoodSwipeList() async {
     //TODO: Esse carinha vai decidir quais comidas sortear
     List<FoodSwipeModel> foodSwipeList = [];
-    var meatList = await _foodProvider.loadDrinks();
+    var meatList = await _foodProvider.loadMeats();
+    var drinkList = await _foodProvider.loadDrinks();
+    var vegList = await _foodProvider.loadVegetables();
+    var fruitList = await _foodProvider.loadFruits();
     foodSwipeList.add(
       FoodSwipeModel(
-        amount: 7,
-        category: FoodSwipeModel.getCategory(FoodCategory.drink),
+        amount: 3,
+        category: FoodSwipeModel.getCategory(FoodCategory.meat),
         foods: meatList,
+      ),
+    );
+    foodSwipeList.add(
+      FoodSwipeModel(
+        amount: 2,
+        category: FoodSwipeModel.getCategory(FoodCategory.vegetable),
+        foods: vegList,
+      ),
+    );
+    foodSwipeList.add(
+      FoodSwipeModel(
+        amount: 1,
+        category: FoodSwipeModel.getCategory(FoodCategory.fruit),
+        foods: fruitList,
+      ),
+    );
+    foodSwipeList.add(
+      FoodSwipeModel(
+        amount: 2,
+        category: FoodSwipeModel.getCategory(FoodCategory.drink),
+        foods: drinkList,
       ),
     );
     return foodSwipeList;

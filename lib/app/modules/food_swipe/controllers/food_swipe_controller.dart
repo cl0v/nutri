@@ -10,22 +10,20 @@ import 'package:nutri/app/routes/app_pages.dart';
 
 class FoodSwipeController extends GetxController {
   final FoodPreferencesRepository foodPreferencesRepository;
-  final FoodRepository foodRepository;
 
   final FoodSwipeRepository foodSwipeRepository =
       FoodSwipeRepository(foodSwipeProvider: FoodSwipeProvider());
 
   FoodSwipeController({
     this.foodPreferencesRepository,
-    @required this.foodRepository,
   });
-
-  RxList<FoodModel> _foodList = <FoodModel>[].obs;
-  List<FoodModel> get foodList => _foodList;
 
   List<FoodSwipeModel> _foodSwipeList = <FoodSwipeModel>[];
   Rx<FoodSwipeModel> _showingFoodSwipeModel = FoodSwipeModel().obs;
   FoodSwipeModel get showingFoodSwipeModel => _showingFoodSwipeModel.value;
+  int currentIndex = 0;
+  final _amountSelected = 0.obs;
+  int get amountSelected => _amountSelected.value;
 
   PageController pageController;
   final _currentPageValue = 0.0.obs;
@@ -42,7 +40,6 @@ class FoodSwipeController extends GetxController {
     //TODO: BUG: Caso eu vire o card e arraste para duas cartas na frente, o estado do primeiro se perde e volta a parte frontal da carta
     //TODO: Checkar se está vindo de algum lugar com o arguments, se estiver nulo ou vazio, mostrar a primeira pagina
     super.onInit();
-    _fetchFoodsAvailable();
     _fetchSomethingToSwipe();
     pageController = PageController(viewportFraction: 0.8)
       ..addListener(
@@ -64,6 +61,23 @@ class FoodSwipeController extends GetxController {
   _setShowingFoodSwipe(FoodSwipeModel foodSwipeModel) =>
       _showingFoodSwipeModel.value = foodSwipeModel;
 
+  onConfirmPressed() {
+    //TODO: Implement onConfirmPressed
+    ++currentIndex;
+    if (currentIndex == _foodSwipeList.length) {
+      Get.offAllNamed(Routes.HOME);
+    } else {
+      _setShowingFoodSwipe(_foodSwipeList[currentIndex]);
+      pageController.jumpToPage(0);
+      _amountSelected.value = 0;
+      _checkedIndexes.clear();
+    }
+    // _savePrefs();
+    // Get.offAllNamed(Routes.HOME);
+    //TODO: Pular a categoria *Proximo foodSwipe
+    //TODO: Caso seja a ultima, salvar e ir pra home
+  }
+
   onSkipPressed() {
     Get.offAllNamed(Routes.HOME);
     //TODO: Pular a categoria *Proximo foodSwipe
@@ -72,23 +86,17 @@ class FoodSwipeController extends GetxController {
 
   List<String> _foodPrefs = <String>[];
   var _checkedIndexes = <int>[].obs;
-
+//TODO: Salvar opçoes marcadas
   void onCheckTapped(FoodModel food, int index) {
     if (isChecked(index)) {
+      _amountSelected.value--;
       _checkedIndexes.remove(index);
       _foodPrefs.remove(food.title);
     } else {
+      _amountSelected.value++;
       _checkedIndexes.add(index);
       _foodPrefs.add(food.title);
     }
-  }
-
-  onConfirmPressed() {
-    //TODO: Implement onConfirmPressed
-    _savePrefs();
-    Get.offAllNamed(Routes.HOME);
-    //TODO: Pular a categoria *Proximo foodSwipe
-    //TODO: Caso seja a ultima, salvar e ir pra home
   }
 
   void _savePrefs() {
@@ -101,10 +109,6 @@ class FoodSwipeController extends GetxController {
 
   onBuildCardapioPressed() {
     _isOkey.value = true;
-  }
-
-  _fetchFoodsAvailable() async {
-    _foodList.assignAll(await foodRepository.loadAllFoods());
   }
 
   @override
