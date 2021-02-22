@@ -2,17 +2,24 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/data/providers/food_preferences_provider.dart';
+import 'package:nutri/app/data/repositories/food_preferences_repository.dart';
 import 'package:nutri/app/data/repositories/meal_repository.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeController extends GetxController {
   final MealRepository mealRepository;
 
+  final FoodPreferencesRepository foodPreferencesRepository =
+      FoodPreferencesRepository(
+          provider: FoodPreferencesProvider(
+              sharedPreferences: SharedPreferences.getInstance()));
+
   HomeController({@required this.mealRepository});
 
-
-  RxList<Rx<MealCardModel>> _mealList = <Rx<MealCardModel>>[].obs;
-  List<Rx<MealCardModel>> get mealList => _mealList;
+  RxList<MealCardModel> _mealList = <MealCardModel>[].obs;
+  List<MealCardModel> get mealList => _mealList;
 
   CarouselController carouselController = CarouselController();
 
@@ -22,15 +29,19 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _printPrefs();
     _fetchMeals();
+  }
+
+  _printPrefs() async {
+    print(await foodPreferencesRepository.getFoodPrefs());
   }
 
   _fetchMeals() async {
     _mealList.assignAll((await mealRepository.fetchMeals(4))
         .map(
           (meal) =>
-              MealCardModel(mealModel: meal, mealCardState: MealCardState.None)
-                  .obs,
+              MealCardModel(mealModel: meal, mealCardState: MealCardState.None),
         )
         .toList());
     // _updateExtraList(_mealList.first.value.mealModel.extras);
@@ -67,27 +78,27 @@ class HomeController extends GetxController {
 //TODO: CHECK: IMPORTANT: Quando chega no ultimo item, nao tem pra onde ir, o app trava
 //TODO:  Quando chega no ultimo item, nao tem pra onde ir, dar um feedback ou parabenizar a pessoa(pontos concluidos)
 
-  onDonePressed(Rx<MealCardModel> mealCard) {
-    mealCard.value.mealCardState = MealCardState.Done;
+  onDonePressed(MealCardModel mealCard) {
+    //TODO: Tornar esse cara reativo
+    mealCard.mealCardState = MealCardState.Done;
     _changeValues(mealCard);
   }
 
-  _changeValues(Rx<MealCardModel> mealCard) {
+  _changeValues(MealCardModel mealCard) {
     //TODO: Rename
     int idx = mealList.indexOf(mealCard) + 1;
-    if (idx < mealList.length)
-      _updateExtraList(mealList[idx].value.mealModel.extras);
+    if (idx < mealList.length) _updateExtraList(mealList[idx].mealModel.extras);
     //TODO: So está atualizando quando a lista termina
     //TODO: Fazer algo quando conclui o ultimo item
     carouselController.nextPage();
   }
 
-  onSkipPressed(Rx<MealCardModel> mealCard) {
-    mealCard.value.mealCardState = MealCardState.Skiped;
+  onSkipPressed(MealCardModel mealCard) {
+    mealCard.mealCardState = MealCardState.Skiped;
     _changeValues(mealCard);
   }
 
-  onChangePressed(Rx<MealCardModel> mealCard) {
+  onChangePressed(MealCardModel mealCard) {
     // int idx = mealList.indexOf(mealCard) + 1;
     // mealCard.value.mealCardState = MealCardState.Done;
     // if (idx < mealList.length)

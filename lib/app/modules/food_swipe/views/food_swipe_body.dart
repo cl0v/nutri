@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:nutri/app/modules/food_swipe/components/food_rating_card.dart';
+import 'package:nutri/app/modules/food_swipe/components/food_swipe_card.dart';
 import 'package:nutri/app/modules/food_swipe/controllers/food_swipe_controller.dart';
 
 class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
@@ -56,7 +56,7 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
                                   itemCount: controller
                                       .showingFoodSwipeModel.foods.length,
                                   itemBuilder: (context, index) => Obx(
-                                        () => FoodRatingCard(
+                                        () => FoodSwipeCard(
                                           food: controller.showingFoodSwipeModel
                                               .foods[index],
                                           isChecked:

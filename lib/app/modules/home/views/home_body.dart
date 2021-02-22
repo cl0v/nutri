@@ -39,7 +39,7 @@ class HomeBody extends GetView<HomeController> {
                     items: controller.mealList
                         .map(
                           (meal) => MealCard(
-                            mealCardModel: meal.value,
+                            mealCardModel: meal,
                             onConfirmedPressed: () =>
                                 controller.onDonePressed(meal),
                             onSkippedPressed: () =>

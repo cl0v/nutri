@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 
 
-class FoodRatingCard extends StatelessWidget {
+class FoodSwipeCard extends StatelessWidget {
   final FoodModel food;
   final bool isChecked;
   final VoidCallback onCheckTapped;
 
-  const FoodRatingCard({
+  const FoodSwipeCard({
     this.food,
     this.isChecked = false,
     @required this.onCheckTapped,
@@ -73,8 +73,9 @@ class FoodRatingCard extends StatelessWidget {
                     onPressed: onCheckTapped,
                   ),
                   Text(
-                    '*Por favor marque o quanto você gostaria que esse alimento estivesse em seu cardápio.',
-                    style: TextStyle(color: Colors.white, fontSize: 8),
+                    '*Por favor marque caso queira que esse alimento esteja em seu cardápio.',
+                    style: TextStyle(color: Colors.white, fontSize: 8,),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
@@ -83,6 +84,10 @@ class FoodRatingCard extends StatelessWidget {
         ),
       ),
       back: Container(
+        margin: EdgeInsets.symmetric(
+          horizontal: 10,
+          // vertical: 30,
+        ),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: Colors.white),
         child: Padding(

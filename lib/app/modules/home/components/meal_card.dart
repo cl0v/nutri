@@ -19,7 +19,6 @@ class MealCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    print(mealCardModel.mealCardState);
     return Container(
       margin: EdgeInsets.all(4.0),
       child: ClipRRect(
@@ -84,7 +83,7 @@ class MealCard extends StatelessWidget {
                               color: Colors.white,
                             ),
                             onPressed: () {
-                              print('so pode ser brinks');
+                             //TODO: Implement info btn
                             },
                           )
                         ],
