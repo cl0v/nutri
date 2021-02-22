@@ -1,11 +1,18 @@
 import 'dart:convert';
 
 //TODO: Pensar em como passar um drink no cardapio diario...
-//TODO: Criar model que definde o cardapio do dia( o model final, mais importante para o home)
-//TODO: Tera uma lista de Meal + uma bebida????????
+//TODO: Criar model que definde o cardapio do dia( o model final, mais importante para o home) ???
 
-//TODO: Implement unidade de medida comumente usada(Tentar limitar a quantidade)
 //TODO: Quantidade dos extras (Ex: brocolis 2 unidades)
+//TODO: Implement 'unidade de medida' nos extras comumente usada(Tentar limitar a quantidade)
+
+//TODO: Terminar de preencher com base nos quadros de categoria do livro
+enum FoodCategory {
+  drink,
+  meat,
+  vegetable,
+  fruit,
+}
 
 class FoodModel {
   String title;
@@ -73,14 +80,6 @@ class FoodModel {
 
   static getCategoryFromIndex(int index) => FoodCategory.values[index];
   static getIndexFromCategory(FoodCategory category) => category.index;
-}
-
-//TODO: Terminar de preencher com base nos quadros de categoria do livro
-enum FoodCategory {
-  drink,
-  meat,
-  vegetable,
-  fruit,
 }
 
 /*

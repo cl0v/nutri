@@ -5,11 +5,9 @@ import 'package:nutri/app/data/model/food_model.dart';
 class MealModel {
   //enum
   MealType meal;
-  FoodModel
-      food; //TODO: BUG: Como o mealModel pede um foodmodel, nao posso colocar cafe, nem bebidas *
+  FoodModel food;
   List<FoodModel> extras;
-  //TODO: ADD: Numero de acompanhamentos... para aquela refeiçao? (Ex: escolha ate 3 acompanhamentos)
-//O ALGORITMO PODE SORTEAR UM NUMERO ALEATORIO COM BASE NO FINAL DA DIETA
+  
   MealModel({
     this.meal,
     this.food,

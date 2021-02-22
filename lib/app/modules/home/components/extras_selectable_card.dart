@@ -30,9 +30,9 @@ class ExtraSelectableCard extends StatelessWidget {
           () => Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: controller.getSelectedIndex(index)
+                color: controller.getSelectedIndex(index) //TODO: Remover index
                     ? Colors.green.withOpacity(.4)
-                    : Colors.black.withOpacity(.3) //Trocar a cor
+                    : Colors.black.withOpacity(.3) 
                 ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

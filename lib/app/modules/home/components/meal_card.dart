@@ -33,12 +33,11 @@ class MealCard extends StatelessWidget {
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: (mealCardModel.mealCardState == MealCardState.Done
-                      ? Colors.greenAccent
-                      : mealCardModel.mealCardState == MealCardState.Skiped
-                          ? Colors.redAccent
-                          : Colors.black)
-                  .withOpacity(0.6),
+              color: mealCardModel.mealCardState == MealCardState.Done
+                  ? Colors.greenAccent.withOpacity(0.6)
+                  : mealCardModel.mealCardState == MealCardState.Skiped
+                      ? Colors.redAccent.withOpacity(0.6)
+                      : null,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
@@ -64,29 +63,15 @@ class MealCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            MealModel.getTranslatedMeal(
-                                mealCardModel.mealModel.meal),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Spacer(),
-                          IconButton(
-                            icon: Icon(
-                              Icons.info,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                             //TODO: Implement info btn
-                            },
-                          )
-                        ],
+                      Text(
+                        MealModel.getTranslatedMeal(
+                            mealCardModel.mealModel.meal),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Text(
                         '   • ${mealCardModel.mealModel.food.title}',
@@ -153,7 +138,7 @@ class MealCardButtons extends StatelessWidget {
             child: Expanded(
               child: RaisedButton(
                 onPressed: onTapBlocked ? null : onSkippedPressed,
-                child: Text('Passei'),
+                child: Text('Pulei'),
                 // icon: Icon(Icons.clear,),
               ),
             ),
@@ -173,7 +158,6 @@ class MealCardButtons extends StatelessWidget {
               ),
             ),
           ),
-          // IconButton(icon: Icon(Icons.replay_outlined),onPressed: (),),
           ButtonTheme(
             height: 30,
             buttonColor: kGreenColor,
@@ -186,7 +170,7 @@ class MealCardButtons extends StatelessWidget {
             child: Expanded(
               child: RaisedButton(
                 onPressed: onTapBlocked ? null : onConfirmedPressed,
-                child: Text('Concluído'),
+                child: Text('Concluí'),
                 // icon: Icon(
                 //   Icons.check,
                 // ),

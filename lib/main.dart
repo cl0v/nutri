@@ -7,8 +7,6 @@ import 'app/routes/app_pages.dart';
 TODO: --- Sugestoes bacanas ---
 -> Apenas deixar a pessoa escolher o que vai querer pra semana, depois jogar isso pruma todolist de compra
 -> E sortear aleatoriamente as coisas para fazer o cardapio diario
-
-
 -----------========----------========-------------========-------------
 */
 

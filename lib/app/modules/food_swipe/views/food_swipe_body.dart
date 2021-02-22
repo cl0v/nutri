@@ -4,6 +4,10 @@ import 'package:get/get.dart';
 import 'package:nutri/app/modules/food_swipe/components/food_swipe_card.dart';
 import 'package:nutri/app/modules/food_swipe/controllers/food_swipe_controller.dart';
 
+//TODO: IDEIA: Pintar de verde o fundo para itens selecionados da mesma forma do extraCard
+//TODO:IDEIA: Tornar o foodSwipe um carroussel, para rodar pras duas direçoes
+// Alem de deixar o visual mais bonito, ja que tem uma parte escura no lado esquerdo
+
 class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
   @override
   Widget build(BuildContext context) {
@@ -18,13 +22,7 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
             fit: BoxFit.cover,
           ),
         ),
-        //TODO: Texto selecione até 7 dessas(Calcular quantos deverei escolher)
-        //TODO: Apos confirmar, Agora selecione alguns vegetais para acompanhamento(onde vou incluir ovos mds????)
-        //TODO: Apos confirmar, agora escolha uma bebida que te agrada no cafe da manha (somente com adoçante e sem acompanhamento PURO)
-        //Criar model que tratará essas decisoes (quantidade, que alimentos sugerir com base nas questions, etc);
-        //TODO: Remover as carinhas e colocar um ou dois botoes de sim ou nao para a semana
-        //Ou uma caixinha de selecao grande que quando marcado será de alguma forma mostrado para o usuario
-        //Ou Pintar de verde o fundo para itens selecionados da mesma forma do extraCard
+
         SafeArea(
           child: Obx(
             () => controller.isOkey
@@ -48,9 +46,7 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
                           flex: 6,
                           child: Center(
                             child: Container(
-                              height: width *
-                                  1.16, //TODO: Possivelmente adicionar um carroussel, para rodar pras duas direçoes
-                              // Alem de deixar o visual mais bonito, ja que tem uma parte escura no lado esquerdo
+                              height: width * 1.16,
                               child: PageView.builder(
                                   controller: controller.pageController,
                                   itemCount: controller
@@ -76,7 +72,6 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
                           flex: 2,
                           child: Center(
                             child: RaisedButton(
-                              //TODO: Modificar esse botao
                               onPressed: controller.onConfirmPressed,
                               child: Text(
                                 'Confirmar',
@@ -90,8 +85,6 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
                 : Container(),
           ),
         ),
-
-        //TODO: Em um celular que a tela é menor, pode dar bizu
         Obx(
           () => !controller.isOkey
               ? GestureDetector(

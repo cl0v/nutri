@@ -47,7 +47,7 @@ class FoodProvider {
         .toList();
   }
 
-//TODO: Trabalhar nesse carinha;
+//TODO: Implement loadFoodsFromPreferences;
   Future<List<FoodModel>> loadFoodsFromPreferences(List<String> prefs) async {
     if (prefs == null) return [];
     var json = await _loadJson();

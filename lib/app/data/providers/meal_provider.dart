@@ -1,10 +1,8 @@
 import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/data/providers/food_provider.dart';
-import 'package:nutri/app/data/repositories/food_repository.dart';
 
   //TODO: Entender com o tempo as escolhar do usuario (padroes etc)
   //TODO: Escolher a melhor forma de organizar quais alimentos deverão aparecer;
-
 
 class MealProvider {
 

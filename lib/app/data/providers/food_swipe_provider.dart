@@ -5,11 +5,9 @@ import 'package:nutri/app/data/providers/food_provider.dart';
 class FoodSwipeProvider {
   FoodProvider _foodProvider = FoodProvider();
 
-// FoodSwipeProvider();
-//TODO: Talvez importar o provider??
-
   Future<List<FoodSwipeModel>> loadFoodSwipeList() async =>
       _buildFoodSwipeList();
+
 
   Future<List<FoodSwipeModel>> _buildFoodSwipeList() async {
     //TODO: Esse carinha vai decidir quais comidas sortear

@@ -2,6 +2,8 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 
+  //TODO: Modificar o botao para melhorar o visual
+  //TODO: Melhorar o aviso na parte inferior
 
 class FoodSwipeCard extends StatelessWidget {
   final FoodModel food;
@@ -14,15 +16,12 @@ class FoodSwipeCard extends StatelessWidget {
     @required this.onCheckTapped,
   });
 
-  //TODO: Diminuir o espaço preto acima do titulo
-  //TODO: Trocar de lugar e mudar o estilo da fonte da informaçao para tocar na imagem pra ver desc
-  //TODO: Modificar o botao para melhorar o visual
-  //TODO: Melhorar o aviso na parte inferior
 
   @override
   Widget build(BuildContext context) {
     return FlipCard(
       flipOnTouch: true,
+      speed: 250,
       front: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
@@ -33,16 +32,17 @@ class FoodSwipeCard extends StatelessWidget {
         ),
         margin: EdgeInsets.symmetric(
           horizontal: 10,
-          // vertical: 30,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 30,
+              padding: const EdgeInsets.only(
+                right: 20,
+                left: 20,
+                bottom: 25,
+                top: 10,
               ),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.3),
@@ -62,19 +62,22 @@ class FoodSwipeCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
-                    'Toque na imagem para ver a descrição',
-                    style: TextStyle(color: Colors.white, fontSize: 8),
-                  ),
                   IconButton(
                     icon: Icon(Icons.check_circle),
                     color: !isChecked ? Colors.white : Colors.greenAccent,
-                    iconSize: 64,
+                    iconSize: 52,
                     onPressed: onCheckTapped,
                   ),
                   Text(
-                    '*Por favor marque caso queira que esse alimento esteja em seu cardápio.',
-                    style: TextStyle(color: Colors.white, fontSize: 8,),
+                    '*Toque na imagem para ver mais informações*',
+                    style: TextStyle(color: Colors.white, fontSize: 8),
+                  ),
+                  Text(
+                    'Por favor marque caso queira que esse alimento esteja em seu cardápio.',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 8,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -86,7 +89,6 @@ class FoodSwipeCard extends StatelessWidget {
       back: Container(
         margin: EdgeInsets.symmetric(
           horizontal: 10,
-          // vertical: 30,
         ),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: Colors.white),
