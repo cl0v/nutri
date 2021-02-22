@@ -11,27 +11,25 @@ import 'package:nutri/app/data/model/meal_model.dart';
 //TODO: Descobrir quantas refeições a pessoa costuma fazer;
 
 class MealProvider {
-  Future<List<MealModel>> fetchMeals(int number) async {
+  Future<List<MealModel>> fetchMeals() async {
     List<MealModel>();
     var foods = await FoodModelHelper.loadAllFoods();
     List meals = List<MealModel>();
     foods.forEach(
       (food) {
-        var randNum = Random().nextInt(3);
         meals.add(
           MealModel(
-              food: food,
-              meal: MealType.breakfast,
-              extras: foods
-                  .where((f) => f.category == FoodCategory.vegetable)
-                  .take(randNum)
-                  .toList() //TODO: Testar sem a toList
-              ),
+            food: food,
+            meal: MealType.breakfast,
+            extras: foods
+                .where((f) => f.category == FoodCategory.vegetable)
+                .toList(), //TODO: Testar sem a toList
+          ),
         );
       },
     );
     _sortMealListByMealOrder(meals);
-    return meals;
+    return meals.toList();
   }
 
   _sortMealListByMealOrder(List<MealModel> m1) {

@@ -64,5 +64,23 @@
     "img": "assets/images/foods/refrigerante sem açucar.jpg",
     "desc": "Sim, você pode tomar refrigerante, desde que não tenha açucar.",
     "category": 0
+  },
+  {
+    "title": "Repolho Roxo",
+    "img": "assets/images/foods/repolho roxo.jpg",
+    "desc": "Repolho roxo mt bom",
+    "category": 2
+  },
+  {
+    "title": "Couve Flor",
+    "img": "assets/images/foods/couve flor.jpg",
+    "desc": "Couve flor faz bem",
+    "category": 2
+  },
+  {
+    "title": "Repolho",
+    "img": "assets/images/foods/repolho.jpg",
+    "desc": "Repolho roxo mt bom",
+    "category": 2
   }
 ]

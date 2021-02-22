@@ -7,7 +7,7 @@ class MealRepository {
 
   MealRepository({@required this.provider});
 
-  Future<List<MealModel>> fetchMeals(int number) => provider.fetchMeals(number);
+  Future<List<MealModel>> fetchMeals() => provider.fetchMeals();
 
   // Future<List<MealModel>> buildMeal({int mealNumber, int foodNumber}) =>
   //     provider.buildMeal(mealNumber, foodNumber);

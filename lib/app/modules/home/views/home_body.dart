@@ -5,7 +5,6 @@ import 'package:nutri/app/modules/home/components/extras_selectable_card.dart';
 import 'package:nutri/app/modules/home/components/meal_card.dart';
 import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 
-
 class HomeBody extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
@@ -32,20 +31,20 @@ class HomeBody extends GetView<HomeController> {
                       scrollDirection: Axis.vertical,
                       viewportFraction: 0.9,
                       enlargeCenterPage: true,
+                      // pageSnapping: false,
+                      onPageChanged: controller.onPageChanged
                     ),
                     //TODO: Dar um jeito de saber quando o carrousel vai trocar
                     carouselController: controller.carouselController,
-                    
-                    items: controller.mealList
+
+
+                    items: controller.meals
                         .map(
                           (meal) => MealCard(
                             mealCardModel: meal,
-                            onConfirmedPressed: () =>
-                                controller.onDonePressed(meal),
-                            onSkippedPressed: () =>
-                                controller.onSkipPressed(meal),
-                            onChangePressed: () =>
-                                controller.onChangePressed(meal),
+                            onConfirmedPressed: controller.onDonePressed,
+                            onSkippedPressed: controller.onSkipPressed,
+                            onChangePressed: controller.onChangePressed,
                           ),
                         )
                         .toList(),
@@ -57,7 +56,7 @@ class HomeBody extends GetView<HomeController> {
                 ),
                 Obx(
                   () => GridView.builder(
-                    itemCount: controller.extraList.length,
+                    itemCount: controller.extras.length,
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -65,7 +64,7 @@ class HomeBody extends GetView<HomeController> {
                     ),
                     itemBuilder: (context, index) {
                       return ExtraSelectableCard(
-                        extra: controller.extraList[index],
+                        extra: controller.extras[index],
                         onTap: () => controller.onExtraTapped(index),
                         index: index,
                       );
