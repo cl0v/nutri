@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
+
 //TODO: Pensar em como passar um drink no cardapio diario...
 //TODO: Criar model que definde o cardapio do dia( o model final, mais importante para o home) ???
 
@@ -80,6 +82,51 @@ class FoodModel {
 
   static getCategoryFromIndex(int index) => FoodCategory.values[index];
   static getIndexFromCategory(FoodCategory category) => category.index;
+}
+
+const jsonPath = 'assets/jsons/food_data.json';
+
+abstract class FoodModelHelper {
+  /// Recebe todas as comidas cadastradas no banco
+  static Future<List<FoodModel>> loadAllFoods() async {
+    var json = await _loadJson();
+    return json.map((map) => FoodModel.fromMap(map)).toList();
+  }
+
+  ///Recebe todas as carnes cadastradas no banco
+  static loadMeats() => _sortJsonByCategory(FoodCategory.meat);
+
+  ///Recebe todas as bebidas cadastradas no banco
+  static loadDrinks() => _sortJsonByCategory(FoodCategory.drink);
+
+  ///Recebe todas os vegetais cadastrados no banco
+  static loadVegetables() => _sortJsonByCategory(FoodCategory.vegetable);
+
+  ///Recebe todas as frutas cadastradas no banco
+  static loadFruits() => _sortJsonByCategory(FoodCategory.fruit);
+
+  static Future<List> _loadJson() async =>
+      jsonDecode(await rootBundle.loadString(jsonPath));
+
+  static Future<List<FoodModel>> _sortJsonByCategory(FoodCategory category) async {
+    var json = await _loadJson();
+    return json
+        .where((map) =>
+            map['category'] == FoodModel.getIndexFromCategory(category))
+        .map((map) => FoodModel.fromMap(map))
+        .toList();
+  }
+
+
+//TODO: Implement loadFoodsFromPreferences;
+  Future<List<FoodModel>> loadFoodsFromPreferences(List<String> prefs) async {
+    if (prefs == null) return [];
+    var json = await _loadJson();
+    return json
+        .where((map) => prefs.contains(map['title']))
+        .map((map) => FoodModel.fromMap(map))
+        .toList();
+  }
 }
 
 /*

@@ -1,9 +1,7 @@
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/food_swipe_model.dart';
-import 'package:nutri/app/data/providers/food_provider.dart';
 
 class FoodSwipeProvider {
-  FoodProvider _foodProvider = FoodProvider();
 
   Future<List<FoodSwipeModel>> loadFoodSwipeList() async =>
       _buildFoodSwipeList();
@@ -12,10 +10,10 @@ class FoodSwipeProvider {
   Future<List<FoodSwipeModel>> _buildFoodSwipeList() async {
     //TODO: Esse carinha vai decidir quais comidas sortear
     List<FoodSwipeModel> foodSwipeList = [];
-    var meatList = await _foodProvider.loadMeats();
-    var drinkList = await _foodProvider.loadDrinks();
-    var vegList = await _foodProvider.loadVegetables();
-    var fruitList = await _foodProvider.loadFruits();
+    var meatList = await FoodModelHelper.loadMeats();
+    var drinkList = await FoodModelHelper.loadDrinks();
+    var vegList = await FoodModelHelper.loadVegetables();
+    var fruitList = await FoodModelHelper.loadFruits();
     foodSwipeList.add(
       FoodSwipeModel(
         amount: 3,

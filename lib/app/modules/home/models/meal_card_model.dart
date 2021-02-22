@@ -4,10 +4,14 @@ class MealCardModel {
   final MealModel mealModel;
   MealCardState mealCardState;
 
-  MealCardModel({this.mealModel, this.mealCardState});
+  MealCardModel({
+    this.mealModel,
+    this.mealCardState = MealCardState.None,
+  });
 
   @override
-  String toString() => 'MealCardModel(mealModel: $mealModel, mealCardState: $mealCardState)';
+  String toString() =>
+      'MealCardModel(mealModel: $mealModel, mealCardState: $mealCardState)';
 }
 
 enum MealCardState {

@@ -2,19 +2,11 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
-import 'package:nutri/app/data/providers/food_preferences_provider.dart';
-import 'package:nutri/app/data/repositories/food_preferences_repository.dart';
 import 'package:nutri/app/data/repositories/meal_repository.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeController extends GetxController {
   final MealRepository mealRepository;
-
-  final FoodPreferencesRepository foodPreferencesRepository =
-      FoodPreferencesRepository(
-          provider: FoodPreferencesProvider(
-              sharedPreferences: SharedPreferences.getInstance()));
 
   HomeController({@required this.mealRepository});
 
@@ -29,20 +21,12 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _printPrefs();
     _fetchMeals();
-  }
-
-  _printPrefs() async {
-    print(await foodPreferencesRepository.getFoodPrefs());
   }
 
   _fetchMeals() async {
     _mealList.assignAll((await mealRepository.fetchMeals(4))
-        .map(
-          (meal) =>
-              MealCardModel(mealModel: meal, mealCardState: MealCardState.None),
-        )
+        .map((meal) => MealCardModel(mealModel: meal))
         .toList());
     // _updateExtraList(_mealList.first.value.mealModel.extras);
   }
@@ -77,6 +61,8 @@ class HomeController extends GetxController {
 
 //TODO: CHECK: IMPORTANT: Quando chega no ultimo item, nao tem pra onde ir, o app trava
 //TODO:  Quando chega no ultimo item, nao tem pra onde ir, dar um feedback ou parabenizar a pessoa(pontos concluidos)
+
+//TODO: BUG: onDonePressed Error: The getter 'iterator' was called on null.
 
   onDonePressed(MealCardModel mealCard) {
     //TODO: Tornar esse cara reativo
