@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 
@@ -23,17 +21,19 @@ class MealProvider {
             meal: MealType.breakfast,
             extras: foods
                 .where((f) => f.category == FoodCategory.vegetable)
-                .toList(), //TODO: Testar sem a toList
+                .toList(),
           ),
         );
       },
     );
-    _sortMealListByMealOrder(meals);
-    return meals.toList();
+    _sortMealListByMealTypeOrder(meals);
+    
+    return meals.take(3).toList();
   }
 
-  _sortMealListByMealOrder(List<MealModel> m1) {
-    m1.sort((a, b) => a.meal.index.compareTo(b.meal.index));
-    return m1;
+  _sortMealListByMealTypeOrder(List<MealModel> m) {
+    //TODO: Testar sem o retorno;
+    m.sort((a, b) => a.meal.index.compareTo(b.meal.index));
+    return m;
   }
 }

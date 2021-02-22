@@ -26,17 +26,13 @@ class HomeBody extends GetView<HomeController> {
                 Obx(
                   () => CarouselSlider(
                     options: CarouselOptions(
-                      // autoPlay: true,
-                      aspectRatio: 1.7,
-                      scrollDirection: Axis.vertical,
-                      viewportFraction: 0.9,
-                      enlargeCenterPage: true,
-                      // pageSnapping: false,
-                      onPageChanged: controller.onPageChanged
-                    ),
+                        aspectRatio: 1.7,
+                        scrollDirection: Axis.vertical,
+                        viewportFraction: 0.9,
+                        enlargeCenterPage: true,
+                        onPageChanged: controller.onPageChanged),
                     //TODO: Dar um jeito de saber quando o carrousel vai trocar
                     carouselController: controller.carouselController,
-
 
                     items: controller.meals
                         .map(
@@ -50,10 +46,10 @@ class HomeBody extends GetView<HomeController> {
                         .toList(),
                   ),
                 ),
-                Text(
-                  'Selecione 3 acompanhamentos',
-                  style: TextStyle(color: Colors.white),
-                ),
+                Obx(() => Text(
+                      'Selecione ${controller.extrasAmount} acompanhamentos',
+                      style: TextStyle(color: Colors.white),
+                    )),
                 Obx(
                   () => GridView.builder(
                     itemCount: controller.extras.length,
@@ -63,10 +59,12 @@ class HomeBody extends GetView<HomeController> {
                       crossAxisCount: 3,
                     ),
                     itemBuilder: (context, index) {
-                      return ExtraSelectableCard(
-                        extra: controller.extras[index],
-                        onTap: () => controller.onExtraTapped(index),
-                        index: index,
+                      return Obx(
+                        () => ExtraSelectableCard(
+                          extra: controller.extras[index],
+                          onTap: () => controller.onExtraTapped(index),
+                          isSelected: controller.getSelectedIndex(index),
+                        ),
                       );
                     },
                   ),
