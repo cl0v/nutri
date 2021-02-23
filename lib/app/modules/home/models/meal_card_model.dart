@@ -8,7 +8,7 @@ class MealCardModel {
   MealCardModel({
     this.mealModel,
     this.mealCardState = MealCardState.None,
-    this.extrasSelectedIndex = const <int>[], //TODO: Soluçao parcial foi remover a constante
+    this.extrasSelectedIndex = const <int>[],
   });
 
   @override

@@ -10,17 +10,22 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text('Comer hoje'),
-        centerTitle: true,
+        title: Row(
+          children: [
+            IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: null,),
+            Text('HOJE'),
+            IconButton(icon: Icon(Icons.arrow_forward_ios), onPressed: (){},),
+          ],
+        ),
 
         //TODO: Botao que vai para a checklist ???
         //TODO: Pagina de FAQ
-        // actions: [
-        //   IconButton(
-        //     icon: Icon(Icons.help),
-        //     onPressed: () {},
-        //   )
-        // ],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.help),
+            onPressed: () {},
+          )
+        ],
       ),
       // bottomNavigationBar: BottomAppBar(child: Row(children: [IconButton(icon: Icon(Icons.home,), onPressed: (){},),],),),
       body: HomeBody(),

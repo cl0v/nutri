@@ -33,7 +33,7 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
                         Expanded(
                           child: Center(
                             child: Text(
-                              '${controller.showingFoodSwipeModel.category} (${controller.amountSelected}/${controller.showingFoodSwipeModel.amount})',
+                              '${controller.currentFoodSwipeModel.category} (${controller.amountSelected}/${controller.currentFoodSwipeModel.amount})',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 28,
@@ -50,16 +50,16 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
                               child: PageView.builder(
                                   controller: controller.pageController,
                                   itemCount: controller
-                                      .showingFoodSwipeModel.foods.length,
+                                      .currentFoodSwipeModel.foods.length,
                                   itemBuilder: (context, index) => Obx(
                                         () => FoodSwipeCard(
-                                          food: controller.showingFoodSwipeModel
+                                          food: controller.currentFoodSwipeModel
                                               .foods[index],
                                           isChecked:
                                               controller.isChecked(index),
                                           onCheckTapped: () =>
                                               controller.onCheckTapped(
-                                            controller.showingFoodSwipeModel
+                                            controller.currentFoodSwipeModel
                                                 .foods[index],
                                             index,
                                           ),

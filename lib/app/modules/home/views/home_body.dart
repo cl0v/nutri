@@ -24,26 +24,26 @@ class HomeBody extends GetView<HomeController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Obx(
-                  () => CarouselSlider(
-                    options: CarouselOptions(
-                        aspectRatio: 1.7,
-                        scrollDirection: Axis.vertical,
-                        viewportFraction: 0.9,
-                        enlargeCenterPage: true,
-                        onPageChanged: controller.onPageChanged),
-                    //TODO: Dar um jeito de saber quando o carrousel vai trocar
-                    carouselController: controller.carouselController,
-
-                    items: controller.meals
-                        .map(
-                          (meal) => MealCard(
-                            mealCardModel: meal,
-                            onConfirmedPressed: controller.onDonePressed,
-                            onSkippedPressed: controller.onSkipPressed,
-                            onChangePressed: controller.onChangePressed,
-                          ),
-                        )
-                        .toList(),
+                  () => AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: PageView.builder(
+                      onPageChanged: controller.onPageChanged,
+                      itemCount: controller.mealListLenght.value,
+                      controller: controller.pageController,
+                      physics: AlwaysScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (context, index) => MealCard(
+                          mealCardModel: controller.mealList[index],
+                          mealCardState:
+                              controller.mealList[index].mealCardState,
+                          onConfirmedPressed: () =>
+                              controller.onDonePressed(index),
+                          onSkippedPressed: () =>
+                              controller.onSkipPressed(index),
+                          onChangePressed: controller.onChangePressed,
+                        
+                      ),
+                    ),
                   ),
                 ),
                 Obx(() => Text(

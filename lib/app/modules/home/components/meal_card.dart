@@ -7,12 +7,14 @@ import 'package:nutri/constants.dart';
 
 class MealCard extends StatelessWidget {
   final MealCardModel mealCardModel;
+  final MealCardState mealCardState;
   final VoidCallback onConfirmedPressed;
   final VoidCallback onSkippedPressed;
   final VoidCallback onChangePressed;
 
   const MealCard({
     this.mealCardModel,
+    this.mealCardState,
     this.onConfirmedPressed,
     this.onSkippedPressed,
     this.onChangePressed,
@@ -59,13 +61,12 @@ class MealCard extends StatelessWidget {
                     ),
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        MealModel.getTranslatedMeal(
-                            mealCardModel.mealModel.meal),
+                        '${MealModel.getTranslatedMeal(mealCardModel.mealModel.meal)} de hoje',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
@@ -99,6 +100,38 @@ class MealCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+// Align(
+//   child: DotsIndicator(),
+//   alignment: Alignment.centerRight,
+// ),
+// Trabalhar nos dots
+class DotsIndicator extends StatelessWidget {
+  DotsIndicator();
+
+  Widget _buildDot(int index) {
+    return Container(
+      height: 12.0,
+      margin: EdgeInsets.only(right: 16),
+      child: Material(
+        color: Colors.white,
+        type: MaterialType.circle,
+        child: Container(
+          width: 8,
+          height: 8,
+        ),
+      ),
+    );
+  }
+
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List<Widget>.generate(3, _buildDot),
     );
   }
 }

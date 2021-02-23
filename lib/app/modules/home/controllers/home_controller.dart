@@ -1,6 +1,5 @@
-import 'package:carousel_slider/carousel_controller.dart';
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/repositories/meal_repository.dart';
@@ -8,26 +7,31 @@ import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 
 //TODO: Quando a pessoa nao tem extras ou terminou as refeicoes do dia, mostra os card de agua??
 //TODO: Quando chega no ultimo item, nao tem pra onde ir, dar um feedback ou parabenizar a pessoa(pontos concluidos)
+//TODO: Criar um card para o final da lista(Card indicando os pontos da pessoa e talvez um pequeno resuminho)
+//TODO: Pode ser um card chapado azul da cor do tema, apenas um overview do dia;
 //TODO: IDEIA: Depois que o user conclui a ultima refeição, dar a possibilidade de ver o que vai comer amanha (desativar os botoes de concluir e pular... Deixar apenas o trocar)
 
-//TODO: Atualizar a cor do card assim que marcado
+//TODO: Atualizar a cor do card assim que marcado (Está com um delay de 1 aparentemente...)
 //TODO: Definir a quantidade de acompanhamentos (inicialmente 3 [extrasAmount])
 
+//TODO: IDEIA: Add dots indicator : https://github.com/jlouage/flutter-carousel-pro/blob/master/lib/src/carousel_pro.dart
+//TODO: A rolagem está tendo um efeito estranho, como se fosse recriado depois de ja ter percorrido uma parte do caminho
+
+//TODO: Bloquear seleção de extras quando ja tiver concluido a refeição
 //--- Provavelmente vou ter que criar um model só pra salvar qual a comida, o estado da comida(concluido ou skipado), quais extras foram mostrados(not needed yet) e quais foram marcados....
 class HomeController extends GetxController {
   final MealRepository mealRepository;
 
   HomeController({@required this.mealRepository});
 
-  final _meals = <MealCardModel>[].obs;
-  List<MealCardModel> get meals => _meals;
+  List<MealCardModel> mealList = <MealCardModel>[];
+  final mealListLenght = 0.obs;
 
   final _extras = <FoodModel>[].obs;
   List<FoodModel> get extras => _extras;
 
   ///Armazena o index do atual meal card
-  final _mealIndex = 0.obs;
-  int get mealIndex => _mealIndex.value;
+  int mealIndex = 0;
 
   ///Armazena os extras selecionados do atual meal card
   final _selectedExtrasList = <int>[].obs;
@@ -37,32 +41,33 @@ class HomeController extends GetxController {
   final _extrasAmount = 3.obs;
   int get extrasAmount => _extrasAmount.value;
 
-  CarouselController carouselController = CarouselController();
+  PageController pageController;
 
   @override
   void onInit() {
     super.onInit();
+    pageController = PageController();
     _fetchMeals();
-    ever(_mealIndex, _onMealChanged);
   }
 
-  onPageChanged(int index, CarouselPageChangedReason reason) {
+  onPageChanged(int idx) {
+    //TODO: Indicador de qual página está agora (as bolinhas no cantinho)
     _saveExtrasSelectedIndex();
-    _mealIndex.value = index;
-  }
-  // if (index >= meals.length - 1) print('Ultimo aq'); 
-
-  _onMealChanged(index) {
-    _setExtras();
+    mealIndex = idx;
+    _onMealChanged(idx);
   }
 
-  _setExtras() {
-    _selectedExtrasList.assignAll(meals[mealIndex].extrasSelectedIndex);
-    _extras.assignAll(meals[mealIndex].mealModel.extras);
+  _onMealChanged(int idx) {
+    _setExtras(idx);
+  }
+
+  _setExtras(int idx) {
+    _selectedExtrasList.assignAll(mealList[idx].extrasSelectedIndex);
+    _extras.assignAll(mealList[idx].mealModel.extras);
   }
 
   _saveExtrasSelectedIndex() {
-    meals[_mealIndex.value].extrasSelectedIndex = _selectedExtrasList.toList();
+    mealList[mealIndex].extrasSelectedIndex = _selectedExtrasList.toList();
     _selectedExtrasList.clear();
   }
 
@@ -73,23 +78,30 @@ class HomeController extends GetxController {
       ? _selectedExtrasList.add(idx)
       : _selectedExtrasList.remove(idx);
 
-  onDonePressed() {
-    meals[_mealIndex.value].mealCardState = MealCardState.Done;
-    _nextMeal();
+  onDonePressed(int idx) {
+    mealList[idx].mealCardState = MealCardState.Done;
+    _nextMeal(idx);
   }
 
-  onSkipPressed() {
-    meals[_mealIndex.value].mealCardState = MealCardState.Skiped;
-    _nextMeal();
+  onSkipPressed(int idx) {
+    mealList[idx].mealCardState = MealCardState.Skiped;
+    _nextMeal(idx);
   }
 
-  _nextMeal() => carouselController.nextPage();
+  _nextMeal(int idx) {
+    if (idx >= mealListLenght.value - 1) {
+      pageController.jumpToPage(0);
+    } else
+      pageController.nextPage(
+          duration: Duration(milliseconds: 1), curve: Curves.linear);
+  }
 
   _fetchMeals() async {
-    _meals.assignAll((await mealRepository.fetchMeals())
+    mealList = ((await mealRepository.fetchMeals())
         .map((meal) => MealCardModel(mealModel: meal))
         .toList());
-    _mealIndex.value = 0;
+    mealListLenght.value = mealList.length;
+    _onMealChanged(0);
   }
 
   onChangePressed() {

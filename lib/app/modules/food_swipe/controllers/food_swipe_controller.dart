@@ -6,6 +6,9 @@ import 'package:nutri/app/data/repositories/food_preferences_repository.dart';
 import 'package:nutri/app/data/repositories/food_swipe_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
+//TODO: No food swipe card, quando a pessoa quiser trocar algum alimento
+//TODO: Mostrar apenas os alimentos selecionados para aquela semana(nao permitir adicionar elementos que nao estavam no planejado pra semana, apenas trocar alimentos equivalentes, de dia)
+
 class FoodSwipeController extends GetxController {
   final FoodPreferencesRepository foodPreferencesRepository;
   final FoodSwipeRepository foodSwipeRepository;
@@ -17,7 +20,7 @@ class FoodSwipeController extends GetxController {
 
   List<FoodSwipeModel> _foodSwipeList = <FoodSwipeModel>[];
   Rx<FoodSwipeModel> _currentFoodSwipeModel = FoodSwipeModel().obs;
-  FoodSwipeModel get showingFoodSwipeModel => _currentFoodSwipeModel.value;
+  FoodSwipeModel get currentFoodSwipeModel => _currentFoodSwipeModel.value;
 
   List<String> _foodPrefs = <String>[];
   var _checkedIndexes = <int>[].obs;
@@ -40,7 +43,6 @@ class FoodSwipeController extends GetxController {
     super.onInit();
     _fetchFoodSwipeList();
   }
-
 
   onBuildCardapioPressed() => _isReady.value = true;
 
@@ -67,7 +69,7 @@ class FoodSwipeController extends GetxController {
       _amountSelected.value--;
       _checkedIndexes.remove(index);
       _foodPrefs.remove(food.title);
-    } else if (amountSelected < showingFoodSwipeModel.amount) {
+    } else if (amountSelected < currentFoodSwipeModel.amount) {
       _amountSelected.value++;
       _checkedIndexes.add(index);
       _foodPrefs.add(food.title);
@@ -76,8 +78,7 @@ class FoodSwipeController extends GetxController {
 
   bool isChecked(int index) => _checkedIndexes.contains(index);
 
-  _savePrefs() =>
-    foodPreferencesRepository.setFoodsPrefs(_foodPrefs);
+  _savePrefs() => foodPreferencesRepository.setFoodsPrefs(_foodPrefs);
 
   _setShowingFoodSwipe(FoodSwipeModel fSwipeModel) =>
       _currentFoodSwipeModel.value = fSwipeModel;
