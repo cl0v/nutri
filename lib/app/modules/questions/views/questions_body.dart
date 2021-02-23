@@ -6,6 +6,7 @@ import 'package:nutri/app/modules/questions/controllers/questions_controller.dar
 import 'package:nutri/constants.dart';
 
 //TODO: Escurecer a letra das respostas do question (Sugestao mae)
+//TODO: Testar essa página
 
 class QuestionViewBody extends StatelessWidget {
   const QuestionViewBody({
@@ -43,41 +44,43 @@ class QuestionViewBody extends StatelessWidget {
             flex: 7,
             child: Obx(
               () => PageView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  controller: controller.pageController,
-                  itemCount: controller.questions.length + 1,
-                  onPageChanged: controller.onQuestionChanged,
-                  itemBuilder: (context, index) {
-                    if (index == 0)
-                      return QuestionCard(
-                        question: 'Informe os valores',
-                        buttonOn: true,
-                        options: [
-                          TextField(),
-                          TextField(),
-                          
-                        ],
-                      );
-
-                    return QuestionCard(
-                      question: controller.questions[index - 1].question,
-                      options: controller.questions[index - 1].options
-                          .map(
-                            (option) => Obx(
-                              () => QuestionOption(
-                                isSelected: controller.selectedIndex ==
-                                    controller.getOptionIndex(
-                                        index - 1, option),
-                                text: option,
-                                // getColor: controller.getColor(),
-                                onTap: () => controller.onAnswerTapped(
-                                    index - 1, option),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    );
-                  }),
+                physics: NeverScrollableScrollPhysics(),
+                controller: controller.pageController,
+                itemCount: controller.questions.length,
+                onPageChanged: controller.onQuestionPageChanged,
+                itemBuilder: (context, qidx) => QuestionCard(
+                  children: [
+                    Center(
+                      child: Text(
+                        controller.questions[qidx].question,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            .copyWith(color: kBlackColor),
+                      ),
+                    ),
+                    SizedBox(height: kDefaultPadding / 2),
+                    ...List.generate(
+                      controller.questions[qidx].options.length,
+                      (oidx) {
+                        var option = controller.questions[qidx].options[oidx];
+                        return Obx(
+                          () => QuestionOption(
+                            isSelected: controller.selectedIndex ==
+                                controller.getOptionIndex(
+                                  qidx,
+                                  option,
+                                ),
+                            text: option,
+                            onTap: () =>
+                                controller.onAnswerTapped(qidx, option),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
           Expanded(

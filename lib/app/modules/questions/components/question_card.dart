@@ -3,14 +3,10 @@ import 'package:nutri/constants.dart';
 
 class QuestionCard extends StatelessWidget {
   const QuestionCard({
-    @required this.question,
-    @required this.options,
-    this.buttonOn = false,
+    @required this.children,
   });
 
-  final String question;
-  final bool buttonOn;
-  final List<Widget> options;
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
@@ -21,23 +17,8 @@ class QuestionCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(25),
       ),
-      child: ListView(
-        children: [
-          Center(
-            child: Text(
-              question,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  .copyWith(color: kBlackColor),
-            ),
-          ),
-          SizedBox(height: kDefaultPadding / 2),
-          ...List.generate(
-            options.length,
-            (index) => options[index],
-          ),
-        ],
+      child: Column(
+        children: children,
       ),
     );
   }

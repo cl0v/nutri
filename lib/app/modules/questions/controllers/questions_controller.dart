@@ -5,10 +5,6 @@ import 'package:nutri/app/data/repositories/question_repository.dart';
 import 'package:nutri/app/data/repositories/user_preferences_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
-//TODO: O Questions deve receber a altura e peso do cliente
-
-//BUG: Se eu clickar rapido, a pagination pode pular mais de uma pagina(2x click)
-
 class QuestionsController extends GetxController {
   final UserPreferencesRepository userDataRepository;
   final QuestionRepository questionRepository;
@@ -44,7 +40,7 @@ class QuestionsController extends GetxController {
     _questions.assignAll(await questionRepository.loadQuestionList());
   }
 
-  onQuestionChanged(int idx){
+  onQuestionPageChanged(int idx){
     lockedAnswer = false;
   }
 

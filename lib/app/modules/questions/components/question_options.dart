@@ -6,12 +6,10 @@ class QuestionOption extends StatelessWidget {
     this.text,
     this.isSelected,
     this.onTap,
-    // this.color,
   });
 
   final String text;
   final bool isSelected;
-  // final Color getColor;
   final VoidCallback onTap;
 
   

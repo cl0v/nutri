@@ -36,9 +36,9 @@ class MealCard extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: mealCardModel.mealCardState == MealCardState.Done
-                  ? Colors.greenAccent.withOpacity(0.6)
+                  ? kGreenColor.withOpacity(0.6)
                   : mealCardModel.mealCardState == MealCardState.Skiped
-                      ? Colors.redAccent.withOpacity(0.6)
+                      ? kRedColor.withOpacity(0.6)
                       : null,
               borderRadius: BorderRadius.circular(15),
             ),
@@ -61,7 +61,6 @@ class MealCard extends StatelessWidget {
                     ),
                   ),
                   child: Column(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
