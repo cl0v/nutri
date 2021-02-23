@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:nutri/app/data/model/question_model.dart';
 import 'package:nutri/app/modules/questions/components/question_card_options.dart';
@@ -6,13 +5,16 @@ import 'package:nutri/constants.dart';
 
 class QuestionCard extends StatelessWidget {
   const QuestionCard({
-    Key key,
+    // @required this.questionModel,
     @required this.question,
-    this.onTap,
-  }) : super(key: key);
+    @required this.options,
+    // this.onTap,
+  });
 
-  final QuestionModel question;
-  final Function(QuestionModel, int) onTap;
+  // final QuestionModel questionModel;
+  final String question;
+  final List<Widget> options;
+  // final Function(QuestionModel, int) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class QuestionCard extends StatelessWidget {
         children: [
           Center(
             child: Text(
-              question.question,
+              question,
               style: Theme.of(context)
                   .textTheme
                   .headline6
@@ -36,12 +38,8 @@ class QuestionCard extends StatelessWidget {
           ),
           SizedBox(height: kDefaultPadding / 2),
           ...List.generate(
-            question.options.length,
-            (index) => Option(
-              index: index,
-              text: question.options[index],
-              onTap: () => onTap(question, index),
-            ),
+            options.length,
+            (index) => options[index],
           ),
         ],
       ),

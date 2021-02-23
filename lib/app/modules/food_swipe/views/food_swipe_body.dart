@@ -4,11 +4,10 @@ import 'package:get/get.dart';
 import 'package:nutri/app/modules/food_swipe/components/food_swipe_card.dart';
 import 'package:nutri/app/modules/food_swipe/controllers/food_swipe_controller.dart';
 
-//TODO: IDEIA: Pintar de verde o fundo para itens selecionados da mesma forma do extraCard
-//TODO:IDEIA: Tornar o foodSwipe um carroussel, para rodar pras duas direçoes
-// Alem de deixar o visual mais bonito, ja que tem uma parte escura no lado esquerdo
+//IDEIA: Tornar o foodSwipe um carroussel, para rodar pras duas direçoes
+//IDEIA: Alem de deixar o visual mais bonito, ja que tem uma parte escura no lado esquerdo
 
-class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
+class FoodSwipeBody extends GetView<FoodSwipeController> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -22,7 +21,6 @@ class BlurBgImgCarroussel extends GetView<FoodSwipeController> {
             fit: BoxFit.cover,
           ),
         ),
-
         SafeArea(
           child: Obx(
             () => controller.isOkey

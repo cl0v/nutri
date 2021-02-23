@@ -20,7 +20,7 @@ class FoodSwipeView extends GetView<FoodSwipeController> {
         ],
       ),
       extendBodyBehindAppBar: true,
-      body: BlurBgImgCarroussel(),
+      body: FoodSwipeBody(),
     );
   }
 }

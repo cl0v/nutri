@@ -6,19 +6,16 @@ import 'package:nutri/app/data/repositories/meal_repository.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 
 //TODO: Quando a pessoa nao tem extras ou terminou as refeicoes do dia, mostra os card de agua??
+//IDEIA: Deslizar os extras pra direita mostra os card de beba agua
 //TODO: Quando chega no ultimo item, nao tem pra onde ir, dar um feedback ou parabenizar a pessoa(pontos concluidos)
-//TODO: Criar um card para o final da lista(Card indicando os pontos da pessoa e talvez um pequeno resuminho)
-//TODO: Pode ser um card chapado azul da cor do tema, apenas um overview do dia;
-//TODO: IDEIA: Depois que o user conclui a ultima refeição, dar a possibilidade de ver o que vai comer amanha (desativar os botoes de concluir e pular... Deixar apenas o trocar)
-
-//TODO: Atualizar a cor do card assim que marcado (Está com um delay de 1 aparentemente...)
+//IDEIA: Criar um card para o final da lista(Card indicando os pontos da pessoa e talvez um pequeno resuminho)
+//IDEIA: Pode ser um card chapado azul da cor do tema, apenas um overview do dia;
+//IDEIA: Depois que o user conclui a ultima refeição, dar a possibilidade de ver o que vai comer amanha (desativar os botoes de concluir e pular... Deixar apenas o trocar)
+//IDEIA: Add dots indicator (num de refeiçoes do dia) : https://github.com/jlouage/flutter-carousel-pro/blob/master/lib/src/carousel_pro.dart
+//BUG: Quando a pessoa toca em confirmar ou pular mas tocar novamente rapido, nao marca e nem rola a pagina
 //TODO: Definir a quantidade de acompanhamentos (inicialmente 3 [extrasAmount])
 
-//TODO: IDEIA: Add dots indicator : https://github.com/jlouage/flutter-carousel-pro/blob/master/lib/src/carousel_pro.dart
-//TODO: A rolagem está tendo um efeito estranho, como se fosse recriado depois de ja ter percorrido uma parte do caminho
 
-//TODO: Bloquear seleção de extras quando ja tiver concluido a refeição
-//--- Provavelmente vou ter que criar um model só pra salvar qual a comida, o estado da comida(concluido ou skipado), quais extras foram mostrados(not needed yet) e quais foram marcados....
 class HomeController extends GetxController {
   final MealRepository mealRepository;
 
@@ -73,10 +70,13 @@ class HomeController extends GetxController {
 
   getSelectedIndex(int idx) => _selectedExtrasList.contains(idx);
 
-  onExtraTapped(int idx) => !_selectedExtrasList.contains(idx) &&
-          _selectedExtrasList.length < extrasAmount
-      ? _selectedExtrasList.add(idx)
-      : _selectedExtrasList.remove(idx);
+  onExtraTapped(int idx) {
+    if (mealList[mealIndex].mealCardState == MealCardState.None)
+      !_selectedExtrasList.contains(idx) &&
+              _selectedExtrasList.length < extrasAmount
+          ? _selectedExtrasList.add(idx)
+          : _selectedExtrasList.remove(idx);
+  }
 
   onDonePressed(int idx) {
     mealList[idx].mealCardState = MealCardState.Done;
