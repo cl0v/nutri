@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/routes/app_pages.dart';
+import 'package:nutri/constants.dart';
 
 class RegisterController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -10,6 +11,9 @@ class RegisterController extends GetxController {
   TextEditingController weightController = TextEditingController();
 
   PageController pageController;
+
+  final _thermIsChecked = false.obs;
+  bool get thermIsChecked => _thermIsChecked.value;
 
   @override
   void onInit() {
@@ -24,11 +28,22 @@ class RegisterController extends GetxController {
         duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 
+  checkTerms(bool val) {
+    _thermIsChecked.value = val;
+  }
+
   _createAccount() async {
     //TODO:Implement Create Account
   }
 
   void onConfirmPressed(context) async {
+    if (!thermIsChecked)
+      return Get.snackbar(
+        'Confirme os termos',
+        'Por favor confirme os termos antes de continuar.',
+        backgroundColor: kRedColor,
+        colorText: Colors.white,
+      );
     FocusScope.of(context).unfocus();
     await _createAccount();
     Get.offAllNamed(Routes.QUESTIONS);

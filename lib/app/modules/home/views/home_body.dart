@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/modules/home/components/extras_selectable_card.dart';
@@ -40,7 +39,7 @@ class HomeBody extends GetView<HomeController> {
                               controller.onDonePressed(index),
                           onSkippedPressed: () =>
                               controller.onSkipPressed(index),
-                          onChangePressed: controller.onChangePressed,
+                          onChangePressed: controller.onChangeMealPressed,
                         
                       ),
                     ),

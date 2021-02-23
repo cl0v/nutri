@@ -2,18 +2,17 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
-//TODO: Pensar em como passar um drink no cardapio diario...
 //TODO: Criar model que definde o cardapio do dia( o model final, mais importante para o home) ???
 
-//TODO: Quantidade dos extras (Ex: brocolis 2 unidades)
-//TODO: Implement 'unidade de medida' nos extras comumente usada(Tentar limitar a quantidade)
-
-//TODO: Terminar de preencher com base nos quadros de categoria do livro
 enum FoodCategory {
   drink,
   meat,
   vegetable,
   fruit,
+  nuts,
+  dairy,
+  tuber,
+  mushroom,
 }
 
 class FoodModel {
@@ -22,7 +21,6 @@ class FoodModel {
   String desc;
   //enum
   FoodCategory category;
-
   //TODO: Add PE
 
   FoodModel({
@@ -87,6 +85,7 @@ class FoodModel {
 const jsonPath = 'assets/jsons/food_data.json';
 
 abstract class FoodModelHelper {
+
   /// Recebe todas as comidas cadastradas no banco
   static Future<List<FoodModel>> loadAllFoods() async {
     var json = await _loadJson();
@@ -118,8 +117,8 @@ abstract class FoodModelHelper {
   }
 
 
-//TODO: Implement loadFoodsFromPreferences;
-  Future<List<FoodModel>> loadFoodsFromPreferences(List<String> prefs) async {
+//TODO: Implement loadFoodsFromPrefs;
+  static Future<List<FoodModel>> loadFoodsFromPreferences(List<String> prefs) async {
     if (prefs == null) return [];
     var json = await _loadJson();
     return json
@@ -128,32 +127,3 @@ abstract class FoodModelHelper {
         .toList();
   }
 }
-
-/*
-
-  static String unidadeToString(UnidadeType u, int a) {
-    switch (u) {
-      case UnidadeType.colher:
-        return (a > 1) ? 'colheres' : 'colher';
-      case UnidadeType.copo:
-        return (a > 1) ? 'copos' : 'copo';
-      case UnidadeType.porcao:
-        return (a > 1) ? 'porções' : 'porção';
-      case UnidadeType.unidade:
-        return (a > 1) ? 'unidades' : 'unidade';
-      case UnidadeType.xicara:
-        return (a > 1) ? 'xícaras' : 'xícara';
-      default:
-        return null;
-    }
-  }
-}
-
-enum UnidadeType {
-  porcao,
-  unidade,
-  colher,
-  xicara,
-  copo,
-}
-*/

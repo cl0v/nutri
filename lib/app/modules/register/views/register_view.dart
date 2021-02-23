@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:nutri/app/modules/register/controllers/register_controller.dart';
 import 'package:nutri/constants.dart';
 
+//TODO: Aceitar termos e condições;
+
 class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class RegisterView extends GetView<RegisterController> {
           PageView(
             controller: controller.pageController,
             pageSnapping: true,
-             physics: NeverScrollableScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             children: [
               Center(
                 child: Container(
@@ -126,7 +128,7 @@ class RegisterView extends GetView<RegisterController> {
                   child: Column(
                     children: [
                       Text(
-                        'Criar conta', //IDEIA: Ou criar conta dnv
+                        'Criar conta',
                         style: Get.theme.textTheme.headline4,
                       ),
                       Divider(),
@@ -164,14 +166,25 @@ class RegisterView extends GetView<RegisterController> {
                           ),
                         ),
                       ),
+                      Obx(
+                        () => CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          dense: true,
+                          value: controller.thermIsChecked,
+                          title: Text(
+                            'Aceitar termos e condições.',
+                          ),
+                          onChanged: controller.checkTerms,
+                          // subtitle: Text('Aceitar termos e condições.'),
+                        ),
+                      ),
                       Spacer(),
                       Align(
                         alignment: Alignment.centerRight,
                         child: RaisedButton(
                           child: Text('Confirmar'),
-                         
                           textTheme: Get.theme.buttonTheme.textTheme,
-                          onPressed:()=> controller.onConfirmPressed(context),
+                          onPressed: () => controller.onConfirmPressed(context),
                         ),
                       ),
                     ],

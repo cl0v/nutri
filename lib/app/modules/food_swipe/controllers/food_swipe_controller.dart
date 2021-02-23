@@ -61,6 +61,7 @@ class FoodSwipeController extends GetxController {
 
   onSkipPressed() {
     _savePrefs(); //TODO: Lembrar que estou possibilitando o usuario pular o foodswipe
+
     Get.offAllNamed(Routes.HOME);
   }
 

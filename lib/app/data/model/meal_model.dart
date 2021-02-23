@@ -7,6 +7,8 @@ class MealModel {
   MealType meal;
   FoodModel food;
   List<FoodModel> extras;
+  //Mapa de extras Lista de Food e quantidade
+  
   
   MealModel({
     this.meal,

@@ -6,7 +6,6 @@ import 'app/routes/app_pages.dart';
 //IDEIA: Apenas deixar a pessoa escolher o que vai querer pra semana, depois jogar isso pruma todolist de compra
 //IDEIA: E sortear aleatoriamente as coisas para fazer o cardapio diario
 
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 

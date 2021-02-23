@@ -8,7 +8,7 @@ class FoodSwipeProvider {
 
 
   Future<List<FoodSwipeModel>> _buildFoodSwipeList() async {
-    //TODO: Esse carinha vai decidir quais comidas sortear
+    //IDEIA: Esse carinha vai decidir quais comidas sortear
     List<FoodSwipeModel> foodSwipeList = [];
     var meatList = await FoodModelHelper.loadMeats();
     var drinkList = await FoodModelHelper.loadDrinks();

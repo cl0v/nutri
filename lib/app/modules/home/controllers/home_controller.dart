@@ -9,12 +9,10 @@ import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 //IDEIA: Deslizar os extras pra direita mostra os card de beba agua
 //TODO: Quando chega no ultimo item, nao tem pra onde ir, dar um feedback ou parabenizar a pessoa(pontos concluidos)
 //IDEIA: Criar um card para o final da lista(Card indicando os pontos da pessoa e talvez um pequeno resuminho)
-//IDEIA: Pode ser um card chapado azul da cor do tema, apenas um overview do dia;
+//IDEIA: Pode ser um card xapado azul da cor do tema, apenas um overview do dia;
 //IDEIA: Depois que o user conclui a ultima refeição, dar a possibilidade de ver o que vai comer amanha (desativar os botoes de concluir e pular... Deixar apenas o trocar)
 //IDEIA: Add dots indicator (num de refeiçoes do dia) : https://github.com/jlouage/flutter-carousel-pro/blob/master/lib/src/carousel_pro.dart
-//BUG: Quando a pessoa toca em confirmar ou pular mas tocar novamente rapido, nao marca e nem rola a pagina
 //TODO: Definir a quantidade de acompanhamentos (inicialmente 3 [extrasAmount])
-
 
 class HomeController extends GetxController {
   final MealRepository mealRepository;
@@ -48,8 +46,8 @@ class HomeController extends GetxController {
   }
 
   onPageChanged(int idx) {
-    //TODO: Indicador de qual página está agora (as bolinhas no cantinho)
     _saveExtrasSelectedIndex();
+    lockedAnswer = false;
     mealIndex = idx;
     _onMealChanged(idx);
   }
@@ -78,12 +76,18 @@ class HomeController extends GetxController {
           : _selectedExtrasList.remove(idx);
   }
 
+  bool lockedAnswer = false;
+
   onDonePressed(int idx) {
+    if (lockedAnswer) return;
+    lockedAnswer = true;
     mealList[idx].mealCardState = MealCardState.Done;
     _nextMeal(idx);
   }
 
   onSkipPressed(int idx) {
+    if (lockedAnswer) return;
+    lockedAnswer = true;
     mealList[idx].mealCardState = MealCardState.Skiped;
     _nextMeal(idx);
   }
@@ -104,7 +108,7 @@ class HomeController extends GetxController {
     _onMealChanged(0);
   }
 
-  onChangePressed() {
+  onChangeMealPressed() {
     //TODO: Implement onChangePressed
     // int idx = mealList.indexOf(mealCard) + 1;
     // mealCard.value.mealCardState = MealCardState.Done;
