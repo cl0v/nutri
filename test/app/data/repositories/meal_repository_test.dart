@@ -15,7 +15,7 @@ main() {
   MealRepository repository = MealRepository(
     provider: provider,
   );
-  group('fetchMealsOfTheWeek', () {
+  group('fetchMealsOfTheWeek: ', () {
     List<List<MealModel>> weekMeals;
 
     test('Asserting the right prefs', () async {
@@ -29,19 +29,19 @@ main() {
 // PEssoa que escolhe a dieta mais agressiva, pode comer 3 x por dia(incluindo cafe na manha)
 // Eu recebo essa lista de lista e o index será o dia da semana(contando do dia que fez o foodswipe semanal)
 // Decidir quantas comidas a pessoa comerá por dia, mas irei começar em 3
-    test('Asserting the 7 days of the week', () async {
+    test('Asserting the lenght of 7 list of meals on the week', () async {
       weekMeals = await repository.fetchMealsOfTheWeek();
       expect(weekMeals.length, 7);
     });
     test(
-        'Asserting the 28 meat based meals in a week, based on 3 main meals a day, cause of breakfast coffee',
+        'Asserting the 28 meals in a week, based on 3 main meals a day, cause of breakfast coffee',
         () async {
       weekMeals = await repository.fetchMealsOfTheWeek();
       int meals = 0;
       weekMeals.forEach(
         (mealList) => mealList.forEach(
           (meal) {
-            if (meal.food.category == FoodCategory.meat) meals++;
+            meals++;
           },
         ),
       );
@@ -72,11 +72,11 @@ main() {
       );
       expect(proteinMeals, greaterThan(7 * 2));
     });
-    test('First meal should be coffee, if the prefs have only the coffee drink',
+    test('First meal should be a drink, if the prefs have only the coffee drink',
         () async {
       //se a unica bebida escolhida no prefs for cafe, o primeiro item de qualquer dia da semana será café
-      expect(weekMeals.first.first.food.title, 'Café');
-    }, skip: true);
+      expect(weekMeals.first.first.food., 'Café');
+    });
   });
 }
 

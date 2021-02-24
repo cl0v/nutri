@@ -85,7 +85,6 @@ class FoodModel {
 const jsonPath = 'assets/jsons/food_data.json';
 
 abstract class FoodModelHelper {
-
   /// Recebe todas as comidas cadastradas no banco
   static Future<List<FoodModel>> loadAllFoods() async {
     var json = await _loadJson();
@@ -93,32 +92,39 @@ abstract class FoodModelHelper {
   }
 
   ///Recebe todas as carnes cadastradas no banco
-  static Future<List<FoodModel>> loadMeats() => _sortJsonByCategory(FoodCategory.meat);
+  static Future<List<FoodModel>> loadMeats() =>
+      _sortJsonByCategory(FoodCategory.meat);
 
   ///Recebe todas as bebidas cadastradas no banco
-  static Future<List<FoodModel>> loadDrinks() => _sortJsonByCategory(FoodCategory.drink);
+  static Future<List<FoodModel>> loadDrinks() =>
+      _sortJsonByCategory(FoodCategory.drink);
 
   ///Recebe todas os vegetais cadastrados no banco
-  static Future<List<FoodModel>> loadVegetables() => _sortJsonByCategory(FoodCategory.vegetable);
+  static Future<List<FoodModel>> loadVegetables() =>
+      _sortJsonByCategory(FoodCategory.vegetable);
 
   ///Recebe todas as frutas cadastradas no banco
-  static Future<List<FoodModel>> loadFruits() => _sortJsonByCategory(FoodCategory.fruit);
+  static Future<List<FoodModel>> loadFruits() =>
+      _sortJsonByCategory(FoodCategory.fruit);
 
   static Future<List> _loadJson() async =>
       jsonDecode(await rootBundle.loadString(jsonPath));
 
-  static Future<List<FoodModel>> _sortJsonByCategory(FoodCategory category) async {
+  static Future<List<FoodModel>> _sortJsonByCategory(
+      FoodCategory category) async {
     var json = await _loadJson();
-    return json
+    var list = json
         .where((map) =>
             map['category'] == FoodModel.getIndexFromCategory(category))
         .map((map) => FoodModel.fromMap(map))
         .toList();
+    list.shuffle();
+    return list;
   }
 
-
 //TODO: Implement loadFoodsFromPrefs;
-  static Future<List<FoodModel>> loadFoodsFromPreferences(List<String> prefs) async {
+  static Future<List<FoodModel>> loadFoodsFromPreferences(
+      List<String> prefs) async {
     if (prefs == null) return [];
     var json = await _loadJson();
     return json

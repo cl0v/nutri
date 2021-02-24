@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
@@ -19,67 +17,60 @@ class MealProvider {
 
   MealProvider({@required this.prefs});
 
-  int dailyMealAmount = 3;
+  int dailyMealAmount = 4; //4 contando com o cafe da manha
   int daysInAWeek = 7;
 
-  Future<List<MealModel>> fetchMeals() async {
-    List<MealModel>();
-    var foods = await FoodModelHelper.loadAllFoods();
-    List meals = List<MealModel>();
-    foods.forEach(
-      (food) {
-        meals.add(
-          MealModel(
-            food: food,
-            mealType: MealType.breakfast,
-            extras: foods
-                .where((f) => f.category == FoodCategory.vegetable)
-                .toList(),
-          ),
-        );
-      },
-    );
-    _sortMealListByMealTypeOrder(meals);
+  // Future<List<MealModel>> fetchMeals() async {
+  //   List<MealModel>();
+  //   var foods = await FoodModelHelper.loadAllFoods();
+  //   List meals = List<MealModel>();
+  //   foods.forEach(
+  //     (food) {
+  //       meals.add(
+  //         MealModel(
+  //           food: food,
+  //           mealType: MealType.breakfast,
+  //           extras: foods
+  //               .where((f) => f.category == FoodCategory.vegetable)
+  //               .toList(),
+  //         ),
+  //       );
+  //     },
+  //   );
+  //   _sortMealListByMealTypeOrder(meals);
 
-    return meals.take(3).toList();
-  }
+  //   return meals.take(3).toList();
+  // }
 
-  _sortMealListByMealTypeOrder(List<MealModel> m) {
-    //TODO: Testar sem o retorno;
-    m.sort((a, b) => a.mealType.index.compareTo(b.mealType.index));
-    return m;
-  }
+  // _sortMealListByMealTypeOrder(List<MealModel> m) {
+  //   //TODO: Testar sem o retorno;
+  //   m.sort((a, b) => a.mealType.index.compareTo(b.mealType.index));
+  //   return m;
+  // }
 
-  Future<List<List<MealModel>>> fetchMealsOfTheWeek() async {
-    List<MealModel> dailyMeal = [];
-    List<List<MealModel>> weekMeal = [];
-    List<FoodModel> listOfMeat = await FoodModelHelper.loadMeats();
-    List<FoodModel> listOfDrinks = await FoodModelHelper.loadMeats();
+  // Future<List<List<MealModel>>> fetchMealsOfTheWeek() async {
+  //   List<FoodModel> listOfMeat = await FoodModelHelper.loadMeats();
+  //   List<FoodModel> listOfDrinks = await FoodModelHelper.loadDrinks();
+  //   List<List<MealModel>> weekMeal = [];
+  //   var dailyMeal = await _buildDailyMeal(listOfDrinks, listOfMeat);
 
-    dailyMeal.addAll(
-        listOfDrinks.take(Random().nextInt(listOfDrinks.length)).map((drink) {
-      return MealModel(food: drink, extras: [], mealType: MealType.breakfast);
-    }));
-    dailyMeal.addAll(listOfMeat.take(Random().nextInt(listOfMeat.length)).map(
-      (meat) {
-        var mealType =
-            MealType.values[Random().nextInt(MealType.values.length - 3) + 3];
-        return MealModel(
-          food: meat,
-          extras: [],
-          mealType: mealType,
-        );
-      },
-    ));
+  //   weekMeal = List.generate(daysInAWeek, (idx) => dailyMeal);
+  //   return weekMeal;
+  // }
 
-    weekMeal = List.generate(daysInAWeek, (idx) => dailyMeal);
-    return weekMeal;
-  }
+  // _buildDailyMeal(listOfDrinks, listOfMeat) async {
 
-  _addMealToMealList(){
-    
-  }
+  //   var breakfast = MealModel(
+  //       food: listOfDrinks.first, extras: [], mealType: MealType.breakfast);
+  //   var lunch =
+  //       MealModel(food: listOfMeat[0], extras: [], mealType: MealType.lunch);
+  //   var tea =
+  //       MealModel(food: listOfMeat[1], extras: [], mealType: MealType.tea);
+  //   var dinner =
+  //       MealModel(food: listOfMeat[2], extras: [], mealType: MealType.dinner);
 
-  Future<List<String>> getFoodsPrefs() async =>
-      (await prefs).getStringList(foodPrefsKey);
+  //   return [breakfast, lunch, tea, dinner];
+  // }
+
+
 }
