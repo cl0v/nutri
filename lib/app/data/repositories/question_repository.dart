@@ -8,4 +8,7 @@ class QuestionRepository {
   QuestionRepository({@required this.provider});
 
   Future<List<QuestionModel>> loadQuestionList() => provider.loadQuestionList();
+
+  setQuestionsPrefs(Map<String, String> answers) =>
+      provider.setQuestionsPrefs(answers);
 }

@@ -65,7 +65,7 @@ class MealCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        '${MealModel.getTranslatedMeal(mealCardModel.mealModel.meal)} de hoje',
+                        '${MealModel.getTranslatedMeal(mealCardModel.mealModel.mealType)} de hoje',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,

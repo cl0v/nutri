@@ -1,10 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/data/providers/food_swipe_provider.dart';
 import 'package:nutri/app/data/repositories/food_swipe_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  FoodSwipeRepository foodSwipeRepository = FoodSwipeRepository(foodSwipeProvider: FoodSwipeProvider());
+  FoodSwipeRepository foodSwipeRepository = FoodSwipeRepository(
+    provider: FoodSwipeProvider(
+      prefs: SharedPreferences.getInstance(),
+    ),
+  );
 
   test('Getting one foodSwipeModel from foodSwipeRepository', () async {
     var foodSwipe = await foodSwipeRepository.loadFoodSwipeList();

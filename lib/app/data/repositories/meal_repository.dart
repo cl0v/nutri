@@ -5,9 +5,13 @@ import 'package:nutri/app/data/providers/meal_provider.dart';
 class MealRepository {
   final MealProvider provider;
 
-  MealRepository({@required this.provider});
+  MealRepository({
+    @required this.provider,
+  });
 
   Future<List<MealModel>> fetchMeals() => provider.fetchMeals();
+
+  fetchMealsOfTheWeek() => provider.fetchMealsOfTheWeek();
 
   // Future<List<MealModel>> buildMeal({int mealNumber, int foodNumber}) =>
   //     provider.buildMeal(mealNumber, foodNumber);

@@ -4,14 +4,14 @@ import 'package:nutri/app/data/model/food_model.dart';
 
 class MealModel {
   //enum
-  MealType meal;
+  MealType mealType;
   FoodModel food;
   List<FoodModel> extras;
   //Mapa de extras Lista de Food e quantidade
   
   
   MealModel({
-    this.meal,
+    this.mealType,
     this.food,
     this.extras,
   });
@@ -43,16 +43,16 @@ class MealModel {
     if (identical(this, o)) return true;
 
     return o is MealModel &&
-        o.meal == meal &&
+        o.mealType == mealType &&
         o.food == food &&
         listEquals(o.extras, extras);
   }
 
   @override
-  int get hashCode => meal.hashCode ^ food.hashCode ^ extras.hashCode;
+  int get hashCode => mealType.hashCode ^ food.hashCode ^ extras.hashCode;
 
   @override
-  String toString() => 'MealModel(meal: $meal, food: $food, extras: $extras)';
+  String toString() => 'MealModel(meal: $mealType, food: $food, extras: $extras)';
 }
 
 enum MealType {

@@ -1,11 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/food_swipe_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+const foodPrefsKey = 'foodPrefs';
 
 class FoodSwipeProvider {
+  final Future<SharedPreferences> prefs;
+
+  FoodSwipeProvider({@required this.prefs});
 
   Future<List<FoodSwipeModel>> loadFoodSwipeList() async =>
       _buildFoodSwipeList();
-
 
   Future<List<FoodSwipeModel>> _buildFoodSwipeList() async {
     //IDEIA: Esse carinha vai decidir quais comidas sortear
@@ -44,4 +50,7 @@ class FoodSwipeProvider {
     );
     return foodSwipeList;
   }
+
+  void setFoodsPrefs(List<String> foodPrefs) async =>
+      (await prefs).setStringList(foodPrefsKey, foodPrefs);
 }

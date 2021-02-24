@@ -93,16 +93,16 @@ abstract class FoodModelHelper {
   }
 
   ///Recebe todas as carnes cadastradas no banco
-  static loadMeats() => _sortJsonByCategory(FoodCategory.meat);
+  static Future<List<FoodModel>> loadMeats() => _sortJsonByCategory(FoodCategory.meat);
 
   ///Recebe todas as bebidas cadastradas no banco
-  static loadDrinks() => _sortJsonByCategory(FoodCategory.drink);
+  static Future<List<FoodModel>> loadDrinks() => _sortJsonByCategory(FoodCategory.drink);
 
   ///Recebe todas os vegetais cadastrados no banco
-  static loadVegetables() => _sortJsonByCategory(FoodCategory.vegetable);
+  static Future<List<FoodModel>> loadVegetables() => _sortJsonByCategory(FoodCategory.vegetable);
 
   ///Recebe todas as frutas cadastradas no banco
-  static loadFruits() => _sortJsonByCategory(FoodCategory.fruit);
+  static Future<List<FoodModel>> loadFruits() => _sortJsonByCategory(FoodCategory.fruit);
 
   static Future<List> _loadJson() async =>
       jsonDecode(await rootBundle.loadString(jsonPath));

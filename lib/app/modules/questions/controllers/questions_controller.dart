@@ -2,16 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/question_model.dart';
 import 'package:nutri/app/data/repositories/question_repository.dart';
-import 'package:nutri/app/data/repositories/user_preferences_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
 class QuestionsController extends GetxController {
-  final UserPreferencesRepository userDataRepository;
-  final QuestionRepository questionRepository;
+  final QuestionRepository repository;
 
   QuestionsController({
-    this.userDataRepository,
-    @required this.questionRepository,
+    @required this.repository,
   });
 
   PageController _pageController = PageController();
@@ -37,7 +34,7 @@ class QuestionsController extends GetxController {
   }
 
   _setQuestionList() async {
-    _questions.assignAll(await questionRepository.loadQuestionList());
+    _questions.assignAll(await repository.loadQuestionList());
   }
 
   onQuestionPageChanged(int idx){
@@ -80,7 +77,7 @@ class QuestionsController extends GetxController {
   }
 
   _saveAnswers(Map ans) {
-    userDataRepository.setQuestionsPrefs(ans);
+    repository.setQuestionsPrefs(ans);
   }
 
   _nextQuestion() {

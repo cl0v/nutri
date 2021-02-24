@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/food_swipe_model.dart';
-import 'package:nutri/app/data/repositories/food_preferences_repository.dart';
 import 'package:nutri/app/data/repositories/food_swipe_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
@@ -10,12 +9,10 @@ import 'package:nutri/app/routes/app_pages.dart';
 //TODO: Mostrar apenas os alimentos selecionados para aquela semana(nao permitir adicionar elementos que nao estavam no planejado pra semana, apenas trocar alimentos equivalentes, de dia)
 
 class FoodSwipeController extends GetxController {
-  final FoodPreferencesRepository foodPreferencesRepository;
-  final FoodSwipeRepository foodSwipeRepository;
+  final FoodSwipeRepository repository;
 
   FoodSwipeController({
-    this.foodPreferencesRepository,
-    this.foodSwipeRepository,
+    this.repository,
   });
 
   List<FoodSwipeModel> _foodSwipeList = <FoodSwipeModel>[];
@@ -79,13 +76,13 @@ class FoodSwipeController extends GetxController {
 
   bool isChecked(int index) => _checkedIndexes.contains(index);
 
-  _savePrefs() => foodPreferencesRepository.setFoodsPrefs(_foodPrefs);
+  _savePrefs() => repository.setFoodPreferences(_foodPrefs);
 
   _setShowingFoodSwipe(FoodSwipeModel fSwipeModel) =>
       _currentFoodSwipeModel.value = fSwipeModel;
 
   _fetchFoodSwipeList() async {
-    _foodSwipeList = await foodSwipeRepository.loadFoodSwipeList();
+    _foodSwipeList = await repository.loadFoodSwipeList();
     _setShowingFoodSwipe(_foodSwipeList.first);
   }
 }
