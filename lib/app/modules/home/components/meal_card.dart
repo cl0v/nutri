@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
-import 'package:nutri/app/routes/app_pages.dart';
 import 'package:nutri/constants.dart';
 
 class MealCard extends StatelessWidget {
@@ -10,14 +8,12 @@ class MealCard extends StatelessWidget {
   final MealCardState mealCardState;
   final VoidCallback onConfirmedPressed;
   final VoidCallback onSkippedPressed;
-  final VoidCallback onChangePressed;
 
   const MealCard({
     this.mealCardModel,
     this.mealCardState,
     this.onConfirmedPressed,
     this.onSkippedPressed,
-    this.onChangePressed,
   });
   @override
   Widget build(BuildContext context) {
@@ -85,7 +81,6 @@ class MealCard extends StatelessWidget {
                       MealCardButtons(
                         onConfirmedPressed: onConfirmedPressed,
                         onSkippedPressed: onSkippedPressed,
-                        onChangePressed: onChangePressed,
                         onTapBlocked: (mealCardModel.mealCardState ==
                                 MealCardState.Done ||
                             mealCardModel.mealCardState ==
@@ -140,13 +135,11 @@ class MealCardButtons extends StatelessWidget {
     Key key,
     @required this.onConfirmedPressed,
     @required this.onSkippedPressed,
-    @required this.onChangePressed,
     this.onTapBlocked = false,
   }) : super(key: key);
 
   final VoidCallback onConfirmedPressed;
   final VoidCallback onSkippedPressed;
-  final VoidCallback onChangePressed;
   final bool onTapBlocked;
 
   @override
@@ -175,21 +168,21 @@ class MealCardButtons extends StatelessWidget {
               ),
             ),
           ),
-          ButtonTheme(
-            height: 30,
-            buttonColor: kGrayColor,
-            child: Expanded(
-              child: RaisedButton(
-                onPressed: onTapBlocked
-                    ? null
-                    : () {
-                        Get.toNamed(Routes.FOOD_SWIPE);
-                      },
-                child: Text('Trocar'),
-                // icon: Icon(Icons.clear,),
-              ),
-            ),
-          ),
+          // ButtonTheme(
+          //   height: 30,
+          //   buttonColor: kGrayColor,
+          //   child: Expanded(
+          //     child: RaisedButton(
+          //       onPressed: onTapBlocked
+          //           ? null
+          //           : () {
+          //               Get.toNamed(Routes.FOOD_SWIPE);
+          //             },
+          //       child: Text('Trocar'),
+          //       // icon: Icon(Icons.clear,),
+          //     ),
+          //   ),
+          // ),
           ButtonTheme(
             height: 30,
             buttonColor: kGreenColor,

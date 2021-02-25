@@ -39,7 +39,6 @@ class HomeBody extends GetView<HomeController> {
                               controller.onDonePressed(index),
                           onSkippedPressed: () =>
                               controller.onSkipPressed(index),
-                          onChangePressed: controller.onChangeMealPressed,
                         
                       ),
                     ),

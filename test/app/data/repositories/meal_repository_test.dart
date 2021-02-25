@@ -75,7 +75,7 @@ main() {
           },
         ),
       );
-      expect(proteinMeals, greaterThan(7 * 2));
+      expect(proteinMeals, greaterThanOrEqualTo(14));
     });
     test('First meal should be some non-calories drink', () async {
       expect(weekMeals.first.first.food.category, FoodCategory.drink);
@@ -147,6 +147,7 @@ main() {
     });
   }, skip: true);
 
+
   group('Daily meals for people that dont do exercice: ', () {
     /* Refeições diarias para pessoas que não fazem exercícios
     * O que preciso testar:
@@ -205,10 +206,10 @@ main() {
       dailyMeals = await repository.fetchDailyMeals();
       List<FoodCategory> extraCategoriesFromSecondMeal = [];
       dailyMeals[1].extras.forEach(
-          (extra) => extraCategoriesFromSecondMeal.add(
-            extra.category,
-          ),
-      );
+            (extra) => extraCategoriesFromSecondMeal.add(
+              extra.category,
+            ),
+          );
 
       expect(extraCategoriesFromSecondMeal.length, greaterThan(0));
       expect(
@@ -226,10 +227,10 @@ main() {
       List<FoodCategory> extraCategoriesFromThirdMeal = [];
 
       dailyMeals[2].extras.forEach(
-          (extra) => extraCategoriesFromThirdMeal.add(
-            extra.category,
-          ),
-      );
+            (extra) => extraCategoriesFromThirdMeal.add(
+              extra.category,
+            ),
+          );
 
       expect(extraCategoriesFromThirdMeal.length, greaterThan(0));
       expect(
@@ -242,9 +243,9 @@ main() {
       List<FoodCategory> extraCategoriesFromLastMeal = [];
 
       dailyMeals.last.extras.forEach(
-          (extra) => extraCategoriesFromLastMeal.add(
-            extra.category,
-          ),
+        (extra) => extraCategoriesFromLastMeal.add(
+          extra.category,
+        ),
       );
       expect(extraCategoriesFromLastMeal.length, greaterThan(0));
       expect(extraCategoriesFromLastMeal, everyElement(FoodCategory.fruit));
@@ -253,6 +254,11 @@ main() {
 }
 // test('Extras from meat should be vegetables')//testar os extras
 //Testar a quantidade de vezes que cada um aparece(tirar a randomizaçao)
+
+//FIXME: Limitar o número de carboidratos
+//Testar a quantidade de extras que pode ser selecionado cada dia
+//Para pessoas que nao praticam atividade fisica, apenas uma opção de fruta já é o suficiente
+// IDEIA: Apenas uma variedade de fruta para cada dia
 
 // Pratos Principais: Frutas, Proteinas, Bebidas(nao caloricas)
 // Acompanhamentos: Sempre será vegetal, (decidir dos ovos ainda)

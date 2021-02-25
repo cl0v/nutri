@@ -31,21 +31,8 @@ class MealProvider {
   int daysInAWeek = 7;
 
   Future<List<MealModel>> fetchDailyMeals() async {
-    List<MealModel> dailyMeals = [];
-
-    List<FoodModel> listOfMeat = await FoodModelHelper.loadMeats();
-    List<FoodModel> listOfDrinks = await FoodModelHelper.loadDrinks();
-    List<FoodModel> listOfFruits = await FoodModelHelper.loadFruits();
-    List<FoodModel> listOfVegetables = await FoodModelHelper.loadVegetables();
-
-    dailyMeals = _buildDailyMeal(
-      listOfDrinks,
-      listOfMeat,
-      listOfVegetables,
-      listOfFruits,
-    );
-
-    return dailyMeals;
+    var listOfFood = await _getPossibleFoodList();
+    return _buildDailyMeal(listOfFood);
   }
 
   Future<List<MealModel>> fetchMeals() async {
@@ -80,40 +67,47 @@ class MealProvider {
   }
 
   Future<List<List<MealModel>>> fetchMealsOfTheWeek() async {
-    List<FoodModel> listOfMeat = await FoodModelHelper.loadMeats();
-    List<FoodModel> listOfDrinks = await FoodModelHelper.loadDrinks();
-    List<FoodModel> listOfFruits = await FoodModelHelper.loadFruits();
-    List<FoodModel> listOfVegetables = await FoodModelHelper.loadVegetables();
-
-    listOfMeat = await _getPossibleMeals(listOfMeat);
-    listOfDrinks = await _getPossibleMeals(listOfDrinks);
-    listOfFruits = await _getPossibleMeals(listOfFruits);
-    listOfVegetables = await _getPossibleMeals(listOfVegetables);
-
-    List<List<MealModel>> weekMeal = [];
-
-    weekMeal = List.generate(
-        daysInAWeek,
-        (idx) => _buildDailyMeal(
-            listOfDrinks, listOfMeat, listOfVegetables, listOfFruits));
-    return weekMeal;
+    var listOfFood = await _getPossibleFoodList();
+    return List.generate(daysInAWeek, (idx) => _buildDailyMeal(listOfFood));
   }
 
   ///Filtra a lista de comida para saber as possibilidades
-  _getPossibleMeals(List<FoodModel> listOfFood) async {
+  Future<List<List<FoodModel>>> _getPossibleFoodList() async {
+    List<FoodModel> listOfDrinks = await FoodModelHelper.loadDrinks();
+    List<FoodModel> listOfMeat = await FoodModelHelper.loadMeats();
+    List<FoodModel> listOfVegetables = await FoodModelHelper.loadVegetables();
+    List<FoodModel> listOfFruits = await FoodModelHelper.loadFruits();
+
     var prefsList = await _getFoodsPrefs();
-    return listOfFood.where((food) => prefsList.contains(food.title)).toList();
+
+    var listOfListOfPossibleFood = [
+      listOfDrinks,
+      listOfMeat,
+      listOfVegetables,
+      listOfFruits,
+    ];
+
+
+
+    return listOfListOfPossibleFood
+        .map((listOfFood) =>
+            listOfFood.where((food) => prefsList.contains(food.title)).toList())
+        .toList();
   }
+
+  //  _sortFoodsByFoodCategory(List<FoodModel> m) {
+  //   m.sort((a, b) => a.mealType.index.compareTo(b.mealType.index));
+  // }
 
   //FIXME: A Aleatoriedade pode as vezes pegar uma unica carne, cerca de 30% de sorte pra o error acontecer
 //Esse cara recebe todos os alimentos e randomiza as escolha de qual comida comer
 //Da forma que tá, a lista final receberá sempre a mesma diaria
-  List<MealModel> _buildDailyMeal(
-    List<FoodModel> listOfDrinks,
-    List<FoodModel> listOfMeat,
-    List<FoodModel> listOfVegetables,
-    List<FoodModel> listOfFruits,
-  ) {
+  List<MealModel> _buildDailyMeal(List<List<FoodModel>> listOfFood) {
+    List<FoodModel> listOfDrinks = listOfFood[0];
+    List<FoodModel> listOfMeat = listOfFood[1];
+    List<FoodModel> listOfVegetables = listOfFood[2];
+    List<FoodModel> listOfFruits = listOfFood[3];
+
     var drinkAmount = listOfDrinks.length;
     var meatAmount = listOfMeat.length;
 

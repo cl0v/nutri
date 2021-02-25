@@ -11,7 +11,7 @@ class MealRepository {
 
   Future<List<MealModel>> fetchMeals() => provider.fetchMeals();
 
-  fetchMealsOfTheWeek() => provider.fetchMealsOfTheWeek();
+  Future<List<List<MealModel>>> fetchMealsOfTheWeek() => provider.fetchMealsOfTheWeek();
 
   fetchDailyMeals() => provider.fetchDailyMeals();
   // Future<List<MealModel>> buildMeal({int mealNumber, int foodNumber}) =>

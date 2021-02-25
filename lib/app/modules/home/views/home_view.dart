@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 
 import 'package:nutri/app/modules/home/views/home_body.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,18 +12,13 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Row(
+        title: Obx(() =>Row(
           children: [
-            
-            IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
-              //TODO: implement previewDay
-            },),
-            Text('HOJE'),
-            IconButton(icon: Icon(Icons.arrow_forward_ios), onPressed: (){
-              //TODO: implement nextDay
-            },),
+            IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: controller.isPreviewBtnDisabled.value ? null : controller.onPreviewDayPressed, ),
+            Text(controller.getDayTitle()),
+            IconButton(icon: Icon(Icons.arrow_forward_ios), onPressed: controller.isNextBtnDisabled.value ? null : controller.onNextDayPressed,),
           ],
-        ),
+        ),),
 
         // TODO: Botao que vai para a checklist ???
         // TODO: Pagina de FAQ
@@ -34,7 +31,6 @@ class HomeView extends StatelessWidget {
         //   )
         // ],
       ),
-      // bottomNavigationBar: BottomAppBar(child: Row(children: [IconButton(icon: Icon(Icons.home,), onPressed: (){},),],),),
       body: HomeBody(),
     );
   }

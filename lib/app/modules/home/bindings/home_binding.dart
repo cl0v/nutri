@@ -9,7 +9,7 @@ class HomeBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<HomeController>(
       () => HomeController(
-        mealRepository: MealRepository(
+        repository: MealRepository(
           provider: MealProvider(
             prefs: SharedPreferences.getInstance(),
           ),
