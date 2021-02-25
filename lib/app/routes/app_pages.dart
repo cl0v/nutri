@@ -6,6 +6,8 @@ import 'package:nutri/app/modules/home/bindings/home_binding.dart';
 import 'package:nutri/app/modules/home/views/home_view.dart';
 import 'package:nutri/app/modules/login/bindings/login_binding.dart';
 import 'package:nutri/app/modules/login/views/login_view.dart';
+import 'package:nutri/app/modules/payment/bindings/payment_binding.dart';
+import 'package:nutri/app/modules/payment/views/payment_view.dart';
 import 'package:nutri/app/modules/profile/bindings/profile_binding.dart';
 import 'package:nutri/app/modules/profile/views/profile_view.dart';
 import 'package:nutri/app/modules/questions/bindings/questions_binding.dart';
@@ -18,7 +20,7 @@ import 'package:nutri/app/modules/splash/views/splash_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.FOOD_SWIPE;
 
   static final routes = [
     GetPage(
@@ -55,6 +57,11 @@ class AppPages {
       name: Routes.FOOD_SWIPE,
       page: () => FoodSwipeView(),
       binding: FoodSwipeBinding(),
+    ),
+    GetPage(
+      name: Routes.PAYMENT,
+      page: () => PaymentView(),
+      binding: PaymentBinding(),
     ),
   ];
 }

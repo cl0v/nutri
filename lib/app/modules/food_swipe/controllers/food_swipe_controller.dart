@@ -4,6 +4,7 @@ import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/food_swipe_model.dart';
 import 'package:nutri/app/data/repositories/food_swipe_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
+import 'package:nutri/constants.dart';
 
 //IDEIA: No food swipe card, quando a pessoa quiser trocar algum alimento
 //IDEIA: Mostrar apenas os alimentos selecionados para aquela semana(nao permitir adicionar elementos que nao estavam no planejado pra semana, apenas trocar alimentos equivalentes, de dia)
@@ -46,8 +47,14 @@ class FoodSwipeController extends GetxController {
   onConfirmPressed() {
     ++currentIndex;
     if (currentIndex == _foodSwipeList.length) {
-      _savePrefs();
-      Get.offAllNamed(Routes.HOME);
+      if (_foodPrefs.isEmpty) {
+        //TODO: Implement onFoodSwipe no element was selected
+        //Retornar para a primeira pagina e
+        _onNoFoodWasSelected();
+      } else {
+        _savePrefs();
+        Get.offAllNamed(Routes.HOME);
+      }
     } else {
       _setShowingFoodSwipe(_foodSwipeList[currentIndex]);
       pageController.jumpToPage(0);
@@ -56,10 +63,19 @@ class FoodSwipeController extends GetxController {
     }
   }
 
-  onSkipPressed() {
-    _savePrefs(); //TODO: Lembrar que estou possibilitando o usuario pular o foodswipe
-
-    Get.offAllNamed(Routes.HOME);
+  _onNoFoodWasSelected() {
+//TODO: Obrigar usuario a escolher pelo menos uma carne e uma bebida(?)
+    pageController.jumpToPage(0);
+    _setShowingFoodSwipe(_foodSwipeList[0]);
+    currentIndex = 0;
+    Get.isSnackbarOpen
+        ? Get.back()
+        : Get.snackbar(
+            'Escolha algo',
+            'Você deve escolher pelo menos uma comida',
+            colorText: Colors.white,
+            backgroundColor: kRedColor,
+          );
   }
 
   void onCheckTapped(FoodModel food, int index) {

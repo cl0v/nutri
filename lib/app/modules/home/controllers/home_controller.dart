@@ -114,9 +114,7 @@ class HomeController extends GetxController {
   }
 
   _fetchMeals() async {
-    var data = DateTime.now();
-    print(HomeScreenHelper.getDayOfTheWeekString(data.weekday));
-    mealList = ((await repository.fetchMeals())
+    mealList = ((await repository.fetchDailyMeals())
         .map((meal) => MealCardModel(mealModel: meal))
         .toList());
     mealListLenght.value = mealList.length;

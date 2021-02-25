@@ -37,7 +37,6 @@ class MealProvider {
 
   Future<List<MealModel>> fetchMeals() async {
     print(await _getFoodsPrefs());
-    List<MealModel>();
     var foods = await FoodModelHelper.loadAllFoods();
     List meals = List<MealModel>();
     foods.forEach(
@@ -73,12 +72,18 @@ class MealProvider {
 
   ///Filtra a lista de comida para saber as possibilidades
   Future<List<List<FoodModel>>> _getPossibleFoodList() async {
-    List<FoodModel> listOfDrinks = await FoodModelHelper.loadDrinks();
-    List<FoodModel> listOfMeat = await FoodModelHelper.loadMeats();
-    List<FoodModel> listOfVegetables = await FoodModelHelper.loadVegetables();
-    List<FoodModel> listOfFruits = await FoodModelHelper.loadFruits();
-
     var prefsList = await _getFoodsPrefs();
+    List<FoodModel> listOfDrinks =
+        await FoodModelHelper.loadPrefsDrinks(prefsList);
+    List<FoodModel> listOfMeat =
+        await FoodModelHelper.loadPrefsMeats(prefsList);
+    List<FoodModel> listOfVegetables =
+        await FoodModelHelper.loadPrefsVegetables(prefsList);
+    List<FoodModel> listOfFruits =
+        await FoodModelHelper.loadPrefsFruits(prefsList);
+    // List<FoodModel> listOfMeat = await FoodModelHelper.loadMeats();
+    // List<FoodModel> listOfVegetables = await FoodModelHelper.loadVegetables();
+    // List<FoodModel> listOfFruits = await FoodModelHelper.loadFruits();
 
     var listOfListOfPossibleFood = [
       listOfDrinks,
@@ -87,12 +92,10 @@ class MealProvider {
       listOfFruits,
     ];
 
-
-
-    return listOfListOfPossibleFood
-        .map((listOfFood) =>
-            listOfFood.where((food) => prefsList.contains(food.title)).toList())
-        .toList();
+    return listOfListOfPossibleFood;
+    // .map((listOfFood) =>
+    //     listOfFood.where((food) => prefsList.contains(food.title)).toList())
+    // .toList();
   }
 
   //  _sortFoodsByFoodCategory(List<FoodModel> m) {
@@ -110,6 +113,8 @@ class MealProvider {
 
     var drinkAmount = listOfDrinks.length;
     var meatAmount = listOfMeat.length;
+
+    //BUG: Quando uma carne, fruta ou bebida(pelo menos um de cada) nao é escolhida, o app trava(ja que estou usando o list[VAL] no build e esse val n pode ser nulo)
 
     var breakfast = MealModel(
       food: listOfDrinks[Random().nextInt(drinkAmount)],

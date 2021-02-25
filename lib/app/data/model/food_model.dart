@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+
 //IDEIA: Talvez posso adicionar quanto cada comida vale em pontos, para montar um prato final
 // Dar os pontos e calcular quanto cada uma vale para fechar o dia com a pontuaçao necessária
 // Exemplo, um frango na pe é 13, + importancia, uns 10, daria 130 pontos
@@ -30,8 +31,6 @@ enum MainOrExtra {
   extra,
   both,
 }
-
-
 
 //FIXME: Corrigir tomate pois nao permitirei frutas no almoço(Provavelmente tomate tambem nao)
 class FoodModel {
@@ -112,17 +111,29 @@ abstract class FoodModelHelper {
   static Future<List<FoodModel>> loadMeats() =>
       _sortJsonByCategory(FoodCategory.meat);
 
+  static Future<List<FoodModel>> loadPrefsMeats(List<String> prefs) =>
+      _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.meat);
+
   ///Recebe todas as bebidas cadastradas no banco
   static Future<List<FoodModel>> loadDrinks() =>
       _sortJsonByCategory(FoodCategory.drink);
+
+  static Future<List<FoodModel>> loadPrefsDrinks(List<String> prefs) =>
+      _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.drink);
 
   ///Recebe todas os vegetais cadastrados no banco
   static Future<List<FoodModel>> loadVegetables() =>
       _sortJsonByCategory(FoodCategory.vegetable);
 
+  static Future<List<FoodModel>> loadPrefsVegetables(List<String> prefs) =>
+      _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.vegetable);
+
   ///Recebe todas as frutas cadastradas no banco
   static Future<List<FoodModel>> loadFruits() =>
       _sortJsonByCategory(FoodCategory.fruit);
+
+  static Future<List<FoodModel>> loadPrefsFruits(List<String> prefs) =>
+      _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.fruit);
 
   static Future<List> _loadJson() async =>
       jsonDecode(await rootBundle.loadString(jsonPath));
@@ -138,6 +149,12 @@ abstract class FoodModelHelper {
     list.shuffle();
     return list;
   }
+
+  static Future<List<FoodModel>> _sortJsonByCategoryBasedOnPref(
+          List<String> prefs, FoodCategory category) async =>
+      (await _sortJsonByCategory(category))
+          .where((food) => prefs.contains(food.title))
+          .toList();
 
 //TODO: Implement loadFoodsFromPrefs;
   static Future<List<FoodModel>> loadFoodsFromPreferences(
