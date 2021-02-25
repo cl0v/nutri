@@ -13,11 +13,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 //IDEIA: Descobrir quantas refeições a pessoa costuma fazer;
 
 //IDEIA: Frutas so de noite ou antes da atividade fisica
-
-//FIXME: Remover o refrigerante sem açucar da lista, pelo menos por agora
+//IDEIA: Em algum momento terei que botar peso nos alimentos(Para decidir a frequencia com que cada um apareça)
 
 //BUG: Quando a pessoa nao escolhe nenhuma comida no foodSwipe o app trava
 //FIXME: Obrigar a pessoa a escolher pelo menos uma carne e uma bebida(!nao precisa tanto) no food swipe
+
+//TODO: Vou precisar testar o card de frutas principal, pode ser que o codigo ainda nao saiba quando é main ou extra
 
 const foodPrefsKey = 'foodPrefs';
 
@@ -28,6 +29,24 @@ class MealProvider {
 
   int dailyMealAmount = 4; //4 contando com o cafe da manha
   int daysInAWeek = 7;
+
+  Future<List<MealModel>> fetchDailyMeals() async {
+    List<MealModel> dailyMeals = [];
+
+    List<FoodModel> listOfMeat = await FoodModelHelper.loadMeats();
+    List<FoodModel> listOfDrinks = await FoodModelHelper.loadDrinks();
+    List<FoodModel> listOfFruits = await FoodModelHelper.loadFruits();
+    List<FoodModel> listOfVegetables = await FoodModelHelper.loadVegetables();
+
+    dailyMeals = _buildDailyMeal(
+      listOfDrinks,
+      listOfMeat,
+      listOfVegetables,
+      listOfFruits,
+    );
+
+    return dailyMeals;
+  }
 
   Future<List<MealModel>> fetchMeals() async {
     print(await _getFoodsPrefs());
@@ -73,8 +92,10 @@ class MealProvider {
 
     List<List<MealModel>> weekMeal = [];
 
-    weekMeal = List.generate(daysInAWeek,
-        (idx) => _buildDailyMeal(listOfDrinks, listOfMeat, listOfVegetables, listOfFruits));
+    weekMeal = List.generate(
+        daysInAWeek,
+        (idx) => _buildDailyMeal(
+            listOfDrinks, listOfMeat, listOfVegetables, listOfFruits));
     return weekMeal;
   }
 
@@ -97,21 +118,25 @@ class MealProvider {
     var meatAmount = listOfMeat.length;
 
     var breakfast = MealModel(
-        food: listOfDrinks[Random().nextInt(drinkAmount)],
-        extras: [],
-        mealType: MealType.breakfast);
+      food: listOfDrinks[Random().nextInt(drinkAmount)],
+      extras: [],
+      mealType: MealType.breakfast,
+    );
     var lunch = MealModel(
-        food: listOfMeat[Random().nextInt(meatAmount)],
-        extras: listOfVegetables,
-        mealType: MealType.lunch);
+      food: listOfMeat[Random().nextInt(meatAmount)],
+      extras: listOfVegetables,
+      mealType: MealType.lunch,
+    );
     var tea = MealModel(
-        food: listOfMeat[Random().nextInt(meatAmount)],
-        extras: [],
-        mealType: MealType.tea);
+      food: listOfMeat[Random().nextInt(meatAmount)],
+      extras: listOfVegetables,
+      mealType: MealType.tea,
+    );
     var dinner = MealModel(
-        food: listOfMeat[Random().nextInt(meatAmount)],
-        extras: listOfFruits,
-        mealType: MealType.dinner);
+      food: listOfFruits.first,
+      extras: listOfFruits,
+      mealType: MealType.dinner,
+    );
 
     return [breakfast, lunch, tea, dinner];
   }

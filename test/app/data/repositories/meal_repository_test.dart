@@ -7,7 +7,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //IDEIA: Create a card that is just fruits in the entire meal (title:Fruits, extras[list of fruits], mealType.tea, mainOrExtra.main, foodcategory.none(or fruits))
 
-// Criar uma lista que armazena o que a pessoa tem que comer
+final mockedPrefs = [
+  'Peito de Frango',
+  'Picanha',
+  'Brócolis',
+  'Alface',
+  'Tomate',
+  'Café Preto',
+];
+
+final mockedMainFoodPrefs = [
+  'Peito de Frango',
+  'Café Preto',
+  'Picanha',
+];
 
 main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -132,11 +145,114 @@ main() {
 
       expect(listExtraAmount, everyElement(2));
     });
+  }, skip: true);
 
-    // test('Extras from meat should be vegetables')//testar os extras
-    //Testar a quantidade de vezes que cada um aparece(tirar a randomizaçao)
+  group('Daily meals for people that dont do exercice: ', () {
+    /* Refeições diarias para pessoas que não fazem exercícios
+    * O que preciso testar:
+    - A quantidade de refeições por dia deve ser 4
+    - A ordem dos pratos principais atendem as respectivas categorias [drink, meat, meat, fruit]
+    - Primeira refeição deve ser alguma bebida
+    - Primeira refeição não deve ter acompanhamentos
+    - Segunda refeição deve ser alguma carne
+    - Segunda refeição deve ser acompanhado de vegetais
+    - Terceira refeição deve ser alguma carne
+    - Terceira refeição deve ser acompanhado de vegetais
+    - Ultima refeição deve ser o card de frutas *
+    - Ultima refeição deve ser acompanhado de frutas
+    */
+
+    List<MealModel> dailyMeals = [];
+
+    test('Total meals of the day should be 4', () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      expect(dailyMeals.length, 4);
+    });
+    test(
+        'The food category ordered by meal order should be drink, meat, meat and fruit',
+        () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      List<FoodCategory> foodCategoryOrderedByMeals = [];
+      dailyMeals.forEach(
+          (meal) => foodCategoryOrderedByMeals.add(meal.food.category));
+      expect(foodCategoryOrderedByMeals, [
+        FoodCategory.drink,
+        FoodCategory.meat,
+        FoodCategory.meat,
+        FoodCategory.fruit
+      ]);
+    });
+
+    test('First meal of the day should be in drink category', () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      expect(dailyMeals.first.food.category, FoodCategory.drink);
+    });
+
+    test('First meal of the day should not have extras', () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      expect(dailyMeals.first.extras.length, 0);
+    });
+
+    test('Second meal of the day should be in meat category', () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      expect(dailyMeals[1].food.category, FoodCategory.meat);
+    });
+
+    //FIXME: Futuramente pode conter tubers(cenoura etc)
+    test(
+        'Second meal of the day should have only extras in vegetables category',
+        () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      List<FoodCategory> extraCategoriesFromSecondMeal = [];
+      dailyMeals[1].extras.forEach(
+          (extra) => extraCategoriesFromSecondMeal.add(
+            extra.category,
+          ),
+      );
+
+      expect(extraCategoriesFromSecondMeal.length, greaterThan(0));
+      expect(
+          extraCategoriesFromSecondMeal, everyElement(FoodCategory.vegetable));
+    });
+    test('Third meal of the day should be in meat category', () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      expect(dailyMeals[2].food.category, FoodCategory.meat);
+    });
+
+    //FIXME: Futuramente pode conter tubers(cenoura etc)
+    test('Third meal of the day should have only extras in vegetables category',
+        () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      List<FoodCategory> extraCategoriesFromThirdMeal = [];
+
+      dailyMeals[2].extras.forEach(
+          (extra) => extraCategoriesFromThirdMeal.add(
+            extra.category,
+          ),
+      );
+
+      expect(extraCategoriesFromThirdMeal.length, greaterThan(0));
+      expect(
+          extraCategoriesFromThirdMeal, everyElement(FoodCategory.vegetable));
+    });
+
+    test('Last meal of the day should have only extras in fruits category',
+        () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      List<FoodCategory> extraCategoriesFromLastMeal = [];
+
+      dailyMeals.last.extras.forEach(
+          (extra) => extraCategoriesFromLastMeal.add(
+            extra.category,
+          ),
+      );
+      expect(extraCategoriesFromLastMeal.length, greaterThan(0));
+      expect(extraCategoriesFromLastMeal, everyElement(FoodCategory.fruit));
+    });
   });
 }
+// test('Extras from meat should be vegetables')//testar os extras
+//Testar a quantidade de vezes que cada um aparece(tirar a randomizaçao)
 
 // Pratos Principais: Frutas, Proteinas, Bebidas(nao caloricas)
 // Acompanhamentos: Sempre será vegetal, (decidir dos ovos ainda)
@@ -144,19 +260,40 @@ main() {
 // Criar um prato principal que se chame frutas, os acompanhamentos mostrarão as frutas
 // Posso criar uma categoria de frutas que seja acompanhamentos
 
-final mockedPrefs = [
-  'Peito de Frango',
-  'Picanha',
-  'Brócolis',
-  'Alface',
-  'Tomate',
-  'Café Preto',
-];
+//IDEIA: É importante saber qual o objetivo da pessoa(Emagrecimento, etc)
+// - Deixar as pessoas que querem engordar e manter peso por ultimo
+// É importante saber o quão rápido a pessoa pretende atingir o objetivo.
+//Para pessoas que praticam atividade física moderada ou de alta intensidade, é importante saber o horario dos exercicios.
+//Para pessoas que praticam atividade fisica de manha, a atividade deverá ser feita em jejum
+//Para pessoas que não praticam atividade fisica, é indiferente
 
-final mockedMainFoodPrefs = [
-  'Peito de Frango',
-  'Café Preto',
-  'Picanha',
-];
+/*
+Serão 4 refeiçoes por dia contando o cafe na parte da manha.
+- Sendo a primeira refeiçao obrigatório alguma bebida sem calorias
+- Sendo o almoço, a refeição principal com base em proteína animal, mais vegetais
+- Sendo a refeição seguinte, uma refeição com base em proteina animal, mais vegetais
+- Sendo uma refeiçao com base em frutas (apenas 100g de carb ja que essa pessoa nao pratica atividade fisica)
+*/
 
-//Erro estranho acontece quando troco a picanha de lugar
+//.Exemplo padrao de combinaçao pode ser encontrado no livro
+//1
+/* Reforçando que essa pessoa não pratica exercicios fisicos, acorda as 7 e dorme as 11
+  - Cafe da manha: Café preto, sem acompanhamento
+  - Almoço: Peito de frango, acompanhado de vegetais
+  - Sem café da tarde
+  - Entre 5 e 7 da noite, Carne, acompanhado de vegetais
+  - Entre 9 e 11, Frutas, limitar a somente uma ou duas frutas por dia
+*/
+
+//2
+/* Uma pessoa que pratica atividade fisica, acorda as 7 e dorme as 11 (Musculaçao)
+// Preciso saber por volta de que horas ela malha, antes de malhar recomendar frutas, o quanto ela quiser
+  - Cafe da manha: Café preto, sem acompanhamento
+  - Almoço: Peito de frango, acompanhado de vegetais
+  - Antes de malhar, Frutas, limitar a somente uma ou duas frutas por dia
+  - Entre 9 e 11 da noite, Carne, acompanhado de vegetais
+*/
+
+//IDEIA: Lembrar do objetivo emagrecer e o quanto ela está disposta a 'sofrer',
+// emagrecer de forma rigorosa, limitar a 1 ou 2 refeiçoes por dia + cafe
+// por enquanto vou trabalhar com uma medida padrão que funcionaria para qualquer pessoa

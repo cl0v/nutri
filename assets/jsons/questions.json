@@ -27,7 +27,16 @@
             "Sim, normal",
             "Sim, com intensidade",
             "Não"
-        ],
-        "answer_index": 2
+        ]
+    },
+    {
+        "question": "Qual seu objetivo?",
+        "prefs": "q_target",
+        "options": [
+            "Emagrecer",
+            "Manter o peso",
+            "Ganhar peso",
+            "Reeducação alimentar"
+        ]
     }
 ]

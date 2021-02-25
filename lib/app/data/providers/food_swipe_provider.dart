@@ -9,7 +9,7 @@ const foodPrefsKey = 'foodPrefs';
 class FoodSwipeProvider {
   final Future<SharedPreferences> prefs;
 
-  //FIXME: Supondo que a pessoa não faça atividade fisica
+  //IDEIA: Supondo que a pessoa não faça atividade fisica
   var exerciceIntensity = 0;
 
   FoodSwipeProvider({@required this.prefs});
@@ -22,7 +22,7 @@ class FoodSwipeProvider {
 
   filterBasedOnExerciceIntensity() => _filterBasedOnExerciceIntensity();
 
-  
+
   _filterBasedOnExerciceIntensity() {}
 
   ///Decide quais comidas deverão ser mostradas pro usuário com base no perfil
