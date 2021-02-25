@@ -3,84 +3,98 @@
     "title": "Peito de Frango",
     "img": "assets/images/foods/peito de frango.jpg",
     "desc": "Peito de frango é uma alternativa excelente para perder peso e ganhar músculos.",
-    "category": 1
+    "category": 2,
+    "mainOrExtra": 1
   },
   {
     "title": "Ovos",
     "img": "assets/images/foods/ovos.jpg",
     "desc": "Ovos, o segundo melhor alimento do mundo, rico em proteínas, coma quantos quiser.",
-    "category": 1
+    "category": 0,
+    "mainOrExtra": 2
   },
   {
     "title": "Salmão",
     "img": "assets/images/foods/salmão.jpg",
     "desc": "Esse saboroso peixe é rico em omega 3.",
-    "category": 1
+    "category": 2,
+    "mainOrExtra": 1
   },
   {
     "title": "Picanha",
     "img": "assets/images/foods/picanha.jpg",
     "desc": "Picanha é uma excelente carne para seu dia a dia, pegue a mais magra possível.",
-    "category": 1
+    "category": 2,
+    "mainOrExtra": 1
   },
   {
     "title": "Brócolis",
     "img": "assets/images/foods/brócolis.jpg",
     "desc": "Brócolis é ótimo para sua saúde.",
-    "category": 2
+    "category": 3,
+    "mainOrExtra": 2
   },
   {
     "title": "Alface",
     "img": "assets/images/foods/alface.jpg",
     "desc": "Folhas de alface são as alternativas muito saudáveis para seu prato.",
-    "category": 2
+    "category": 3,
+    "mainOrExtra": 2
   },
   {
     "title": "Espinafre",
     "img": "assets/images/foods/espinafre.jpg",
     "desc": "Folhas de espinafre são as alternativas muito saudáveis para seu prato.",
-    "category": 2
+    "category": 3,
+    "mainOrExtra": 2
   },
   {
     "title": "Tomate",
     "img": "assets/images/foods/tomate.jpg",
     "desc": "Um pouco de tomate é sempre bom, mas não abuse dessa fruta",
-    "category": 3
+    "category": 4,
+    "mainOrExtra": 2
   },
   {
     "title": "Café Preto",
     "img": "assets/images/foods/café preto.jpg",
     "desc": "Lembre-se de sempre adoçar com adoçante (Recomendo Stevia).",
-    "category": 0
+    "category": 1,
+    "mainOrExtra": 1
   },
   {
     "title": "Chá",
     "img": "assets/images/foods/chá.jpg",
     "desc": "Lembre-se de sempre adoçar com adoçante (Recomendo Stevia).",
-    "category": 0
+    "category": 1,
+    "mainOrExtra": 1
   },
   {
     "title": "Refrigerante sem açucar",
     "img": "assets/images/foods/refrigerante sem açucar.jpg",
     "desc": "Sim, você pode tomar refrigerante, desde que não tenha açucar.",
-    "category": 0
+    "category": 1,
+    "mainOrExtra": 3
   },
   {
     "title": "Repolho Roxo",
     "img": "assets/images/foods/repolho roxo.jpg",
     "desc": "Repolho roxo mt bom",
-    "category": 2
+    "category": 3,
+    "mainOrExtra": 2
   },
   {
     "title": "Couve Flor",
     "img": "assets/images/foods/couve flor.jpg",
     "desc": "Couve flor faz bem",
-    "category": 2
+    "category": 3,
+    "mainOrExtra": 2
   },
   {
     "title": "Repolho",
     "img": "assets/images/foods/repolho.jpg",
     "desc": "Repolho roxo mt bom",
-    "category": 2
+    "category": 3,
+    "mainOrExtra": 2
   }
 ]

@@ -23,6 +23,8 @@ class FoodSwipeModel {
         return 'Vegetais';
       case FoodCategory.fruit:
         return 'Frutas';
+      case FoodCategory.others:
+        return 'Outros';
       default:
         return '';
     }

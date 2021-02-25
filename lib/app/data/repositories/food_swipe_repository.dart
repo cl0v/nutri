@@ -10,5 +10,7 @@ class FoodSwipeRepository {
   Future<List<FoodSwipeModel>> loadFoodSwipeList() =>
       provider.loadFoodSwipeList();
 
+  filterBasedOnExerciceIntensity() => provider.filterBasedOnExerciceIntensity();
+
   setFoodPreferences(List<String> list) => provider.setFoodsPrefs(list);
 }

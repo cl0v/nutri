@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 
 import 'package:nutri/app/data/model/food_model.dart';
@@ -7,13 +9,14 @@ class MealModel {
   MealType mealType;
   FoodModel food;
   List<FoodModel> extras;
+  int extraAmount;
   //Mapa de extras Lista de Food e quantidade
-  
-  
+
   MealModel({
     this.mealType,
     this.food,
     this.extras,
+    this.extraAmount,
   });
 
   static getTranslatedMeal(MealType m) {
@@ -41,18 +44,49 @@ class MealModel {
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
-
+  
     return o is MealModel &&
-        o.mealType == mealType &&
-        o.food == food &&
-        listEquals(o.extras, extras);
+      o.mealType == mealType &&
+      o.food == food &&
+      listEquals(o.extras, extras) &&
+      o.extraAmount == extraAmount;
   }
 
   @override
-  int get hashCode => mealType.hashCode ^ food.hashCode ^ extras.hashCode;
+  int get hashCode {
+    return mealType.hashCode ^
+      food.hashCode ^
+      extras.hashCode ^
+      extraAmount.hashCode;
+  }
 
   @override
-  String toString() => 'MealModel(meal: $mealType, food: $food, extras: $extras)';
+  String toString() =>
+      'MealModel(mealType: $mealType, food: $food, extras: $extras)';
+
+  Map<String, dynamic> toMap() {
+    return {
+      'mealType': mealType?.index,
+      'food': food?.toMap(),
+      'extras': extras?.map((x) => x?.toMap())?.toList(),
+      'extraAmount': extraAmount,
+    };
+  }
+
+  factory MealModel.fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+  
+    return MealModel(
+      mealType: MealType.values[map['mealType']],
+      food: FoodModel.fromMap(map['food']),
+      extras: List<FoodModel>.from(map['extras']?.map((x) => FoodModel.fromMap(x))),
+      extraAmount: map['extraAmount'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory MealModel.fromJson(String source) => MealModel.fromMap(json.decode(source));
 }
 
 enum MealType {

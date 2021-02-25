@@ -3,8 +3,12 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 
 //TODO: Criar model que definde o cardapio do dia( o model final, mais importante para o home) ???
-
+//FIXME: Pensar em como remover o tomate do cardapio de refeiçao de frutas
+//FIXME: Pensar onde encaixar ovos
+//FIXME: Decidir o que é comida pesada e leve para comer de noite e antes do treino
+///Categoria da comida que será servida
 enum FoodCategory {
+  none,
   drink,
   meat,
   vegetable,
@@ -13,14 +17,31 @@ enum FoodCategory {
   dairy,
   tuber,
   mushroom,
+  others,
 }
 
+///Qualquer coisa que possa ser prato principal receberá categoria MainExtraCategory.main
+///Qualquer coisa que possa ser acompanhamento receberá categoria MainExtraCategory.extra
+///Qualquer coisa que não se enquadra em nenhuma categoria receberá categoria MainExtraCategory.none
+enum MainOrExtra {
+  none,
+  main,
+  extra,
+  both,
+}
+
+
+
+//FIXME: Corrigir tomate pois nao permitirei frutas no almoço(Provavelmente tomate tambem nao)
 class FoodModel {
   String title;
   String img;
   String desc;
   //enum
   FoodCategory category;
+  //enum
+  MainOrExtra mainOrExtra;
+
   //TODO: Add PE
 
   FoodModel({
@@ -28,15 +49,8 @@ class FoodModel {
     this.img,
     this.desc,
     this.category,
+    this.mainOrExtra,
   });
-
-  // List<CookingType> getCooking(int i) {
-  //   return i.toString().split("").map((String c) => CookingType.values[int.parse(c)]).toList();
-  // }
-
-  // List<MealType> getMeal(int i) {
-  //   return i.toString().split("").map((String c) => MealType.values[int.parse(c)]).toList();
-  // }
 
   @override
   bool operator ==(Object o) {
@@ -54,6 +68,7 @@ class FoodModel {
       'img': img,
       'desc': desc,
       'category': category?.index,
+      'mainOrExtra': mainOrExtra?.index,
     };
   }
 
@@ -65,6 +80,7 @@ class FoodModel {
       img: map['img'],
       desc: map['desc'],
       category: FoodCategory.values[map['category']],
+      mainOrExtra: MainOrExtra.values[map['mainOrExtra']],
     );
   }
 
