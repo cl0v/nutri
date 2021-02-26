@@ -9,6 +9,11 @@ import 'package:nutri/constants.dart';
 //IDEIA: No food swipe card, quando a pessoa quiser trocar algum alimento
 //IDEIA: Mostrar apenas os alimentos selecionados para aquela semana(nao permitir adicionar elementos que nao estavam no planejado pra semana, apenas trocar alimentos equivalentes, de dia)
 
+//BUG: Quando a pessoa nao escolhe nenhuma comida das tres principais categorias [drink, meat, fruit] no foodSwipe o app trava
+//IDEIA: Liberar o botão de continuar apenas depois que a pessoa marcou o mínimo
+
+//IDEIA: Informar ao usuario a quantidade mínima que deve ser selecionada
+
 class FoodSwipeController extends GetxController {
   final FoodSwipeRepository repository;
 
@@ -24,6 +29,9 @@ class FoodSwipeController extends GetxController {
   var _checkedIndexes = <int>[].obs;
 
   int currentIndex = 0;
+
+  final _isConfirmBtnAvailable = false.obs;
+  bool get isConfirmBtnAvailable => _isConfirmBtnAvailable.value;
 
   final _amountSelected = 0.obs;
   int get amountSelected => _amountSelected.value;
@@ -86,10 +94,14 @@ class FoodSwipeController extends GetxController {
       _amountSelected.value--;
       _checkedIndexes.remove(index);
       _foodPrefs.remove(food.title);
-    } else if (amountSelected < currentFoodSwipeModel.amount) {
+    } else if (amountSelected < currentFoodSwipeModel.maximum) {
       _amountSelected.value++;
       _checkedIndexes.add(index);
       _foodPrefs.add(food.title);
+    }
+    if (currentFoodSwipeModel.minimum <= _amountSelected.value) {
+      
+      _isConfirmBtnAvailable.value = true;
     }
   }
 
@@ -97,8 +109,12 @@ class FoodSwipeController extends GetxController {
 
   _savePrefs() => repository.setFoodPreferences(_foodPrefs);
 
-  _setShowingFoodSwipe(FoodSwipeModel fSwipeModel) =>
-      _currentFoodSwipeModel.value = fSwipeModel;
+  _setShowingFoodSwipe(FoodSwipeModel fSwipeModel) {
+    _currentFoodSwipeModel.value = fSwipeModel;
+    if (currentFoodSwipeModel.minimum > _amountSelected.value) {
+      _isConfirmBtnAvailable.value = false;
+    }
+  }
 
   _fetchFoodSwipeList() async {
     _foodSwipeList = await repository.loadFoodSwipeList();

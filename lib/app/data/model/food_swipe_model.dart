@@ -2,12 +2,14 @@ import 'package:nutri/app/data/model/food_model.dart';
 
 class FoodSwipeModel {
   String category;
-  int amount;
+  int maximum;
+  int minimum;
   List<FoodModel> foods;
 
   FoodSwipeModel({
     this.category,
-    this.amount,
+    this.maximum,
+    this.minimum,
     this.foods,
   });
 
@@ -30,7 +32,4 @@ class FoodSwipeModel {
     }
   }
 
-  @override
-  String toString() =>
-      'FoodSwipeModel(category: $category, amount: $amount, foods: $foods)';
 }

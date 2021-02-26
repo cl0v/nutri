@@ -5,19 +5,23 @@ import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/repositories/meal_repository.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 
-//TODO: Quando a pessoa nao tem extras ou terminou as refeicoes do dia, mostra os card de agua??
+//IDEIA: Quando a pessoa nao tem extras ou terminou as refeicoes do dia, mostra os card de agua??
 //IDEIA: Deslizar os extras pra direita mostra os card de beba agua
 //TODO: Quando chega no ultimo item, nao tem pra onde ir, dar um feedback ou parabenizar a pessoa(pontos concluidos)
 //IDEIA: Criar um card para o final da lista(Card indicando os pontos da pessoa e talvez um pequeno resuminho)
 //IDEIA: Pode ser um card xapado azul da cor do tema, apenas um overview do dia;
 //IDEIA: Depois que o user conclui a ultima refeição, dar a possibilidade de ver o que vai comer amanha (desativar os botoes de concluir e pular... Deixar apenas o trocar)
 //IDEIA: Add dots indicator (num de refeiçoes do dia) : https://github.com/jlouage/flutter-carousel-pro/blob/master/lib/src/carousel_pro.dart
-//TODO: Definir a quantidade de acompanhamentos (inicialmente 3 [extrasAmount])
+//TODO: Definir a quantidade de acompanhamentos que podem ser selecionados(inicialmente 3 [extrasAmount])
 
 //IDEIA: COOL: Preencher os extras restantes com sugestões com base
-// no peso(valor que eu atribuo com base na qualidade do alimento)
-// e no PE(Valor do livro)
+// no peso (valor que eu atribuo com base na qualidade do alimento)
+// e no PE (Valor do livro)
 // Para sempre manter na casa dos 9 extras para ter um grid arrumadin
+
+// FIXME: Quando a pessoa confirma uma refeição a frente, a de tras deve ser marcada como nao concluida
+// EX: Se eu confirmar o almoço, mas nao ter marcado o cafe da manha, o cafe da manha será marcado como nao concluido
+// Posso adicionar uma categoria que seja, nao confirmado, nem skipado... (nao informado)
 
 class HomeController extends GetxController {
   final MealRepository repository;

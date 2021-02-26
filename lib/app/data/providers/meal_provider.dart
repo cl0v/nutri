@@ -15,8 +15,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 //IDEIA: Frutas so de noite ou antes da atividade fisica
 //IDEIA: Em algum momento terei que botar peso nos alimentos(Para decidir a frequencia com que cada um apareça)
 
-//BUG: Quando a pessoa nao escolhe nenhuma comida das tres principais categorias [drink, meat, fruit] no foodSwipe o app trava
 //FIXME: Obrigar a pessoa a escolher pelo menos uma carne e uma bebida(!nao precisa tanto) no food swipe
+
 
 //TODO: Vou precisar testar o card de frutas principal, pode ser que o codigo ainda nao saiba quando é main ou extra
 

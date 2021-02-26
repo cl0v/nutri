@@ -10,7 +10,7 @@ class FoodSwipeProvider {
   final Future<SharedPreferences> prefs;
 
   //IDEIA: Supondo que a pessoa não faça atividade fisica
-  var exerciceIntensity = 0;
+  // var exerciceIntensity = 0;
 
   FoodSwipeProvider({@required this.prefs});
 
@@ -18,12 +18,7 @@ class FoodSwipeProvider {
       _buildFoodSwipeList();
 
 //IDEIA: Quanto maior o valor da intensidade do exercício, mais frutas recomendar
-// 0 ... 3
-
-  filterBasedOnExerciceIntensity() => _filterBasedOnExerciceIntensity();
-
-
-  _filterBasedOnExerciceIntensity() {}
+// 0 ... 3 (até no maximo de 400g de carboidratos)
 
   ///Decide quais comidas deverão ser mostradas pro usuário com base no perfil
   Future<List<FoodSwipeModel>> _buildFoodSwipeList() async {
@@ -34,28 +29,32 @@ class FoodSwipeProvider {
     var fruitList = await FoodModelHelper.loadFruitsWithouFruitCard();
     foodSwipeList.add(
       FoodSwipeModel(
-        amount: 3,
+        maximum: 3,
+        minimum: 2,
         category: FoodSwipeModel.getCategory(FoodCategory.meat),
         foods: meatList,
       ),
     );
     foodSwipeList.add(
       FoodSwipeModel(
-        amount: 2,
+        maximum: 9,
+        minimum: 3,
         category: FoodSwipeModel.getCategory(FoodCategory.vegetable),
         foods: vegList,
       ),
     );
     foodSwipeList.add(
       FoodSwipeModel(
-        amount: 1,
+        maximum: 1,
+        minimum: 0,
         category: FoodSwipeModel.getCategory(FoodCategory.fruit),
         foods: fruitList,
       ),
     );
     foodSwipeList.add(
       FoodSwipeModel(
-        amount: 2,
+        maximum: 2,
+        minimum: 1,
         category: FoodSwipeModel.getCategory(FoodCategory.drink),
         foods: drinkList,
       ),

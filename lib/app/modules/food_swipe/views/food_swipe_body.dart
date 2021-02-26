@@ -31,7 +31,7 @@ class FoodSwipeBody extends GetView<FoodSwipeController> {
                         Expanded(
                           child: Center(
                             child: Text(
-                              '${controller.currentFoodSwipeModel.category} (${controller.amountSelected}/${controller.currentFoodSwipeModel.amount})',
+                              '${controller.currentFoodSwipeModel.category} (${controller.amountSelected}/${controller.currentFoodSwipeModel.maximum})',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 28,
@@ -69,10 +69,14 @@ class FoodSwipeBody extends GetView<FoodSwipeController> {
                         Expanded(
                           flex: 2,
                           child: Center(
-                            child: RaisedButton(
-                              onPressed: controller.onConfirmPressed,
-                              child: Text(
-                                'Confirmar',
+                            child: Obx(
+                              () => RaisedButton(
+                                onPressed: controller.isConfirmBtnAvailable
+                                    ? controller.onConfirmPressed
+                                    : null,
+                                child: Text(
+                                  'Confirmar',
+                                ),
                               ),
                             ),
                           ),
