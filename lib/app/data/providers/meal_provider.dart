@@ -15,7 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 //IDEIA: Frutas so de noite ou antes da atividade fisica
 //IDEIA: Em algum momento terei que botar peso nos alimentos(Para decidir a frequencia com que cada um apareça)
 
-//BUG: Quando a pessoa nao escolhe nenhuma comida no foodSwipe o app trava
+//BUG: Quando a pessoa nao escolhe nenhuma comida das tres principais categorias [drink, meat, fruit] no foodSwipe o app trava
 //FIXME: Obrigar a pessoa a escolher pelo menos uma carne e uma bebida(!nao precisa tanto) no food swipe
 
 //TODO: Vou precisar testar o card de frutas principal, pode ser que o codigo ainda nao saiba quando é main ou extra
@@ -67,7 +67,11 @@ class MealProvider {
 
   Future<List<List<MealModel>>> fetchMealsOfTheWeek() async {
     var listOfFood = await _getPossibleFoodList();
-    return List.generate(daysInAWeek, (idx) => _buildDailyMeal(listOfFood));
+    var listOfDailyMeal = [];
+    for (var i = 0; i < daysInAWeek; i++) {
+      listOfDailyMeal.add( await _buildDailyMeal(listOfFood));
+    }
+    return listOfDailyMeal;
   }
 
   ///Filtra a lista de comida para saber as possibilidades
@@ -80,19 +84,18 @@ class MealProvider {
     List<FoodModel> listOfVegetables =
         await FoodModelHelper.loadPrefsVegetables(prefsList);
     List<FoodModel> listOfFruits =
-        await FoodModelHelper.loadPrefsFruits(prefsList);
+        await FoodModelHelper.loadExtraFruits(prefsList);
     // List<FoodModel> listOfMeat = await FoodModelHelper.loadMeats();
     // List<FoodModel> listOfVegetables = await FoodModelHelper.loadVegetables();
     // List<FoodModel> listOfFruits = await FoodModelHelper.loadFruits();
 
-    var listOfListOfPossibleFood = [
+    return [
       listOfDrinks,
       listOfMeat,
       listOfVegetables,
       listOfFruits,
     ];
 
-    return listOfListOfPossibleFood;
     // .map((listOfFood) =>
     //     listOfFood.where((food) => prefsList.contains(food.title)).toList())
     // .toList();
@@ -105,7 +108,7 @@ class MealProvider {
   //FIXME: A Aleatoriedade pode as vezes pegar uma unica carne, cerca de 30% de sorte pra o error acontecer
 //Esse cara recebe todos os alimentos e randomiza as escolha de qual comida comer
 //Da forma que tá, a lista final receberá sempre a mesma diaria
-  List<MealModel> _buildDailyMeal(List<List<FoodModel>> listOfFood) {
+  Future<List<MealModel>> _buildDailyMeal(List<List<FoodModel>> listOfFood) async {
     List<FoodModel> listOfDrinks = listOfFood[0];
     List<FoodModel> listOfMeat = listOfFood[1];
     List<FoodModel> listOfVegetables = listOfFood[2];
@@ -114,8 +117,8 @@ class MealProvider {
     var drinkAmount = listOfDrinks.length;
     var meatAmount = listOfMeat.length;
 
-    //BUG: Quando uma carne, fruta ou bebida(pelo menos um de cada) nao é escolhida, o app trava(ja que estou usando o list[VAL] no build e esse val n pode ser nulo)
-
+    //BUG:  Quando uma carne, fruta ou bebida(pelo menos um de cada) nao é escolhida, o app trava
+//FIXME: MOTIVO DO BUG: Estou usando o list[VAL] no build e esse val n pode ser nulo
     var breakfast = MealModel(
       food: listOfDrinks[Random().nextInt(drinkAmount)],
       extras: [],
@@ -131,13 +134,19 @@ class MealProvider {
       extras: listOfVegetables,
       mealType: MealType.tea,
     );
+    //TODO: Testar caso em que nenhuma fruta for selecionada
+    if (listOfFruits.isEmpty) return [breakfast, lunch, tea];
+
+
+    var mainFruitCard = await FoodModelHelper.loadMainFruitCard();
     var dinner = MealModel(
-      food: listOfFruits.first,
+      food: mainFruitCard, //Deve receber apenas o card de fruta
       extras: listOfFruits,
       mealType: MealType.dinner,
     );
 
     return [breakfast, lunch, tea, dinner];
+    //FIXME: Está tendo um comportamento estranho, ja que está me retornando 5 valores
   }
 
   Future<List<String>> _getFoodsPrefs() async =>

@@ -114,12 +114,18 @@ abstract class FoodModelHelper {
   static Future<List<FoodModel>> loadPrefsMeats(List<String> prefs) =>
       _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.meat);
 
+  static Future<List<FoodModel>> loadMainMeats() async => _sortByMainOrExtra(
+     await _sortJsonByCategory(FoodCategory.meat), MainOrExtra.main);
+
   ///Recebe todas as bebidas cadastradas no banco
   static Future<List<FoodModel>> loadDrinks() =>
       _sortJsonByCategory(FoodCategory.drink);
 
   static Future<List<FoodModel>> loadPrefsDrinks(List<String> prefs) =>
       _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.drink);
+
+  static Future<List<FoodModel>> loadMainDrinks() async => _sortByMainOrExtra(
+     await _sortJsonByCategory(FoodCategory.drink), MainOrExtra.main);
 
   ///Recebe todas os vegetais cadastrados no banco
   static Future<List<FoodModel>> loadVegetables() =>
@@ -132,8 +138,17 @@ abstract class FoodModelHelper {
   static Future<List<FoodModel>> loadFruits() =>
       _sortJsonByCategory(FoodCategory.fruit);
 
+  static Future<List<FoodModel>> loadFruitsWithouFruitCard() async => _sortByMainOrExtra(
+      await _sortJsonByCategory(FoodCategory.fruit), MainOrExtra.extra);
+
   static Future<List<FoodModel>> loadPrefsFruits(List<String> prefs) =>
       _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.fruit);
+
+  static Future<FoodModel> loadMainFruitCard() async => _sortByMainOrExtra(
+     await _sortJsonByCategory(FoodCategory.fruit), MainOrExtra.main).first;
+
+  static Future<List<FoodModel>> loadExtraFruits(List<String> prefs) async => _sortByMainOrExtra(
+     await _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.fruit), MainOrExtra.extra);
 
   static Future<List> _loadJson() async =>
       jsonDecode(await rootBundle.loadString(jsonPath));
@@ -150,6 +165,12 @@ abstract class FoodModelHelper {
     return list;
   }
 
+  static List<FoodModel> _sortByMainOrExtra(
+          List<FoodModel> list, MainOrExtra mainOrExtra) =>
+      list.where((food) => food.mainOrExtra == mainOrExtra).toList();
+
+
+//TODO: Testar se tiver pelo menos uma fruta, deve mostrar o card de frutas
   static Future<List<FoodModel>> _sortJsonByCategoryBasedOnPref(
           List<String> prefs, FoodCategory category) async =>
       (await _sortJsonByCategory(category))

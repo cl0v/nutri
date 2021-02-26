@@ -96,5 +96,12 @@
     "desc": "Repolho roxo mt bom",
     "category": 3,
     "mainOrExtra": 2
+  },
+  {
+    "title": "Frutas",
+    "img": "assets/images/foods/frutas.jpg",
+    "desc": "Opção saudavel para evitar comer doces",
+    "category": 4,
+    "mainOrExtra": 1
   }
 ]

@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
-import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/data/repositories/meal_repository.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 
@@ -14,6 +13,11 @@ import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 //IDEIA: Depois que o user conclui a ultima refeição, dar a possibilidade de ver o que vai comer amanha (desativar os botoes de concluir e pular... Deixar apenas o trocar)
 //IDEIA: Add dots indicator (num de refeiçoes do dia) : https://github.com/jlouage/flutter-carousel-pro/blob/master/lib/src/carousel_pro.dart
 //TODO: Definir a quantidade de acompanhamentos (inicialmente 3 [extrasAmount])
+
+//IDEIA: COOL: Preencher os extras restantes com sugestões com base
+// no peso(valor que eu atribuo com base na qualidade do alimento)
+// e no PE(Valor do livro)
+// Para sempre manter na casa dos 9 extras para ter um grid arrumadin
 
 class HomeController extends GetxController {
   final MealRepository repository;

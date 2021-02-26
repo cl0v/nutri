@@ -31,7 +31,7 @@ class FoodSwipeProvider {
     var meatList = await FoodModelHelper.loadMeats();
     var drinkList = await FoodModelHelper.loadDrinks();
     var vegList = await FoodModelHelper.loadVegetables();
-    var fruitList = await FoodModelHelper.loadFruits();
+    var fruitList = await FoodModelHelper.loadFruitsWithouFruitCard();
     foodSwipeList.add(
       FoodSwipeModel(
         amount: 3,

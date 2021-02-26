@@ -6,7 +6,7 @@ import 'package:nutri/app/data/repositories/meal_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //IDEIA: Create a card that is just fruits in the entire meal (title:Fruits, extras[list of fruits], mealType.tea, mainOrExtra.main, foodcategory.none(or fruits))
-
+//FIXME: Fruits nao deve aparecer na foodswipe, porém deve aparecer no cardapio final (SOMENTE SE ALGuMA FRUTA FOI ESCOLHIDA)
 final mockedPrefs = [
   'Peito de Frango',
   'Picanha',
@@ -147,6 +147,53 @@ main() {
     });
   }, skip: true);
 
+  group('Card on the dayle meals: ', () {
+    /* Testar funcionalidade da FoodModel definindo se deve ser(na home) um card principal ou um card de extras
+     - Nenhum card principal deve estar na categoria MainOrExtra.extra
+     - Nenhum card de extra deve estar na categoria MainOrExtra.main
+     - Todos os card principais devem estar na categoria MainOrExtra.main
+     - Todos os card de extra devem estar na categoria MainOrExtra.extra
+     -- Fruits é uma exceção, logo deverá ser testado com suas regras
+     - O card de frutas deverá estar disponível, se for escolhida pelo menos uma fruta
+    */
+    //Esse cara vai ser responsável por pegar o error dos dois ultimos testes do grupo seguinte Sendo tomate um prato principal, sendo que ele está na categoria de extras
+//TODO: Implementar sistema de verificação se o card é main ou não
+
+    List<MealModel> dailyMeals = [];
+    test('No main card should be in MainOrExtra.extra category', () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      var listOfMains =
+          dailyMeals.map((meal) => meal.food.mainOrExtra).toList();
+      expect(listOfMains, everyElement(isNot(MainOrExtra.extra)));
+    });
+    test('No extra card should be in MainOrExtra.main category', () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      var listOfExtras = [];
+      dailyMeals.forEach((meal) =>
+          meal.extras.forEach((extra) => listOfExtras.add(extra.mainOrExtra)));
+      expect(listOfExtras, everyElement(isNot(MainOrExtra.main)));
+    });
+    test('Every main card should be in MainOrExtra.main category', () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      var listOfMains =
+          dailyMeals.map((meal) => meal.food.mainOrExtra).toList();
+      expect(listOfMains, everyElement(MainOrExtra.main));
+    });
+    test('Every extra card should be in MainOrExtra.extra category', () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      var listOfExtras = [];
+      dailyMeals.forEach((meal) =>
+          meal.extras.forEach((extra) => listOfExtras.add(extra.mainOrExtra)));
+      expect(listOfExtras, everyElement(MainOrExtra.extra));
+    });
+
+    test(
+        'Fruits card should be available, only if prefs have at least one FoodCategory.fruit ',
+        () async {
+      dailyMeals = await repository.fetchDailyMeals();
+    });
+  });
+  //Diabéticos nao podem jejuar de manhã
 
   group('Daily meals for people that dont do exercice: ', () {
     /* Refeições diarias para pessoas que não fazem exercícios
@@ -235,6 +282,11 @@ main() {
       expect(extraCategoriesFromThirdMeal.length, greaterThan(0));
       expect(
           extraCategoriesFromThirdMeal, everyElement(FoodCategory.vegetable));
+    });
+
+    test('Last meal of the day should be in fruit category', () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      expect(dailyMeals[3].food.category, FoodCategory.fruit);
     });
 
     test('Last meal of the day should have only extras in fruits category',
