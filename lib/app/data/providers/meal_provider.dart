@@ -17,7 +17,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //FIXME: Obrigar a pessoa a escolher pelo menos uma carne e uma bebida(!nao precisa tanto) no food swipe
 
-
 //TODO: Vou precisar testar o card de frutas principal, pode ser que o codigo ainda nao saiba quando é main ou extra
 
 const foodPrefsKey = 'foodPrefs';
@@ -67,9 +66,10 @@ class MealProvider {
 
   Future<List<List<MealModel>>> fetchMealsOfTheWeek() async {
     var listOfFood = await _getPossibleFoodList();
-    var listOfDailyMeal = [];
+    List<List<MealModel>> listOfDailyMeal = [];
     for (var i = 0; i < daysInAWeek; i++) {
-      listOfDailyMeal.add( await _buildDailyMeal(listOfFood));
+      var dailyMeal = await _buildDailyMeal(listOfFood);
+      listOfDailyMeal.add(dailyMeal);
     }
     return listOfDailyMeal;
   }
@@ -96,7 +96,8 @@ class MealProvider {
 
   //FIXME: A Aleatoriedade pode as vezes pegar uma unica carne, cerca de 30% de sorte pra o error acontecer
 //Esse cara recebe todos os alimentos e randomiza as escolha de qual comida comer
-  Future<List<MealModel>> _buildDailyMeal(List<List<FoodModel>> listOfFood) async {
+  Future<List<MealModel>> _buildDailyMeal(
+      List<List<FoodModel>> listOfFood) async {
     List<FoodModel> listOfDrinks = listOfFood[0];
     List<FoodModel> listOfMeat = listOfFood[1];
     List<FoodModel> listOfVegetables = listOfFood[2];
@@ -122,7 +123,6 @@ class MealProvider {
     );
     //TODO: Testar caso em que nenhuma fruta for selecionada
     if (listOfFruits.isEmpty) return [breakfast, lunch, tea];
-
 
     var mainFruitCard = await FoodModelHelper.loadMainFruitCard();
     var dinner = MealModel(

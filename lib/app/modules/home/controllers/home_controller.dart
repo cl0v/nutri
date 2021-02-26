@@ -29,6 +29,15 @@ import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 // FIXME: Corrigir o botão de dia anterior e dia seguinte
 // Por enquanto com base na lista semanal(logo calcula o hoje e amanha em diante)
 
+//IDEIA: Salvar os dados do dia do usuário (Talvez criar o card de fechamento do dia primeiro)
+// Podendo assim salvar de maneira mais facil o card (Se salvar nas shared pref a tendencia é que de merda)
+
+/*
+[MUDAR PARA CORRIGIDO] Corrigindo falha em que o dia seguinte ou anterior não 
+estara disponivel para os seguintes requisitos 
+(Não for usuário premium; Nao tiver nenhuma refeiçao disponível no dia anterior ou seguinte)
+*/
+
 class HomeController extends GetxController {
   final MealRepository repository;
 
@@ -127,7 +136,7 @@ class HomeController extends GetxController {
           duration: Duration(milliseconds: 1), curve: Curves.linear);
   }
 
-  
+
 
   _fetchMeals() async {
     mealList = ((await repository.fetchDailyMeals())
