@@ -14,6 +14,8 @@ import 'app/routes/app_pages.dart';
  - Estou sentindo muita fome, o que faço? - Repete a refeição anterior, pode exagerar na quantidade(sem limite)
 */
 
+//TODO: Corrigir bug do tomate nas frutas
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 

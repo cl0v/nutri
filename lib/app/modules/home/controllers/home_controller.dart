@@ -5,19 +5,19 @@ import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/repositories/meal_repository.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 
-//IDEIA: Quando a pessoa nao tem extras ou terminou as refeicoes do dia, mostra os card de agua??
-//IDEIA: Deslizar os extras pra direita mostra os card de beba agua
-//TODO: Quando chega no ultimo item, nao tem pra onde ir, dar um feedback ou parabenizar a pessoa(pontos concluidos)
-//IDEIA: Criar um card para o final da lista(Card indicando os pontos da pessoa e talvez um pequeno resuminho)
-//IDEIA: Pode ser um card xapado azul da cor do tema, apenas um overview do dia;
-//IDEIA: Depois que o user conclui a ultima refeição, dar a possibilidade de ver o que vai comer amanha (desativar os botoes de concluir e pular... Deixar apenas o trocar)
-//IDEIA: Add dots indicator (num de refeiçoes do dia) : https://github.com/jlouage/flutter-carousel-pro/blob/master/lib/src/carousel_pro.dart
+// IDEIA: Quando a pessoa nao tem extras ou terminou as refeicoes do dia, mostra os card de agua??
+// IDEIA: Deslizar os extras pra direita mostra os card de beba agua
 
-//TODO: IMPORTANTE: Definir a quantidade de acompanhamentos que podem ser selecionados(inicialmente 3 [extrasAmount])
-//TODO: Adicionar variavel que diz se tem extras disponiveis, caso nao tenha, nao aparece o texto 'Selecione x extras'
+// TODO: Quando chega no ultimo item, nao tem pra onde ir, dar um feedback ou parabenizar a pessoa(pontos concluidos)
+// IDEIA: Criar um card para o final da lista(Card indicando os pontos da pessoa e talvez um pequeno resuminho)
+// IDEIA: Pode ser um card xapado azul da cor do tema, apenas um overview do dia;
+// IDEIA: Depois que o user conclui a ultima refeição, dar a possibilidade de ver o que vai comer amanha (desativar os botoes de concluir e pular... Deixar apenas o trocar)
+// IDEIA: Add dots indicator (num de refeiçoes do dia) : https://github.com/jlouage/flutter-carousel-pro/blob/master/lib/src/carousel_pro.dart
 
+// TODO: IMPORTANTE: Definir a quantidade de acompanhamentos que podem ser selecionados(inicialmente 3 [extrasAmount])
+// TODO: Adicionar variavel que diz se tem extras disponiveis, caso nao tenha, nao aparece o texto 'Selecione x extras'
 
-//IDEIA: COOL: Preencher os extras restantes com sugestões com base
+// IDEIA: COOL: Preencher os extras restantes com sugestões com base
 // no peso (valor que eu atribuo com base na qualidade do alimento)
 // e no PE (Valor do livro)
 // Para sempre manter na casa dos 9 extras para ter um grid arrumadin
@@ -26,7 +26,8 @@ import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 // EX: Se eu confirmar o almoço, mas nao ter marcado o cafe da manha, o cafe da manha será marcado como nao concluido
 // Posso adicionar uma categoria que seja, nao confirmado, nem skipado... (nao informado)
 
-//FIXME: Corrigir o botão de dia anterior e dia seguinte
+// FIXME: Corrigir o botão de dia anterior e dia seguinte
+// Por enquanto com base na lista semanal(logo calcula o hoje e amanha em diante)
 
 class HomeController extends GetxController {
   final MealRepository repository;
@@ -126,6 +127,8 @@ class HomeController extends GetxController {
           duration: Duration(milliseconds: 1), curve: Curves.linear);
   }
 
+  
+
   _fetchMeals() async {
     mealList = ((await repository.fetchDailyMeals())
         .map((meal) => MealCardModel(mealModel: meal))
@@ -133,7 +136,6 @@ class HomeController extends GetxController {
     mealListLenght.value = mealList.length;
     _onMealChanged(0);
   }
-
 
   void onPreviewDayPressed() {
     showingDay.value--;
@@ -149,8 +151,20 @@ class HomeController extends GetxController {
   }
 }
 
+//Bug no domingo...
 //IMplementar hoje, amanha e ontem
 abstract class HomeScreenHelper {
+  static dayOnTheWeekToString(int dayNum) {
+    if (dayNum > 7) {
+      dayNum = (dayNum % 7);
+    } else if (dayNum < 1) {
+      dayNum = (dayNum % 7);
+    }
+    if (dayNum == 0) dayNum = 7;
+
+    return dayNum;
+  }
+
   static getDayTitle(int today, int showingDay) {
     if (showingDay == today + 1) {
       return 'AMANHÃ';
@@ -159,7 +173,7 @@ abstract class HomeScreenHelper {
     } else if (showingDay == today) {
       return 'HOJE';
     } else
-      return getDayOfTheWeekString(showingDay);
+      return getDayOfTheWeekString(dayOnTheWeekToString(showingDay));
   }
 
 //TODO: Corrigir bug do domingo (dia > 8 ou dia 0 <)

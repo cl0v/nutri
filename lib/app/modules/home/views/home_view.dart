@@ -12,13 +12,25 @@ class HomeView extends GetView<HomeController> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Obx(() =>Row(
-          children: [
-            IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: controller.isPreviewBtnDisabled.value ? null : controller.onPreviewDayPressed, ),
-            Text(controller.getDayTitle()),
-            IconButton(icon: Icon(Icons.arrow_forward_ios), onPressed: controller.isNextBtnDisabled.value ? null : controller.onNextDayPressed,),
-          ],
-        ),),
+        title: Obx(
+          () => Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.arrow_back_ios),
+                onPressed: controller.isPreviewBtnDisabled.value
+                    ? null
+                    : controller.onPreviewDayPressed,
+              ),
+              Text(controller.getDayTitle()),
+              IconButton(
+                icon: Icon(Icons.arrow_forward_ios),
+                onPressed: controller.isNextBtnDisabled.value
+                    ? null
+                    : controller.onNextDayPressed,
+              ),
+            ],
+          ),
+        ),
 
         // TODO: Botao que vai para a checklist ???
         // TODO: Pagina de FAQ
@@ -26,7 +38,7 @@ class HomeView extends GetView<HomeController> {
         //   IconButton(
         //     icon: Icon(Icons.help),
         //     onPressed: () {
-              // TODO: implement FAQ PAGE
+        // TODO: implement FAQ PAGE
         //     },
         //   )
         // ],
