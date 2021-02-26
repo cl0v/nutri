@@ -6,18 +6,9 @@ import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //IDEIA: Entender com o tempo as escolhar do usuario (padroes etc)
-//IDEIA: Escolher a melhor forma de organizar quais alimentos deverão aparecer;
 
-//IDEIA: Montar a lista de alimentos no final da semana
-//IDEIA: Dividir 'aleatoriamente' por 7 e cada dia será um meal + 4(por dia)...;
-//IDEIA: Descobrir quantas refeições a pessoa costuma fazer;
-
-//IDEIA: Frutas so de noite ou antes da atividade fisica
+//INFO: Frutas so de noite ou antes da atividade fisica
 //IDEIA: Em algum momento terei que botar peso nos alimentos(Para decidir a frequencia com que cada um apareça)
-
-//FIXME: Obrigar a pessoa a escolher pelo menos uma carne e uma bebida(!nao precisa tanto) no food swipe
-
-//TODO: Vou precisar testar o card de frutas principal, pode ser que o codigo ainda nao saiba quando é main ou extra
 
 const foodPrefsKey = 'foodPrefs';
 
@@ -94,8 +85,8 @@ class MealProvider {
     ];
   }
 
-  //FIXME: A Aleatoriedade pode as vezes pegar uma unica carne, cerca de 30% de sorte pra o error acontecer
-//Esse cara recebe todos os alimentos e randomiza as escolha de qual comida comer
+//FIXME: A Aleatoriedade pode as vezes pegar uma unica carne, cerca de 30% de sorte pra o error acontecer
+///Esse cara recebe todos os alimentos e randomiza as escolha de qual comida comer
   Future<List<MealModel>> _buildDailyMeal(
       List<List<FoodModel>> listOfFood) async {
     List<FoodModel> listOfDrinks = listOfFood[0];
@@ -105,20 +96,23 @@ class MealProvider {
 
     var drinkAmount = listOfDrinks.length;
     var meatAmount = listOfMeat.length;
-
+//Quantidade de extras deverá ser decidida de maneira mais inteligente
     var breakfast = MealModel(
       food: listOfDrinks[Random().nextInt(drinkAmount)],
       extras: [],
+      extraAmount: 0,
       mealType: MealType.breakfast,
     );
     var lunch = MealModel(
       food: listOfMeat[Random().nextInt(meatAmount)],
       extras: listOfVegetables,
+      extraAmount: 3,
       mealType: MealType.lunch,
     );
     var tea = MealModel(
       food: listOfMeat[Random().nextInt(meatAmount)],
       extras: listOfVegetables,
+      extraAmount: 5,
       mealType: MealType.tea,
     );
     //TODO: Testar caso em que nenhuma fruta for selecionada
@@ -128,11 +122,11 @@ class MealProvider {
     var dinner = MealModel(
       food: mainFruitCard, //Deve receber apenas o card de fruta
       extras: listOfFruits,
+      extraAmount: 1,
       mealType: MealType.dinner,
     );
 
     return [breakfast, lunch, tea, dinner];
-    //FIXME: Está tendo um comportamento estranho, ja que está me retornando 5 valores
   }
 
   Future<List<String>> _getFoodsPrefs() async =>

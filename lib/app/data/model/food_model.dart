@@ -6,9 +6,7 @@ import 'package:flutter/services.dart';
 // Dar os pontos e calcular quanto cada uma vale para fechar o dia com a pontuaçao necessária
 // Exemplo, um frango na pe é 13, + importancia, uns 10, daria 130 pontos
 // se fosse 13*1 daria 13 pontos, mas 1 frango nao é suficiente, porém nao tao pouco caso eu queria calcular 100 pontos
-//FIXME: Tomate não deverá estar presente nos extras do Card Principal de frutas
-//FIXME: Tomate deverá estar presente apenas nos extras da segunda refeição de proteinas (o mais perto da refeicao de frutas)
-//FIXME: Decidir o que é comida pesada e leve para comer de noite e antes do treino(Normalmente frutas)
+//IDEIA: Decidir o que é comida pesada e leve para comer de noite e antes do treino(Normalmente frutas)
 
 
 

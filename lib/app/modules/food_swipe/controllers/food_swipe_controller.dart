@@ -69,10 +69,6 @@ class FoodSwipeController extends GetxController {
   }
 
   _onNoFoodWasSelected() {
-//TODO: Obrigar usuario a escolher pelo menos uma carne e uma bebida(?)
-//MAPA {Categoria : quantidade} .... pelo menos uma quantidade específica de cada (minimo)
-//IDEIA: Antes dessa quantidade eu não permito o botão de liberar
-//Definir isso no prefs e enviar pra o foodSwipe model (Quantidade por categoria) ... Ja da para enviar como uma lista
     pageController.jumpToPage(0);
     _setShowingFoodSwipe(_foodSwipeList[0]);
     currentIndex = 0;

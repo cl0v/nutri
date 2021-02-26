@@ -36,10 +36,12 @@ class HomeBody extends GetView<HomeController> {
                           mealCardModel: controller.mealList[index],
                           mealCardState:
                               controller.mealList[index].mealCardState,
-                          onConfirmedPressed: () =>
-                              controller.onDonePressed(index),
-                          onSkippedPressed: () =>
-                              controller.onSkipPressed(index),
+                          onConfirmedPressed: controller.isToday
+                              ? () => controller.onDonePressed(index)
+                              : null,
+                          onSkippedPressed: controller.isToday
+                              ? () => controller.onSkipPressed(index)
+                              : null,
                         ),
                       ),
                     ),
@@ -48,7 +50,7 @@ class HomeBody extends GetView<HomeController> {
                 Obx(
                   () => Text(
                     controller.extrasAmount > 0
-                        ? 'Selecione ${controller.extrasAmount} acompanhamentos'
+                        ? 'Selecione (${controller.selectedExtrasList.length}/${controller.extrasAmount}) acompanhamentos'
                         : '',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -65,7 +67,9 @@ class HomeBody extends GetView<HomeController> {
                       return Obx(
                         () => ExtraSelectableCard(
                           extra: controller.extras[index],
-                          onTap: () => controller.onExtraTapped(index),
+                          onTap: controller.isToday
+                              ? () => controller.onExtraTapped(index)
+                              : null,
                           isSelected: controller.getSelectedIndex(index),
                         ),
                       );

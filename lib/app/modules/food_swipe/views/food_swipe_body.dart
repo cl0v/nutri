@@ -6,7 +6,8 @@ import 'package:nutri/app/modules/food_swipe/controllers/food_swipe_controller.d
 
 //IDEIA: Tornar o foodSwipe um carroussel, para rodar pras duas direçoes
 //IDEIA: Alem de deixar o visual mais bonito, ja que tem uma parte escura no lado esquerdo
-
+//IDEIA: Caso a pessoa não queria nenhum, deixar um card no final para adicionar outro alimento ou um card que quando marcado ele fala que não quer nenhum daqueles
+//Um cardzao cinza com uma lupa no centro por exemplo
 class FoodSwipeBody extends GetView<FoodSwipeController> {
   @override
   Widget build(BuildContext context) {

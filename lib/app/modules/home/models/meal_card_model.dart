@@ -5,9 +5,11 @@ class MealCardModel {
   final MealModel mealModel;
   MealCardState mealCardState  = MealCardState.None;
   List<int> extrasSelectedIndex = [];
+  final int extraAmount;
 
   MealCardModel({
     @required this.mealModel,
+    @required this.extraAmount,
   });
 
   @override

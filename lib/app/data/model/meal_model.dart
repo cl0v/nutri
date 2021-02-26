@@ -10,13 +10,12 @@ class MealModel {
   FoodModel food;
   List<FoodModel> extras;
   int extraAmount;
-  //Mapa de extras Lista de Food e quantidade
 
   MealModel({
     this.mealType,
     this.food,
     this.extras,
-    this.extraAmount,
+    this.extraAmount = 0,
   });
 
   static getTranslatedMeal(MealType m) {

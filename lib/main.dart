@@ -3,6 +3,27 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
 
+// Não colocar apenas as comidas, mas sim os pratos prontos(Assim o usuário nao tem a oportunidade de adicionar um arroz ou feijao)
+// Acompanhamentos
+
+//TODO: Melhorar a página SPLASH
+//TODO: Adicionar logo
+//TODO: Montar página de pagamentos
+//TODO: Montar página de FAQ
+//TODO: Montar info de cada refeição
+//TODO: Sugerir acompanhamentos para preencher o vazio
+
+
+
+
+//FIXME: Tomate não deve aparecer nas frutas
+//FIXME: Corrigir bug do tomate nas frutas
+//INFO: Tomate não deverá estar presente nos extras do Card Principal de frutas
+//INFO: Tomate deverá estar presente apenas nos extras da segunda refeição de proteinas (o mais perto da refeicao de frutas)
+
+
+//IDEIA: Card de água seria uma boa para preencher o vazio do café
+
 //IDEIA: Apenas deixar a pessoa escolher o que vai querer pra semana, depois jogar isso pruma todolist de compra
 //IDEIA: E sortear aleatoriamente as coisas para fazer o cardapio diario
 
@@ -12,9 +33,9 @@ import 'app/routes/app_pages.dart';
  - Posso comer o que não está no cardápio?
  - Qual quantidade devo comer?
  - Estou sentindo muita fome, o que faço? - Repete a refeição anterior, pode exagerar na quantidade(sem limite)
+ - Descobrir quantas refeições a pessoa costuma fazer
 */
 
-//TODO: Corrigir bug do tomate nas frutas
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

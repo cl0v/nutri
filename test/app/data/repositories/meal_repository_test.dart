@@ -5,12 +5,10 @@ import 'package:nutri/app/data/providers/meal_provider.dart';
 import 'package:nutri/app/data/repositories/meal_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-//FIXME: Tomate não deve aparecer nas frutas
 //TODO: Testar a nao repetição dos extras quando tiver mais de um extra
+//TODO: Criar sugestão de acompanhamentos para preencher os 9 espaços
 
-//IDEIA: Devo remover a fruta das possibilidades(extras), caso o usuario tenha comido?
-// Resumindo: Cada dia uma fruta diferente (Dar 7 possibilidades no primeiro dia, segundo 6, e assim por diante)
-// Por enquanto Não
+//IDEIA: Sugerir uma fruta diferente, porém nao remover a fruta da lista(podendo assim, o usuario comer uma mesma fruta mais de uma vez na semana);
 
 final mockedFoodPrefs = [
   'Peito de Frango',
@@ -259,7 +257,8 @@ main() {
       expect(dailyMeals[1].food.category, FoodCategory.meat);
     });
 
-    //FIXME: Futuramente pode conter tubers(cenoura etc)
+    //FIXME: Futuramente pode conter tubers(cenoura etc) nos acompanhamentos
+    //IDEIA: Devo juntar no foodSwipe legumes e verduras e limitar a 9
     test(
         'Second meal of the day should have only extras in vegetables category',
         () async {
@@ -280,7 +279,6 @@ main() {
       expect(dailyMeals[2].food.category, FoodCategory.meat);
     });
 
-    //FIXME: Futuramente pode conter tubers(cenoura etc)
     test('Third meal of the day should have only extras in vegetables category',
         () async {
       dailyMeals = await repository.fetchDailyMeals();

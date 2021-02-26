@@ -5,32 +5,30 @@ import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/repositories/meal_repository.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 
-// IDEIA: Quando a pessoa nao tem extras ou terminou as refeicoes do dia, mostra os card de agua??
 // IDEIA: Deslizar os extras pra direita mostra os card de beba agua
 
 // TODO: Quando chega no ultimo item, nao tem pra onde ir, dar um feedback ou parabenizar a pessoa(pontos concluidos)
-// IDEIA: Criar um card para o final da lista(Card indicando os pontos da pessoa e talvez um pequeno resuminho)
-// IDEIA: Pode ser um card xapado azul da cor do tema, apenas um overview do dia;
-// IDEIA: Depois que o user conclui a ultima refeição, dar a possibilidade de ver o que vai comer amanha (desativar os botoes de concluir e pular... Deixar apenas o trocar)
-// IDEIA: Add dots indicator (num de refeiçoes do dia) : https://github.com/jlouage/flutter-carousel-pro/blob/master/lib/src/carousel_pro.dart
+// IDEIA: (10/10) Criar um card para o final da lista(Card indicando os pontos da pessoa e talvez um pequeno resuminho)
+// Pode ser um card xapado azul da cor do tema, apenas um overview do dia;
+// IDEIA: (4/10) Add dots indicator (num de refeiçoes do dia) : https://github.com/jlouage/flutter-carousel-pro/blob/master/lib/src/carousel_pro.dart
 
-// TODO: IMPORTANTE: Definir a quantidade de acompanhamentos que podem ser selecionados(inicialmente 3 [extrasAmount])
-// TODO: Adicionar variavel que diz se tem extras disponiveis, caso nao tenha, nao aparece o texto 'Selecione x extras'
-
-// IDEIA: COOL: Preencher os extras restantes com sugestões com base
+// IDEIA: (10/10) Preencher os extras restantes com sugestões com base
 // no peso (valor que eu atribuo com base na qualidade do alimento)
 // e no PE (Valor do livro)
 // Para sempre manter na casa dos 9 extras para ter um grid arrumadin
 
+//TODO: Quando a pessoa toca no info do card de cada refeição, explica aquela refeição
+
 // IDEIA: Quando a pessoa confirma uma refeição a frente, a de tras deve ser marcada como nao concluida
 // EX: Se eu confirmar o almoço, mas nao ter marcado o cafe da manha, o cafe da manha será marcado como nao concluido
-// Posso adicionar uma categoria que seja, nao confirmado, nem skipado... (nao informado)
+// ... => Posso adicionar uma categoria que seja, nao confirmado, nem skipado... (nao informado)
 
-//IDEIA: Salvar os dados do dia do usuário (Talvez criar o card de fechamento do dia primeiro)
-// Podendo assim salvar de maneira mais facil o card (Se salvar nas shared pref a tendencia é que de merda)
+//TODO: Salvar os dados do usuario (dia de hoje, ontem, etc)
+//TODO: [IMPORTANTE] Gerar a lista de refeições da semana apenas uma vez por semana
+//TODO: [IMPORTANTE] Salvar a lista de refeiçoes semanal, e sempre carregar ela quando o user entrar
 
-//TODO: Salvar estado da refeição de cada dia
-// So preciso salvar do dia de hoje, pois os botoes tem que estar bloqueados pros proximos dias
+//TODO: Salvar os dados da refeição a medida que o usuário for preenchendo(posso usar o shared, porem na ultima do dia, salvar no banco);
+
 
 class HomeController extends GetxController {
   final MealRepository repository;
@@ -58,10 +56,12 @@ class HomeController extends GetxController {
   List<int> get selectedExtrasList => _selectedExtrasList;
 
   ///Quantidade de extras que deverá ter
-  final _extrasAmount = 3.obs;
+  final _extrasAmount = 1.obs;
   int get extrasAmount => _extrasAmount.value;
 
   int indexOfTheDayOnWeek = 0;
+
+  bool get isToday => indexOfTheDayOnWeek == 0;
 
   PageController pageController;
 
@@ -87,7 +87,6 @@ class HomeController extends GetxController {
   // }
 
   _setMeal(List<MealCardModel> m) {
-    print(m);
     pageController.jumpToPage(0);
     mealList.assignAll(m);
     mealListLenght.value = m.length;
@@ -99,7 +98,10 @@ class HomeController extends GetxController {
         .map(
           (dailyMeal) => dailyMeal
               .map(
-                (mealModel) => MealCardModel(mealModel: mealModel),
+                (mealModel) => MealCardModel(
+                  mealModel: mealModel,
+                  extraAmount: mealModel.extraAmount,
+                ),
               )
               .toList(),
         )
@@ -119,6 +121,7 @@ class HomeController extends GetxController {
   }
 
   _setExtras(int idx) {
+    _extrasAmount.value = mealList[idx].extraAmount;
     _selectedExtrasList.assignAll(mealList[idx].extrasSelectedIndex);
     _extras.assignAll(mealList[idx].mealModel.extras);
   }
