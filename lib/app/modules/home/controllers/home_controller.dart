@@ -12,7 +12,10 @@ import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 //IDEIA: Pode ser um card xapado azul da cor do tema, apenas um overview do dia;
 //IDEIA: Depois que o user conclui a ultima refeição, dar a possibilidade de ver o que vai comer amanha (desativar os botoes de concluir e pular... Deixar apenas o trocar)
 //IDEIA: Add dots indicator (num de refeiçoes do dia) : https://github.com/jlouage/flutter-carousel-pro/blob/master/lib/src/carousel_pro.dart
-//TODO: Definir a quantidade de acompanhamentos que podem ser selecionados(inicialmente 3 [extrasAmount])
+
+//TODO: IMPORTANTE: Definir a quantidade de acompanhamentos que podem ser selecionados(inicialmente 3 [extrasAmount])
+//TODO: Adicionar variavel que diz se tem extras disponiveis, caso nao tenha, nao aparece o texto 'Selecione x extras'
+
 
 //IDEIA: COOL: Preencher os extras restantes com sugestões com base
 // no peso (valor que eu atribuo com base na qualidade do alimento)
@@ -22,6 +25,8 @@ import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 // FIXME: Quando a pessoa confirma uma refeição a frente, a de tras deve ser marcada como nao concluida
 // EX: Se eu confirmar o almoço, mas nao ter marcado o cafe da manha, o cafe da manha será marcado como nao concluido
 // Posso adicionar uma categoria que seja, nao confirmado, nem skipado... (nao informado)
+
+//FIXME: Corrigir o botão de dia anterior e dia seguinte
 
 class HomeController extends GetxController {
   final MealRepository repository;

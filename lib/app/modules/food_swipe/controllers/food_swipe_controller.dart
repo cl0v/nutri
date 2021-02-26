@@ -9,9 +9,6 @@ import 'package:nutri/constants.dart';
 //IDEIA: No food swipe card, quando a pessoa quiser trocar algum alimento
 //IDEIA: Mostrar apenas os alimentos selecionados para aquela semana(nao permitir adicionar elementos que nao estavam no planejado pra semana, apenas trocar alimentos equivalentes, de dia)
 
-//BUG: Quando a pessoa nao escolhe nenhuma comida das tres principais categorias [drink, meat, fruit] no foodSwipe o app trava
-//IDEIA: Liberar o botão de continuar apenas depois que a pessoa marcou o mínimo
-
 //IDEIA: Informar ao usuario a quantidade mínima que deve ser selecionada
 
 class FoodSwipeController extends GetxController {

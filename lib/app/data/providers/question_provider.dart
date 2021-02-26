@@ -25,15 +25,14 @@ class QuestionProvider {
     return jsonList.map((e) => QuestionModel.fromJson(e)).toList();
   }
 
-//FIXME: Nao preciso receber as questions na questionPage, AINDA
-  Future<Map<String, String>> getQuestionsPrefs() async {
-    Map<String, String> map = Map();
-    var p = await prefs;
-    p.getKeys().toList().where((key) => key.contains('q_')).forEach((key) {
-      map[key] = p.getString(key);
-    });
-    return map;
-  }
+  // Future<Map<String, String>> getQuestionsPrefs() async {
+  //   Map<String, String> map = Map();
+  //   var p = await prefs;
+  //   p.getKeys().toList().where((key) => key.contains('q_')).forEach((key) {
+  //     map[key] = p.getString(key);
+  //   });
+  //   return map;
+  // }
 
   void setQuestionsPrefs(Map<String, String> answers) => answers
       .forEach((key, value) async => (await prefs).setString(key, value));

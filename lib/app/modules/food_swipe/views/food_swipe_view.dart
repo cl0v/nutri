@@ -12,12 +12,6 @@ class FoodSwipeView extends GetView<FoodSwipeController> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        // actions: [
-        //   FlatButton(
-        //     onPressed: controller.onSkipPressed,
-        //     child: Text('Pular'),
-        //   ),
-        // ],
       ),
       extendBodyBehindAppBar: true,
       body: FoodSwipeBody(),

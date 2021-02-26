@@ -6,6 +6,14 @@ import 'app/routes/app_pages.dart';
 //IDEIA: Apenas deixar a pessoa escolher o que vai querer pra semana, depois jogar isso pruma todolist de compra
 //IDEIA: E sortear aleatoriamente as coisas para fazer o cardapio diario
 
+/* TODO: Criar uma pagina de FAQ para responder possíveis perguntar
+ - Por que não estou sentindo o gosto de sal na comida, devo comer mais sal?
+ - Posso comer doces?
+ - Posso comer o que não está no cardápio?
+ - Qual quantidade devo comer?
+ - Estou sentindo muita fome, o que faço? - Repete a refeição anterior, pode exagerar na quantidade(sem limite)
+*/
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 

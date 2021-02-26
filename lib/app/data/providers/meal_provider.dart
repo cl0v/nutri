@@ -85,9 +85,6 @@ class MealProvider {
         await FoodModelHelper.loadPrefsVegetables(prefsList);
     List<FoodModel> listOfFruits =
         await FoodModelHelper.loadExtraFruits(prefsList);
-    // List<FoodModel> listOfMeat = await FoodModelHelper.loadMeats();
-    // List<FoodModel> listOfVegetables = await FoodModelHelper.loadVegetables();
-    // List<FoodModel> listOfFruits = await FoodModelHelper.loadFruits();
 
     return [
       listOfDrinks,
@@ -95,19 +92,10 @@ class MealProvider {
       listOfVegetables,
       listOfFruits,
     ];
-
-    // .map((listOfFood) =>
-    //     listOfFood.where((food) => prefsList.contains(food.title)).toList())
-    // .toList();
   }
-
-  //  _sortFoodsByFoodCategory(List<FoodModel> m) {
-  //   m.sort((a, b) => a.mealType.index.compareTo(b.mealType.index));
-  // }
 
   //FIXME: A Aleatoriedade pode as vezes pegar uma unica carne, cerca de 30% de sorte pra o error acontecer
 //Esse cara recebe todos os alimentos e randomiza as escolha de qual comida comer
-//Da forma que tá, a lista final receberá sempre a mesma diaria
   Future<List<MealModel>> _buildDailyMeal(List<List<FoodModel>> listOfFood) async {
     List<FoodModel> listOfDrinks = listOfFood[0];
     List<FoodModel> listOfMeat = listOfFood[1];
@@ -117,8 +105,6 @@ class MealProvider {
     var drinkAmount = listOfDrinks.length;
     var meatAmount = listOfMeat.length;
 
-    //BUG:  Quando uma carne, fruta ou bebida(pelo menos um de cada) nao é escolhida, o app trava
-//FIXME: MOTIVO DO BUG: Estou usando o list[VAL] no build e esse val n pode ser nulo
     var breakfast = MealModel(
       food: listOfDrinks[Random().nextInt(drinkAmount)],
       extras: [],
