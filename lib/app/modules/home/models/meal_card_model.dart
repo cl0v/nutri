@@ -1,19 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 
 class MealCardModel {
   final MealModel mealModel;
-  MealCardState mealCardState;
-  List<int> extrasSelectedIndex;
+  MealCardState mealCardState  = MealCardState.None;
+  List<int> extrasSelectedIndex = [];
 
   MealCardModel({
-    this.mealModel,
-    this.mealCardState = MealCardState.None,
-    this.extrasSelectedIndex = const <int>[],
+    @required this.mealModel,
   });
 
   @override
   String toString() =>
-      'MealCardModel(mealModel: $mealModel, mealCardState: $mealCardState)';
+      'MealCardModel(mealModel: $mealModel)';
 }
 
 enum MealCardState {

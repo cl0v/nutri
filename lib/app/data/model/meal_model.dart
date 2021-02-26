@@ -62,7 +62,7 @@ class MealModel {
 
   @override
   String toString() =>
-      'MealModel(mealType: $mealType, food: $food, extras: $extras)';
+      'MealModel(food: $food)';
 
   Map<String, dynamic> toMap() {
     return {

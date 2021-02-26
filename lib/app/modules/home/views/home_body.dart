@@ -31,7 +31,8 @@ class HomeBody extends GetView<HomeController> {
                       controller: controller.pageController,
                       physics: AlwaysScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) => MealCard(
+                      itemBuilder: (context, index) => Obx(
+                        () => MealCard(
                           mealCardModel: controller.mealList[index],
                           mealCardState:
                               controller.mealList[index].mealCardState,
@@ -39,15 +40,19 @@ class HomeBody extends GetView<HomeController> {
                               controller.onDonePressed(index),
                           onSkippedPressed: () =>
                               controller.onSkipPressed(index),
-                        
+                        ),
                       ),
                     ),
                   ),
                 ),
-                Obx(() => Text(
-                      'Selecione ${controller.extrasAmount} acompanhamentos',
-                      style: TextStyle(color: Colors.white),
-                    )),
+                Obx(
+                  () => Text(
+                    controller.extrasAmount > 0
+                        ? 'Selecione ${controller.extrasAmount} acompanhamentos'
+                        : '',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
                 Obx(
                   () => GridView.builder(
                     itemCount: controller.extras.length,

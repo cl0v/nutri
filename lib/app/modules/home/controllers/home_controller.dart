@@ -22,34 +22,29 @@ import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 // e no PE (Valor do livro)
 // Para sempre manter na casa dos 9 extras para ter um grid arrumadin
 
-// FIXME: Quando a pessoa confirma uma refeição a frente, a de tras deve ser marcada como nao concluida
+// IDEIA: Quando a pessoa confirma uma refeição a frente, a de tras deve ser marcada como nao concluida
 // EX: Se eu confirmar o almoço, mas nao ter marcado o cafe da manha, o cafe da manha será marcado como nao concluido
 // Posso adicionar uma categoria que seja, nao confirmado, nem skipado... (nao informado)
-
-// FIXME: Corrigir o botão de dia anterior e dia seguinte
-// Por enquanto com base na lista semanal(logo calcula o hoje e amanha em diante)
 
 //IDEIA: Salvar os dados do dia do usuário (Talvez criar o card de fechamento do dia primeiro)
 // Podendo assim salvar de maneira mais facil o card (Se salvar nas shared pref a tendencia é que de merda)
 
-/*
-[MUDAR PARA CORRIGIDO] Corrigindo falha em que o dia seguinte ou anterior não 
-estara disponivel para os seguintes requisitos 
-(Não for usuário premium; Nao tiver nenhuma refeiçao disponível no dia anterior ou seguinte)
-*/
+//TODO: Salvar estado da refeição de cada dia
+// So preciso salvar do dia de hoje, pois os botoes tem que estar bloqueados pros proximos dias
 
 class HomeController extends GetxController {
   final MealRepository repository;
 
   HomeController({@required this.repository});
 
-  List<MealCardModel> mealList = <MealCardModel>[];
+  List<List<MealCardModel>> dailyMenuOfTheWeek = [];
+  final mealList = <MealCardModel>[].obs;
   final mealListLenght = 0.obs;
 
   final _extras = <FoodModel>[].obs;
   List<FoodModel> get extras => _extras;
 
-  final isPreviewBtnDisabled = false.obs;
+  final isPreviewBtnDisabled = true.obs;
   final isNextBtnDisabled = false.obs;
 
   ///Armazena o index do atual meal card
@@ -66,6 +61,8 @@ class HomeController extends GetxController {
   final _extrasAmount = 3.obs;
   int get extrasAmount => _extrasAmount.value;
 
+  int indexOfTheDayOnWeek = 0;
+
   PageController pageController;
 
   @override
@@ -73,12 +70,41 @@ class HomeController extends GetxController {
     super.onInit();
     pageController = PageController();
     _setDayOfTheWeek();
-    _fetchMeals();
+    // _fetchMeals();
+    _fetchWeekDailyMeals();
   }
 
   _setDayOfTheWeek() {
     showingDay.value = DateTime.now().weekday;
     todayDay = DateTime.now().weekday;
+  }
+
+  // _fetchMeals() async {
+  //   mealList = ((await repository.fetchDailyMeals())
+  //       .map((meal) => MealCardModel(mealModel: meal))
+  //       .toList());
+  //   _setMeal(mealList);
+  // }
+
+  _setMeal(List<MealCardModel> m) {
+    print(m);
+    pageController.jumpToPage(0);
+    mealList.assignAll(m);
+    mealListLenght.value = m.length;
+    _onMealChanged(0);
+  }
+
+  _fetchWeekDailyMeals() async {
+    dailyMenuOfTheWeek = (await repository.fetchDailyMenuOfTheWeek())
+        .map(
+          (dailyMeal) => dailyMeal
+              .map(
+                (mealModel) => MealCardModel(mealModel: mealModel),
+              )
+              .toList(),
+        )
+        .toList();
+    _setMeal(dailyMenuOfTheWeek[indexOfTheDayOnWeek]);
   }
 
   onPageChanged(int idx) {
@@ -136,19 +162,16 @@ class HomeController extends GetxController {
           duration: Duration(milliseconds: 1), curve: Curves.linear);
   }
 
-
-
-  _fetchMeals() async {
-    mealList = ((await repository.fetchDailyMeals())
-        .map((meal) => MealCardModel(mealModel: meal))
-        .toList());
-    mealListLenght.value = mealList.length;
-    _onMealChanged(0);
-  }
-
   void onPreviewDayPressed() {
     showingDay.value--;
-    //TODO: Implement onPreviewDayPressed
+    if (indexOfTheDayOnWeek >= 0) {
+      isNextBtnDisabled.value = false;
+      indexOfTheDayOnWeek--;
+      _setMeal(dailyMenuOfTheWeek[indexOfTheDayOnWeek]);
+    }
+    if (indexOfTheDayOnWeek <= 0) {
+      isPreviewBtnDisabled.value = true;
+    }
   }
 
   String getDayTitle() =>
@@ -156,6 +179,16 @@ class HomeController extends GetxController {
 
   void onNextDayPressed() {
     showingDay.value++;
+    if (indexOfTheDayOnWeek <= 6) {
+      isPreviewBtnDisabled.value = false;
+      indexOfTheDayOnWeek++;
+      _setMeal(dailyMenuOfTheWeek[indexOfTheDayOnWeek]);
+    }
+    if (indexOfTheDayOnWeek >= 6) {
+      //Vai bugar pq vai desativar o botao no 1 a mais, vou precisar apertar duas vz o outro pra voltar
+      isNextBtnDisabled.value = true;
+    }
+
     //TODO: Implement onNextDayPressed
   }
 }

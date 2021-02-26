@@ -95,7 +95,7 @@ class FoodModel {
 
   @override
   String toString() {
-    return 'FoodModel(title: $title, img: $img, desc: $desc, category: $category)';
+    return 'FoodModel(title: $title)';
   }
 
   static getCategoryFromIndex(int index) => FoodCategory.values[index];

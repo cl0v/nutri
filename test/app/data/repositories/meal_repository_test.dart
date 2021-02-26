@@ -20,18 +20,13 @@ final mockedFoodPrefs = [
   'Tomate',
   'Café Preto',
 ];
+
 final mockedFoodPrefsWithoutFruit = [
   'Peito de Frango',
   'Picanha',
   'Brócolis',
   'Alface',
   'Café Preto',
-];
-
-final mockedMainFoodPrefs = [
-  'Peito de Frango',
-  'Café Preto',
-  'Picanha',
 ];
 
 main() {
@@ -45,6 +40,9 @@ main() {
     provider: provider,
   );
   group('fetchMealsOfTheWeek: ', () {
+    SharedPreferences.getInstance().then((prefs) async =>
+        await prefs.setStringList(foodPrefsKey, mockedFoodPrefs));
+
     List<List<MealModel>> weekMeals;
 
 // A lista de dentro pode varias a quantidade com base na pessoa;
@@ -112,7 +110,13 @@ main() {
           (meal) => foodList.add(meal.food.title),
         ),
       );
-      expect(foodList, containsAll(mockedMainFoodPrefs));
+      expect(
+          foodList,
+          containsAll([
+            'Peito de Frango',
+            'Café Preto',
+            'Picanha',
+          ]));
     });
 
     test('Extras in lunch should be the extras saved in prefs', () async {
@@ -163,6 +167,9 @@ main() {
 
 //TODO: O foodSwipe nao deverá mostrar fruits como uma opção na categoria de frutas
 
+    SharedPreferences.getInstance().then((prefs) async =>
+        await prefs.setStringList(foodPrefsKey, mockedFoodPrefs));
+
     List<MealModel> dailyMeals = [];
     test('No main card should be in MainOrExtra.extra category', () async {
       dailyMeals = await repository.fetchDailyMeals();
@@ -212,6 +219,9 @@ main() {
     - Ultima refeição deve ser o card de frutas *
     - Ultima refeição deve ser acompanhado de frutas
     */
+
+    SharedPreferences.getInstance().then((prefs) async =>
+        await prefs.setStringList(foodPrefsKey, mockedFoodPrefs));
 
     List<MealModel> dailyMeals = [];
 
@@ -315,6 +325,8 @@ main() {
     - Quantidade de refeições na semana deve ser de 28 caso tenha escolhido alguma fruta
     - Quantidade de refeições na semana deve ser de 21 caso não tenha escolhido nenhum fruta
     */
+    SharedPreferences.getInstance().then((prefs) async =>
+        await prefs.setStringList(foodPrefsKey, mockedFoodPrefs));
 
     List<List<MealModel>> dailyMenuOfTheWeek = [];
     test('Menu of the Week should have 7 elements', () async {
