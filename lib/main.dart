@@ -6,6 +6,11 @@ import 'app/routes/app_pages.dart';
 // Não colocar apenas as comidas, mas sim os pratos prontos(Assim o usuário nao tem a oportunidade de adicionar um arroz ou feijao)
 // Acompanhamentos
 
+
+//TODO: Remover tudo relacionado a frutas e refazer com base nas frutas do livro
+
+
+
 //TODO: Melhorar a página SPLASH
 //TODO: Adicionar logo
 //TODO: Montar página de pagamentos

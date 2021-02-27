@@ -40,9 +40,6 @@ class FoodSwipeController extends GetxController {
 
   @override
   void onInit() {
-    //TODO: Tornar o food swipe uma pagina que será acessada varias vezes por fontes
-    //TODO: Informar para quando está sendo escolhido(HOJE, SEMANA)
-    //TODO: Checkar se está vindo de algum lugar com o arguments, se estiver nulo ou vazio, mostrar a primeira pagina (!)
     super.onInit();
     _fetchFoodSwipeList();
   }

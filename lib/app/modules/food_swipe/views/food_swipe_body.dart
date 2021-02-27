@@ -47,23 +47,24 @@ class FoodSwipeBody extends GetView<FoodSwipeController> {
                             child: Container(
                               height: width * 1.16,
                               child: PageView.builder(
-                                  controller: controller.pageController,
-                                  itemCount: controller
-                                      .currentFoodSwipeModel.foods.length,
-                                  itemBuilder: (context, index) => Obx(
-                                        () => FoodSwipeCard(
-                                          food: controller.currentFoodSwipeModel
-                                              .foods[index],
-                                          isChecked:
-                                              controller.isChecked(index),
-                                          onCheckTapped: () =>
-                                              controller.onCheckTapped(
-                                            controller.currentFoodSwipeModel
-                                                .foods[index],
-                                            index,
-                                          ),
-                                        ),
-                                      )),
+                                controller: controller.pageController,
+                                // pageSnapping: false,
+                                itemCount: controller
+                                    .currentFoodSwipeModel.foods.length,
+                                itemBuilder: (context, index) => Obx(
+                                  () => FoodSwipeCard(
+                                    food: controller
+                                        .currentFoodSwipeModel.foods[index],
+                                    isChecked: controller.isChecked(index),
+                                    onCheckTapped: () =>
+                                        controller.onCheckTapped(
+                                      controller
+                                          .currentFoodSwipeModel.foods[index],
+                                      index,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
