@@ -17,7 +17,7 @@ class MealProvider {
 
   MealProvider({@required this.prefs});
 
-  int dailyMealAmount = 4; //4 contando com o cafe da manha
+  int dailyMealAmount = 4;
   int daysInAWeek = 7;
 
   Future<List<MealModel>> fetchDailyMeals() async {
@@ -33,7 +33,7 @@ class MealProvider {
       (food) {
         meals.add(
           MealModel(
-            food: food,
+            mainFood: food,
             mealType: MealType.breakfast,
             extras: foods
                 .where((f) => f.category == FoodCategory.vegetable)
@@ -74,60 +74,71 @@ class MealProvider {
         await FoodModelHelper.loadPrefsMeats(prefsList);
     List<FoodModel> listOfVegetables =
         await FoodModelHelper.loadPrefsVegetables(prefsList);
-    List<FoodModel> listOfFruits =
-        await FoodModelHelper.loadExtraFruits(prefsList);
+    List<FoodModel> listOfEggs = await FoodModelHelper.loadEggs();
 
     return [
       listOfDrinks,
       listOfMeat,
       listOfVegetables,
-      listOfFruits,
+      listOfEggs,
     ];
   }
 
 //FIXME: A Aleatoriedade pode as vezes pegar uma unica carne, cerca de 30% de sorte pra o error acontecer
-///Esse cara recebe todos os alimentos e randomiza as escolha de qual comida comer
+  ///Esse cara recebe todos os alimentos e randomiza as escolha de qual comida comer
   Future<List<MealModel>> _buildDailyMeal(
       List<List<FoodModel>> listOfFood) async {
     List<FoodModel> listOfDrinks = listOfFood[0];
     List<FoodModel> listOfMeat = listOfFood[1];
     List<FoodModel> listOfVegetables = listOfFood[2];
-    List<FoodModel> listOfFruits = listOfFood[3];
+    List<FoodModel> listOfEggs = listOfFood[3];
 
-    var drinkAmount = listOfDrinks.length;
-    var meatAmount = listOfMeat.length;
 //Quantidade de extras deverá ser decidida de maneira mais inteligente
-    var breakfast = MealModel(
-      food: listOfDrinks[Random().nextInt(drinkAmount)],
-      extras: [],
-      extraAmount: 0,
-      mealType: MealType.breakfast,
-    );
-    var lunch = MealModel(
-      food: listOfMeat[Random().nextInt(meatAmount)],
-      extras: listOfVegetables,
-      extraAmount: 3,
-      mealType: MealType.lunch,
-    );
-    var tea = MealModel(
-      food: listOfMeat[Random().nextInt(meatAmount)],
-      extras: listOfVegetables,
-      extraAmount: 5,
-      mealType: MealType.tea,
-    );
-    //TODO: Testar caso em que nenhuma fruta for selecionada
-    if (listOfFruits.isEmpty) return [breakfast, lunch, tea];
+    var breakfast = _buildBreakfast(listOfDrinks);
+    var lunch = _buildLunch(listOfMeat, listOfVegetables);
+    var snack = _buildSnack(listOfEggs);
+    var dinner = _buildDinner(listOfMeat, listOfVegetables);
 
-    var mainFruitCard = await FoodModelHelper.loadMainFruitCard();
-    var dinner = MealModel(
-      food: mainFruitCard, //Deve receber apenas o card de fruta
-      extras: listOfFruits,
+    return [breakfast, lunch, snack, dinner];
+  }
+
+  MealModel _buildDinner(
+      List<FoodModel> listOfFood, List<FoodModel> listOfExtras) => MealModel(
+      mainFood: listOfFood[Random().nextInt(listOfFood.length)],
+      extras: listOfExtras,
+      extraAmount: 3,
+      mealType: MealType.dinner,
+    );
+
+  MealModel _buildFruitMeal(
+      List<FoodModel> mainFruitCard, List<FoodModel> listOfExtra) => MealModel(
+      mainFood: mainFruitCard.first, //Deve receber apenas o card de fruta
+      extras: listOfExtra,
       extraAmount: 1,
       mealType: MealType.dinner,
     );
 
-    return [breakfast, lunch, tea, dinner];
-  }
+  MealModel _buildSnack(List<FoodModel> listOfFood) => MealModel(
+      mainFood: listOfFood.first,
+      extras: [],
+      extraAmount: 5,
+      mealType: MealType.snack,
+    );
+
+  MealModel _buildLunch(
+      List<FoodModel> listOfFood, List<FoodModel> listOfExtra) => MealModel(
+      mainFood: listOfFood[Random().nextInt(listOfFood.length)],
+      extras: listOfExtra,
+      extraAmount: 3,
+      mealType: MealType.lunch,
+    );
+
+  MealModel _buildBreakfast(List<FoodModel> listOfFood) => MealModel(
+      mainFood: listOfFood[Random().nextInt(listOfFood.length)],
+      extras: [],
+      extraAmount: 0,
+      mealType: MealType.breakfast,
+    );
 
   Future<List<String>> _getFoodsPrefs() async =>
       (await prefs).getStringList(foodPrefsKey);

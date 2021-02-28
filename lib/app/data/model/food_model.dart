@@ -8,32 +8,27 @@ import 'package:flutter/services.dart';
 // se fosse 13*1 daria 13 pontos, mas 1 frango nao é suficiente, porém nao tao pouco caso eu queria calcular 100 pontos
 //IDEIA: Decidir o que é comida pesada e leve para comer de noite e antes do treino(Normalmente frutas)
 
-
-
 ///Categoria da comida que será servida
 enum FoodCategory {
   none,
   drink,
   meat,
   vegetable,
-  fruit,
+  lowSugarFruits,
+  tuber,
+  eggs,
   nuts,
   dairy,
-  tuber,
   mushroom,
+  fruits,
   others,
 }
 
-///Qualquer coisa que possa ser prato principal receberá categoria MainExtraCategory.main
-///Qualquer coisa que possa ser acompanhamento receberá categoria MainExtraCategory.extra
-///Qualquer coisa que não se enquadra em nenhuma categoria receberá categoria MainExtraCategory.none
 enum MainOrExtra {
-  none,
   main,
   extra,
   both,
 }
-
 
 class FoodModel {
   String title;
@@ -93,7 +88,7 @@ class FoodModel {
 
   @override
   String toString() {
-    return 'FoodModel(title: $title)';
+    return 'FoodModel(title: $title, img: $img, desc: $desc, category: $category, mainOrExtra: $mainOrExtra)';
   }
 
   static getCategoryFromIndex(int index) => FoodCategory.values[index];
@@ -109,6 +104,11 @@ abstract class FoodModelHelper {
     return json.map((map) => FoodModel.fromMap(map)).toList();
   }
 
+  //TODO: Receber a lista de comidar que combina com cada refeição
+  //ex: loadBreakfastMainFoods
+  //ex: loadLunchMainFoods
+  //ex: loadLunchExtraFoods...
+
   ///Recebe todas as carnes cadastradas no banco
   static Future<List<FoodModel>> loadMeats() =>
       _sortJsonByCategory(FoodCategory.meat);
@@ -117,7 +117,7 @@ abstract class FoodModelHelper {
       _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.meat);
 
   static Future<List<FoodModel>> loadMainMeats() async => _sortByMainOrExtra(
-     await _sortJsonByCategory(FoodCategory.meat), MainOrExtra.main);
+      await _sortJsonByCategory(FoodCategory.meat), MainOrExtra.main);
 
   ///Recebe todas as bebidas cadastradas no banco
   static Future<List<FoodModel>> loadDrinks() =>
@@ -127,7 +127,7 @@ abstract class FoodModelHelper {
       _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.drink);
 
   static Future<List<FoodModel>> loadMainDrinks() async => _sortByMainOrExtra(
-     await _sortJsonByCategory(FoodCategory.drink), MainOrExtra.main);
+      await _sortJsonByCategory(FoodCategory.drink), MainOrExtra.main);
 
   ///Recebe todas os vegetais cadastrados no banco
   static Future<List<FoodModel>> loadVegetables() =>
@@ -137,20 +137,33 @@ abstract class FoodModelHelper {
       _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.vegetable);
 
   ///Recebe todas as frutas cadastradas no banco
-  static Future<List<FoodModel>> loadFruits() =>
-      _sortJsonByCategory(FoodCategory.fruit);
+  static Future<List<FoodModel>> loadLowSugarFruits() =>
+      _sortJsonByCategory(FoodCategory.lowSugarFruits);
 
-  static Future<List<FoodModel>> loadFruitsWithouFruitCard() async => _sortByMainOrExtra(
-      await _sortJsonByCategory(FoodCategory.fruit), MainOrExtra.extra);
+  static Future<List<FoodModel>> loadTubers() =>
+      _sortJsonByCategory(FoodCategory.tuber);
+
+  static Future<List<FoodModel>> loadFruitsWithouFruitCard() async =>
+      _sortByMainOrExtra(await _sortJsonByCategory(FoodCategory.lowSugarFruits),
+          MainOrExtra.extra);
+
+  static Future<List<FoodModel>> loadEggs() async =>
+      await _sortJsonByCategory(FoodCategory.eggs);
 
   static Future<List<FoodModel>> loadPrefsFruits(List<String> prefs) =>
-      _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.fruit);
+      _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.lowSugarFruits);
 
   static Future<FoodModel> loadMainFruitCard() async => _sortByMainOrExtra(
-     await _sortJsonByCategory(FoodCategory.fruit), MainOrExtra.main).first;
+          await _sortJsonByCategory(FoodCategory.lowSugarFruits),
+          MainOrExtra.main)
+      .first;
 
-  static Future<List<FoodModel>> loadExtraFruits(List<String> prefs) async => _sortByMainOrExtra(
-     await _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.fruit), MainOrExtra.extra);
+  static Future<List<FoodModel>> loadLowSugarFruitsFromPrefs(
+          List<String> prefs) async =>
+      _sortByMainOrExtra(
+          await _sortJsonByCategoryBasedOnPref(
+              prefs, FoodCategory.lowSugarFruits),
+          MainOrExtra.extra);
 
   static Future<List> _loadJson() async =>
       jsonDecode(await rootBundle.loadString(jsonPath));
@@ -170,7 +183,6 @@ abstract class FoodModelHelper {
   static List<FoodModel> _sortByMainOrExtra(
           List<FoodModel> list, MainOrExtra mainOrExtra) =>
       list.where((food) => food.mainOrExtra == mainOrExtra).toList();
-
 
 //TODO: Testar se tiver pelo menos uma fruta, deve mostrar o card de frutas
   static Future<List<FoodModel>> _sortJsonByCategoryBasedOnPref(

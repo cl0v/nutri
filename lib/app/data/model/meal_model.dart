@@ -7,36 +7,29 @@ import 'package:nutri/app/data/model/food_model.dart';
 class MealModel {
   //enum
   MealType mealType;
-  FoodModel food;
+  FoodModel mainFood;
   List<FoodModel> extras;
   int extraAmount;
 
   MealModel({
     this.mealType,
-    this.food,
+    this.mainFood,
     this.extras,
     this.extraAmount = 0,
   });
 
-  static getTranslatedMeal(MealType m) {
+  static String getTranslatedMeal(MealType m) {
     switch (m) {
       case MealType.breakfast:
         return "Café da manhã";
-      case MealType.brunch:
-        return "brunch";
-      case MealType.elevenses:
-        return "elevenses";
       case MealType.lunch:
         return "Almoço";
-      case MealType.tea:
-        return "Café da tarde";
-      case MealType.supper:
-        return "Jantar";
+      case MealType.snack:
+        return "Lanche";
       case MealType.dinner:
         return "Jantar";
-
       default:
-        return null;
+        return '';
     }
   }
 
@@ -46,7 +39,7 @@ class MealModel {
   
     return o is MealModel &&
       o.mealType == mealType &&
-      o.food == food &&
+      o.mainFood == mainFood &&
       listEquals(o.extras, extras) &&
       o.extraAmount == extraAmount;
   }
@@ -54,19 +47,19 @@ class MealModel {
   @override
   int get hashCode {
     return mealType.hashCode ^
-      food.hashCode ^
+      mainFood.hashCode ^
       extras.hashCode ^
       extraAmount.hashCode;
   }
 
   @override
   String toString() =>
-      'MealModel(food: $food)';
+      'MealModel(food: $mainFood)';
 
   Map<String, dynamic> toMap() {
     return {
       'mealType': mealType?.index,
-      'food': food?.toMap(),
+      'food': mainFood?.toMap(),
       'extras': extras?.map((x) => x?.toMap())?.toList(),
       'extraAmount': extraAmount,
     };
@@ -77,7 +70,7 @@ class MealModel {
   
     return MealModel(
       mealType: MealType.values[map['mealType']],
-      food: FoodModel.fromMap(map['food']),
+      mainFood: FoodModel.fromMap(map['food']),
       extras: List<FoodModel>.from(map['extras']?.map((x) => FoodModel.fromMap(x))),
       extraAmount: map['extraAmount'],
     );
@@ -90,10 +83,7 @@ class MealModel {
 
 enum MealType {
   breakfast,
-  brunch,
-  elevenses,
   lunch,
-  tea,
-  supper,
+  snack,
   dinner,
 }

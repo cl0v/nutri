@@ -25,7 +25,7 @@ class MealCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             image: DecorationImage(
-              image: AssetImage(mealCardModel.mealModel.food.img),
+              image: AssetImage(mealCardModel.mealModel.mainFood.img),
               fit: BoxFit.cover,
             ),
           ),
@@ -57,11 +57,12 @@ class MealCard extends StatelessWidget {
                     ),
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        '${MealModel.getTranslatedMeal(mealCardModel.mealModel.mealType)} de hoje',
+                        '${MealModel.getTranslatedMeal(mealCardModel.mealModel.mealType)}: ',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
@@ -70,7 +71,7 @@ class MealCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '   • ${mealCardModel.mealModel.food.title}',
+                        '   • ${mealCardModel.mealModel.mainFood.title}',
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           color: Colors.white,

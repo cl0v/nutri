@@ -4,69 +4,90 @@
     "img": "assets/images/foods/peito de frango.jpg",
     "desc": "Peito de frango é uma alternativa excelente para perder peso e ganhar músculos.",
     "category": 2,
-    "mainOrExtra": 1
-  },
-  {
-    "title": "Ovos",
-    "img": "assets/images/foods/ovos.jpg",
-    "desc": "Ovos, o segundo melhor alimento do mundo, rico em proteínas, coma quantos quiser.",
-    "category": 0,
-    "mainOrExtra": 2
+    "mainOrExtra": 0
   },
   {
     "title": "Salmão",
     "img": "assets/images/foods/salmão.jpg",
     "desc": "Esse saboroso peixe é rico em omega 3.",
     "category": 2,
-    "mainOrExtra": 1
+    "mainOrExtra": 0
   },
   {
     "title": "Picanha",
     "img": "assets/images/foods/picanha.jpg",
     "desc": "Picanha é uma excelente carne para seu dia a dia, pegue a mais magra possível.",
     "category": 2,
-    "mainOrExtra": 1
-  },
-  {
-    "title": "Brócolis",
-    "img": "assets/images/foods/brócolis.jpg",
-    "desc": "Brócolis é ótimo para sua saúde.",
-    "category": 3,
-    "mainOrExtra": 2
-  },
-  {
-    "title": "Alface",
-    "img": "assets/images/foods/alface.jpg",
-    "desc": "Folhas de alface são as alternativas muito saudáveis para seu prato.",
-    "category": 3,
-    "mainOrExtra": 2
-  },
-  {
-    "title": "Espinafre",
-    "img": "assets/images/foods/espinafre.jpg",
-    "desc": "Folhas de espinafre são as alternativas muito saudáveis para seu prato.",
-    "category": 3,
-    "mainOrExtra": 2
-  },
-  {
-    "title": "Tomate",
-    "img": "assets/images/foods/tomate.jpg",
-    "desc": "Um pouco de tomate é sempre bom, mas não abuse dessa fruta",
-    "category": 4,
-    "mainOrExtra": 2
+    "mainOrExtra": 0
   },
   {
     "title": "Café Preto",
     "img": "assets/images/foods/café preto.jpg",
     "desc": "Lembre-se de sempre adoçar com adoçante (Recomendo Stevia).",
     "category": 1,
-    "mainOrExtra": 1
+    "mainOrExtra": 0
   },
   {
     "title": "Chá",
     "img": "assets/images/foods/chá.jpg",
     "desc": "Lembre-se de sempre adoçar com adoçante (Recomendo Stevia).",
     "category": 1,
+    "mainOrExtra": 0
+  },
+  {
+    "title": "Ovos",
+    "img": "assets/images/foods/ovos.jpg",
+    "desc": "Ovos, o segundo melhor alimento do mundo, rico em proteínas, coma quantos quiser.",
+    "category": 6,
+    "mainOrExtra": 2
+  },
+  {
+    "title": "Brócolis",
+    "img": "assets/images/foods/brócolis.jpg",
+    "desc": "Brócolis é ótimo para sua saúde.",
+    "category": 3,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Alface",
+    "img": "assets/images/foods/alface.jpg",
+    "desc": "Folhas de alface são as alternativas muito saudáveis para seu prato.",
+    "category": 3,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Espinafre",
+    "img": "assets/images/foods/espinafre.jpg",
+    "desc": "Folhas de espinafre são as alternativas muito saudáveis para seu prato.",
+    "category": 3,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Tomate",
+    "img": "assets/images/foods/tomate.jpg",
+    "desc": "Um pouco de tomate é sempre bom, mas não abuse dessa fruta",
+    "category": 4,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Repolho Roxo",
+    "img": "assets/images/foods/repolho roxo.jpg",
+    "desc": "Repolho roxo mt bom",
+    "category": 3,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Couve Flor",
+    "img": "assets/images/foods/couve flor.jpg",
+    "desc": "Couve flor faz bem",
+    "category": 3,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Repolho",
+    "img": "assets/images/foods/repolho.jpg",
+    "desc": "Repolho roxo mt bom",
+    "category": 3,
     "mainOrExtra": 1
   },
   {
@@ -74,33 +95,145 @@
     "img": "assets/images/foods/refrigerante sem açucar.jpg",
     "desc": "Sim, você pode tomar refrigerante, desde que não tenha açucar.",
     "category": 1,
-    "mainOrExtra": 3
+    "mainOrExtra": 1
   },
   {
-    "title": "Repolho Roxo",
-    "img": "assets/images/foods/repolho roxo.jpg",
-    "desc": "Repolho roxo mt bom",
+    "title": "Aspargo",
+    "img": "assets/images/foods/aspargo.jpg",
+    "desc": "Excelente verdura para sua refeição",
     "category": 3,
-    "mainOrExtra": 2
+    "mainOrExtra": 1
   },
   {
-    "title": "Couve Flor",
-    "img": "assets/images/foods/couve flor.jpg",
-    "desc": "Couve flor faz bem",
+    "title": "Acelga",
+    "img": "assets/images/foods/acelga.jpg",
+    "desc": "Excelente verdura para sua refeição",
     "category": 3,
-    "mainOrExtra": 2
+    "mainOrExtra": 1
   },
   {
-    "title": "Repolho",
-    "img": "assets/images/foods/repolho.jpg",
-    "desc": "Repolho roxo mt bom",
+    "title": "Agrião",
+    "img": "assets/images/foods/agriao.jpg",
+    "desc": "Excelente verdura para sua refeição",
     "category": 3,
-    "mainOrExtra": 2
+    "mainOrExtra": 1
   },
   {
-    "title": "Frutas",
-    "img": "assets/images/foods/frutas.jpg",
-    "desc": "Opção saudavel para evitar comer doces",
+    "title": "Couve",
+    "img": "assets/images/foods/couve.jpg",
+    "desc": "Excelente verdura para sua refeição",
+    "category": 3,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Broto de Feijão",
+    "img": "assets/images/foods/broto de feijao.jpg",
+    "desc": "Excelente verdura para sua refeição",
+    "category": 3,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Batata Baroa",
+    "img": "assets/images/foods/batata baroa.jpg",
+    "desc": "Excelente legume para sua refeição",
+    "category": 5,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Cenoura",
+    "img": "assets/images/foods/cenoura.jpg",
+    "desc": "Excelente legume para sua refeição",
+    "category": 5,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Batata Yacon",
+    "img": "assets/images/foods/batata yacon.jpg",
+    "desc": "Excelente legume para sua refeição",
+    "category": 5,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Beterraba",
+    "img": "assets/images/foods/beterraba.jpg",
+    "desc": "Excelente legume para sua refeição",
+    "category": 5,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Rabanete",
+    "img": "assets/images/foods/rabanete.jpg",
+    "desc": "Excelente legume para sua refeição",
+    "category": 5,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Batata Inglesa",
+    "img": "assets/images/foods/batata inglesa.jpg",
+    "desc": "Excelente legume para sua refeição",
+    "category": 5,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Nabo",
+    "img": "assets/images/foods/nabo.jpg",
+    "desc": "Excelente legume para sua refeição",
+    "category": 5,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Abóbora",
+    "img": "assets/images/foods/abobora.jpg",
+    "desc": "Excelente fruta sem açúcar para sua refeição",
+    "category": 4,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Quiabo",
+    "img": "assets/images/foods/quiabo.jpg",
+    "desc": "Excelente fruta sem açúcar para sua refeição",
+    "category": 4,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Abacate",
+    "img": "assets/images/foods/abacate.jpg",
+    "desc": "Excelente fruta sem açúcar para sua refeição",
+    "category": 4,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Pepino",
+    "img": "assets/images/foods/pepino.jpg",
+    "desc": "Excelente fruta sem açúcar para sua refeição",
+    "category": 4,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Abobrinha",
+    "img": "assets/images/foods/abobrinha.jpg",
+    "desc": "Excelente fruta sem açúcar para sua refeição",
+    "category": 4,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Tomate Cereja",
+    "img": "assets/images/foods/tomate cereja.jpg",
+    "desc": "Excelente fruta sem açúcar para sua refeição",
+    "category": 4,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Berinjela",
+    "img": "assets/images/foods/berinjela.jpg",
+    "desc": "Excelente fruta sem açúcar para sua refeição",
+    "category": 4,
+    "mainOrExtra": 1
+  },
+  {
+    "title": "Azeitona",
+    "img": "assets/images/foods/azeitona.jpg",
+    "desc": "Excelente fruta sem açúcar para sua refeição",
     "category": 4,
     "mainOrExtra": 1
   }

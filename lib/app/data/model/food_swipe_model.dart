@@ -13,8 +13,6 @@ class FoodSwipeModel {
     this.foods,
   });
 
-  //...Data???....
-
   static String getCategory(FoodCategory category) {
     switch (category) {
       case FoodCategory.meat:
@@ -23,8 +21,10 @@ class FoodSwipeModel {
         return 'Bebidas';
       case FoodCategory.vegetable:
         return 'Vegetais';
-      case FoodCategory.fruit:
-        return 'Frutas';
+      case FoodCategory.tuber:
+        return 'Legumes';
+      case FoodCategory.lowSugarFruits:
+        return 'Frutas sem açucar';
       case FoodCategory.others:
         return 'Outros';
       default:

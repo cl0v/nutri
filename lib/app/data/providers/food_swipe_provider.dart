@@ -23,7 +23,9 @@ class FoodSwipeProvider {
     var meatList = await FoodModelHelper.loadMeats();
     var drinkList = await FoodModelHelper.loadDrinks();
     var vegList = await FoodModelHelper.loadVegetables();
-    var fruitList = await FoodModelHelper.loadFruitsWithouFruitCard();
+    var lowSugarFruitList = await FoodModelHelper.loadLowSugarFruits();
+    var tubersList = await FoodModelHelper.loadTubers();
+
     foodSwipeList.add(
       FoodSwipeModel(
         maximum: 3,
@@ -42,10 +44,18 @@ class FoodSwipeProvider {
     );
     foodSwipeList.add(
       FoodSwipeModel(
-        maximum: 1,
+        maximum: 4,
         minimum: 0,
-        category: FoodSwipeModel.getCategory(FoodCategory.fruit),
-        foods: fruitList,
+        category: FoodSwipeModel.getCategory(FoodCategory.lowSugarFruits),
+        foods: lowSugarFruitList,
+      ),
+    );
+    foodSwipeList.add(
+      FoodSwipeModel(
+        maximum: 4,
+        minimum: 0,
+        category: FoodSwipeModel.getCategory(FoodCategory.tuber),
+        foods: tubersList,
       ),
     );
     foodSwipeList.add(

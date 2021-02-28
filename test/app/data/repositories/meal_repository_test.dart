@@ -37,130 +37,13 @@ main() {
   MealRepository repository = MealRepository(
     provider: provider,
   );
-  group('fetchMealsOfTheWeek: ', () {
-    SharedPreferences.getInstance().then((prefs) async =>
-        await prefs.setStringList(foodPrefsKey, mockedFoodPrefs));
-
-    List<List<MealModel>> weekMeals;
-
-// A lista de dentro pode varias a quantidade com base na pessoa;
-// PEssoa que escolhe a dieta mais agressiva, pode comer 3 x por dia(incluindo cafe na manha)
-// Eu recebo essa lista de lista e o index será o dia da semana(contando do dia que fez o foodswipe semanal)
-// Decidir quantas comidas a pessoa comerá por dia, mas irei começar em 3
-    test('Asserting the lenght of 7 list of meals on the week', () async {
-      weekMeals = await repository.fetchDailyMenuOfTheWeek();
-      expect(weekMeals.length, 7);
-    });
-    test(
-        'Asserting the 28 meals in a week, based on 3 main meals a day plus coffee on breakfast',
-        () async {
-      weekMeals = await repository.fetchDailyMenuOfTheWeek();
-      weekMeals.shuffle();
-      expect(weekMeals.length * weekMeals.first.length, 28);
-    });
-
-    test('Every first meal should be breakfast and is in the BreakFastCategory',
-        () async {
-      weekMeals = await repository.fetchDailyMenuOfTheWeek();
-      List list = [];
-      weekMeals.forEach((dailyMeal) {
-        if (dailyMeal.first.mealType == MealType.breakfast &&
-            dailyMeal.first.food.category == FoodCategory.drink)
-          list.add(dailyMeal.first.mealType);
-      });
-      expect(list.length, 7);
-    });
-
-    test('At lest 2 meals should have protein, based on at least 4 meals a day',
-        () async {
-      weekMeals = await repository.fetchDailyMenuOfTheWeek();
-      int proteinMeals = 0;
-      weekMeals.forEach(
-        (mealList) => mealList.forEach(
-          (meal) {
-            if (meal.food.category == FoodCategory.meat) proteinMeals++;
-          },
-        ),
-      );
-      expect(proteinMeals, greaterThanOrEqualTo(14));
-    });
-    test('First meal should be some non-calories drink', () async {
-      expect(weekMeals.first.first.food.category, FoodCategory.drink);
-    });
-
-    test('Foods in the meals is based on prefs(choosed by user', () async {
-      weekMeals = await repository.fetchDailyMenuOfTheWeek();
-      List<String> foodList = [];
-      weekMeals.forEach(
-        (dailyMeal) => dailyMeal.forEach(
-          (meal) => foodList.add(meal.food.title),
-        ),
-      );
-      expect(foodList, everyElement(isIn(mockedFoodPrefs)));
-    });
-
-    test('Main Foods in the week should have every MAIN foods from prefs',
-        () async {
-      weekMeals = await repository.fetchDailyMenuOfTheWeek();
-      List<String> foodList = [];
-      weekMeals.forEach(
-        (dailyMeal) => dailyMeal.forEach(
-          (meal) => foodList.add(meal.food.title),
-        ),
-      );
-      expect(
-          foodList,
-          containsAll([
-            'Peito de Frango',
-            'Café Preto',
-            'Picanha',
-          ]));
-    });
-
-    test('Extras in lunch should be the extras saved in prefs', () async {
-      weekMeals = await repository.fetchDailyMenuOfTheWeek();
-
-      var allExtras = [];
-
-      weekMeals
-          .map((dailyMeal) =>
-              dailyMeal.firstWhere((meal) => meal.mealType == MealType.lunch))
-          .toList()
-          .forEach(
-            (meal) => meal.extras.forEach(
-              (extra) => allExtras.add(extra.title),
-            ),
-          );
-
-      expect(allExtras, containsAll(['Brócolis', 'Alface']));
-    });
-
-    test('Every lunch should have 2 extras, cause of the selected prefs',
-        () async {
-      weekMeals = await repository.fetchDailyMenuOfTheWeek();
-      var listExtraAmount = [];
-
-      listExtraAmount = weekMeals
-          .map(
-            (dailyMeal) => dailyMeal
-                .firstWhere((a) => a.mealType == MealType.lunch)
-                .extras
-                .length,
-          )
-          .toList();
-
-      expect(listExtraAmount, everyElement(2));
-    });
-  }, skip: true);
 
   group('Testing cards on the daily meals: ', () {
     /* Testar funcionalidade da FoodModel definindo se deve ser(na home) um card principal ou um card de extras
      - Nenhum card principal deve estar na categoria MainOrExtra.extra
      - Nenhum card de extra deve estar na categoria MainOrExtra.main
-     - Todos os card principais devem estar na categoria MainOrExtra.main
-     - Todos os card de extra devem estar na categoria MainOrExtra.extra
-     -- Fruits é uma exceção, logo deverá ser testado com regras exclusivas --
-     - O card de frutas deverá estar disponível, se for escolhida pelo menos uma fruta
+     - Todos os card principais devem estar na categoria MainOrExtra.main ou MainOrExtra.both
+     - Todos os card de extra devem estar na categoria MainOrExtra.extra ou MainOrExtra.both
     */
 
 //TODO: O foodSwipe nao deverá mostrar fruits como uma opção na categoria de frutas
@@ -172,9 +55,10 @@ main() {
     test('No main card should be in MainOrExtra.extra category', () async {
       dailyMeals = await repository.fetchDailyMeals();
       var listOfMains =
-          dailyMeals.map((meal) => meal.food.mainOrExtra).toList();
+          dailyMeals.map((meal) => meal.mainFood.mainOrExtra).toList();
       expect(listOfMains, everyElement(isNot(MainOrExtra.extra)));
     });
+
     test('No extra card should be in MainOrExtra.main category', () async {
       dailyMeals = await repository.fetchDailyMeals();
       var listOfExtras = [];
@@ -182,40 +66,40 @@ main() {
           meal.extras.forEach((extra) => listOfExtras.add(extra.mainOrExtra)));
       expect(listOfExtras, everyElement(isNot(MainOrExtra.main)));
     });
-    test('Every main card should be in MainOrExtra.main category', () async {
+
+    test('Every main card should be in MainOrExtra.main or MainOrExtra.both category', () async {
       dailyMeals = await repository.fetchDailyMeals();
       var listOfMains =
-          dailyMeals.map((meal) => meal.food.mainOrExtra).toList();
-      expect(listOfMains, everyElement(MainOrExtra.main));
+          dailyMeals.map((meal) => meal.mainFood.mainOrExtra).toList();
+      expect(listOfMains, everyElement(anyOf([MainOrExtra.main, MainOrExtra.both])));
     });
-    test('Every extra card should be in MainOrExtra.extra category', () async {
+
+    test('Every extra card should be in MainOrExtra.extra or MainOrExtra.both category', () async {
       dailyMeals = await repository.fetchDailyMeals();
       var listOfExtras = [];
       dailyMeals.forEach((meal) =>
           meal.extras.forEach((extra) => listOfExtras.add(extra.mainOrExtra)));
-      expect(listOfExtras, everyElement(MainOrExtra.extra));
+      expect(listOfExtras, everyElement(anyOf([MainOrExtra.extra, MainOrExtra.both])));
     });
 
-    test(
-        'Fruits card should be available, only if prefs have at least one FoodCategory.fruit ',
-        () async {
-      dailyMeals = await repository.fetchDailyMeals();
-    });
   });
 
-  //INFO: Diabéticos tipo 2 nao devem jejuar na parte da manhã (Segundo mae)
+  //INFO: Diabéticos tipo 1 nao devem jejuar na parte da manhã (Segundo mae)
+
+  //Testar a montagem de cada refeição
+  //Receber a refeição do dia e obrigar a ser 4 por dia
   group('Testing daily meals for people that dont do exercice: ', () {
     /* Refeições diarias para pessoas que não fazem exercícios:
     - A quantidade de refeições por dia deve ser 4
     - A ordem dos pratos principais atendem as respectivas categorias [drink, meat, meat, fruit]
     - Primeira refeição deve ser alguma bebida
     - Primeira refeição não deve ter acompanhamentos
-    - Segunda refeição deve ser alguma carne
+    - Segunda refeição deve ser alguma proteina animal
     - Segunda refeição deve ser acompanhado de vegetais
-    - Terceira refeição deve ser alguma carne
-    - Terceira refeição deve ser acompanhado de vegetais
-    - Ultima refeição deve ser o card de frutas *
-    - Ultima refeição deve ser acompanhado de frutas
+    - Terceira refeição deve ser um prato de proteina mais leve, como ovos e derivados do leite(iogurte e queijo)
+    - Terceira refeição não deve ter acompanhamento
+    - Ultima refeição deve ser alguma proteina animal
+    - Ultima refeição deve ser acompanhado de vegetais, frutas de baixo indice glicemigo e legumes
     */
 
     SharedPreferences.getInstance().then((prefs) async =>
@@ -228,23 +112,23 @@ main() {
       expect(dailyMeals.length, 4);
     });
     test(
-        'The food category ordered by meal order should be drink, meat, meat and fruit',
+        'The food category ordered by meal order should be drink, meat, eggs and meat',
         () async {
       dailyMeals = await repository.fetchDailyMeals();
       List<FoodCategory> foodCategoryOrderedByMeals = [];
       dailyMeals.forEach(
-          (meal) => foodCategoryOrderedByMeals.add(meal.food.category));
+          (meal) => foodCategoryOrderedByMeals.add(meal.mainFood.category));
       expect(foodCategoryOrderedByMeals, [
         FoodCategory.drink,
         FoodCategory.meat,
+        FoodCategory.eggs, //FIXME: Nao decidi ainda
         FoodCategory.meat,
-        FoodCategory.fruit
       ]);
     });
 
     test('First meal of the day should be in drink category', () async {
       dailyMeals = await repository.fetchDailyMeals();
-      expect(dailyMeals.first.food.category, FoodCategory.drink);
+      expect(dailyMeals.first.mainFood.category, FoodCategory.drink);
     });
 
     test('First meal of the day should not have extras', () async {
@@ -254,11 +138,9 @@ main() {
 
     test('Second meal of the day should be in meat category', () async {
       dailyMeals = await repository.fetchDailyMeals();
-      expect(dailyMeals[1].food.category, FoodCategory.meat);
+      expect(dailyMeals[1].mainFood.category, FoodCategory.meat);
     });
 
-    //FIXME: Futuramente pode conter tubers(cenoura etc) nos acompanhamentos
-    //IDEIA: Devo juntar no foodSwipe legumes e verduras e limitar a 9
     test(
         'Second meal of the day should have only extras in vegetables category',
         () async {
@@ -274,30 +156,21 @@ main() {
       expect(
           extraCategoriesFromSecondMeal, everyElement(FoodCategory.vegetable));
     });
-    test('Third meal of the day should be in meat category', () async {
+
+    test('Third meal of the day should be in dairy or eggs category', () async {
       dailyMeals = await repository.fetchDailyMeals();
-      expect(dailyMeals[2].food.category, FoodCategory.meat);
+      expect(dailyMeals[2].mainFood.category,
+          anyOf([FoodCategory.dairy, FoodCategory.eggs]));
     });
 
-    test('Third meal of the day should have only extras in vegetables category',
-        () async {
+    test('Third meal of the day should not have any extra', () async {
       dailyMeals = await repository.fetchDailyMeals();
-      List<FoodCategory> extraCategoriesFromThirdMeal = [];
-
-      dailyMeals[2].extras.forEach(
-            (extra) => extraCategoriesFromThirdMeal.add(
-              extra.category,
-            ),
-          );
-
-      expect(extraCategoriesFromThirdMeal.length, greaterThan(0));
-      expect(
-          extraCategoriesFromThirdMeal, everyElement(FoodCategory.vegetable));
+      expect(dailyMeals[2].extras.length, 0);
     });
 
     test('Last meal of the day should be in fruit category', () async {
       dailyMeals = await repository.fetchDailyMeals();
-      expect(dailyMeals[3].food.category, FoodCategory.fruit);
+      expect(dailyMeals[3].mainFood.category, FoodCategory.meat);
     });
 
     test('Last meal of the day should have only extras in fruits category',
@@ -311,17 +184,15 @@ main() {
         ),
       );
       expect(extraCategoriesFromLastMeal.length, greaterThan(0));
-      expect(extraCategoriesFromLastMeal, everyElement(FoodCategory.fruit));
+      expect(extraCategoriesFromLastMeal, everyElement(FoodCategory.vegetable));
     });
   });
 
-  group(
-      'Testing the build of the food of the entire week (Same pattern every day): ',
+  group('Testing the build of the food of the entire week (Default pattern): ',
       () {
     /* Cardápios da semana baseado em refeições diarias com o mesmo padrão
     - Quantidade de cardápios diarios deve ser de 7(Sendo a quantidade de dias na semana)
     - Quantidade de refeições na semana deve ser de 28 caso tenha escolhido alguma fruta
-    - Quantidade de refeições na semana deve ser de 21 caso não tenha escolhido nenhum fruta
     */
     SharedPreferences.getInstance().then((prefs) async =>
         await prefs.setStringList(foodPrefsKey, mockedFoodPrefs));
@@ -332,29 +203,16 @@ main() {
       expect(dailyMenuOfTheWeek.length, 7);
     });
 
-    test(
-        'Total amount of meals should be 28, in case of any fruit was selected',
-        () async {
+    test('Total amount of meals should be 28 by default', () async {
       dailyMenuOfTheWeek = await repository.fetchDailyMenuOfTheWeek();
       var meals = [];
       dailyMenuOfTheWeek
           .forEach((day) => day.forEach((meal) => meals.add(meal)));
       expect(meals.length, 28);
     });
-    test('Total amount of meals should be 21, in case of no fruit was selected',
-        () async {
-      SharedPreferences.getInstance().then((prefs) async =>
-          await prefs.setStringList(foodPrefsKey, mockedFoodPrefsWithoutFruit));
-
-      dailyMenuOfTheWeek = await repository.fetchDailyMenuOfTheWeek();
-      var meals = [];
-      dailyMenuOfTheWeek
-          .forEach((day) => day.forEach((meal) => meals.add(meal)));
-      expect(meals.length, 21);
-    });
   });
 }
-// test('Extras from meat should be vegetables')//testar os extras
+
 //Testar a quantidade de vezes que cada um aparece(tirar a randomizaçao)
 
 //FIXME: Limitar o número de carboidratos

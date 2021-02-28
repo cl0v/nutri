@@ -4,19 +4,18 @@ import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
 
 // Não colocar apenas as comidas, mas sim os pratos prontos(Assim o usuário nao tem a oportunidade de adicionar um arroz ou feijao)
+// Pegar os exemplos do livro
 // Acompanhamentos
 
 
-//TODO: Remover tudo relacionado a frutas e refazer com base nas frutas do livro
-
-
-
 //TODO: Melhorar a página SPLASH
-//TODO: Adicionar logo
+//TODO: Adicionar LOGOTIPO
 //TODO: Montar página de pagamentos
 //TODO: Montar página de FAQ
 //TODO: Montar info de cada refeição
 //TODO: Sugerir acompanhamentos para preencher o vazio
+//TODO: Melhorar o design do app
+//TODO: Nao esquecer de mudar a imagem do ovo
 
 
 
