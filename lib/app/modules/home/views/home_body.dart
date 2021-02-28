@@ -36,6 +36,8 @@ class HomeBody extends GetView<HomeController> {
                 ),
               ),
             ),
+            
+            
             Obx(
               () => Text(
                 controller.extrasAmount > 0

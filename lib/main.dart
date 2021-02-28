@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
 
 // Não colocar apenas as comidas, mas sim os pratos prontos(Assim o usuário nao tem a oportunidade de adicionar um arroz ou feijao)
+// Jogar todo o banco de dados atual para extras? (Prato pronto significa por exemplo, proteina com vegetais), no cardzin de extra a pessoa escolha 1 proteina e uns 3 vegetais e alguma bebida por exemplo
 // Pegar os exemplos do livro
 // Acompanhamentos
 
