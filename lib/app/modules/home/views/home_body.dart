@@ -7,80 +7,67 @@ import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 class HomeBody extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: double.infinity,
-          width: double.infinity,
-          child: Image.asset(
-            'assets/Profile.jpg',
-            fit: BoxFit.cover,
-          ),
-        ),
-        SingleChildScrollView(
-          child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Obx(
-                  () => AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: PageView.builder(
-                      onPageChanged: controller.onPageChanged,
-                      itemCount: controller.mealListLenght.value,
-                      controller: controller.pageController,
-                      physics: AlwaysScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) => Obx(
-                        () => MealCard(
-                          mealCardModel: controller.mealList[index],
-                          mealCardState:
-                              controller.mealList[index].mealCardState,
-                          onConfirmedPressed: controller.isToday
-                              ? () => controller.onDonePressed(index)
-                              : null,
-                          onSkippedPressed: controller.isToday
-                              ? () => controller.onSkipPressed(index)
-                              : null,
-                        ),
-                      ),
+    return SingleChildScrollView(
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Obx(
+              () => AspectRatio(
+                aspectRatio: 16 / 9,
+                child: PageView.builder(
+                  onPageChanged: controller.onPageChanged,
+                  itemCount: controller.mealListLenght.value,
+                  controller: controller.pageController,
+                  physics: AlwaysScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) => Obx(
+                    () => MealCard(
+                      mealCardModel: controller.mealList[index],
+                      mealCardState: controller.mealList[index].mealCardState,
+                      onConfirmedPressed: controller.isToday
+                          ? () => controller.onDonePressed(index)
+                          : null,
+                      onSkippedPressed: controller.isToday
+                          ? () => controller.onSkipPressed(index)
+                          : null,
                     ),
                   ),
                 ),
-                Obx(
-                  () => Text(
-                    controller.extrasAmount > 0
-                        ? 'Selecione (${controller.selectedExtrasList.length}/${controller.extrasAmount}) acompanhamentos'
-                        : '',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                Obx(
-                  () => GridView.builder(
-                    itemCount: controller.extras.length,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                    ),
-                    itemBuilder: (context, index) {
-                      return Obx(
-                        () => ExtraSelectableCard(
-                          extra: controller.extras[index],
-                          onTap: controller.isToday
-                              ? () => controller.onExtraTapped(index)
-                              : null,
-                          isSelected: controller.getSelectedIndex(index),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+            Obx(
+              () => Text(
+                controller.extrasAmount > 0
+                    ? 'Selecione (${controller.selectedExtrasList.length}/${controller.extrasAmount}) acompanhamentos'
+                    : '',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            Obx(
+              () => GridView.builder(
+                itemCount: controller.extras.length,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                ),
+                itemBuilder: (context, index) {
+                  return Obx(
+                    () => ExtraSelectableCard(
+                      extra: controller.extras[index],
+                      onTap: controller.isToday
+                          ? () => controller.onExtraTapped(index)
+                          : null,
+                      isSelected: controller.getSelectedIndex(index),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 

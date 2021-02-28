@@ -8,23 +8,24 @@ import 'package:nutri/constants.dart';
 class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
-      body: Stack(
-        children: [
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            child: Image.asset(
-              'assets/Profile.jpg',
-              fit: BoxFit.cover,
-            ),
+    return Stack(
+      children: [
+        Container(
+          height: double.infinity,
+          width: double.infinity,
+          child: Image.asset(
+            'assets/Profile.jpg',
+            fit: BoxFit.cover,
           ),
-          PageView(
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+          ),
+          body: PageView(
             controller: controller.pageController,
             pageSnapping: true,
             physics: NeverScrollableScrollPhysics(),
@@ -194,8 +195,8 @@ class RegisterView extends GetView<RegisterController> {
               ),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

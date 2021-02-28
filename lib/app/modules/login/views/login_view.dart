@@ -6,18 +6,19 @@ import 'package:nutri/constants.dart';
 class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            child: Image.asset(
-              'assets/Profile.jpg',
-              fit: BoxFit.cover,
-            ),
+    return Stack(
+      children: [
+        Container(
+          height: double.infinity,
+          width: double.infinity,
+          child: Image.asset(
+            'assets/Profile.jpg',
+            fit: BoxFit.cover,
           ),
-          Center(
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Center(
             child: Container(
               height: 450,
               margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -63,7 +64,6 @@ class LoginView extends GetView<LoginController> {
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock),
                       suffixIcon: Icon(Icons.remove_red_eye),
-
                       hintText: 'Password',
                       labelText: 'Password',
                       border: OutlineInputBorder(
@@ -121,8 +121,8 @@ class LoginView extends GetView<LoginController> {
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

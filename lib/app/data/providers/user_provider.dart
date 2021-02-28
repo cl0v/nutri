@@ -15,7 +15,7 @@ class UserProvider extends GetConnect {
 
   signin(String email, String password) async {
     try {
-      UserCredential userCredential =
+      // UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
@@ -38,7 +38,8 @@ class UserProvider extends GetConnect {
 
   register(String email, String password) async {
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      // UserCredential userCredential = 
+      await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       // userCredential.user.sendEmailVerification(); //TODO: Implement sendEmailVerification
     } on FirebaseAuthException catch (e) {

@@ -14,14 +14,6 @@ class FoodSwipeBody extends GetView<FoodSwipeController> {
     double width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
-        Container(
-          height: double.infinity,
-          width: double.infinity,
-          child: Image.asset(
-            'assets/Profile.jpg',
-            fit: BoxFit.cover,
-          ),
-        ),
         SafeArea(
           child: Obx(
             () => controller.isOkey
