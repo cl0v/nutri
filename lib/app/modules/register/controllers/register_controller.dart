@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nutri/app/data/repositories/user_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 import 'package:nutri/constants.dart';
 
 class RegisterController extends GetxController {
+  final UserRepository repository;
+  RegisterController({@required this.repository});
+
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -13,6 +17,7 @@ class RegisterController extends GetxController {
   PageController pageController;
 
   final _thermIsChecked = false.obs;
+
   bool get thermIsChecked => _thermIsChecked.value;
 
   @override
@@ -33,7 +38,7 @@ class RegisterController extends GetxController {
   }
 
   _createAccount() async {
-    //TODO:Implement Create Account
+    repository.register(emailController.text, passwordController.text);
   }
 
   void onConfirmPressed(context) async {
@@ -45,6 +50,7 @@ class RegisterController extends GetxController {
         colorText: Colors.white,
       );
     FocusScope.of(context).unfocus();
+    
     await _createAccount();
     Get.offAllNamed(Routes.QUESTIONS);
   }

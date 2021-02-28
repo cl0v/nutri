@@ -110,13 +110,13 @@ class MealProvider {
       mealType: MealType.dinner,
     );
 
-  MealModel _buildFruitMeal(
-      List<FoodModel> mainFruitCard, List<FoodModel> listOfExtra) => MealModel(
-      mainFood: mainFruitCard.first, //Deve receber apenas o card de fruta
-      extras: listOfExtra,
-      extraAmount: 1,
-      mealType: MealType.dinner,
-    );
+  // MealModel _buildFruitMeal(
+  //     List<FoodModel> mainFruitCard, List<FoodModel> listOfExtra) => MealModel(
+  //     mainFood: mainFruitCard.first, //Deve receber apenas o card de fruta
+  //     extras: listOfExtra,
+  //     extraAmount: 1,
+  //     mealType: MealType.dinner,
+  //   );
 
   MealModel _buildSnack(List<FoodModel> listOfFood) => MealModel(
       mainFood: listOfFood.first,

@@ -87,6 +87,7 @@ class RegisterView extends GetView<RegisterController> {
                       ),
                       TextFormField(
                         controller: controller.passwordController,
+                        obscureText: true,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.lock),
                           suffixIcon: Icon(Icons.remove_red_eye),

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "24512228909",
+    "project_id": "nutri-nest-c5ba6",
+    "storage_bucket": "nutri-nest-c5ba6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24512228909:android:7a852a346a6bc92055d2a4",
+        "android_client_info": {
+          "package_name": "com.example.nutri"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24512228909-3o32dka7h7ham0lmqpscl28g946kde2c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQjOGaOh5DhrAPPqaNiWWVJmQnREsJ7u0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24512228909-3o32dka7h7ham0lmqpscl28g946kde2c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

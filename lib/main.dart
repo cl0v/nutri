@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -6,7 +7,6 @@ import 'app/routes/app_pages.dart';
 // Não colocar apenas as comidas, mas sim os pratos prontos(Assim o usuário nao tem a oportunidade de adicionar um arroz ou feijao)
 // Pegar os exemplos do livro
 // Acompanhamentos
-
 
 //TODO: Melhorar a página SPLASH
 //TODO: Adicionar LOGOTIPO
@@ -17,14 +17,10 @@ import 'app/routes/app_pages.dart';
 //TODO: Melhorar o design do app
 //TODO: Nao esquecer de mudar a imagem do ovo
 
-
-
-
 //FIXME: Tomate não deve aparecer nas frutas
 //FIXME: Corrigir bug do tomate nas frutas
 //INFO: Tomate não deverá estar presente nos extras do Card Principal de frutas
 //INFO: Tomate deverá estar presente apenas nos extras da segunda refeição de proteinas (o mais perto da refeicao de frutas)
-
 
 //IDEIA: Card de água seria uma boa para preencher o vazio do café
 
@@ -40,9 +36,9 @@ import 'app/routes/app_pages.dart';
  - Descobrir quantas refeições a pessoa costuma fazer
 */
 
-
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (value) => runApp(

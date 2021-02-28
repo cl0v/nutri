@@ -29,6 +29,7 @@ class QuestionsController extends GetxController {
 
   @override
   void onInit() {
+
     super.onInit();
     _setQuestionList();
   }
@@ -37,7 +38,7 @@ class QuestionsController extends GetxController {
     _questions.assignAll(await repository.loadQuestionList());
   }
 
-  onQuestionPageChanged(int idx){
+  onQuestionPageChanged(int idx) {
     lockedAnswer = false;
   }
 
@@ -52,7 +53,6 @@ class QuestionsController extends GetxController {
 
   Map<String, String> _answers = {};
   var indexDaOpcao = -1;
-
 
   int getOptionIndex(int qIdx, String opt) =>
       questions[qIdx].options.indexOf(opt);

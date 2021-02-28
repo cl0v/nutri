@@ -24,9 +24,15 @@ dependencies:
   # websafe_svg: ^1.1.4
   shared_preferences: ^0.5.12+4
   flip_card: ^0.4.4
+  
   get: 3.24.0
+
+  firebase_core: "0.7.0"
+  firebase_auth: "^0.20.1"
+
   flutter:
     sdk: flutter
+  
 
 
   # The following adds the Cupertino Icons font to your application.

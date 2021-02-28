@@ -59,9 +59,11 @@ class LoginView extends GetView<LoginController> {
                   ),
                   TextFormField(
                     controller: controller.passwordController,
+                    obscureText: true,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock),
                       suffixIcon: Icon(Icons.remove_red_eye),
+
                       hintText: 'Password',
                       labelText: 'Password',
                       border: OutlineInputBorder(
