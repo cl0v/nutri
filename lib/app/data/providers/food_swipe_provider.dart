@@ -60,7 +60,7 @@ class FoodSwipeProvider {
     );
     foodSwipeList.add(
       FoodSwipeModel(
-        maximum: 2,
+        maximum: 3,
         minimum: 1,
         category: FoodSwipeModel.getCategory(FoodCategory.drink),
         foods: drinkList,

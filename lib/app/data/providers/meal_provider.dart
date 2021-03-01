@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
@@ -25,6 +23,14 @@ class MealProvider {
     return _buildDailyMeal(listOfFood);
   }
 
+  Future<List<FoodModel>> getTreeFoods() async {
+    return (await FoodModelHelper.loadMeats()).take(3).toList();
+  }
+
+  Future<List<FoodModel>> getExtras() async {
+    return await FoodModelHelper.loadVegetables();
+  }
+
   Future<List<MealModel>> fetchMeals() async {
     print(await _getFoodsPrefs());
     var foods = await FoodModelHelper.loadAllFoods();
@@ -33,9 +39,9 @@ class MealProvider {
       (food) {
         meals.add(
           MealModel(
-            mainFood: food,
+            mainFoodList: foods.take(3).toList(),
             mealType: MealType.breakfast,
-            extras: foods
+            extraList: foods
                 .where((f) => f.category == FoodCategory.vegetable)
                 .toList(),
           ),
@@ -103,12 +109,13 @@ class MealProvider {
   }
 
   MealModel _buildDinner(
-      List<FoodModel> listOfFood, List<FoodModel> listOfExtras) => MealModel(
-      mainFood: listOfFood[Random().nextInt(listOfFood.length)],
-      extras: listOfExtras,
-      extraAmount: 3,
-      mealType: MealType.dinner,
-    );
+          List<FoodModel> listOfFood, List<FoodModel> listOfExtras) =>
+      MealModel(
+        mainFoodList: listOfFood.take(3).toList(),
+        extraList: listOfExtras,
+        extraAmount: 3,
+        mealType: MealType.dinner,
+      );
 
   // MealModel _buildFruitMeal(
   //     List<FoodModel> mainFruitCard, List<FoodModel> listOfExtra) => MealModel(
@@ -119,26 +126,27 @@ class MealProvider {
   //   );
 
   MealModel _buildSnack(List<FoodModel> listOfFood) => MealModel(
-      mainFood: listOfFood.first,
-      extras: [],
-      extraAmount: 5,
-      mealType: MealType.snack,
-    );
+        mainFoodList: listOfFood.take(3).toList(),
+        extraList: [],
+        extraAmount: 5,
+        mealType: MealType.snack,
+      );
 
   MealModel _buildLunch(
-      List<FoodModel> listOfFood, List<FoodModel> listOfExtra) => MealModel(
-      mainFood: listOfFood[Random().nextInt(listOfFood.length)],
-      extras: listOfExtra,
-      extraAmount: 3,
-      mealType: MealType.lunch,
-    );
+          List<FoodModel> listOfFood, List<FoodModel> listOfExtra) =>
+      MealModel(
+        mainFoodList: listOfFood.take(3).toList(),
+        extraList: listOfExtra,
+        extraAmount: 3,
+        mealType: MealType.lunch,
+      );
 
   MealModel _buildBreakfast(List<FoodModel> listOfFood) => MealModel(
-      mainFood: listOfFood[Random().nextInt(listOfFood.length)],
-      extras: [],
-      extraAmount: 0,
-      mealType: MealType.breakfast,
-    );
+        mainFoodList: listOfFood.take(3).toList(),
+        extraList: [],
+        extraAmount: 0,
+        mealType: MealType.breakfast,
+      );
 
   Future<List<String>> _getFoodsPrefs() async =>
       (await prefs).getStringList(foodPrefsKey);
