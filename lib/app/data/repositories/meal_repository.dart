@@ -9,11 +9,11 @@ class MealRepository {
     @required this.provider,
   });
 
-  Future<List<MealModel>> fetchMeals() => provider.fetchMeals();
 
   Future<List<List<MealModel>>> fetchDailyMenuOfTheWeek() =>
       provider.fetchMealsOfTheWeek();
 
   Future<List<MealModel>> fetchDailyMeals() => provider.fetchDailyMeals();
 
+  Future saveMealPrefs(String mealType, List<String> list) => provider.saveMealPrefs(mealType, list);
 }

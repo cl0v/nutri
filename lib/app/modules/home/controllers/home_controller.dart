@@ -6,7 +6,8 @@ import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/data/repositories/meal_repository.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 
-// IDEIA: Deslizar os extras pra direita mostra os card de beba agua
+
+// IDEIA: Sugerir as mais importantes(maior PE) ja marcadas
 
 // TODO: Quando chega no ultimo item, nao tem pra onde ir, dar um feedback ou parabenizar a pessoa(pontos concluidos)
 // IDEIA: (10/10) Criar um card para o final da lista(Card indicando os pontos da pessoa e talvez um pequeno resuminho)
@@ -14,10 +15,13 @@ import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 
 //TODO: Quando a pessoa toca no info do card de cada refeição, explica aquela refeição
 
-// EX: Se eu confirmar o almoço, mas nao ter marcado o cafe da manha, o cafe da manha será marcado como nao concluido
-// ... => Posso adicionar uma categoria que seja, nao confirmado, nem skipado... (nao informado)
+// TODO: O widget de extras mostrará apenas imagens com base na quantidade, de 1 a 3
+// TODO: O widget de opçoes será centralizado com base na quantidade disponivel(1 fica no meio, 2 fica cada um de um lado, 3 fica do jeito q ta)
 
 //TODO: Salvar os dados da refeição a medida que o usuário for preenchendo(posso usar o shared, porem na ultima do dia, salvar no banco);
+
+//sharedPrefs = todayBreakfast : ['refeiçao principal', 'primeiro acompanhamento', 'segundo', 'terceiro']
+//salvar assim que confirmar, para nao correr o risco de a pessoa esquecer de marcar o ultimoe  ficar sem salvar
 
 //TODO: Na ultima meal, quando confirmada, mostrará as informações na tela
 
@@ -92,9 +96,9 @@ class HomeController extends GetxController {
     return true;
   }
 
-  isMainFoodSelected(int idx) {
-    return selectedFoodIdx.value == idx;
-  }
+  isMainFoodSelected(int idx) =>
+     selectedFoodIdx.value == idx;
+  
 
   onExtraTapped(int idx) {
     if (!_selectedExtrasList.contains(idx) &&
@@ -114,18 +118,27 @@ class HomeController extends GetxController {
     mealsOfTheDay[mealIndex].selectedFood =
         mealsOfTheDay[mealIndex].mealModel.mainFoodList[selectedFoodIdx.value];
     mealsOfTheDay[mealIndex].selectedExtras = selectedExtras;
+    _buildAndSavePrefs(mealsOfTheDay[mealIndex]);
+  }
+
+  _buildAndSavePrefs(MealCardModel mealCard) {
+    List<String> prefStringList = [];
+    var extrasStringList = mealCard.selectedExtras.map((extra) => extra.title);
+    prefStringList.add(mealCard.mealCardState.toString());
+    prefStringList.add(mealCard.selectedFood.title);
+    prefStringList.addAll(extrasStringList);
+    repository.saveMealPrefs(mealCard.mealModel.mealType.toString(), prefStringList);
   }
 
   onDonePressed() {
     //TODO: Implement onDonePressed
-    _saveMealOfTheDay(); //TODO: Deu algum bug que salva os extras no primeiro itme
+    _saveMealOfTheDay(); //FIXME: BUG: INVESTIGAR: Deu algum bug que salva os extras no primeiro itme
     _nextPage();
   }
 
   onSkippedPressed() {
     //TODO: Implement onSkippedPressed
     _saveMealOfTheDay();
-    print(mealsOfTheDay);
     _nextPage();
   }
 
