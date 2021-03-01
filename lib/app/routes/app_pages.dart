@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import 'package:nutri/app/modules/faq/bindings/faq_binding.dart';
+import 'package:nutri/app/modules/faq/views/faq_view.dart';
 import 'package:nutri/app/modules/food_swipe/bindings/food_swipe_binding.dart';
 import 'package:nutri/app/modules/food_swipe/views/food_swipe_view.dart';
 import 'package:nutri/app/modules/home/bindings/home_binding.dart';
@@ -20,7 +22,7 @@ import 'package:nutri/app/modules/splash/views/splash_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.FAQ;
 
   static final routes = [
     GetPage(
@@ -62,6 +64,11 @@ class AppPages {
       name: Routes.PAYMENT,
       page: () => PaymentView(),
       binding: PaymentBinding(),
+    ),
+    GetPage(
+      name: Routes.FAQ,
+      page: () => FaqView(),
+      binding: FaqBinding(),
     ),
   ];
 }

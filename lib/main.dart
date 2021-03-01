@@ -5,9 +5,7 @@ import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
 
 // Não colocar apenas as comidas, mas sim os pratos prontos(Assim o usuário nao tem a oportunidade de adicionar um arroz ou feijao)
-// Jogar todo o banco de dados atual para extras? (Prato pronto significa por exemplo, proteina com vegetais), no cardzin de extra a pessoa escolha 1 proteina e uns 3 vegetais e alguma bebida por exemplo
 // Pegar os exemplos do livro
-// Acompanhamentos
 
 //TODO: Melhorar a página SPLASH
 //TODO: Adicionar LOGOTIPO
@@ -18,17 +16,11 @@ import 'app/routes/app_pages.dart';
 //TODO: Melhorar o design do app
 //TODO: Nao esquecer de mudar a imagem do ovo
 
-//FIXME: Tomate não deve aparecer nas frutas
-//FIXME: Corrigir bug do tomate nas frutas
-//INFO: Tomate não deverá estar presente nos extras do Card Principal de frutas
-//INFO: Tomate deverá estar presente apenas nos extras da segunda refeição de proteinas (o mais perto da refeicao de frutas)
-
 //IDEIA: Card de água seria uma boa para preencher o vazio do café
 
 //IDEIA: Apenas deixar a pessoa escolher o que vai querer pra semana, depois jogar isso pruma todolist de compra
-//IDEIA: E sortear aleatoriamente as coisas para fazer o cardapio diario
 
-/* TODO: Criar uma pagina de FAQ para responder possíveis perguntar
+/* TODO: Criar uma pagina de FAQ para responder possíveis perguntas
  - Por que não estou sentindo o gosto de sal na comida, devo comer mais sal?
  - Posso comer doces?
  - Posso comer o que não está no cardápio?

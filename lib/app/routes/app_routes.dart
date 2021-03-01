@@ -10,4 +10,5 @@ abstract class Routes {
   static const PROFILE = '/profile';
   static const FOOD_SWIPE = '/food-swipe';
   static const PAYMENT = '/payment';
+  static const FAQ = '/faq';
 }

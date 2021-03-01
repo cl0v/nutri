@@ -83,8 +83,8 @@ class FoodModel {
 
   String toJson() => json.encode(toMap());
 
-  factory FoodModel.fromJson(String source) =>
-      FoodModel.fromMap(json.decode(source));
+  // factory FoodModel.fromJson(String source) =>
+  //     FoodModel.fromMap(json.decode(source));
 
   @override
   String toString() {
