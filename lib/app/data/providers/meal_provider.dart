@@ -60,11 +60,12 @@ class MealProvider {
     List<FoodModel> listOfMeat = listOfFood[1];
     List<FoodModel> listOfVegetables = listOfFood[2];
     List<FoodModel> listOfEggs = listOfFood[3];
+    List<FoodModel> listOfExtras = listOfFood[4];
 
     var breakfast = MealProviderHelper.buildBreakfast(listOfDrinks);
     var lunch = MealProviderHelper.buildLunch(listOfMeat, listOfVegetables);
     var snack = MealProviderHelper.buildSnack(listOfEggs);
-    var dinner = MealProviderHelper.buildDinner(listOfMeat, listOfVegetables);
+    var dinner = MealProviderHelper.buildDinner(listOfMeat, listOfExtras);
 
     return [breakfast, lunch, snack, dinner];
   }
@@ -85,12 +86,15 @@ abstract class MealProviderHelper {
     List<FoodModel> listOfVegetables =
         await FoodModelHelper.loadPrefsVegetables(prefs);
     List<FoodModel> listOfEggs = await FoodModelHelper.loadEggs();
+    List<FoodModel> listOfExtras =
+        await FoodModelHelper.loadPrefsExtras(prefs);
 
     return [
       listOfDrinks,
       listOfMeat,
       listOfVegetables,
       listOfEggs,
+      listOfExtras,
     ];
   }
 

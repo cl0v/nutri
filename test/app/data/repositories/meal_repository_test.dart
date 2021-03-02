@@ -16,6 +16,7 @@ final mockedFoodPrefs = [
   'Espinafre',
   'Repolho Roxo',
   'Tomate',
+  "Cenoura",
   'Café Preto',
 ];
 
@@ -44,6 +45,7 @@ main() {
      - Nenhum card de extra deve estar na categoria MainOrExtra.main
      - Todos os card principais devem estar na categoria MainOrExtra.main ou MainOrExtra.both
      - Todos os card de extra devem estar na categoria MainOrExtra.extra ou MainOrExtra.both
+     - Nenhum extra deve repetir na mesma refeição
     */
 
     SharedPreferences.getInstance().then((prefs) async =>
@@ -97,6 +99,17 @@ main() {
         everyElement(anyOf([MainOrExtra.extra, MainOrExtra.both])),
       );
     });
+
+    test('No extra should be repeat at the same meal', () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      dailyMeals.forEach((meal) {
+        var existingExtrasTitle = [];
+        meal.extraList.forEach((extra) {
+          expect(extra.title, isNot(anyOf(existingExtrasTitle)));
+          existingExtrasTitle.add(extra.title);
+        });
+      });
+    });
   });
 
   //INFO: Diabéticos tipo 1 nao devem jejuar na parte da manhã (Segundo mae)
@@ -116,7 +129,9 @@ main() {
     - Terceira refeição deve ser um prato de proteina mais leve, como ovos e derivados do leite(iogurte e queijo)
     - Terceira refeição não deve ter acompanhamento //IDEIA: (talvez para o iogurte(Adicionar alguma fruta que combine(morango etc)))
     - Ultima refeição deve ser alguma proteina animal
-    - Ultima refeição deve ser acompanhado de vegetais, legumes e frutas de baixo indice glicemigo 
+    - Ultima refeição deve ser acompanhado de vegetais, legumes e frutas de baixo indice glicemigo
+    - Ultima refeição do dia deve sugerir pelo menos uma fruta de baixo indice glicemico
+    - Ultima refeição do dia deve sugerir pelo menos um legume //TODO: Implement
     */
 
     SharedPreferences.getInstance().then((prefs) async =>
@@ -289,6 +304,22 @@ main() {
           FoodCategory.tuber,
         ])),
       );
+    });
+        test('Dinner should suggest at least one low sugar fruit', () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      var extraCategoriesFromDinner = dailyMeals
+          .lastWhere((meal) => meal.mealType == MealType.dinner)
+          .extraList
+          .map((extra) => extra.category).toList();
+      expect(extraCategoriesFromDinner, anyElement(FoodCategory.lowSugarFruits));
+    });
+    test('Dinner should suggest at least one low sugar fruit', () async {
+      dailyMeals = await repository.fetchDailyMeals();
+      var extraCategoriesFromDinner = dailyMeals
+          .lastWhere((meal) => meal.mealType == MealType.dinner)
+          .extraList
+          .map((extra) => extra.category).toList();
+      expect(extraCategoriesFromDinner, anyElement(FoodCategory.lowSugarFruits));
     });
   });
 

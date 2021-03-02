@@ -136,6 +136,9 @@ abstract class FoodModelHelper {
   static Future<List<FoodModel>> loadPrefsVegetables(List<String> prefs) =>
       _sortJsonByCategoryBasedOnPref(prefs, FoodCategory.vegetable);
 
+  static Future<List<FoodModel>> loadPrefsExtras(List<String> prefs) async =>
+      _sortByMainOrExtra(await loadFoodsFromPreferences(prefs), MainOrExtra.extra);
+
   ///Recebe todas as frutas cadastradas no banco
   static Future<List<FoodModel>> loadLowSugarFruits() =>
       _sortJsonByCategory(FoodCategory.lowSugarFruits);
