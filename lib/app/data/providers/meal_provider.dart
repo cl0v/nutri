@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+    // IDEIA: - Priorizar vegetais de noite
 
 //IDEIA: Entender com o tempo as escolhar do usuario (padroes etc)
 

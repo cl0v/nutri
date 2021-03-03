@@ -5,8 +5,6 @@ import 'package:nutri/app/data/providers/meal_provider.dart';
 import 'package:nutri/app/data/repositories/meal_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-//TODO: Testar a nao repetição dos extras quando tiver mais de um extra
-
 final mockedFoodPrefs = [
   'Peito de Frango',
   'Picanha',
@@ -127,11 +125,11 @@ main() {
     - Segunda refeição deve ter 3 opções de proteina
     - Segunda refeição deve ser acompanhado de vegetais
     - Terceira refeição deve ser um prato de proteina mais leve, como ovos e derivados do leite(iogurte e queijo)
-    - Terceira refeição não deve ter acompanhamento //IDEIA: (talvez para o iogurte(Adicionar alguma fruta que combine(morango etc)))
+    - Terceira refeição não deve ter acompanhamento 
     - Ultima refeição deve ser alguma proteina animal
     - Ultima refeição deve ser acompanhado de vegetais, legumes e frutas de baixo indice glicemigo
     - Ultima refeição do dia deve sugerir pelo menos uma fruta de baixo indice glicemico
-    - Ultima refeição do dia deve sugerir pelo menos um legume //TODO: Implement
+    - Ultima refeição do dia deve sugerir pelo menos um legume
     */
 
     SharedPreferences.getInstance().then((prefs) async =>

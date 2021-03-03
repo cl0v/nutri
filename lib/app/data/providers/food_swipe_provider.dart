@@ -28,32 +28,32 @@ class FoodSwipeProvider {
 
     foodSwipeList.add(
       FoodSwipeModel(
-        maximum: 3,
-        minimum: 2,
+        maximum: 7,
+        minimum: 3,
         category: FoodSwipeModel.getCategory(FoodCategory.meat),
         foods: meatList,
       ),
     );
     foodSwipeList.add(
       FoodSwipeModel(
-        maximum: 9,
-        minimum: 3,
+        // maximum: null, // Nao tem maximo
+        minimum: 7,
         category: FoodSwipeModel.getCategory(FoodCategory.vegetable),
         foods: vegList,
       ),
     );
     foodSwipeList.add(
       FoodSwipeModel(
-        maximum: 4,
-        minimum: 0,
+        maximum: 9,
+        minimum: 7,
         category: FoodSwipeModel.getCategory(FoodCategory.lowSugarFruits),
         foods: lowSugarFruitList,
       ),
     );
     foodSwipeList.add(
       FoodSwipeModel(
-        maximum: 4,
-        minimum: 0,
+        maximum: 5,
+        minimum: 2,
         category: FoodSwipeModel.getCategory(FoodCategory.tuber),
         foods: tubersList,
       ),
