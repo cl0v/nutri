@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
-import 'package:nutri/app/data/repositories/meal_repository.dart';
+import 'package:nutri/app/data/repositories/home_provider.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 
 
@@ -26,7 +26,7 @@ import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 //TODO: Na ultima meal, quando confirmada, mostrará as informações na tela
 
 class HomeController extends GetxController {
-  final MealRepository repository;
+  final HomeRepository repository;
   HomeController({@required this.repository});
 
   final mealsOfTheDay = <MealCardModel>[].obs;

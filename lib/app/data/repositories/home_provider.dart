@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
-import 'package:nutri/app/data/providers/meal_provider.dart';
+import 'package:nutri/app/data/providers/home_provider.dart';
 
-class MealRepository {
-  final MealProvider provider;
+class HomeRepository {
+  final HomeProvider provider;
 
-  MealRepository({
+  HomeRepository({
     @required this.provider,
   });
 

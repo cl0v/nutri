@@ -2,12 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
-//IDEIA: Talvez posso adicionar quanto cada comida vale em pontos, para montar um prato final
-// Dar os pontos e calcular quanto cada uma vale para fechar o dia com a pontuaçao necessária
-// Exemplo, um frango na pe é 13, + importancia, uns 10, daria 130 pontos
-// se fosse 13*1 daria 13 pontos, mas 1 frango nao é suficiente, porém nao tao pouco caso eu queria calcular 100 pontos
-//IDEIA: Decidir o que é comida pesada e leve para comer de noite e antes do treino(Normalmente frutas)
-
 ///Categoria da comida que será servida
 enum FoodCategory {
   none,

@@ -9,10 +9,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const foodPrefsKey = 'foodPrefs';
 
-class MealProvider {
+class HomeProvider {
   final Future<SharedPreferences> sharedPreferences;
 
-  MealProvider({@required this.sharedPreferences});
+  HomeProvider({@required this.sharedPreferences});
 
   int dailyMealAmount = 4;
   int daysInAWeek = 7;
@@ -45,6 +45,10 @@ class MealProvider {
 
   //Esse cara precisa ser buildado uma vez por semana
   //logo apos o food swipe ter sido escolhido
+
+
+  //Quando o food swipe terminar, ele pegará todos os alimentos e irá montar um cardápio semanal
+  //
 
   // Conferir se ja existem alimentos nas shared prefs, caso contrario, leva a pessoa pro food swipe
   // Ter um tempo de load para buildar as comidas, mostrar o lead na home, antes de qualquer coisa

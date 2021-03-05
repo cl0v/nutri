@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
-import 'package:nutri/app/data/providers/meal_provider.dart';
-import 'package:nutri/app/data/repositories/meal_repository.dart';
+import 'package:nutri/app/data/providers/home_provider.dart';
+import 'package:nutri/app/data/repositories/home_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final mockedFoodPrefs = [
@@ -30,10 +30,10 @@ main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({foodPrefsKey: mockedFoodPrefs});
   final prefs = SharedPreferences.getInstance();
-  final provider = MealProvider(
+  final provider = HomeProvider(
     sharedPreferences: prefs,
   );
-  MealRepository repository = MealRepository(
+  HomeRepository repository = HomeRepository(
     provider: provider,
   );
 

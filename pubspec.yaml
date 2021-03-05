@@ -24,6 +24,8 @@ dependencies:
   # websafe_svg: ^1.1.4
   shared_preferences: ^0.5.12+4
   flip_card: ^0.4.4
+  
+
 
   
   get: 3.24.0
@@ -40,10 +42,18 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
 
+  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.9.0
 
+flutter_icons:
+  image_path: "assets/launcher_icon/logo.png"
+  android: true
+  ios: true
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
