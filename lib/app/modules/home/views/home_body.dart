@@ -4,8 +4,6 @@ import 'package:nutri/app/modules/home/components/food_card.dart';
 import 'package:nutri/app/modules/home/components/food_selectable_card.dart';
 import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 
-//BUG: Corrigir o espaço branco do café
-
 class HomeBody extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
@@ -17,12 +15,12 @@ class HomeBody extends GetView<HomeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Obx(() => Text(
-                    '${controller.mealCategory}',
-                    style:
-                        Get.textTheme.headline5.copyWith(color: Colors.white),
-                  )),
-              //TODO: Categoria do meal
+              Obx(
+                () => Text(
+                  '${controller.mealCategory}',
+                  style: Get.textTheme.headline5.copyWith(color: Colors.white),
+                ),
+              ),
               MainFoodSelector(),
               Divider(),
               Obx(

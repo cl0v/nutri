@@ -12,11 +12,6 @@ class MealCardModel {
   MealCardModel({
     @required this.mealModel,
   });
-
-  @override
-  String toString() {
-    return 'MealCardModel( mealCardState: $mealCardState, selectedFood: $selectedFood, selectedExtras: $selectedExtras)';
-  }
 }
 
 enum MealCardState {

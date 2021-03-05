@@ -2,28 +2,24 @@ import 'package:flutter/foundation.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-    // IDEIA: - Priorizar vegetais de noite
+// IDEIA: - Priorizar vegetais de noite
 
-//IDEIA: Entender com o tempo as escolhar do usuario (padroes etc)
+// A classe provider deverá receber os dados do banco e entregar de forma organizada
+// A adicao de meal não é feita pelo usuário, é uma rotina padrao do aplicativo
 
 const foodPrefsKey = 'foodPrefs';
 
 class MealProvider {
-  final Future<SharedPreferences> prefs;
+  final Future<SharedPreferences> sharedPreferences;
 
-  MealProvider({@required this.prefs});
+  MealProvider({@required this.sharedPreferences});
 
   int dailyMealAmount = 4;
   int daysInAWeek = 7;
 
-  Future<List<MealModel>> fetchDailyMeals({int dayOfTheWeek = 0}) async {
-    //TODO: [dayOfTheWeek] Receber o dia busca algum dia em específico, para a pessoa se preparar com antecedencia caso precise
-    var listOfFood = await _getPossibleFoodList();
-    return _buildDailyMeal(listOfFood);
-  }
-
-  Future<List<FoodModel>> getTreeFoods() async {
-    return (await FoodModelHelper.loadMeats()).take(3).toList();
+  Future<List<MealModel>> fetchDailyMeals({int day = 1}) async {
+    // var listOfFood = await _getPossibleFoodList();
+    return (await fetchMealsOfTheWeek())[day - 1];
   }
 
   Future<List<FoodModel>> getExtras() async {
@@ -38,96 +34,91 @@ class MealProvider {
   /// with the same pattern of the daily meals
   /// Basicaly is the daily meal multiplied by 7 and randomized
   Future<List<List<MealModel>>> fetchMealsOfTheWeek() async {
-    var listOfFood = await _getPossibleFoodList();
+    var foodPrefsList = await _getFoodsPrefsList();
     List<List<MealModel>> listOfDailyMeal = [];
-    for (var i = 0; i < daysInAWeek; i++) {
-      var dailyMeal = await _buildDailyMeal(listOfFood);
+    for (var i = 1; i <= daysInAWeek; i++) {
+      var dailyMeal = await _buildDailyMeal(foodPrefsList);
       listOfDailyMeal.add(dailyMeal);
     }
     return listOfDailyMeal;
   }
 
-  ///Filtra a lista de comida para saber as possibilidades
-  Future<List<List<FoodModel>>> _getPossibleFoodList() async {
-    var prefsList = await _getFoodsPrefs();
-    return MealProviderHelper.getPossibleFoodList(prefsList);
+  //Esse cara precisa ser buildado uma vez por semana
+  //logo apos o food swipe ter sido escolhido
+
+  // Conferir se ja existem alimentos nas shared prefs, caso contrario, leva a pessoa pro food swipe
+  // Ter um tempo de load para buildar as comidas, mostrar o lead na home, antes de qualquer coisa
+  _buildMealsOfTheWeek() {
+    // - getMealsFromDB if null build meals of the week
+    // -
+    //Esse cara deve buildar as comidas da semana toda e ainda salvar em algum lugar,
+    // para que sempre que chamado, seja iguais os valores
+    // A questao é, como salvar esses valores?
   }
 
-//FIXME: A Aleatoriedade pode as vezes pegar uma unica carne, cerca de 30% de sorte pra o error acontecer
-  ///Esse cara recebe todos os alimentos e randomiza as escolha de qual comida comer
-  Future<List<MealModel>> _buildDailyMeal(
-      List<List<FoodModel>> listOfFood) async {
-    List<FoodModel> listOfDrinks = listOfFood[0];
-    List<FoodModel> listOfMeat = listOfFood[1];
-    List<FoodModel> listOfVegetables = listOfFood[2];
-    List<FoodModel> listOfEggs = listOfFood[3];
-    List<FoodModel> listOfExtras = listOfFood[4];
-
-    var breakfast = MealProviderHelper.buildBreakfast(listOfDrinks);
-    var lunch = MealProviderHelper.buildLunch(listOfMeat, listOfVegetables);
-    var snack = MealProviderHelper.buildSnack(listOfEggs);
-    var dinner = MealProviderHelper.buildDinner(listOfMeat, listOfExtras);
+  ///Esse cara recebe todos os alimentos recebidos das preferencias e randomiza
+  ///as escolha de qual comida comer
+  Future<List<MealModel>> _buildDailyMeal(List<String> prefs,
+      {int day = 1}) async {
+    var breakfast = await MealProviderHelper.buildBreakfast(prefs);
+    var lunch = await MealProviderHelper.buildLunch(prefs);
+    var snack = await MealProviderHelper.buildSnack(prefs);
+    var dinner = await MealProviderHelper.buildDinner(prefs);
 
     return [breakfast, lunch, snack, dinner];
   }
 
-  Future<List<String>> _getFoodsPrefs() async =>
-      (await prefs).getStringList(foodPrefsKey);
+  Future<List<String>> _getFoodsPrefsList() async =>
+      (await sharedPreferences).getStringList(foodPrefsKey);
 
   saveMealPrefs(String mealType, List<String> list) async {
     //TODO: Implement saveMealPrefs
-    (await prefs).setStringList(mealType, list);
+    (await sharedPreferences).setStringList(mealType, list);
   }
 }
 
 abstract class MealProviderHelper {
-  static Future<List<List<FoodModel>>> getPossibleFoodList(prefs) async {
-    List<FoodModel> listOfDrinks = await FoodModelHelper.loadPrefsDrinks(prefs);
-    List<FoodModel> listOfMeat = await FoodModelHelper.loadPrefsMeats(prefs);
-    List<FoodModel> listOfVegetables =
-        await FoodModelHelper.loadPrefsVegetables(prefs);
-    List<FoodModel> listOfEggs = await FoodModelHelper.loadEggs();
-    List<FoodModel> listOfExtras =
-        await FoodModelHelper.loadPrefsExtras(prefs);
+  static Future<MealModel> buildDinner(List<String> prefs) async {
+    var mainFoodList = await FoodModelHelper.loadDinnerMainFoodsFromPrefs(prefs);
+    var extraFoodList = await FoodModelHelper.loadDinnerExtrasFromPrefs(prefs);
 
-    return [
-      listOfDrinks,
-      listOfMeat,
-      listOfVegetables,
-      listOfEggs,
-      listOfExtras,
-    ];
+    return MealModel(
+      mainFoodList: mainFoodList.take(3).toList(),
+      extraList: extraFoodList,
+      extraAmount: 3, //TODO: Decidir a quantidade de extras
+      mealType: MealType.dinner,
+    );
   }
 
-  static MealModel buildDinner(
-          List<FoodModel> listOfFood, List<FoodModel> listOfExtras) =>
-      MealModel(
-        mainFoodList: listOfFood.take(3).toList(),
-        extraList: listOfExtras,
-        extraAmount: 3, //TODO: Decidir a quantidade de extras
-        mealType: MealType.dinner,
-      );
+  static Future<MealModel> buildSnack(List<String> prefs) async {
+    var mainFoodList = await FoodModelHelper.loadSnackMainFoodsFromPrefs(prefs);
+    return MealModel(
+      mainFoodList: mainFoodList.take(3).toList(),
+      extraList: [],
+      extraAmount: 5, //TODO: Decidir a quantidade de extras
+      mealType: MealType.snack,
+    );
+  }
 
-  static MealModel buildSnack(List<FoodModel> listOfFood) => MealModel(
-        mainFoodList: listOfFood.take(3).toList(),
-        extraList: [],
-        extraAmount: 5, //TODO: Decidir a quantidade de extras
-        mealType: MealType.snack,
-      );
+  static Future<MealModel> buildLunch(List<String> prefs) async {
+    var mainFoodList = await FoodModelHelper.loadLunchMainFoodsFromPrefs(prefs);
+    var extraFoodList = await FoodModelHelper.loadLunchExtrasFromPrefs(prefs);
+    return MealModel(
+      mainFoodList: mainFoodList.take(3).toList(),
+      extraList: extraFoodList,
+      extraAmount: 3, //TODO: Decidir a quantidade de extras
+      mealType: MealType.lunch,
+    );
+  }
 
-  static MealModel buildLunch(
-          List<FoodModel> listOfFood, List<FoodModel> listOfExtra) =>
-      MealModel(
-        mainFoodList: listOfFood.take(3).toList(),
-        extraList: listOfExtra,
-        extraAmount: 3, //TODO: Decidir a quantidade de extras
-        mealType: MealType.lunch,
-      );
-
-  static MealModel buildBreakfast(List<FoodModel> listOfFood) => MealModel(
-        mainFoodList: listOfFood.take(3).toList(),
-        extraList: [],
-        extraAmount: 0, //TODO: Decidir a quantidade de extras
-        mealType: MealType.breakfast,
-      );
+  static Future<MealModel> buildBreakfast(List<String> prefs) async {
+    //TODO: Renomear para pegar apenas as comidas possiveis no café da manha FoodModelHelper.loadBreakfastMainFoods
+    var mainFoodList = await FoodModelHelper.loadBreakfastMainFoodsFromPrefs(prefs);
+    return MealModel(
+      mainFoodList: mainFoodList.take(3).toList(),
+      extraList: [],
+      extraAmount: 0, //TODO: Decidir a quantidade de extras
+      mealType: MealType.breakfast,
+    );
+  }
 }

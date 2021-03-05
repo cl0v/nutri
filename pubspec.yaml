@@ -24,6 +24,7 @@ dependencies:
   # websafe_svg: ^1.1.4
   shared_preferences: ^0.5.12+4
   flip_card: ^0.4.4
+
   
   get: 3.24.0
 

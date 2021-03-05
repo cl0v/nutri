@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
 import 'package:nutri/app/data/model/food_model.dart';
 
 class MealModel {
@@ -11,7 +13,6 @@ class MealModel {
 
   MealModel({
     this.mealType,
-    // this.mainFood,
     this.mainFoodList,
     this.extraList,
     this.extraAmount = 0,
@@ -32,7 +33,6 @@ class MealModel {
     }
   }
 
-
   Map<String, dynamic> toMap() {
     return {
       'mealType': mealType?.index,
@@ -44,11 +44,13 @@ class MealModel {
 
   factory MealModel.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
+
     return MealModel(
       mealType: MealType.values[map['mealType']],
-      mainFoodList: List<FoodModel>.from(map['mainFoodList']?.map((x) => FoodModel.fromMap(x))),
-      extraList: List<FoodModel>.from(map['extras']?.map((x) => FoodModel.fromMap(x))),
+      mainFoodList: List<FoodModel>.from(
+          map['mainFoodList']?.map((x) => FoodModel.fromMap(x))),
+      extraList:
+          List<FoodModel>.from(map['extras']?.map((x) => FoodModel.fromMap(x))),
       extraAmount: map['extraAmount'],
     );
   }
@@ -60,9 +62,29 @@ class MealModel {
 
   @override
   String toString() {
-    return 'MealModel(mealType: $mealType, mainFoodList: $mainFoodList, extraList: $extraList, extraAmount: $extraAmount)';
+    return 'MealModel(mealType: $mealType, mainFoodList: $mainFoodList)';
+  }
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is MealModel &&
+        o.mealType == mealType &&
+        listEquals(o.mainFoodList, mainFoodList) &&
+        listEquals(o.extraList, extraList) &&
+        o.extraAmount == extraAmount;
+  }
+
+  @override
+  int get hashCode {
+    return mealType.hashCode ^
+        mainFoodList.hashCode ^
+        extraList.hashCode ^
+        extraAmount.hashCode;
   }
 }
+
 
 enum MealType {
   breakfast,

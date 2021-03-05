@@ -4,6 +4,17 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
 
+
+
+
+//Definir o fluxo do app
+//Da pagina de login irá para a homePage em formato de carregamento
+//Caso não tenha sido escolhido foodswipe essa semana, mostrar a página de foodswipe
+//A home irá decidir quais dados estão marcados, pois tem o questions e o foodswipe que são necessários
+//antes da home, logo a home decidirá se vai ter que voltar ou não
+//Talvez buscar o estado, pois o cliente pode não responder o quesitonario e fechar o app na pressa
+// e dpois logar
+
 // Não colocar apenas as comidas, mas sim os pratos prontos(Assim o usuário nao tem a oportunidade de adicionar um arroz ou feijao)
 // Pegar os exemplos do livro
 

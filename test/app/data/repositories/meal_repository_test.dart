@@ -31,7 +31,7 @@ main() {
   SharedPreferences.setMockInitialValues({foodPrefsKey: mockedFoodPrefs});
   final prefs = SharedPreferences.getInstance();
   final provider = MealProvider(
-    prefs: prefs,
+    sharedPreferences: prefs,
   );
   MealRepository repository = MealRepository(
     provider: provider,
@@ -303,21 +303,25 @@ main() {
         ])),
       );
     });
-        test('Dinner should suggest at least one low sugar fruit', () async {
+    test('Dinner should suggest at least one low sugar fruit', () async {
       dailyMeals = await repository.fetchDailyMeals();
       var extraCategoriesFromDinner = dailyMeals
           .lastWhere((meal) => meal.mealType == MealType.dinner)
           .extraList
-          .map((extra) => extra.category).toList();
-      expect(extraCategoriesFromDinner, anyElement(FoodCategory.lowSugarFruits));
+          .map((extra) => extra.category)
+          .toList();
+      expect(
+          extraCategoriesFromDinner, anyElement(FoodCategory.lowSugarFruits));
     });
     test('Dinner should suggest at least one low sugar fruit', () async {
       dailyMeals = await repository.fetchDailyMeals();
       var extraCategoriesFromDinner = dailyMeals
           .lastWhere((meal) => meal.mealType == MealType.dinner)
           .extraList
-          .map((extra) => extra.category).toList();
-      expect(extraCategoriesFromDinner, anyElement(FoodCategory.lowSugarFruits));
+          .map((extra) => extra.category)
+          .toList();
+      expect(
+          extraCategoriesFromDinner, anyElement(FoodCategory.lowSugarFruits));
     });
   });
 
@@ -349,6 +353,35 @@ main() {
         28,
       );
     });
+  });
+
+  group('Testing the build of the food of the entire week', () {
+    /* A semana deverá receber os itens com base nas sharedPrefs;
+    Os dias deverão ser uma parcela de 1/7 da semana; 
+    - Sendo a assim, a semana deverá ser a soma de 7 dias diferentes de refeições
+    Quando eu pegar algum dia da semana, eu deverei ter sempre o mesmo item da semana;
+    Para isso eu preciso criar a semana, salvar e buscar o dia da semana que quero;
+    Decidir como criar a semana e como salvar, para entao buscar item a item (4 meals a cada busca)
+    */
+
+    List<List<MealModel>> weeklyMeals = [];
+
+    test(
+        'The first daily meal of the week should be the same as the day 1 on fetchDailyMeals by day',
+        () async {
+      // weeklyMeals primeira refeição deverá ser a mesma que fetch daily meal (1)
+      //weeklyMeal.first == dailyMeal(1)
+      weeklyMeals = await repository.fetchDailyMenuOfTheWeek();
+      var dailyMeal = await repository.fetchDailyMeals(day: 1);
+      expect(weeklyMeals.first, dailyMeal);
+    }, skip: true);
+
+    test('The weeklyMeals should be the same, whenever the user acces it',
+        () async {
+      weeklyMeals = await repository.fetchDailyMenuOfTheWeek();
+      var sameWeeklyMeals = await repository.fetchDailyMenuOfTheWeek();
+      expect(weeklyMeals, sameWeeklyMeals);
+    }, skip: true);
   });
 }
 

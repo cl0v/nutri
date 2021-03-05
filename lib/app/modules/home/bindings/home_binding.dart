@@ -11,7 +11,7 @@ class HomeBinding extends Bindings {
       () => HomeController(
         repository: MealRepository(
           provider: MealProvider(
-            prefs: SharedPreferences.getInstance(),
+            sharedPreferences: SharedPreferences.getInstance(),
           ),
         ),
       ),
