@@ -10,6 +10,8 @@ const jsonPath = 'assets/jsons/questions.json';
 //TODO: Trabalhar em cima das questões (Processar informações e tomar decisoes com base nas informações)
 
 class QuestionProvider {
+  //TODO: Passar o question provider para a questionModel
+  //TODO: Renomear paga questionpage provider
   final Future<SharedPreferences> prefs;
 
   QuestionProvider({@required this.prefs});
@@ -24,15 +26,6 @@ class QuestionProvider {
     List jsonList = jsonDecode(data);
     return jsonList.map((e) => QuestionModel.fromJson(e)).toList();
   }
-
-  // Future<Map<String, String>> getQuestionsPrefs() async {
-  //   Map<String, String> map = Map();
-  //   var p = await prefs;
-  //   p.getKeys().toList().where((key) => key.contains('q_')).forEach((key) {
-  //     map[key] = p.getString(key);
-  //   });
-  //   return map;
-  // }
 
   void setQuestionsPrefs(Map<String, String> answers) => answers
       .forEach((key, value) async => (await prefs).setString(key, value));

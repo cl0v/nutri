@@ -19,13 +19,11 @@ import 'app/routes/app_pages.dart';
 // Pegar os exemplos do livro
 
 //TODO: Melhorar a página SPLASH
-//TODO: Adicionar LOGOTIPO
 //TODO: Montar página de pagamentos
 //TODO: Montar página de FAQ
-//TODO: Montar info de cada refeição
-//TODO: Sugerir acompanhamentos para preencher o vazio
+//TODO: Montar info de cada refeição(?)
+//TODO: Sugerir acompanhamentos para preencher o vazio(?)
 //TODO: Melhorar o design do app
-//TODO: Nao esquecer de mudar a imagem do ovo
 
 //IDEIA: Card de água seria uma boa para preencher o vazio do café
 

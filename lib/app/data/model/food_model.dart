@@ -175,14 +175,12 @@ abstract class FoodModelHelper {
           List<FoodModel> list, MainOrExtra mainOrExtra) =>
       list.where((food) => food.mainOrExtra == mainOrExtra).toList();
 
-//TODO: Testar se tiver pelo menos uma fruta, deve mostrar o card de frutas
   static Future<List<FoodModel>> _sortJsonByCategoryBasedOnPref(
           List<String> prefs, FoodCategory category) async =>
       (await _sortJsonByCategory(category))
           .where((food) => prefs.contains(food.title))
           .toList();
 
-//TODO: Implement loadFoodsFromPrefs;
   static Future<List<FoodModel>> _loadFoodsFromPreferences(
       List<String> prefs) async {
     if (prefs == null) return [];

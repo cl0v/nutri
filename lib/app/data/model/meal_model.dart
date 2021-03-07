@@ -4,6 +4,14 @@ import 'package:flutter/foundation.dart';
 
 import 'package:nutri/app/data/model/food_model.dart';
 
+
+enum MealType {
+  breakfast,
+  lunch,
+  snack,
+  dinner,
+}
+
 class MealModel {
   //enum
   MealType mealType;
@@ -86,9 +94,19 @@ class MealModel {
 }
 
 
-enum MealType {
-  breakfast,
-  lunch,
-  snack,
-  dinner,
+abstract class MealProvider{
+
+
+  //LEmbrando que o toJson é uma string, logo o sqflite aceita tambem
+
+  static saveWeeklyMeals(){
+    //salvar nas prefs c tojson
+  }
+
+  static List<List<MealModel>> getWeeklyMeals(){
+    //Posso salvar apenas uma lista de prefs no banco de dados com o titulo da lista de comidas principais
+    //Posso salvar apenas uma lista(String) de titulos dos extras
+
+
+  }
 }
