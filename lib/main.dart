@@ -4,7 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
 
+//TODO: Voltar criando pagina por página ja definindo o estilo 
+// mockar dados para login por exemplo para fazer todo o fluxo de uso
 //BUG: Error quando conclui o jantar(nao tem proxima pg)
+
+//FIXME: Pulando a splash
 
 //Definir o fluxo do app
 //Da pagina de login irá para a homePage em formato de carregamento
@@ -17,6 +21,8 @@ import 'app/routes/app_pages.dart';
 // Não colocar apenas as comidas, mas sim os pratos prontos(Assim o usuário nao tem a oportunidade de adicionar um arroz ou feijao)
 // Pegar os exemplos do livro
 
+//TODO: Imagem de fundo(Posso procurar uma cor de fundo melhor)
+//TODO: Logotipo
 //TODO: Melhorar a página SPLASH
 //TODO: Montar página de pagamentos
 //TODO: Montar página de FAQ

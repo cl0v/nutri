@@ -8,6 +8,7 @@ import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 // se apenas uma for selecionada, ela ocupa todo o espaço
 // caso duas sejam selecionadas, ocupar metade do espaço
 //
+//FIXME: Não está intuitivo o suficiente que é para tocar em alguma das comidas
 
 class ExtraFoodSelector extends StatelessWidget {
   @override

@@ -6,7 +6,7 @@ class UserRepository {
 
   UserRepository({@required this.provider}) : assert(provider != null);
 
-  signin(String email, String password) => provider.signin(email, password);
+  Future<bool> signin(String email, String password) => provider.signin(email, password);
   
   register(String email, String password) => provider.register(email, password);
 }

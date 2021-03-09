@@ -10,23 +10,42 @@ class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  void onCreateAccountPressed() {
+  RxBool _loginError = false.obs;
+  RxString _errorMsg = ''.obs;
+  RxBool _isObscurePassword = true.obs;
+
+  bool get loginError => _loginError.value;
+  String get errorMsg => _errorMsg.value;
+  bool get isObscurePassword => _isObscurePassword.value;
+
+  onCreateAccountPressed() {
     Get.toNamed(Routes.REGISTER);
   }
 
-  void onForgetPasswordPressed() {
+  onForgetPasswordPressed() {
     //TODO: Implement onForgetPasswordPressed
   }
 
-  Future<void> onEnterPressed() async {
+  onEnterPressed() async {
     var response =
         await repository.signin(emailController.text, passwordController.text);
     FocusScope.of(Get.context).unfocus();
     if (response)
-      Get.offAllNamed(Routes.QUESTIONS);
-
-    // Get.offAllNamed(Routes.HOME);
-    else
-      return;
+      //TODO: Receber as infos pra saber do fluxo do app, pra onde enviar o cliente, question, swipe ou home
+      Get.offAllNamed(Routes.HOME);
+    else {
+      //TODO: Implement mensagem de erro
+      // String msg = await repository.getError();
+      _showLoginErrors('Error ao efetuar login');
+    }
   }
+
+  _showLoginErrors(msg) {
+    _loginError.value = true;
+    _errorMsg.value = msg;
+  }
+
+  onShowPasswordPressed() =>
+    _isObscurePassword.toggle();
+  
 }

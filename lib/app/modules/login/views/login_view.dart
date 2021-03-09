@@ -58,12 +58,12 @@ class LoginView extends GetView<LoginController> {
                   SizedBox(
                     height: 16,
                   ),
-                  TextFormField(
+                  Obx(()=>TextFormField(
                     controller: controller.passwordController,
-                    obscureText: true,
+                    obscureText: controller.isObscurePassword,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock),
-                      suffixIcon: Icon(Icons.remove_red_eye),
+                      suffixIcon: IconButton(icon: Icon(Icons.remove_red_eye), onPressed: controller.onShowPasswordPressed),
                       hintText: 'Password',
                       labelText: 'Password',
                       border: OutlineInputBorder(
@@ -72,6 +72,11 @@ class LoginView extends GetView<LoginController> {
                         ),
                       ),
                     ),
+                  ),),
+                  Obx(
+                    () => controller.loginError
+                        ? Text(controller.errorMsg, style: TextStyle(color: kRedColor),)
+                        : Container(),
                   ),
                   TextButton(
                     onPressed: controller.onForgetPasswordPressed,

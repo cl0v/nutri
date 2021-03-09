@@ -13,32 +13,41 @@ class UserProvider extends GetConnect {
     await Firebase.initializeApp();
   }
 
-  signin(String email, String password) async {
-    try {
-      // UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      // if (userCredential.user.emailVerified) {  //TODO: Implement emailVerified
+  Future<bool> signin(String email, String password) async {
+    await Future.delayed(Duration(seconds: 0));
+    if (email == 'teste@t.com' && password == '123456')
       return true;
-      // } else {
-      // print('Email ainda nao está verificadinho');
-      // return false;
-      // }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-    }
-    return false;
+    else
+      return false;
   }
+
+//TODO: Implement SignIn
+  // signin(String email, String password) async {
+  //   try {
+  //     // UserCredential userCredential =
+  //         await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //       email: email,
+  //       password: password,
+  //     );
+  //     // if (userCredential.user.emailVerified) {  //TODO: Implement emailVerified
+  //     return true;
+  //     // } else {
+  //     // print('Email ainda nao está verificadinho');
+  //     // return false;
+  //     // }
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'user-not-found') {
+  //       print('No user found for that email.');
+  //     } else if (e.code == 'wrong-password') {
+  //       print('Wrong password provided for that user.');
+  //     }
+  //   }
+  //   return false;
+  // }
 
   register(String email, String password) async {
     try {
-      // UserCredential userCredential = 
+      // UserCredential userCredential =
       await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       // userCredential.user.sendEmailVerification(); //TODO: Implement sendEmailVerification
