@@ -64,7 +64,7 @@ class FoodSwipeBody extends GetView<FoodSwipeController> {
                           flex: 2,
                           child: Center(
                             child: Obx(
-                              () => RaisedButton(
+                              () => ElevatedButton(
                                 onPressed: controller.isConfirmBtnAvailable
                                     ? controller.onConfirmPressed
                                     : null,

@@ -24,8 +24,10 @@ class QuestionsView extends GetView<QuestionsController> {
             backgroundColor: Colors.transparent,
             elevation: 0,
             actions: [
-              FlatButton(
-                  onPressed: controller.onSkipPressed, child: Text('Pular'))
+              TextButton(
+                onPressed: controller.onSkipPressed,
+                child: Text('Pular'),
+              ),
             ],
           ),
           body: QuestionViewBody(controller: controller),

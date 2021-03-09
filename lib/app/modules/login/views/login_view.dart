@@ -73,7 +73,7 @@ class LoginView extends GetView<LoginController> {
                       ),
                     ),
                   ),
-                  FlatButton(
+                  TextButton(
                     onPressed: controller.onForgetPasswordPressed,
                     child: Text(
                       'Esqueceu sua senha?',
@@ -84,7 +84,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       onPressed: controller.onEnterPressed,
                       child: Text(
                         'Entrar',
@@ -101,8 +101,7 @@ class LoginView extends GetView<LoginController> {
                       ButtonTheme(
                         padding: EdgeInsets.zero,
                         minWidth: 0,
-                        child: FlatButton(
-                          padding: EdgeInsets.zero,
+                        child: TextButton(
                           onPressed: controller.onCreateAccountPressed,
                           child: Text(
                             'Criar',
@@ -111,8 +110,6 @@ class LoginView extends GetView<LoginController> {
                               decoration: TextDecoration.underline,
                             ),
                           ),
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
                         ),
                       ),
                     ],

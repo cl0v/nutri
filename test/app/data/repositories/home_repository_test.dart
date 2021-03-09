@@ -1,8 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/data/providers/home_provider.dart';
-import 'package:nutri/app/data/repositories/home_provider.dart';
+import 'package:nutri/app/data/repositories/home_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final mockedFoodPrefs = [
@@ -36,6 +38,13 @@ main() {
   HomeRepository repository = HomeRepository(
     provider: provider,
   );
+
+  group('Testing particular methods', () {
+    test('saveWeeklyMeals should be the same as getWeeklyMeals', () {
+      // expect(actual, matcher)
+    });
+  });
+
 
   group('Testing basic build of cards on the daily meals: ', () {
     /* Testar funcionalidade da FoodModel definindo se deve ser(na home) um card principal ou um card de extras
@@ -330,41 +339,41 @@ main() {
     /* Cardápios da semana baseado em refeições diarias com o mesmo padrão
     - Quantidade de cardápios diarios deve ser de 7(Sendo a quantidade de dias na semana)
     - Quantidade de refeições na semana deve ser 28
+    */ //TODO: Fazer mais testes do weekly meal
+
+    /* A semana deverá receber os itens com base nas sharedPrefs;
+     - O nome de todas as comidas do sharedPrefs deverá estar no cardapio semanal, sem faltar uma
+     - As comidas da semana deverão respeitar as sharedPrefs, caso tenha alguma comida a mais, deverá dar erro
+     -- Resumindo, o cardapio da semana deverá ter absolutamente todas as comidas do foodprefs, nao deixando nenhuma de lado nem adicionando alguma que não estava lá(RESPEITAR A DECISAO DO USUARIO)
+     --- //FIXME: Essa abordagem assume que não serão feitas nenhuma sugestão de comida para o usuário.
+   
+    Quando eu pegar algum dia da semana, eu deverei ter sempre o mesmo item da semana;
+    -- Ou seja, se eu pedir o dia 3 duas vezes, ambos deverão ser identicos
+    Para isso eu preciso criar a semana, salvar e buscar o dia da semana que quero;
+    Decidir como criar a semana e como salvar, para entao buscar item a item (4 meals a cada busca)
     */
+
     SharedPreferences.getInstance().then((prefs) async =>
         await prefs.setStringList(foodPrefsKey, mockedFoodPrefs));
 
-    List<List<MealModel>> dailyMenuOfTheWeek = [];
+    List<List<MealModel>> weeklyMeals = [];
     test('Menu of the Week should have 7 elements', () async {
-      dailyMenuOfTheWeek = await repository.fetchDailyMenuOfTheWeek();
+      weeklyMeals = await repository.fetchDailyMenuOfTheWeek();
       expect(
-        dailyMenuOfTheWeek.length,
+        weeklyMeals.length,
         7,
       );
     });
 
     test('Total amount of meals should be 28 by default', () async {
-      dailyMenuOfTheWeek = await repository.fetchDailyMenuOfTheWeek();
+      weeklyMeals = await repository.fetchDailyMenuOfTheWeek();
       var meals = [];
-      dailyMenuOfTheWeek
-          .forEach((day) => meals.addAll(day.map((meal) => meal)));
+      weeklyMeals.forEach((day) => meals.addAll(day.map((meal) => meal)));
       expect(
         meals.length,
         28,
       );
     });
-  });
-
-  group('Testing the build of the food of the entire week', () {
-    /* A semana deverá receber os itens com base nas sharedPrefs;
-    Os dias deverão ser uma parcela de 1/7 da semana; 
-    - Sendo a assim, a semana deverá ser a soma de 7 dias diferentes de refeições
-    Quando eu pegar algum dia da semana, eu deverei ter sempre o mesmo item da semana;
-    Para isso eu preciso criar a semana, salvar e buscar o dia da semana que quero;
-    Decidir como criar a semana e como salvar, para entao buscar item a item (4 meals a cada busca)
-    */
-
-    List<List<MealModel>> weeklyMeals = [];
 
     test(
         'The first daily meal of the week should be the same as the day 1 on fetchDailyMeals by day',
@@ -374,14 +383,21 @@ main() {
       weeklyMeals = await repository.fetchDailyMenuOfTheWeek();
       var dailyMeal = await repository.fetchDailyMeals(day: 1);
       expect(weeklyMeals.first, dailyMeal);
-    }, skip: true);
+    });
 
     test('The weeklyMeals should be the same, whenever the user acces it',
         () async {
       weeklyMeals = await repository.fetchDailyMenuOfTheWeek();
       var sameWeeklyMeals = await repository.fetchDailyMenuOfTheWeek();
       expect(weeklyMeals, sameWeeklyMeals);
-    }, skip: true);
+    });
+
+    test('Any day of the week should be the same if requested twice', () async {
+      var anyDay = Random().nextInt(7) + 1;
+      var dayMeal = await repository.fetchDailyMeals(day: anyDay);
+      var sameDayMeal = await repository.fetchDailyMeals(day: anyDay);
+      expect(dayMeal, sameDayMeal);
+    });
   });
 }
 

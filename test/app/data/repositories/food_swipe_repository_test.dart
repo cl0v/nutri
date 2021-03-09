@@ -66,5 +66,5 @@ main() {
       expect(swipe.minimum, equals(1));
       
     });
-  });
+  }, skip: true);
 }

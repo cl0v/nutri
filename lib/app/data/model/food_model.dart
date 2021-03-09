@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
+
+const foodPrefsKey = 'foodPrefs';
+
 ///Categoria da comida que será servida
 enum FoodCategory {
   none,
@@ -190,4 +193,11 @@ abstract class FoodModelHelper {
         .map((map) => FoodModel.fromMap(map))
         .toList();
   }
+}
+
+
+abstract class FoodProvider{
+  static List<String> getFoodsPrefsList(prefs)=>
+    prefs.getStringList(foodPrefsKey);
+  
 }

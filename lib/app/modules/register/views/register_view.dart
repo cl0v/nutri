@@ -104,13 +104,13 @@ class RegisterView extends GetView<RegisterController> {
                       Spacer(),
                       Align(
                         alignment: Alignment.centerRight,
-                        child: RaisedButton.icon(
+                        child: ElevatedButton.icon(
                           label: Text('Continuar'),
                           icon: Icon(
                             Icons.arrow_forward,
                             size: 18,
                           ),
-                          textTheme: Get.theme.buttonTheme.textTheme,
+                          // textTheme: Get.theme.buttonTheme.textTheme,
                           onPressed: controller.onContinuePressed,
                         ),
                       ),
@@ -183,9 +183,9 @@ class RegisterView extends GetView<RegisterController> {
                       Spacer(),
                       Align(
                         alignment: Alignment.centerRight,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           child: Text('Confirmar'),
-                          textTheme: Get.theme.buttonTheme.textTheme,
+                          // textTheme: Get.theme.buttonTheme.textTheme,
                           onPressed: () => controller.onConfirmPressed(context),
                         ),
                       ),

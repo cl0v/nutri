@@ -36,7 +36,7 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ),
                     child: Expanded(
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: controller.onSkippedPressed,
                         child: Text('Pulei'),
                       ),
@@ -51,7 +51,7 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ),
                     child: Expanded(
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: controller.onDonePressed,
                         child: Text('Concluí'),
                       ),

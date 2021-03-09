@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // A classe provider deverá receber os dados do banco e entregar de forma organizada
 // A adicao de meal não é feita pelo usuário, é uma rotina padrao do aplicativo
 
-const foodPrefsKey = 'foodPrefs';
+// const foodPrefsKey = 'foodPrefs';
 
 class HomeProvider {
   final Future<SharedPreferences> sharedPreferences;
@@ -15,35 +15,25 @@ class HomeProvider {
   HomeProvider({@required this.sharedPreferences});
 
   int dailyMealAmount = 4;
-  int daysInAWeek = 7;
 
   Future<List<MealModel>> fetchDailyMeals({int day = 1}) async {
-    // var listOfFood = await _getPossibleFoodList();
-    return (await fetchMealsOfTheWeek())[day - 1];
+    return (await HomeProviderHelper.fetchWeeklyMeals(
+        await sharedPreferences))[day - 1];
   }
 
-  Future<List<FoodModel>> getExtras() async {
-    return await FoodModelHelper.loadVegetables();
-  }
-
-  _sortMealListByMealTypeOrder(List<MealModel> m) {
-    m.sort((a, b) => a.mealType.index.compareTo(b.mealType.index));
-  }
-
-  /// [fetchMealsOfTheWeek] builds the meal of the amount of days on the week
+/// [fetchMealsOfTheWeek] builds the meal of the amount of days on the week
   /// with the same pattern of the daily meals
   /// Basicaly is the daily meal multiplied by 7 and randomized
-  Future<List<List<MealModel>>> fetchMealsOfTheWeek() async {
-    var foodPrefsList = await _getFoodsPrefsList();
-    List<List<MealModel>> listOfDailyMeal = [];
-    for (var i = 1; i <= daysInAWeek; i++) {
-      var dailyMeal = await _buildDailyMeal(foodPrefsList);
-      listOfDailyMeal.add(dailyMeal);
-    }
-    return listOfDailyMeal;
-  }
+  Future<List<List<MealModel>>> fetchMealsOfTheWeek() async =>
+      HomeProviderHelper.fetchWeeklyMeals(await sharedPreferences);
 
-  //Esse cara precisa ser buildado uma vez por semana
+
+  // _sortMealListByMealTypeOrder(List<MealModel> m) {
+  //   m.sort((a, b) => a.mealType.index.compareTo(b.mealType.index));
+  // }
+
+  
+  //IDEIA:Esse cara precisa ser buildado uma vez por semana
   //logo apos o food swipe ter sido escolhido
 
   //Quando o food swipe terminar, ele pegará todos os alimentos e irá montar um cardápio semanal
@@ -51,20 +41,31 @@ class HomeProvider {
 
   // Conferir se ja existem alimentos nas shared prefs, caso contrario, leva a pessoa pro food swipe
   // Ter um tempo de load para buildar as comidas, mostrar o lead na home, antes de qualquer coisa
-  _fetchWeeklyMeals() {
-    var weeklyMeals = _getWeeklyMeals();
-    if (weeklyMeals.isEmpty)
-      return _buildMealsOfTheWeek();
-    else
-      return weeklyMeals;
+
+  saveMealPrefs(String mealType, List<String> list) async {
+    //TODO: Implement saveMealPrefs
+    (await sharedPreferences).setStringList(mealType, list);
   }
 
-  _getWeeklyMeals() {
-    return MealProvider.getWeeklyMeals();
-    //TODO: Implement getWeeklyMeals
-  }
+  ///Esse cara recebe todos os alimentos recebidos das preferencias e randomiza
+  ///as escolha de qual comida comer
 
-  _buildMealsOfTheWeek() {
+}
+
+abstract class HomeProviderHelper {
+
+  static int daysInAWeek = 7;
+
+  static Future<List<List<MealModel>>> buildMealsOfTheWeek(
+      prefs) async {
+    List<List<MealModel>> listOfDailyMeal = [];
+    for (var i = 1; i <= daysInAWeek; i++) {
+      var dailyMeal = await buildDailyMeal(prefs);
+      listOfDailyMeal.add(dailyMeal);
+    }
+    //TODO: Save the week
+    await saveWeeklyMeals(prefs, listOfDailyMeal);
+    return listOfDailyMeal;
     // - getMealsFromDB if null build meals of the week
     // -
     //Esse cara deve buildar as comidas da semana toda e ainda salvar em algum lugar,
@@ -72,28 +73,38 @@ class HomeProvider {
     // A questao é, como salvar esses valores?
   }
 
-  ///Esse cara recebe todos os alimentos recebidos das preferencias e randomiza
-  ///as escolha de qual comida comer
-  Future<List<MealModel>> _buildDailyMeal(List<String> prefs,
-      {int day = 1}) async {
-    var breakfast = await HomeProviderHelper.buildBreakfast(prefs);
-    var lunch = await HomeProviderHelper.buildLunch(prefs);
-    var snack = await HomeProviderHelper.buildSnack(prefs);
-    var dinner = await HomeProviderHelper.buildDinner(prefs);
+  static Future<List<List<MealModel>>> fetchWeeklyMeals(
+      prefs) async {
+    //TODO: Tornar ternario
+    var weeklyMeals = await getWeeklyMeals(prefs);
+    if (weeklyMeals.isEmpty)
+      return HomeProviderHelper.buildMealsOfTheWeek(prefs);
+    else
+      return weeklyMeals;
+  }
+
+  static Future<List<MealModel>> buildDailyMeal(sharedPreferences) async {
+    var foodPrefsList = await getFoodsPrefsList(sharedPreferences);
+
+    var breakfast = await HomeProviderHelper.buildBreakfast(foodPrefsList);
+    var lunch = await HomeProviderHelper.buildLunch(foodPrefsList);
+    var snack = await HomeProviderHelper.buildSnack(foodPrefsList);
+    var dinner = await HomeProviderHelper.buildDinner(foodPrefsList);
 
     return [breakfast, lunch, snack, dinner];
   }
 
-  Future<List<String>> _getFoodsPrefsList() async =>
-      (await sharedPreferences).getStringList(foodPrefsKey);
+  static Future<List<String>> getFoodsPrefsList(sharedPreferences) async =>
+      FoodProvider.getFoodsPrefsList(sharedPreferences);
 
-  saveMealPrefs(String mealType, List<String> list) async {
-    //TODO: Implement saveMealPrefs
-    (await sharedPreferences).setStringList(mealType, list);
-  }
-}
+  static Future<List<List<MealModel>>> getWeeklyMeals(
+          sharedPreferences) async =>
+      MealProvider.getWeeklyMeals(await sharedPreferences);
 
-abstract class HomeProviderHelper {
+  static Future<List<List<MealModel>>> saveWeeklyMeals(
+          sharedPreferences, List<List<MealModel>> listOfDailyMeal) async =>
+      MealProvider.saveWeeklyMeals(await sharedPreferences, listOfDailyMeal);
+
   static Future<MealModel> buildDinner(List<String> prefs) async {
     var mainFoodList =
         await FoodModelHelper.loadDinnerMainFoodsFromPrefs(prefs);

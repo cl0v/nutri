@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import 'package:nutri/app/data/model/food_model.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum MealType {
   breakfast,
@@ -70,7 +70,7 @@ class MealModel {
 
   @override
   String toString() {
-    return 'MealModel(mealType: $mealType, mainFoodList: $mainFoodList)';
+    return 'MealModel(mealType: $mealType)';
   }
 
   @override
@@ -93,20 +93,22 @@ class MealModel {
   }
 }
 
+abstract class MealProvider {
+  //Lembrando que o toJson é uma string, logo o sqflite aceita tambem
 
-abstract class MealProvider{
-
-
-  //LEmbrando que o toJson é uma string, logo o sqflite aceita tambem
-
-  static saveWeeklyMeals(){
+  static saveWeeklyMeals(SharedPreferences prefs, List<List<MealModel>> listOfDailyMeal) {
     //salvar nas prefs c tojson
+    //TODO: Implement saveWeeklyMeals
+
+    //Fazer a lista de lista virar json, recuperar ela
   }
 
-  static List<List<MealModel>> getWeeklyMeals(){
+  static List<List<MealModel>> getWeeklyMeals(SharedPreferences prefs) {
     //Posso salvar apenas uma lista de prefs no banco de dados com o titulo da lista de comidas principais
     //Posso salvar apenas uma lista(String) de titulos dos extras
+    //TODO: Implement getWeeklyMeals
 
-
+    var weeklyMealsPrefs = prefs.getStringList('weeklyMeals');
+    return [];
   }
 }
