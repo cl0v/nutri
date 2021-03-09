@@ -10,6 +10,7 @@ import 'package:nutri/constants.dart';
 //IDEIA: Mostrar apenas os alimentos selecionados para aquela semana(nao permitir adicionar elementos que nao estavam no planejado pra semana, apenas trocar alimentos equivalentes, de dia)
 
 //IDEIA: Informar ao usuario a quantidade mínima que deve ser selecionada
+// -- Talvez colocar o contador no botao de confirmar 'Confirmar(3)' > Confirmar(2)...
 
 class FoodSwipeController extends GetxController {
   final FoodSwipeRepository repository;
@@ -59,8 +60,9 @@ class FoodSwipeController extends GetxController {
       }
     } else {
       _setShowingFoodSwipe(_foodSwipeList[currentIndex]);
-      pageController.jumpToPage(0);
+      _isConfirmBtnAvailable.value = false; // Passar isso pra um metodo
       _amountSelected.value = 0;
+      pageController.jumpToPage(0);
       _checkedIndexes.clear();
     }
   }
@@ -101,9 +103,6 @@ class FoodSwipeController extends GetxController {
 
   _setShowingFoodSwipe(FoodSwipeModel fSwipeModel) {
     _currentFoodSwipeModel.value = fSwipeModel;
-    if (currentFoodSwipeModel.minimum > _amountSelected.value) {
-      _isConfirmBtnAvailable.value = false;
-    }
   }
 
   _fetchFoodSwipeList() async {

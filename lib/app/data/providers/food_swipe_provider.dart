@@ -36,8 +36,8 @@ class FoodSwipeProvider {
     );
     foodSwipeList.add(
       FoodSwipeModel(
-        // maximum: null, // Nao tem maximo
-        minimum: 7,
+        maximum: 9, // TODO: Quando nao tem maximo, o que fazer?
+        minimum: 3, // TODO: Como mostrar ao usuário a quantidade minima?
         category: FoodSwipeModel.getCategory(FoodCategory.vegetable),
         foods: vegList,
       ),
@@ -45,7 +45,7 @@ class FoodSwipeProvider {
     foodSwipeList.add(
       FoodSwipeModel(
         maximum: 9,
-        minimum: 7,
+        minimum: 3,
         category: FoodSwipeModel.getCategory(FoodCategory.lowSugarFruits),
         foods: lowSugarFruitList,
       ),
@@ -53,7 +53,7 @@ class FoodSwipeProvider {
     foodSwipeList.add(
       FoodSwipeModel(
         maximum: 5,
-        minimum: 2,
+        minimum: 3,
         category: FoodSwipeModel.getCategory(FoodCategory.tuber),
         foods: tubersList,
       ),

@@ -4,8 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
 
-//BUG: Tem um bug no foodswipe nos vegetais (0/null)
-//FIXME: Tela branca no snack
 //BUG: Error quando conclui o jantar(nao tem proxima pg)
 
 //Definir o fluxo do app

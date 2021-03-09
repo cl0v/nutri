@@ -29,6 +29,7 @@ class RegisterController extends GetxController {
 
   void onContinuePressed() {
     //TODO: Implement onContinuePressed
+    //TODO: Marcar como obrigatório os campos
     pageController.nextPage(
         duration: Duration(milliseconds: 300), curve: Curves.ease);
   }

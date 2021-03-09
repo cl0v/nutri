@@ -44,7 +44,7 @@ class HomeController extends GetxController {
 
   int mealIndex = 0;
 
-  final selectedFoodIdx = 0.obs;
+  final selectedMainFoodIdx = 0.obs;
 
   final _selectedExtrasList = <int>[].obs;
   List<int> get selectedExtrasList => _selectedExtrasList;
@@ -75,7 +75,7 @@ class HomeController extends GetxController {
   }
 
   _setMeal(MealModel meal) async {
-    selectedFoodIdx.value = 0;
+    selectedMainFoodIdx.value = 0;
     mainFoodsAvailable.assignAll(meal.mainFoodList);
     extraFoodsAvailable.assignAll(meal.extraList);
     _extrasAmount.value = meal.extraAmount;
@@ -91,13 +91,12 @@ class HomeController extends GetxController {
 
   getSelectedIndex(int idx) => _selectedExtrasList.contains(idx);
 
-  onMainFoodTapped(int idx) {
-    selectedFoodIdx.value = idx;
-    return true;
-  }
+  onMainFoodTapped(int idx) =>
+    selectedMainFoodIdx.value = idx;
+  
 
   isMainFoodSelected(int idx) =>
-     selectedFoodIdx.value == idx;
+     selectedMainFoodIdx.value == idx;
   
 
   onExtraTapped(int idx) {
@@ -116,7 +115,7 @@ class HomeController extends GetxController {
   _saveMealOfTheDay() {
     mealsOfTheDay[mealIndex].mealCardState = MealCardState.Done;
     mealsOfTheDay[mealIndex].selectedFood =
-        mealsOfTheDay[mealIndex].mealModel.mainFoodList[selectedFoodIdx.value];
+        mealsOfTheDay[mealIndex].mealModel.mainFoodList[selectedMainFoodIdx.value];
     mealsOfTheDay[mealIndex].selectedExtras = selectedExtras;
     _buildAndSavePrefs(mealsOfTheDay[mealIndex]);
   }

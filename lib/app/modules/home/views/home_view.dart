@@ -23,39 +23,30 @@ class HomeView extends GetView<HomeController> {
           backgroundColor: Colors.transparent,
           bottomNavigationBar: BottomAppBar(
             color: Colors.transparent,
+            elevation: 0,
             child: Padding(
-              padding: const EdgeInsets.only(left: 18.0, right: 18, bottom: 12),
+              padding: const EdgeInsets.only(bottom:8.0),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ButtonTheme(
-                    buttonColor: kRedColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        bottomLeft: Radius.circular(15),
-                      ),
-                    ),
-                    child: Expanded(
-                      child: ElevatedButton(
-                        onPressed: controller.onSkippedPressed,
-                        child: Text('Pulei'),
-                      ),
-                    ),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.resolveWith(
+                            (states) => Size(120, 36)),
+                        backgroundColor: MaterialStateProperty.resolveWith(
+                            (states) => Colors.red)),
+                    onPressed: controller.onSkippedPressed,
+                    child: Text('Pulei'),
                   ),
-                  ButtonTheme(
-                    buttonColor: kGreenColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(15),
-                        bottomRight: Radius.circular(15),
-                      ),
-                    ),
-                    child: Expanded(
-                      child: ElevatedButton(
-                        onPressed: controller.onDonePressed,
-                        child: Text('Concluí'),
-                      ),
-                    ),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.resolveWith(
+                            (states) => Size(120, 36)),
+                        backgroundColor: MaterialStateProperty.resolveWith(
+                            (states) => Colors.green)),
+                    onPressed: controller.onDonePressed,
+                    child: Text('Concluí'),
                   ),
                 ],
               ),
@@ -85,7 +76,6 @@ class HomeView extends GetView<HomeController> {
                 ],
               ),
             ),
-
           ),
           body: HomeBody(),
         ),
