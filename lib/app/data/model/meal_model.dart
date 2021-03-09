@@ -93,22 +93,26 @@ class MealModel {
   }
 }
 
+const weeklyMealsPrefsKey = 'weeklyMeals';
+
 abstract class MealProvider {
   //Lembrando que o toJson é uma string, logo o sqflite aceita tambem
 
-  static saveWeeklyMeals(SharedPreferences prefs, List<List<MealModel>> listOfDailyMeal) {
-    //salvar nas prefs c tojson
-    //TODO: Implement saveWeeklyMeals
+  static List<List<MealModel>> saveWeeklyMeals(
+      SharedPreferences prefs, List<List<MealModel>> listOfDailyMeal) {
+    var list = listOfDailyMeal.map((l) => json.encode(l)).toList();
+    prefs.setStringList(weeklyMealsPrefsKey, list);
 
-    //Fazer a lista de lista virar json, recuperar ela
+    return listOfDailyMeal;
+
   }
 
-  static List<List<MealModel>> getWeeklyMeals(SharedPreferences prefs) {
-    //Posso salvar apenas uma lista de prefs no banco de dados com o titulo da lista de comidas principais
-    //Posso salvar apenas uma lista(String) de titulos dos extras
-    //TODO: Implement getWeeklyMeals
+  static List<List<MealModel>> getWeeklyMeals(SharedPreferences prefs) =>
 
-    var weeklyMealsPrefs = prefs.getStringList('weeklyMeals');
-    return [];
-  }
+   prefs.getStringList(weeklyMealsPrefsKey)?.map((w) {
+          List js = json.decode(w);
+          return js.map((e) => MealModel.fromJson(e)).toList();
+        })?.toList() ??
+        [];
+  
 }
