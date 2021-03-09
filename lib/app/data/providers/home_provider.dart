@@ -26,6 +26,9 @@ class HomeProvider {
   Future<List<List<MealModel>>> fetchMealsOfTheWeek() async =>
       HomeProviderHelper.fetchWeeklyMeals(await sharedPreferences);
 
+//TODO: Salvar as refeições já confirmadas do dia
+// Salvar o index de qual refeição é a proxima(Se confirmei o cafe da manha, a proxima refeição, para quando eu abrir o app, deverá ser o almoço)
+// Lembrar que isso pode afetar o dia seguinte....
   saveMealPrefs(String mealType, List<String> list) async =>
       //TODO: Implement saveMealPrefs
       (await sharedPreferences).setStringList(mealType, list);
@@ -37,7 +40,6 @@ abstract class HomeProviderHelper {
 
 
   static Future<List<List<MealModel>>> fetchWeeklyMeals(prefs) async {
-    //TODO: Tornar ternario
     var weeklyMeals = await _getWeeklyMeals(prefs);
     if (weeklyMeals.isEmpty)
       return _buildMealsOfTheWeek(prefs);

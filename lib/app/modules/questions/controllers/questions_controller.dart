@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/question_model.dart';
-import 'package:nutri/app/data/repositories/question_repository.dart';
+import 'package:nutri/app/data/repositories/question_page_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
 class QuestionsController extends GetxController {
-  final QuestionRepository repository;
+  final QuestionPageRepository repository;
 
   QuestionsController({
     @required this.repository,

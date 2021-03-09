@@ -16,13 +16,14 @@ class RegisterController extends GetxController {
 
   PageController pageController;
 
-  final _thermIsChecked = false.obs;
+  final RxBool _thermIsChecked = false.obs;
+  final RxBool _isObscurePassword = true.obs;
 
   bool get thermIsChecked => _thermIsChecked.value;
+  bool get isObscurePassword => _isObscurePassword.value;
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     pageController = PageController();
   }
@@ -34,12 +35,17 @@ class RegisterController extends GetxController {
         duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 
-  checkTerms(bool val) {
+  checkTerms(bool val) =>
     _thermIsChecked.value = val;
-  }
+  
 
-  _createAccount() async {
-    repository.register(emailController.text, passwordController.text);
+  _createAccount() async => repository.register(emailController.text, passwordController.text);
+
+
+  @override
+  void onClose() {
+    FocusScope.of(Get.context).unfocus();
+    super.onClose();
   }
 
   void onConfirmPressed(context) async {
@@ -50,9 +56,18 @@ class RegisterController extends GetxController {
         backgroundColor: kRedColor,
         colorText: Colors.white,
       );
-    FocusScope.of(context).unfocus();
-    
+
     await _createAccount();
     Get.offAllNamed(Routes.QUESTIONS);
   }
+
+  void onCancelRegisterPressed() {
+    // TODO: Mostrar mensagem de aviso caso algo tenha sido preenchido
+    // TODO: Implement onCancelRegisterPressed
+    Get.back();
+  }
+
+  void onShowPasswordPressed() =>
+    _isObscurePassword.toggle();
+  
 }

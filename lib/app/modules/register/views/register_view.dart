@@ -22,6 +22,10 @@ class RegisterView extends GetView<RegisterController> {
           backgroundColor: Colors.transparent,
           extendBodyBehindAppBar: true,
           appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.close),
+              onPressed: controller.onCancelRegisterPressed,
+            ),
             elevation: 0,
             backgroundColor: Colors.transparent,
           ),
@@ -86,12 +90,12 @@ class RegisterView extends GetView<RegisterController> {
                       SizedBox(
                         height: 16,
                       ),
-                      TextFormField(
+                      Obx(()=>TextFormField(
                         controller: controller.passwordController,
-                        obscureText: true,
+                        obscureText: controller.isObscurePassword,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.lock),
-                          suffixIcon: Icon(Icons.remove_red_eye),
+                          suffixIcon: IconButton(icon: Icon(Icons.remove_red_eye), onPressed: controller.onShowPasswordPressed),
                           hintText: 'Password',
                           labelText: 'Password',
                           border: OutlineInputBorder(
@@ -100,7 +104,7 @@ class RegisterView extends GetView<RegisterController> {
                             ),
                           ),
                         ),
-                      ),
+                      ),),
                       Spacer(),
                       Align(
                         alignment: Alignment.centerRight,

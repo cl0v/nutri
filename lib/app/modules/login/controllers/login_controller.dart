@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/repositories/user_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
@@ -26,10 +27,16 @@ class LoginController extends GetxController {
     //TODO: Implement onForgetPasswordPressed
   }
 
+  @override
+  void onClose() {
+    FocusScope.of(Get.context).unfocus();
+    super.onClose();
+  }
+
   onEnterPressed() async {
     var response =
         await repository.signin(emailController.text, passwordController.text);
-    FocusScope.of(Get.context).unfocus();
+    // FocusScope.of(Get.context).unfocus();
     if (response)
       //TODO: Receber as infos pra saber do fluxo do app, pra onde enviar o cliente, question, swipe ou home
       Get.offAllNamed(Routes.HOME);
@@ -45,7 +52,5 @@ class LoginController extends GetxController {
     _errorMsg.value = msg;
   }
 
-  onShowPasswordPressed() =>
-    _isObscurePassword.toggle();
-  
+  onShowPasswordPressed() => _isObscurePassword.toggle();
 }

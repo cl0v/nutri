@@ -103,19 +103,16 @@ class LoginView extends GetView<LoginController> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text('Ainda não tem conta? '),
-                      ButtonTheme(
-                        padding: EdgeInsets.zero,
-                        minWidth: 0,
-                        child: TextButton(
+                       TextButton(
+                         style: ButtonStyle(padding: MaterialStateProperty.resolveWith((states) => EdgeInsets.all(0))),
                           onPressed: controller.onCreateAccountPressed,
-                          child: Text(
+                          child: Text( //TODO: Remover espaçamento do botao
                             'Criar',
                             style: TextStyle(
                               color: Colors.black,
                               decoration: TextDecoration.underline,
                             ),
                           ),
-                        ),
                       ),
                     ],
                   )
