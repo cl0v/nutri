@@ -6,7 +6,6 @@ import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/data/repositories/home_repository.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 
-
 // IDEIA: Sugerir as mais importantes(maior PE) ja marcadas
 
 // TODO: Quando chega no ultimo item, nao tem pra onde ir, dar um feedback ou parabenizar a pessoa(pontos concluidos)
@@ -81,7 +80,7 @@ class HomeController extends GetxController {
     _extrasAmount.value = meal.extraAmount;
     selectedExtras = [];
     _selectedExtrasList.assignAll([]);
-    mealCategory.value = MealModel.getTranslatedMeal(meal.mealType);
+    mealCategory.value = MealModelHelper.getTranslatedMeal(meal.mealType);
   }
 
   _setDayOfTheWeek() {
@@ -91,13 +90,9 @@ class HomeController extends GetxController {
 
   getSelectedIndex(int idx) => _selectedExtrasList.contains(idx);
 
-  onMainFoodTapped(int idx) =>
-    selectedMainFoodIdx.value = idx;
-  
+  onMainFoodTapped(int idx) => selectedMainFoodIdx.value = idx;
 
-  isMainFoodSelected(int idx) =>
-     selectedMainFoodIdx.value == idx;
-  
+  isMainFoodSelected(int idx) => selectedMainFoodIdx.value == idx;
 
   onExtraTapped(int idx) {
     if (!_selectedExtrasList.contains(idx) &&
@@ -114,8 +109,9 @@ class HomeController extends GetxController {
 
   _saveMealOfTheDay() {
     mealsOfTheDay[mealIndex].mealCardState = MealCardState.Done;
-    mealsOfTheDay[mealIndex].selectedFood =
-        mealsOfTheDay[mealIndex].mealModel.mainFoodList[selectedMainFoodIdx.value];
+    mealsOfTheDay[mealIndex].selectedFood = mealsOfTheDay[mealIndex]
+        .mealModel
+        .mainFoodList[selectedMainFoodIdx.value];
     mealsOfTheDay[mealIndex].selectedExtras = selectedExtras;
     _buildAndSavePrefs(mealsOfTheDay[mealIndex]);
   }
@@ -126,13 +122,14 @@ class HomeController extends GetxController {
     prefStringList.add(mealCard.mealCardState.toString());
     prefStringList.add(mealCard.selectedFood.title);
     prefStringList.addAll(extrasStringList);
-    repository.saveMealPrefs(mealCard.mealModel.mealType.toString(), prefStringList);
+    repository.saveMealPrefs(
+        mealCard.mealModel.mealType.toString(), prefStringList);
     //TODO: Analizar esse carinha
   }
 
   onDonePressed() {
     //TODO: Implement onDonePressed
-    _saveMealOfTheDay(); //FIXME: BUG: INVESTIGAR: Deu algum bug que salva os extras no primeiro itme
+    _saveMealOfTheDay();
     _nextPage();
   }
 
@@ -142,17 +139,28 @@ class HomeController extends GetxController {
     _nextPage();
   }
 
+  var pgIdx = 0;
   _nextPage() {
-    pageController.nextPage(
-      duration: Duration(microseconds: 100),
-      curve: Curves.ease,
-    );
-    _setMeal(mealsOfTheDay[++mealIndex].mealModel);
+    pgIdx++;
+    if (pgIdx >= mealsOfTheDay.length)
+      //TODO: Conferir se está bloqueando a ultima pagina
+      return _showFinalCard();
+    else {
+      pageController.nextPage(
+        duration: Duration(microseconds: 100),
+        curve: Curves.ease,
+      );
+      _setMeal(mealsOfTheDay[++mealIndex].mealModel);
+    }
+  }
+
+  _showFinalCard() {
+    //TODO: Implement: Mostrar o card final
   }
 
   void onPreviewDayPressed() {
     //TODO: Sempre que solicitar um dia, será o provider quem fornecerá, para nao precisar ficar com tanto espaço na memoria
-
+    //TODO: Implement set meals of the day x;
     showingDayIndex.value--;
     if (indexOfTheDayOnWeek >= 0) {
       isNextBtnDisabled.value = false;

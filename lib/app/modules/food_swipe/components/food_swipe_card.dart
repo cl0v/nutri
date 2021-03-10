@@ -2,8 +2,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 
-  //TODO: Modificar o botao para melhorar o visual
-  //TODO: Melhorar o aviso na parte inferior
+//TODO: Deixar o visual mais limpo e mais intuitivo (Botao nao intuitivo / aviso nao está limpo)
 
 class FoodSwipeCard extends StatelessWidget {
   final FoodModel food;

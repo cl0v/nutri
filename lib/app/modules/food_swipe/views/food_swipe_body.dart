@@ -85,7 +85,7 @@ class FoodSwipeBody extends GetView<FoodSwipeController> {
         Obx(
           () => !controller.isOkey
               ? GestureDetector(
-                  onTap: controller.onBuildCardapioPressed,
+                  onTap: controller.onReadyPressed,
                   behavior: HitTestBehavior.translucent,
                   child: Center(
                     child: Column(

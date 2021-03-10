@@ -7,6 +7,10 @@ import 'package:nutri/app/data/providers/home_provider.dart';
 import 'package:nutri/app/data/repositories/home_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+//TODO: Criar testes quando nenhuma comida for selecionada na foodPrefs
+//Obviamente quero evitar o máximo para que a pessoa sempre escolha as comidas da semana
+//Mas nao quero cair em bugs por não ter achado
+
 final mockedFoodPrefs = [
   'Peito de Frango',
   'Picanha',
@@ -44,7 +48,6 @@ main() {
       // expect(actual, matcher)
     });
   });
-
 
   group('Testing basic build of cards on the daily meals: ', () {
     /* Testar funcionalidade da FoodModel definindo se deve ser(na home) um card principal ou um card de extras
@@ -397,6 +400,15 @@ main() {
       var dayMeal = await repository.fetchDailyMeals(day: anyDay);
       var sameDayMeal = await repository.fetchDailyMeals(day: anyDay);
       expect(dayMeal, sameDayMeal);
+    });
+  });
+
+  group('Testing behavior when weeklyFood pref is empty or null', () {
+    SharedPreferences.getInstance().then((p)=>p.setStringList(weeklyMealsPrefsKey, []));
+    //TODO: Testar prefs vazia, pois o user apagou os dados do disp
+        test('Receiving error when prefs is empty', () async {
+      var weeklyMeals = await repository.fetchDailyMenuOfTheWeek();
+      expect(weeklyMeals, 9);
     });
   });
 }

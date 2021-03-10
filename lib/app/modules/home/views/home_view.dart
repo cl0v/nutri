@@ -3,7 +3,6 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 
 import 'package:nutri/app/modules/home/views/home_body.dart';
-import 'package:nutri/constants.dart';
 
 class HomeView extends GetView<HomeController> {
   @override

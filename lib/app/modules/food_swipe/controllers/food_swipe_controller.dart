@@ -4,10 +4,6 @@ import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/food_swipe_model.dart';
 import 'package:nutri/app/data/repositories/food_swipe_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
-import 'package:nutri/constants.dart';
-
-//IDEIA: No food swipe card, quando a pessoa quiser trocar algum alimento
-//IDEIA: Mostrar apenas os alimentos selecionados para aquela semana(nao permitir adicionar elementos que nao estavam no planejado pra semana, apenas trocar alimentos equivalentes, de dia)
 
 //IDEIA: Informar ao usuario a quantidade mínima que deve ser selecionada
 // -- Talvez colocar o contador no botao de confirmar 'Confirmar(3)' > Confirmar(2)...
@@ -45,19 +41,13 @@ class FoodSwipeController extends GetxController {
     _fetchFoodSwipeList();
   }
 
-  onBuildCardapioPressed() => _isReady.value = true;
+  onReadyPressed() => _isReady.value = true;
 
   onConfirmPressed() {
     ++currentIndex;
     if (currentIndex == _foodSwipeList.length) {
-      if (_foodPrefs.isEmpty) {
-        //TODO: Implement onFoodSwipe no element was selected
-        //Retornar para a primeira pagina e
-        _onNoFoodWasSelected();
-      } else {
-        _savePrefs();
-        Get.offAllNamed(Routes.HOME);
-      }
+      _savePrefs();
+      Get.offAllNamed(Routes.HOME);
     } else {
       _setShowingFoodSwipe(_foodSwipeList[currentIndex]);
       _isConfirmBtnAvailable.value = false; // Passar isso pra um metodo
@@ -65,20 +55,6 @@ class FoodSwipeController extends GetxController {
       pageController.jumpToPage(0);
       _checkedIndexes.clear();
     }
-  }
-
-  _onNoFoodWasSelected() {
-    pageController.jumpToPage(0);
-    _setShowingFoodSwipe(_foodSwipeList[0]);
-    currentIndex = 0;
-    Get.isSnackbarOpen
-        ? Get.back()
-        : Get.snackbar(
-            'Escolha algo',
-            'Você deve escolher pelo menos uma comida',
-            colorText: Colors.white,
-            backgroundColor: kRedColor,
-          );
   }
 
   void onCheckTapped(FoodModel food, int index) {
@@ -92,7 +68,6 @@ class FoodSwipeController extends GetxController {
       _foodPrefs.add(food.title);
     }
     if (currentFoodSwipeModel.minimum <= _amountSelected.value) {
-      
       _isConfirmBtnAvailable.value = true;
     }
   }

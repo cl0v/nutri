@@ -2,20 +2,23 @@ import 'package:flutter/foundation.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// IDEIA: - Priorizar vegetais de noite
 
-// A classe provider deverá receber os dados do banco e entregar de forma organizada
-// A adicao de meal não é feita pelo usuário, é uma rotina padrao do aplicativo
-
-//IDEIA: Conferir se ja existem alimentos nas shared prefs, caso contrario, leva a pessoa pro food swipe
-// Ter um tempo de load para buildar as comidas, mostrar o lead na home, antes de qualquer coisa
-
-// const foodPrefsKey = 'foodPrefs';
+enum HomeState{
+  Error,
+  Ready,
+  NotReady,
+  WaitingFoodPrefs,
+}
 
 class HomeProvider {
   final Future<SharedPreferences> sharedPreferences;
 
   HomeProvider({@required this.sharedPreferences});
+
+  getHomeState() {
+    return 1;
+    //Aqui é basicamente um loading, para saber o que deve ser feito depois do login
+  }
 
   Future<List<MealModel>> fetchDailyMeals({int day = 1}) async =>
       HomeProviderHelper.fetchDailyMeals(await sharedPreferences, day: day);
@@ -37,7 +40,6 @@ class HomeProvider {
 abstract class HomeProviderHelper {
   static int daysInAWeek = 7;
   // int dailyMealAmount = 4;
-
 
   static Future<List<List<MealModel>>> fetchWeeklyMeals(prefs) async {
     var weeklyMeals = await _getWeeklyMeals(prefs);
@@ -77,13 +79,15 @@ abstract class HomeProviderHelper {
 
   static Future<List<List<MealModel>>> _getWeeklyMeals(
           sharedPreferences) async =>
-      MealProvider.getWeeklyMeals(await sharedPreferences);
+      MealProvider.getWeeklyMealsFromPrefs(await sharedPreferences);
 
   static Future<List<List<MealModel>>> _saveWeeklyMeals(
           sharedPreferences, List<List<MealModel>> listOfDailyMeal) async =>
-      MealProvider.saveWeeklyMeals(await sharedPreferences, listOfDailyMeal);
+      MealProvider.saveWeeklyMealsOnPrefs(
+          await sharedPreferences, listOfDailyMeal);
 
   static Future<MealModel> _buildDinner(List<String> prefs) async {
+// IDEIA: - Priorizar vegetais de noite
     var mainFoodList =
         await FoodModelHelper.loadDinnerMainFoodsFromPrefs(prefs);
     var extraFoodList = await FoodModelHelper.loadDinnerExtrasFromPrefs(prefs);

@@ -4,19 +4,15 @@ import 'package:nutri/app/modules/home/components/food_card.dart';
 import 'package:nutri/app/modules/home/components/food_selectable_card.dart';
 import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 
-//Distribuir de maneira centralizada as opçoes de escolha
 // Quando escolher, esconde as opçoes e aparece uma pequena seta para expandir
+//IDEIA: Quando seleciona ele esconde, e vira uma setinha que quando clica ele expande novamente
 
 //FIXME: Não está intuitivo o suficiente que é para tocar em alguma das comidas
 
-//TODO: Se tiver mais de uma opção, mostrar as opções e um texto falando, selecione uma opção
-// Se tiver apenas uma opção, nao mostrar o texto
-// Se tiver uma opção, ja mostrar escondido as opçes
 class MainFoodSelector extends StatelessWidget {
   final controller = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return Column(
       children: [
         AspectRatio(
@@ -30,25 +26,32 @@ class MainFoodSelector extends StatelessWidget {
                 : Container(),
           ),
         ),
-
-        //TODO: Quando seleciona ele esconde, e vira uma setinha que quando clica ele expande novamente
+        Obx(
+          () => controller.mainFoodsAvailable.length > 1
+              ? Text(
+                  'Selecione uma opção',
+                  style: TextStyle(color: Colors.white),
+                )
+              : Container(),
+        ),
         AspectRatio(
           aspectRatio: 5,
           child: Obx(
-            () => controller.mainFoodsAvailable.isNotEmpty
+            () => controller.mainFoodsAvailable.isNotEmpty &&
+                    controller.mainFoodsAvailable.length > 1
                 ? Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: controller.mainFoodsAvailable.map((food) {
-                    var idx = controller.mainFoodsAvailable.indexOf(food);
-                    return Expanded(
-                      child: MainFoodSelectableCard(
+                      var idx = controller.mainFoodsAvailable.indexOf(food);
+                      return Expanded(
+                        child: MainFoodSelectableCard(
                           food: food,
                           onTap: () => controller.onMainFoodTapped(idx),
                           selected: controller.isMainFoodSelected(idx),
-                      ),
-                    );
-                  }).toList())
+                        ),
+                      );
+                    }).toList())
 
                 // ListView.builder(
                 //     scrollDirection: Axis.horizontal,

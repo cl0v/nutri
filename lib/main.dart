@@ -6,7 +6,7 @@ import 'app/routes/app_pages.dart';
 
 //TODO: Voltar criando pagina por página ja definindo o estilo 
 // mockar dados para login por exemplo para fazer todo o fluxo de uso
-//BUG: Error quando conclui o jantar(nao tem proxima pg)
+//
 
 //FIXME: Pulando a splash
 
@@ -18,7 +18,7 @@ import 'app/routes/app_pages.dart';
 //Talvez buscar o estado, pois o cliente pode não responder o quesitonario e fechar o app na pressa
 // e dpois logar
 
-// Não colocar apenas as comidas, mas sim os pratos prontos(Assim o usuário nao tem a oportunidade de adicionar um arroz ou feijao)
+//IDEIA: Não colocar apenas as comidas, mas sim os pratos prontos(Assim o usuário nao tem a oportunidade de adicionar um arroz ou feijao)
 // Pegar os exemplos do livro
 
 //TODO: Imagem de fundo(Posso procurar uma cor de fundo melhor)

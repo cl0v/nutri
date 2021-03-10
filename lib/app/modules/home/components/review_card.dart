@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class ReviewCard extends StatelessWidget {
   //TODO: Implementar o card final que mostra um resuminho do que o usuário fez
-  //POSSO modificar os dois botoes de pular e concluir para 'Ver relatorio final'
 
   
   @override

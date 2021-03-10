@@ -1,14 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/modules/home/components/food_selectable_card.dart';
 import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 
-//Mostrar as comidas selecionadas de forma a ir aparecendo uma por uma
+// Mostrar as comidas selecionadas de forma a ir aparecendo uma por uma
 // se apenas uma for selecionada, ela ocupa todo o espaço
 // caso duas sejam selecionadas, ocupar metade do espaço
-//
-//FIXME: Não está intuitivo o suficiente que é para tocar em alguma das comidas
+
+//TODO: O que fazer quando nenhum acompanhamento for selecionado?
 
 class ExtraFoodSelector extends StatelessWidget {
   @override
@@ -76,7 +75,8 @@ class ExtraFoodSelector extends StatelessWidget {
                                                     .selectedExtrasList.length >
                                                 2 &&
                                             controller.selectedExtrasList !=
-                                                null) //BUG: Corrigir bug que ele libera o estado e pode ter dois do mesmo
+                                                null)
+                                        //BUG: Pode ter duas imagens iguais
                                         ? controller.selectedExtrasList[2]
                                         : 2]
                                     .img ??
@@ -91,10 +91,10 @@ class ExtraFoodSelector extends StatelessWidget {
           ),
         ),
         Center(
-          child: Text(
-            'Acompanhamentos (0/3)',
+          child: Obx(()=>Text(
+            'Selecione até 3 acompanhamentos (${controller.selectedExtrasList.length}/3)',
             style: TextStyle(color: Colors.white),
-          ),
+          ),),
         ),
         SizedBox(
           height: 3,

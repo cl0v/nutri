@@ -45,7 +45,11 @@ class UserProvider extends GetConnect {
   //   return false;
   // }
 
-  register(String email, String password) async {
+  register(String email, String password) {
+    return true;
+  }
+
+  registerA(String email, String password) async {
     try {
       // UserCredential userCredential =
       await auth.createUserWithEmailAndPassword(

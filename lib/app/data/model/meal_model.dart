@@ -26,21 +26,6 @@ class MealModel {
     this.extraAmount = 0,
   });
 
-  static String getTranslatedMeal(MealType m) {
-    switch (m) {
-      case MealType.breakfast:
-        return "Café da manhã";
-      case MealType.lunch:
-        return "Almoço";
-      case MealType.snack:
-        return "Lanche";
-      case MealType.dinner:
-        return "Jantar";
-      default:
-        return '';
-    }
-  }
-
   Map<String, dynamic> toMap() {
     return {
       'mealType': mealType?.index,
@@ -93,26 +78,48 @@ class MealModel {
   }
 }
 
+abstract class MealModelHelper {
+  static String getTranslatedMeal(MealType m) {
+    switch (m) {
+      case MealType.breakfast:
+        return "Café da manhã";
+      case MealType.lunch:
+        return "Almoço";
+      case MealType.snack:
+        return "Lanche";
+      case MealType.dinner:
+        return "Jantar";
+      default:
+        return '';
+    }
+  }
+}
+
 const weeklyMealsPrefsKey = 'weeklyMeals';
 
 abstract class MealProvider {
   //Lembrando que o toJson é uma string, logo o sqflite aceita tambem
 
-  static List<List<MealModel>> saveWeeklyMeals(
+  static List<List<MealModel>> saveWeeklyMealsOnPrefs(
       SharedPreferences prefs, List<List<MealModel>> listOfDailyMeal) {
     var list = listOfDailyMeal.map((l) => json.encode(l)).toList();
     prefs.setStringList(weeklyMealsPrefsKey, list);
 
     return listOfDailyMeal;
-
   }
 
-  static List<List<MealModel>> getWeeklyMeals(SharedPreferences prefs) =>
-
-   prefs.getStringList(weeklyMealsPrefsKey)?.map((w) {
-          List js = json.decode(w);
-          return js.map((e) => MealModel.fromJson(e)).toList();
-        })?.toList() ??
-        [];
-  
+  static List<List<MealModel>> getWeeklyMealsFromPrefs(
+      SharedPreferences prefs) {
+    var foodPrefList = prefs.getStringList(weeklyMealsPrefsKey);
+    if (foodPrefList != null)
+      return foodPrefList?.map((w) {
+            List js = json.decode(w);
+            return js.map((e) => MealModel.fromJson(e)).toList();
+          })?.toList() ??
+          [];
+    else
+      print('Nao tem nada nas prefs');
+    return [];
+    //TODO: Jogar o user para a página da foodSwipe
+  }
 }
