@@ -199,5 +199,4 @@ abstract class FoodModelHelper {
 abstract class FoodProvider{
   static List<String> getFoodsPrefsList(prefs)=>
     prefs.getStringList(foodPrefsKey);
-  
 }

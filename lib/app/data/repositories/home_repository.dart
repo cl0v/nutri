@@ -9,14 +9,16 @@ class HomeRepository {
     @required this.provider,
   });
 
-  Future getHomeState() => provider.getHomeState();
-
   Future<List<List<MealModel>>> fetchDailyMenuOfTheWeek() =>
       provider.fetchMealsOfTheWeek();
+
+
+  getHomeState() => provider.getHomeState();
+  closeHomeStream() => provider.closeHomeStream();
 
   Future<List<MealModel>> fetchDailyMeals({int day = 1}) =>
       provider.fetchDailyMeals(day: day);
 
-  Future saveMealPrefs(String mealType, List<String> list) =>
-      provider.saveMealPrefs(mealType, list);
+  // Future saveMealPrefs(String mealType, List<String> list) =>
+      // provider.saveMealPrefs(mealType, list);
 }

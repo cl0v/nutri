@@ -67,22 +67,44 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    print('dnv samerda');
+    repository.getHomeState().listen((state) {
+      print(state);
+      switch (state) {
+        case HomeState.Ready:
+          print('home ta pronta');
+          _showHomeContent.value = true;
+          break;
+        case HomeState.SharedPrefsNull:
+          Get.offAllNamed(Routes.FOOD_SWIPE);
+          //BUG: Quando a rota home é chamada novamente, ele nao entra aq
+          break;
+        default:
+          break;
+      }
+    });
     _initHome();
   }
 
-  _initHome() async {
-    _setDayOfTheWeek(); //FIXME: Dependendo da ordem isso aqui pode dar erro, ja que eu to setando os valores mesmo sendo nulo as prefs
-    _fetchTodayMeals();
-    _showHomeContent.value = true;
+  @override
+  void onClose() {
+    super.onClose();
+    repository.closeHomeStream();
+  }
 
-    //TODO: Implement _getHomeState
-    //TODO: Deixar carregamento enquanto os dados estão sendo carregados
+  _initHome() async {
+    _setDayOfTheWeek();
+    _fetchTodayMeals();
   }
 
   _fetchTodayMeals() async {
-    mealsOfTheDay.assignAll((await repository.fetchDailyMeals())
-        .map((meal) => MealCardModel(mealModel: meal)));
-    _setMeal(mealsOfTheDay[mealIndex].mealModel);
+    var dailyMeals =
+        await repository.fetchDailyMeals(day: DateTime.now().weekday);
+    if (dailyMeals != null && dailyMeals.isNotEmpty) {
+      mealsOfTheDay.assignAll(
+          (dailyMeals).map((meal) => MealCardModel(mealModel: meal)));
+      _setMeal(mealsOfTheDay[mealIndex].mealModel);
+    }
   }
 
   _setMeal(MealModel meal) async {
@@ -134,8 +156,8 @@ class HomeController extends GetxController {
     prefStringList.add(mealCard.mealCardState.toString());
     prefStringList.add(mealCard.selectedFood.title);
     prefStringList.addAll(extrasStringList);
-    repository.saveMealPrefs(
-        mealCard.mealModel.mealType.toString(), prefStringList);
+    // repository.saveMealPrefs(
+    //     mealCard.mealModel.mealType.toString(), prefStringList);
     //TODO: Analizar esse carinha
   }
 

@@ -26,7 +26,7 @@ dependencies:
   flip_card: ^0.4.4
   
 
-
+  rxdart:
   
   get: 3.24.0
 

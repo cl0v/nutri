@@ -29,7 +29,7 @@ class FoodSwipeProvider {
     foodSwipeList.add(
       FoodSwipeModel(
         maximum: 7,
-        minimum: 3,
+        minimum: 1,
         category: FoodSwipeModel.getCategory(FoodCategory.meat),
         foods: meatList,
       ),
@@ -38,6 +38,7 @@ class FoodSwipeProvider {
       FoodSwipeModel(
         maximum: 9, // TODO: Quando nao tem maximo, o que fazer?
         minimum: 3, // TODO: Como mostrar ao usuário a quantidade minima?
+        //FIXME: Quando o minimo é 0 o botao ainda permanece apagado, precisando selecionar 1 pra liberar
         category: FoodSwipeModel.getCategory(FoodCategory.vegetable),
         foods: vegList,
       ),

@@ -7,8 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<HomeController>(
-      () => HomeController(
+    Get.put<HomeController>(
+      HomeController(
         repository: HomeRepository(
           provider: HomeProvider(
             sharedPreferences: SharedPreferences.getInstance(),

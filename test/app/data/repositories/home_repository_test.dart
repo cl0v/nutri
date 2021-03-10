@@ -27,14 +27,44 @@ final mockedFoodPrefs = [
 main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({foodPrefsKey: mockedFoodPrefs});
-  final prefs = SharedPreferences.getInstance();
-  final provider = HomeProvider(
-    sharedPreferences: prefs,
-  );
+  var prefs = SharedPreferences.getInstance();
+  var provider= HomeProvider(
+      sharedPreferences: prefs,
+    );
   HomeRepository repository = HomeRepository(
-    provider: provider,
-  );
+      provider: provider,
+    );
 
+  group('Testing home state flow', () {
+    test('HomeState should be initialized as HomeState.Loading', () {
+      expect(
+          repository.getHomeState(),
+          emitsInOrder([
+            HomeState.Loading,
+          ]));
+    });
+    test('HomeState second event should be Ready if prefs exist', () {
+      expect(
+          repository.getHomeState(),
+          emitsInOrder([
+            HomeState.Loading,
+            HomeState.Ready,
+          ]));
+      repository.fetchDailyMenuOfTheWeek();
+    });
+
+    test(
+        'HomeState second event should be SharedPrefsNull if prefs do not exist',
+        () {
+      expect(
+          repository.getHomeState(),
+          emitsInOrder([
+            HomeState.Loading,
+            HomeState.SharedPrefsNull,
+          ]));
+      repository.fetchDailyMenuOfTheWeek();
+    }, skip: true);
+  });
 
   group('Testing basic build of cards on the daily meals: ', () {
     /* Testar funcionalidade da FoodModel definindo se deve ser(na home) um card principal ou um card de extras
@@ -47,6 +77,7 @@ main() {
 
     SharedPreferences.getInstance().then((prefs) async =>
         await prefs.setStringList(foodPrefsKey, mockedFoodPrefs));
+
 
     List<MealModel> dailyMeals = [];
     test('No main card should be in MainOrExtra.extra category', () async {
@@ -391,13 +422,14 @@ main() {
   });
 
   group('Testing behavior when weeklyFood pref is empty or null', () {
-    SharedPreferences.getInstance().then((p)=>p.setStringList(weeklyMealsPrefsKey, []));
+    SharedPreferences.getInstance()
+        .then((p) => p.setStringList(weeklyMealsPrefsKey, []));
     //TODO: Testar prefs vazia, pois o user apagou os dados do disp
-        test('Receiving error when prefs is empty', () async {
+    test('Receiving error when prefs is empty', () async {
       var weeklyMeals = await repository.fetchDailyMenuOfTheWeek();
       expect(weeklyMeals, 9);
     });
-  });
+  }, skip: true);
 }
 
 //TODO: Testar a quantidade de extras que pode ser selecionado cada dia

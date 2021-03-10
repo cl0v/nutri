@@ -111,13 +111,67 @@ abstract class MealProvider {
   static List<List<MealModel>> getWeeklyMealsFromPrefs(
       SharedPreferences prefs) {
     var foodPrefList = prefs.getStringList(weeklyMealsPrefsKey);
-    print(foodPrefList);
     if (foodPrefList != null)
       return foodPrefList?.map((w) {
         List js = json.decode(w);
         return js.map((e) => MealModel.fromJson(e)).toList();
       })?.toList();
     else
-      return null;
+      return [];
+  }
+}
+
+abstract class MealProviderHelper {
+  static Future<List<String>> _getFoodsPrefsList(sharedPreferences) async =>
+      FoodProvider.getFoodsPrefsList(sharedPreferences);
+
+  static Future<MealModel> buildDinner(sharedPreferences) async {
+    var prefs = await _getFoodsPrefsList(sharedPreferences);
+// IDEIA: - Priorizar vegetais de noite
+    var mainFoodList =
+        await FoodModelHelper.loadDinnerMainFoodsFromPrefs(prefs);
+    var extraFoodList = await FoodModelHelper.loadDinnerExtrasFromPrefs(prefs);
+
+    return MealModel(
+      mainFoodList: mainFoodList.take(3).toList(),
+      extraList: extraFoodList,
+      extraAmount: 3,
+      mealType: MealType.dinner,
+    );
+  }
+
+  static Future<MealModel> buildSnack(sharedPreferences) async {
+    var prefs = await _getFoodsPrefsList(sharedPreferences);
+    var mainFoodList = await FoodModelHelper.loadSnackMainFoodsFromPrefs(prefs);
+    return MealModel(
+      mainFoodList: mainFoodList.take(3).toList(),
+      extraList: [],
+      extraAmount: 0,
+      mealType: MealType.snack,
+    );
+  }
+
+  static Future<MealModel> buildLunch(sharedPreferences) async {
+    var prefs = await _getFoodsPrefsList(sharedPreferences);
+    var mainFoodList = await FoodModelHelper.loadLunchMainFoodsFromPrefs(prefs);
+    var extraFoodList = await FoodModelHelper.loadLunchExtrasFromPrefs(prefs);
+    return MealModel(
+      mainFoodList: mainFoodList.take(3).toList(),
+      extraList: extraFoodList,
+      extraAmount: 3,
+      mealType: MealType.lunch,
+    );
+  }
+
+  static Future<MealModel> buildBreakfast(sharedPreferences) async {
+    var prefs = await _getFoodsPrefsList(sharedPreferences);
+    var mainFoodList =
+        await FoodModelHelper.loadBreakfastMainFoodsFromPrefs(prefs);
+    return MealModel(
+      mainFoodList: mainFoodList.take(3).toList(),
+      extraList: [],
+      extraAmount: 0,
+      mealType: MealType.breakfast,
+    );
   }
 }
