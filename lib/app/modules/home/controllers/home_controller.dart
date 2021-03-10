@@ -5,6 +5,8 @@ import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/data/repositories/home_repository.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
+import 'package:nutri/app/data/providers/home_provider.dart';
+import 'package:nutri/app/routes/app_pages.dart';
 
 // IDEIA: Sugerir as mais importantes(maior PE) ja marcadas
 
@@ -38,6 +40,9 @@ class HomeController extends GetxController {
   final mainFoodsAvailable = <FoodModel>[].obs;
   final extraFoodsAvailable = <FoodModel>[].obs;
 
+  final RxBool _showHomeContent = false.obs;
+  bool get showHomeContent => _showHomeContent.value;
+
   final showingDayIndex = 0.obs;
   int todayDayIndex = 0;
 
@@ -55,16 +60,23 @@ class HomeController extends GetxController {
 
   int indexOfTheDayOnWeek = 0;
 
-  PageController pageController;
+  PageController pageController = PageController();
 
   final mealCategory = 'Café da manhã'.obs;
 
   @override
   void onInit() {
     super.onInit();
-    pageController = PageController();
-    _setDayOfTheWeek();
+    _initHome();
+  }
+
+  _initHome() async {
+    _setDayOfTheWeek(); //FIXME: Dependendo da ordem isso aqui pode dar erro, ja que eu to setando os valores mesmo sendo nulo as prefs
     _fetchTodayMeals();
+    _showHomeContent.value = true;
+
+    //TODO: Implement _getHomeState
+    //TODO: Deixar carregamento enquanto os dados estão sendo carregados
   }
 
   _fetchTodayMeals() async {

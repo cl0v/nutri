@@ -17,66 +17,74 @@ class HomeView extends GetView<HomeController> {
             fit: BoxFit.cover,
           ),
         ),
-        Scaffold(
-          extendBodyBehindAppBar: true,
-          backgroundColor: Colors.transparent,
-          bottomNavigationBar: BottomAppBar(
-            color: Colors.transparent,
-            elevation: 0,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom:8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.resolveWith(
-                            (states) => Size(120, 36)),
-                        backgroundColor: MaterialStateProperty.resolveWith(
-                            (states) => Colors.red)),
-                    onPressed: controller.onSkippedPressed,
-                    child: Text('Pulei'),
+        Obx(
+          () => controller.showHomeContent
+              ? Scaffold(
+                  body: HomeBody(),
+                  extendBodyBehindAppBar: true,
+                  backgroundColor: Colors.transparent,
+                  bottomNavigationBar:
+                      BottomAppBar(
+                    color: Colors.transparent,
+                    elevation: 0,
+                    child: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            ElevatedButton(
+                              style: ButtonStyle(
+                                  minimumSize:
+                                      MaterialStateProperty.resolveWith(
+                                          (states) => Size(120, 36)),
+                                  backgroundColor:
+                                      MaterialStateProperty.resolveWith(
+                                          (states) => Colors.red)),
+                              onPressed: controller.onSkippedPressed,
+                              child: Text('Pulei'),
+                            ),
+                            ElevatedButton(
+                              style: ButtonStyle(
+                                  minimumSize:
+                                      MaterialStateProperty.resolveWith(
+                                          (states) => Size(120, 36)),
+                                  backgroundColor:
+                                      MaterialStateProperty.resolveWith(
+                                          (states) => Colors.green)),
+                              onPressed: controller.onDonePressed,
+                              child: Text('Concluí'),
+                            )
+                          ],
+                        ),),
                   ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.resolveWith(
-                            (states) => Size(120, 36)),
-                        backgroundColor: MaterialStateProperty.resolveWith(
-                            (states) => Colors.green)),
-                    onPressed: controller.onDonePressed,
-                    child: Text('Concluí'),
+                  appBar: AppBar(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    centerTitle: true,
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.arrow_back_ios),
+                          onPressed: controller.isPreviewBtnDisabled.value
+                              ? null
+                              : controller.onPreviewDayPressed,
+                        ),
+                        Text(controller.getDayTitle()),
+                        IconButton(
+                          icon: Icon(Icons.arrow_forward_ios),
+                          onPressed: controller.isNextBtnDisabled.value
+                              ? null
+                              : controller.onNextDayPressed,
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            centerTitle: true,
-            title: Obx(
-              () => Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back_ios),
-                    onPressed: controller.isPreviewBtnDisabled.value
-                        ? null
-                        : controller.onPreviewDayPressed,
-                  ),
-                  Text(controller.getDayTitle()),
-                  IconButton(
-                    icon: Icon(Icons.arrow_forward_ios),
-                    onPressed: controller.isNextBtnDisabled.value
-                        ? null
-                        : controller.onNextDayPressed,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          body: HomeBody(),
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
+                ),
         ),
       ],
     );

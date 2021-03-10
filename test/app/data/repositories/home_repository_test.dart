@@ -24,14 +24,6 @@ final mockedFoodPrefs = [
   'Café Preto',
 ];
 
-final mockedFoodPrefsWithoutFruit = [
-  'Peito de Frango',
-  'Picanha',
-  'Brócolis',
-  'Alface',
-  'Café Preto',
-];
-
 main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({foodPrefsKey: mockedFoodPrefs});
@@ -43,11 +35,6 @@ main() {
     provider: provider,
   );
 
-  group('Testing particular methods', () {
-    test('saveWeeklyMeals should be the same as getWeeklyMeals', () {
-      // expect(actual, matcher)
-    });
-  });
 
   group('Testing basic build of cards on the daily meals: ', () {
     /* Testar funcionalidade da FoodModel definindo se deve ser(na home) um card principal ou um card de extras

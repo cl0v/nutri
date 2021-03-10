@@ -43,12 +43,11 @@ class FoodSwipeController extends GetxController {
 
   onReadyPressed() => _isReady.value = true;
 
-  onConfirmPressed() {
+  onConfirmPressed() async {
     ++currentIndex;
-    if (currentIndex == _foodSwipeList.length) {
-      _savePrefs();
-      Get.offAllNamed(Routes.HOME);
-    } else {
+    if (currentIndex == _foodSwipeList.length) 
+      _savePrefs().whenComplete(() => Get.offAllNamed(Routes.HOME));
+     else {
       _setShowingFoodSwipe(_foodSwipeList[currentIndex]);
       _isConfirmBtnAvailable.value = false; // Passar isso pra um metodo
       _amountSelected.value = 0;
@@ -74,7 +73,7 @@ class FoodSwipeController extends GetxController {
 
   bool isChecked(int index) => _checkedIndexes.contains(index);
 
-  _savePrefs() => repository.setFoodPreferences(_foodPrefs);
+  Future _savePrefs() async => await repository.setFoodPreferences(_foodPrefs);
 
   _setShowingFoodSwipe(FoodSwipeModel fSwipeModel) {
     _currentFoodSwipeModel.value = fSwipeModel;

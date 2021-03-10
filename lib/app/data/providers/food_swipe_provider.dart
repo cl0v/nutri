@@ -69,6 +69,6 @@ class FoodSwipeProvider {
     return foodSwipeList;
   }
 
-  void setFoodsPrefs(List<String> foodPrefs) async =>
-      (await prefs).setStringList(foodPrefsKey, foodPrefs);
+  Future setFoodsPrefs(List<String> foodPrefs) async =>
+      await (await prefs).setStringList(foodPrefsKey, foodPrefs);
 }

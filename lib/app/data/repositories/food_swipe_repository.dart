@@ -10,5 +10,5 @@ class FoodSwipeRepository {
   Future<List<FoodSwipeModel>> loadFoodSwipeList() =>
       provider.loadFoodSwipeList();
 
-  setFoodPreferences(List<String> list) => provider.setFoodsPrefs(list);
+  Future setFoodPreferences(List<String> list) async => await provider.setFoodsPrefs(list);
 }

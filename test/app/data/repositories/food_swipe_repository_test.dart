@@ -5,6 +5,19 @@ import 'package:nutri/app/data/providers/food_swipe_provider.dart';
 import 'package:nutri/app/data/repositories/food_swipe_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+final mockedFoodPrefs = [
+  'Peito de Frango',
+  'Picanha',
+  'Salmão',
+  'Brócolis',
+  'Alface',
+  'Espinafre',
+  'Repolho Roxo',
+  'Tomate',
+  "Cenoura",
+  'Café Preto',
+];
+
 main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({});
@@ -15,6 +28,14 @@ main() {
   FoodSwipeRepository repository = FoodSwipeRepository(
     provider: provider,
   );
+
+  group('Food Swipe prefs: ', () {
+    test('FoodSwipe prefs', () async {
+      repository.setFoodPreferences(mockedFoodPrefs);
+      var xp = (await prefs).getStringList('foodPrefs');
+      expect(xp, mockedFoodPrefs);
+    });
+  });
 
   group('Build food swipe: ', () {
     /* Testar a construição do build swipe com base nas recomendações
@@ -64,7 +85,6 @@ main() {
       var swipe = foodSwipeList.firstWhere((swipe) =>
           swipe.category == FoodSwipeModel.getCategory(FoodCategory.drink));
       expect(swipe.minimum, equals(1));
-      
     });
   }, skip: true);
 }

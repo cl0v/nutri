@@ -111,15 +111,13 @@ abstract class MealProvider {
   static List<List<MealModel>> getWeeklyMealsFromPrefs(
       SharedPreferences prefs) {
     var foodPrefList = prefs.getStringList(weeklyMealsPrefsKey);
+    print(foodPrefList);
     if (foodPrefList != null)
       return foodPrefList?.map((w) {
-            List js = json.decode(w);
-            return js.map((e) => MealModel.fromJson(e)).toList();
-          })?.toList() ??
-          [];
+        List js = json.decode(w);
+        return js.map((e) => MealModel.fromJson(e)).toList();
+      })?.toList();
     else
-      print('Nao tem nada nas prefs');
-    return [];
-    //TODO: Jogar o user para a página da foodSwipe
+      return null;
   }
 }
