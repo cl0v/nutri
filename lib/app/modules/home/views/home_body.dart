@@ -18,7 +18,7 @@ class HomeBody extends GetView<HomeController> {
               Obx(
                 () => Text(
                   '${controller.mealCategory}',
-                  style: Get.textTheme.headline5.copyWith(color: Colors.white),
+                  style: Get.textTheme!.headline5!.copyWith(color: Colors.white),
                 ),
               ),
               MainFoodSelector(),

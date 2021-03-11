@@ -8,9 +8,9 @@ class QuestionOption extends StatelessWidget {
     this.onTap,
   });
 
-  final String text;
-  final bool isSelected;
-  final VoidCallback onTap;
+  final String? text;
+  final bool? isSelected;
+  final VoidCallback? onTap;
 
   
 
@@ -18,7 +18,7 @@ class QuestionOption extends StatelessWidget {
   Widget build(BuildContext context) {
 
 
-  Color getColor = (isSelected ? kGreenColor : kGrayColor);
+  Color getColor = (isSelected! ? kGreenColor : kGrayColor);
 
 
     return InkWell(

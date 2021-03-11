@@ -5,7 +5,7 @@ import 'package:nutri/app/data/providers/food_swipe_provider.dart';
 class FoodSwipeRepository {
   FoodSwipeProvider provider;
 
-  FoodSwipeRepository({@required this.provider});
+  FoodSwipeRepository({required this.provider});
 
   Future<List<FoodSwipeModel>> loadFoodSwipeList() =>
       provider.loadFoodSwipeList();

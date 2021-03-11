@@ -12,12 +12,14 @@ class FoodSwipeController extends GetxController {
   final FoodSwipeRepository repository;
 
   FoodSwipeController({
-    this.repository,
+    required this.repository,
   });
 
   List<FoodSwipeModel> _foodSwipeList = <FoodSwipeModel>[];
-  Rx<FoodSwipeModel> _currentFoodSwipeModel = FoodSwipeModel().obs;
-  FoodSwipeModel get currentFoodSwipeModel => _currentFoodSwipeModel.value;
+  late Rx<FoodSwipeModel> _currentFoodSwipeModel = FoodSwipeModel(minimum: 0, maximum: 0, foods: [], category: '').obs; //Corrigir isso
+  get currentFoodSwipeModel =>
+      _currentFoodSwipeModel.value!; //TODO: Conferir isso
+
 
   List<String> _foodPrefs = <String>[];
   var _checkedIndexes = <int>[].obs;
@@ -25,7 +27,7 @@ class FoodSwipeController extends GetxController {
   int currentIndex = 0;
 
   final _isConfirmBtnAvailable = false.obs;
-  bool get isConfirmBtnAvailable => _isConfirmBtnAvailable.value;
+  bool get isConfirmBtnAvailable => _isConfirmBtnAvailable.value!;
 
   final _amountSelected = 0.obs;
   int get amountSelected => _amountSelected.value;
@@ -33,7 +35,7 @@ class FoodSwipeController extends GetxController {
   PageController pageController = PageController(viewportFraction: 0.8);
 
   final _isReady = false.obs;
-  bool get isOkey => _isReady.value;
+  bool get isOkey => _isReady.value!;
 
   @override
   void onInit() {
@@ -62,12 +64,12 @@ class FoodSwipeController extends GetxController {
       _amountSelected.value--;
       _checkedIndexes.remove(index);
       _foodPrefs.remove(food.title);
-    } else if (amountSelected < currentFoodSwipeModel.maximum) {
+    } else if (amountSelected < currentFoodSwipeModel!.maximum) {
       _amountSelected.value++;
       _checkedIndexes.add(index);
       _foodPrefs.add(food.title);
     }
-    if (currentFoodSwipeModel.minimum <= _amountSelected.value) {
+    if (currentFoodSwipeModel!.minimum <= _amountSelected.value) {
       _isConfirmBtnAvailable.value = true;
     }
   }
@@ -82,6 +84,7 @@ class FoodSwipeController extends GetxController {
 
   _fetchFoodSwipeList() async {
     _foodSwipeList = await repository.loadFoodSwipeList();
+    //TODO: Como estou esperando esse cara, ele vai dar error
     _setShowingFoodSwipe(_foodSwipeList.first);
   }
 }

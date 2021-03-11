@@ -6,7 +6,7 @@ class HomeRepository {
   final HomeProvider provider;
 
   HomeRepository({
-    @required this.provider,
+    required this.provider,
   });
 
   Future<List<List<MealModel>>> fetchDailyMenuOfTheWeek() =>

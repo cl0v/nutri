@@ -31,13 +31,13 @@ class LoginView extends GetView<LoginController> {
                 children: [
                   Text(
                     'Bem-vindo',
-                    style: Get.theme.textTheme.headline4,
+                    style: Get.theme!.textTheme.headline4,
                   ),
                   Divider(),
                   Spacer(),
                   TextFormField(
                     validator: (s) {
-                      if (!GetUtils.isEmail(s))
+                      if (!GetUtils.isEmail(s!))
                         return 'Por favor insira um email valido';
                       return null;
                     },

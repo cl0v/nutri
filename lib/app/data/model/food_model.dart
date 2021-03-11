@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 const foodPrefsKey = 'foodPrefs';
@@ -30,7 +32,7 @@ enum MainOrExtra {
 class FoodModel {
   String title;
   String img;
-  String desc;
+  String? desc;
   //enum
   FoodCategory category;
   //enum
@@ -39,11 +41,11 @@ class FoodModel {
   //TODO: Add PE
 
   FoodModel({
-    this.title,
-    this.img,
+    required this.title,
+    required this.img,
     this.desc,
-    this.category,
-    this.mainOrExtra,
+    required this.category,
+    required this.mainOrExtra,
   });
 
   @override
@@ -61,22 +63,18 @@ class FoodModel {
       'title': title,
       'img': img,
       'desc': desc,
-      'category': category?.index,
-      'mainOrExtra': mainOrExtra?.index,
+      'category': category.index,
+      'mainOrExtra': mainOrExtra.index,
     };
   }
 
-  factory FoodModel.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
-    return FoodModel(
+  factory FoodModel.fromMap(Map<String, dynamic> map) => FoodModel(
       title: map['title'],
       img: map['img'],
       desc: map['desc'],
       category: FoodCategory.values[map['category']],
       mainOrExtra: MainOrExtra.values[map['mainOrExtra']],
     );
-  }
 
   String toJson() => json.encode(toMap());
 
@@ -164,8 +162,7 @@ abstract class FoodModelHelper {
 
   static Future<List<FoodModel>> _sortJsonByCategory(
       FoodCategory category) async {
-    var json = await _loadJson();
-    var list = json
+    var list = (await _loadJson())
         .where((map) =>
             map['category'] == FoodModel.getIndexFromCategory(category))
         .map((map) => FoodModel.fromMap(map))
@@ -187,7 +184,7 @@ abstract class FoodModelHelper {
   static Future<List<FoodModel>> _loadFoodsFromPreferences(
       List<String> prefs) async {
     if (prefs == null) return [];
-    var json = await _loadJson();
+    var json = await (_loadJson() as FutureOr<List<dynamic>>);
     return json
         .where((map) => prefs.contains(map['title']))
         .map((map) => FoodModel.fromMap(map))
@@ -197,6 +194,6 @@ abstract class FoodModelHelper {
 
 
 abstract class FoodProvider{
-  static List<String> getFoodsPrefsList(prefs)=>
-    prefs.getStringList(foodPrefsKey);
+  static List<String> getFoodsPrefsList(SharedPreferences prefs) =>
+    prefs.getStringList(foodPrefsKey) ?? [];
 }

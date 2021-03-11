@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class UserProvider extends GetConnect {
   final FirebaseAuth auth;
 
-  UserProvider({@required this.auth});
+  UserProvider({required this.auth});
 
   @override
   Future<void> onInit() async {

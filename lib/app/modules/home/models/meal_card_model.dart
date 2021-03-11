@@ -6,11 +6,11 @@ import 'package:nutri/app/data/model/meal_model.dart';
 class MealCardModel {
   final MealModel mealModel;
   MealCardState mealCardState = MealCardState.None;
-  FoodModel selectedFood;
-  List<FoodModel> selectedExtras;
+  late FoodModel selectedFood;
+  late List<FoodModel> selectedExtras;
 
   MealCardModel({
-    @required this.mealModel,
+    required this.mealModel,
   });
 }
 

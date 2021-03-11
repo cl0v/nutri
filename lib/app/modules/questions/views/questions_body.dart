@@ -10,8 +10,8 @@ import 'package:nutri/constants.dart';
 
 class QuestionViewBody extends StatelessWidget {
   const QuestionViewBody({
-    Key key,
-    @required this.controller,
+    Key? key,
+    required this.controller,
   }) : super(key: key);
 
   final QuestionsController controller;
@@ -32,7 +32,7 @@ class QuestionViewBody extends StatelessWidget {
                       "Por favor, me ajude a te entender melhor", //TODO: Pensar no papel desse titulo, pois ele pode ser removido
                   style: Theme.of(context)
                       .textTheme
-                      .headline5
+                      .headline5!
                       .copyWith(color: kSecondaryColor),
                 ),
               ),
@@ -55,7 +55,7 @@ class QuestionViewBody extends StatelessWidget {
                         controller.questions[qidx].question,
                         style: Theme.of(context)
                             .textTheme
-                            .headline6
+                            .headline6!
                             .copyWith(color: kBlackColor),
                       ),
                     ),

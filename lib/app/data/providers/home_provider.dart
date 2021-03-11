@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:rxdart/rxdart.dart';
@@ -20,12 +19,12 @@ enum HomeState {
 class HomeProvider {
   final Future<SharedPreferences> sharedPreferences;
 
-  HomeProvider({@required this.sharedPreferences});
+  HomeProvider({required this.sharedPreferences});
 
   Stream<HomeState> getHomeState() => homeStateOutput;
   closeHomeStream() => homeStateController.close();
 
-  Future<List<MealModel>> fetchDailyMeals({int day = 1}) async =>
+  Future<List<MealModel>> fetchDailyMeals({int day = 1}) async => 
       _fetchDailyMeals(await sharedPreferences, day: day);
 
   Future<List<List<MealModel>>> fetchMealsOfTheWeek() async =>
@@ -35,18 +34,17 @@ class HomeProvider {
   //     //TODO: Implement saveMealPrefs
   //     (await sharedPreferences).setStringList(mealType, list);
 
-   int daysInAWeek = 7;
+  int daysInAWeek = 7;
   // int dailyMealAmount = 4;
 
-   BehaviorSubject<HomeState> homeStateController =
+  BehaviorSubject<HomeState> homeStateController =
       BehaviorSubject.seeded(HomeState.Loading);
-   Stream<HomeState> get homeStateOutput => homeStateController.stream;
-   Sink<HomeState> get homeStateInput => homeStateController.sink;
+  Stream<HomeState> get homeStateOutput => homeStateController.stream;
+  Sink<HomeState> get homeStateInput => homeStateController.sink;
 
-   Future<List<List<MealModel>>> _fetchWeeklyMeals(
-      sharedPreferences) async {
+  Future<List<List<MealModel>>> _fetchWeeklyMeals(sharedPreferences) async {
     List foodPrefs = _getFoodPrefs(sharedPreferences);
-    if (foodPrefs == null || foodPrefs.isEmpty) {
+    if (foodPrefs.isEmpty) {
       homeStateInput.add(HomeState.SharedPrefsNull);
       return [];
     } else {
@@ -59,16 +57,14 @@ class HomeProvider {
     }
   }
 
-   Future<List<MealModel>> _fetchDailyMeals(sharedPreferences,
-      {int day = 1}) async {
-    var weeklyMeals = await _fetchWeeklyMeals(sharedPreferences);
-    if (weeklyMeals != null && weeklyMeals.isNotEmpty)
-      return weeklyMeals[day - 1];
-    return [];
+  Future<List<MealModel>> _fetchDailyMeals(sharedPreferences,
+      {int day = 1}) async { //TODO: Aqui que deve ser chamado o builde semanal
+    var weeklyMeals = await _fetchWeeklyMeals(sharedPreferences); //FIXME:erro aq
+
+    return weeklyMeals.isNotEmpty ? weeklyMeals[day - 1] : [];
   }
 
-   Future<List<List<MealModel>>> _buildMealsOfTheWeek(
-      sharedPreferences) async {
+  Future<List<List<MealModel>>> _buildMealsOfTheWeek(sharedPreferences) async {
     List<List<MealModel>> listOfDailyMeal = [];
     for (var i = 1; i <= daysInAWeek; i++) {
       var dailyMeal = await _buildDailyMeal(sharedPreferences);
@@ -78,7 +74,7 @@ class HomeProvider {
     return listOfDailyMeal;
   }
 
-   Future<List<MealModel>> _buildDailyMeal(sharedPreferences) async {
+  Future<List<MealModel>> _buildDailyMeal(sharedPreferences) async {
     var breakfast = await MealProviderHelper.buildBreakfast(sharedPreferences);
     var lunch = await MealProviderHelper.buildLunch(sharedPreferences);
     var snack = await MealProviderHelper.buildSnack(sharedPreferences);
@@ -87,13 +83,13 @@ class HomeProvider {
     return [breakfast, lunch, snack, dinner];
   }
 
-   _getFoodPrefs(sharedPreferences) =>
+  _getFoodPrefs(sharedPreferences) =>
       FoodProvider.getFoodsPrefsList(sharedPreferences);
 
-   List<List<MealModel>> _getWeeklyMeals(sharedPreferences) =>
+  List<List<MealModel>> _getWeeklyMeals(sharedPreferences) =>
       MealProvider.getWeeklyMealsFromPrefs(sharedPreferences);
 
-   Future<List<List<MealModel>>> _saveWeeklyMeals(
+  Future<List<List<MealModel>>> _saveWeeklyMeals(
           sharedPreferences, List<List<MealModel>> listOfDailyMeal) async =>
       MealProvider.saveWeeklyMealsOnPrefs(
           await sharedPreferences, listOfDailyMeal);

@@ -6,7 +6,7 @@ import 'package:nutri/constants.dart';
 
 class RegisterController extends GetxController {
   final UserRepository repository;
-  RegisterController({@required this.repository});
+  RegisterController({required this.repository});
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -14,18 +14,17 @@ class RegisterController extends GetxController {
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
 
-  PageController pageController;
+  PageController pageController = PageController(); 
 
   final RxBool _thermIsChecked = false.obs;
   final RxBool _isObscurePassword = true.obs;
 
-  bool get thermIsChecked => _thermIsChecked.value;
-  bool get isObscurePassword => _isObscurePassword.value;
+  bool get thermIsChecked => _thermIsChecked.value!;
+  bool get isObscurePassword => _isObscurePassword.value!;
 
   @override
   void onInit() {
     super.onInit();
-    pageController = PageController();
   }
 
   void onContinuePressed() {
@@ -35,7 +34,7 @@ class RegisterController extends GetxController {
         duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 
-  checkTerms(bool val) =>
+  checkTerms(bool? val) =>
     _thermIsChecked.value = val;
   
 
@@ -44,7 +43,7 @@ class RegisterController extends GetxController {
 
   @override
   void onClose() {
-    FocusScope.of(Get.context).unfocus();
+    FocusScope.of(Get.context!).unfocus();
     super.onClose();
   }
 

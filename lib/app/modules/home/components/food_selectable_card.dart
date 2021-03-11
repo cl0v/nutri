@@ -4,10 +4,10 @@ import 'package:nutri/app/data/model/food_model.dart';
 
 class FoodSelectableCard extends StatefulWidget {
   final FoodModel food;
-  final Function onTap;
+  final Function? onTap;
 
   FoodSelectableCard({
-    this.food,
+    required this.food,
     this.onTap,
   });
 
@@ -19,7 +19,7 @@ class _FoodSelectableCardState extends State<FoodSelectableCard> {
   bool selectedState = false;
 
   onTap() {
-    if (widget.onTap()) {
+    if (widget.onTap!()) {
       setState(() {
         selectedState = true;
       });
@@ -73,9 +73,9 @@ class _FoodSelectableCardState extends State<FoodSelectableCard> {
 }
 
 class MainFoodSelectableCard extends StatelessWidget {
-  final FoodModel food;
-  final Function onTap;
-  final bool selected;
+  final FoodModel? food;
+  final Function? onTap;
+  final bool? selected;
 
   MainFoodSelectableCard({
     this.food,
@@ -86,14 +86,14 @@ class MainFoodSelectableCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTap as void Function()?,
       child: Container(
         margin: EdgeInsets.all(4.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
             image: AssetImage(
-              food.img,
+              food!.img,
             ),
             fit: BoxFit.cover,
           ),
@@ -101,7 +101,7 @@ class MainFoodSelectableCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: selected
+            color: selected!
                 ? Colors.green.withOpacity(.4)
                 : Colors.black.withOpacity(.3),
           ),
@@ -110,7 +110,7 @@ class MainFoodSelectableCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                food.title,
+                food!.title,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,

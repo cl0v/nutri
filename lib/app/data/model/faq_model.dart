@@ -4,7 +4,7 @@ class FAQModel {
   String question;
   String answer;
 
-  FAQModel({this.question, this.answer});
+  FAQModel({required this.question, required this.answer});
 
   Map<String, dynamic> toMap() {
     return {
@@ -13,14 +13,10 @@ class FAQModel {
     };
   }
 
-  factory FAQModel.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
-    return FAQModel(
+  factory FAQModel.fromMap(Map<String, dynamic> map) => FAQModel(
       question: map['question'],
       answer: map['answer'],
     );
-  }
 
   String toJson() => json.encode(toMap());
 

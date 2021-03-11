@@ -31,7 +31,7 @@ import 'package:nutri/app/routes/app_pages.dart';
 
 class HomeController extends GetxController {
   final HomeRepository repository;
-  HomeController({@required this.repository});
+  HomeController({required this.repository});
 
   final mealsOfTheDay = <MealCardModel>[].obs;
 
@@ -44,7 +44,7 @@ class HomeController extends GetxController {
   final extraFoodsAvailable = <FoodModel>[].obs;
 
   final RxBool _showHomeContent = false.obs;
-  bool get showHomeContent => _showHomeContent.value;
+  bool get showHomeContent => _showHomeContent.value!;
 
   final showingDayIndex = 0.obs;
   int todayDayIndex = 0;
@@ -70,12 +70,9 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    print('dnv samerda');
     repository.getHomeState().listen((state) {
-      print(state);
       switch (state) {
         case HomeState.Ready:
-          print('home ta pronta');
           _showHomeContent.value = true;
           break;
         case HomeState.SharedPrefsNull:
@@ -101,8 +98,8 @@ class HomeController extends GetxController {
 
   _fetchTodayMeals() async {
     var dailyMeals =
-        await repository.fetchDailyMeals(day: DateTime.now().weekday);
-    if (dailyMeals != null && dailyMeals.isNotEmpty) {
+        await repository.fetchDailyMeals(day: DateTime.now().weekday); //FIXME: Erro aq
+    if (dailyMeals.isNotEmpty) {
       mealsOfTheDay.assignAll(
           (dailyMeals).map((meal) => MealCardModel(mealModel: meal)));
       _setMeal(mealsOfTheDay[mealIndex].mealModel);

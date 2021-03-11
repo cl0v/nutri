@@ -5,7 +5,7 @@ import 'package:nutri/app/data/providers/question_page_provider.dart';
 class QuestionPageRepository {
   final QuestionPageProvider provider;
 
-  QuestionPageRepository({@required this.provider});
+  QuestionPageRepository({required this.provider});
 
   Future<List<QuestionModel>> loadQuestionList() => provider.loadQuestionList();
 

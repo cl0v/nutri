@@ -5,7 +5,7 @@ class FoodCard extends StatelessWidget {
   final FoodModel food;
 
   const FoodCard({
-    this.food,
+    required this.food,
   });
   @override
   Widget build(BuildContext context) {

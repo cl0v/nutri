@@ -1,4 +1,4 @@
-import 'package:flip_card/flip_card.dart';
+// import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 
@@ -10,18 +10,21 @@ class FoodSwipeCard extends StatelessWidget {
   final VoidCallback onCheckTapped;
 
   const FoodSwipeCard({
-    this.food,
+    required this.food,
     this.isChecked = false,
-    @required this.onCheckTapped,
+    required this.onCheckTapped,
   });
 
 
   @override
   Widget build(BuildContext context) {
-    return FlipCard(
-      flipOnTouch: true,
-      speed: 250,
-      front: Container(
+    return 
+    // FlipCard(
+    //   flipOnTouch: true,
+    //   speed: 250,
+    //   front: 
+    //TODO: Criar o card novamente
+      Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
@@ -84,21 +87,21 @@ class FoodSwipeCard extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      back: Container(
-        margin: EdgeInsets.symmetric(
-          horizontal: 10,
-        ),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15), color: Colors.white),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            food.desc,
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ),
-    );
+      );
+    //   back: Container(
+    //     margin: EdgeInsets.symmetric(
+    //       horizontal: 10,
+    //     ),
+    //     decoration: BoxDecoration(
+    //         borderRadius: BorderRadius.circular(15), color: Colors.white),
+    //     child: Padding(
+    //       padding: const EdgeInsets.all(16.0),
+    //       child: Text(
+    //         food.desc,
+    //         textAlign: TextAlign.center,
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }

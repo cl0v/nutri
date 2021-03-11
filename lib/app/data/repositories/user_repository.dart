@@ -4,7 +4,7 @@ import 'package:nutri/app/data/providers/user_provider.dart';
 class UserRepository {
   final UserProvider provider;
 
-  UserRepository({@required this.provider}) : assert(provider != null);
+  UserRepository({required this.provider}) : assert(provider != null);
 
   Future<bool> signin(String email, String password) => provider.signin(email, password);
   

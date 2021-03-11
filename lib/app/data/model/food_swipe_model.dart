@@ -7,10 +7,10 @@ class FoodSwipeModel {
   List<FoodModel> foods;
 
   FoodSwipeModel({
-    this.category,
-    this.maximum,
-    this.minimum,
-    this.foods,
+    required this.category,
+    required this.maximum,
+    required this.minimum,
+    required this.foods,
   });
 
   static String getCategory(FoodCategory category) {

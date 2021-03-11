@@ -8,7 +8,7 @@ class QuestionsController extends GetxController {
   final QuestionPageRepository repository;
 
   QuestionsController({
-    @required this.repository,
+    required this.repository,
   });
 
   PageController _pageController = PageController();
@@ -19,12 +19,12 @@ class QuestionsController extends GetxController {
   List<QuestionModel> get questions => this._questions;
 
   var _isAnswered = false.obs;
-  bool get isAnswered => _isAnswered.value;
+  bool? get isAnswered => _isAnswered.value;
 
   RxInt _selectedIndex = 5.obs;
   int get selectedIndex => _selectedIndex.value;
 
-  final _index = RxInt();
+  final _index = RxInt(0);
   int get index => this._index.value;
 
   @override
@@ -77,11 +77,11 @@ class QuestionsController extends GetxController {
   }
 
   _saveAnswers(Map ans) {
-    repository.setQuestionsPrefs(ans);
+    repository.setQuestionsPrefs(ans as Map<String, String>);
   }
 
   _nextQuestion() {
-    if (pageController.page.round() != questions.length - 1) {
+    if (pageController.page!.round() != questions.length - 1) {
       _selectedIndex.value = -1;
       _isAnswered.value = false;
       _pageController.nextPage(

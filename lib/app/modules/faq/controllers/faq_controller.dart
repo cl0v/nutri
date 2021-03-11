@@ -6,7 +6,7 @@ import 'package:nutri/app/data/repositories/faq_repository.dart';
 class FaqController extends GetxController {
   final FAQRepository faqRepository;
 
-  FaqController({@required this.faqRepository});
+  FaqController({required this.faqRepository});
 
   final faqList = <FAQModel>[].obs;
 

@@ -34,32 +34,26 @@ class ExtraFoodSelector extends StatelessWidget {
                           ),
                           child: Obx(() => Image.asset(
                                 controller
-                                        .extraFoodsAvailable[(controller
-                                                    .selectedExtrasList
-                                                    .isNotEmpty &&
-                                                controller.selectedExtrasList
-                                                        .length >
-                                                    0 &&
-                                                controller.selectedExtrasList !=
-                                                    null)
-                                            ? controller.selectedExtrasList[0]
-                                            : 0]
-                                        .img ??
-                                    '',
+                                    .extraFoodsAvailable[(controller
+                                                .selectedExtrasList
+                                                .isNotEmpty &&
+                                            controller
+                                                    .selectedExtrasList.length >
+                                                0)
+                                        ? controller.selectedExtrasList[0]
+                                        : 0]
+                                    .img,
                                 fit: BoxFit.cover,
                               )),
                         ),
                         Image.asset(
                           controller
-                                  .extraFoodsAvailable[(controller
-                                              .selectedExtrasList.isNotEmpty &&
-                                          controller.selectedExtrasList.length >
-                                              1 &&
-                                          controller.selectedExtrasList != null)
-                                      ? controller.selectedExtrasList[1]
-                                      : 1]
-                                  .img ??
-                              '',
+                              .extraFoodsAvailable[(controller
+                                          .selectedExtrasList.isNotEmpty &&
+                                      controller.selectedExtrasList.length > 1)
+                                  ? controller.selectedExtrasList[1]
+                                  : 1]
+                              .img,
                           fit: BoxFit.cover,
                         ),
                         ClipRRect(
@@ -68,19 +62,14 @@ class ExtraFoodSelector extends StatelessWidget {
                               topRight: Radius.circular(15)),
                           child: Image.asset(
                             controller
-                                    .extraFoodsAvailable[(controller
-                                                .selectedExtrasList
-                                                .isNotEmpty &&
-                                            controller
-                                                    .selectedExtrasList.length >
-                                                2 &&
-                                            controller.selectedExtrasList !=
-                                                null)
-                                        //BUG: Pode ter duas imagens iguais
-                                        ? controller.selectedExtrasList[2]
-                                        : 2]
-                                    .img ??
-                                '',
+                                .extraFoodsAvailable[(controller
+                                            .selectedExtrasList.isNotEmpty &&
+                                        controller.selectedExtrasList.length >
+                                            2)
+                                    //BUG: Pode ter duas imagens iguais
+                                    ? controller.selectedExtrasList[2]
+                                    : 2]
+                                .img,
                             fit: BoxFit.cover,
                           ),
                         )
@@ -91,10 +80,12 @@ class ExtraFoodSelector extends StatelessWidget {
           ),
         ),
         Center(
-          child: Obx(()=>Text(
-            'Selecione até 3 acompanhamentos (${controller.selectedExtrasList.length}/3)',
-            style: TextStyle(color: Colors.white),
-          ),),
+          child: Obx(
+            () => Text(
+              'Selecione até 3 acompanhamentos (${controller.selectedExtrasList.length}/3)',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
         ),
         SizedBox(
           height: 3,

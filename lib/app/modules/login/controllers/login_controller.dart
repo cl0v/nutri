@@ -5,7 +5,7 @@ import 'package:nutri/app/routes/app_pages.dart';
 
 class LoginController extends GetxController {
   final UserRepository repository;
-  LoginController({@required this.repository});
+  LoginController({required this.repository});
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -14,9 +14,9 @@ class LoginController extends GetxController {
   RxString _errorMsg = ''.obs;
   RxBool _isObscurePassword = true.obs;
 
-  bool get loginError => _loginError.value;
-  String get errorMsg => _errorMsg.value;
-  bool get isObscurePassword => _isObscurePassword.value;
+  bool get loginError => _loginError.value!;
+  String get errorMsg => _errorMsg.value!;
+  bool get isObscurePassword => _isObscurePassword.value!;
 
   onCreateAccountPressed() {
     Get.toNamed(Routes.REGISTER);
@@ -28,7 +28,7 @@ class LoginController extends GetxController {
 
   @override
   void onClose() {
-    FocusScope.of(Get.context).unfocus();
+    FocusScope.of(Get.context!).unfocus();
     super.onClose();
   }
 

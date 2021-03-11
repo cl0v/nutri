@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class QuestionPageProvider {
   final Future<SharedPreferences> sharedPreferences;
 
-  QuestionPageProvider({@required this.sharedPreferences});
+  QuestionPageProvider({required this.sharedPreferences});
 
   Future<List<QuestionModel>> loadQuestionList() async => QuestionProvider.loadQuestionList();
 

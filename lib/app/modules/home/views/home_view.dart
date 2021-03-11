@@ -67,14 +67,14 @@ class HomeView extends GetView<HomeController> {
                       children: [
                         IconButton(
                           icon: Icon(Icons.arrow_back_ios),
-                          onPressed: controller.isPreviewBtnDisabled.value
+                          onPressed: controller.isPreviewBtnDisabled.value!
                               ? null
                               : controller.onPreviewDayPressed,
                         ),
                         Text(controller.getDayTitle()),
                         IconButton(
                           icon: Icon(Icons.arrow_forward_ios),
-                          onPressed: controller.isNextBtnDisabled.value
+                          onPressed: controller.isNextBtnDisabled.value!
                               ? null
                               : controller.onNextDayPressed,
                         ),

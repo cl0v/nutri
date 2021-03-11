@@ -95,7 +95,7 @@
     "img": "assets/images/foods/refrigerante sem açucar.jpg",
     "desc": "Sim, você pode tomar refrigerante, desde que não tenha açucar.",
     "category": 1,
-    "mainOrExtra": 1
+    "mainOrExtra": 0
   },
   {
     "title": "Aspargo",

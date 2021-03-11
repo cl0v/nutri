@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:nutri/app/data/model/food_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 enum MealType {
   breakfast,
@@ -17,35 +17,23 @@ class MealModel {
   MealType mealType;
   List<FoodModel> mainFoodList;
   List<FoodModel> extraList;
-  int extraAmount;
-
+  int extraAmount; //TODO: Remover, nem estou mais usando (fixei em sempre ter 3 acompanhamentos)
+//TODO: Solução basica é contar quantos elementos tem nos extras, se tiver vazia, nao mostra acompanhamentos
+//Se tiver 3 ou mais, mostra o selecione
   MealModel({
-    this.mealType,
-    this.mainFoodList,
-    this.extraList,
+    required this.mealType,
+    required this.mainFoodList,
+    required this.extraList,
     this.extraAmount = 0,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'mealType': mealType?.index,
-      'mainFoodList': mainFoodList?.map((x) => x?.toMap())?.toList(),
-      'extras': extraList?.map((x) => x?.toMap())?.toList(),
+      'mealType': mealType.index,
+      'mainFoodList': mainFoodList.map((x) => x.toMap()).toList(),
+      'extraList': extraList.map((x) => x.toMap()).toList(),
       'extraAmount': extraAmount,
     };
-  }
-
-  factory MealModel.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
-    return MealModel(
-      mealType: MealType.values[map['mealType']],
-      mainFoodList: List<FoodModel>.from(
-          map['mainFoodList']?.map((x) => FoodModel.fromMap(x))),
-      extraList:
-          List<FoodModel>.from(map['extras']?.map((x) => FoodModel.fromMap(x))),
-      extraAmount: map['extraAmount'],
-    );
   }
 
   String toJson() => json.encode(toMap());
@@ -75,6 +63,24 @@ class MealModel {
         mainFoodList.hashCode ^
         extraList.hashCode ^
         extraAmount.hashCode;
+  }
+
+  // factory MealModel.fromMap(Map<String, dynamic>? map) { //TODO: Estudar esse caso
+  //   if (map == null) return null;
+  factory MealModel.fromMap(Map<String, dynamic> map) {
+    return MealModel(
+      mealType: MealType.values[map['mealType']],
+      mainFoodList: List<FoodModel>.from(
+          map['mainFoodList']?.map((x) => FoodModel.fromMap(x))),
+      extraList: List<FoodModel>.from(
+        map['extraList']?.map(
+              //Esse  map['extraList'] é nulo as vezes, mas nao deveria, deveria ser vazio
+              (x) => FoodModel.fromMap(x),
+            ) ??
+            [],
+      ),
+      extraAmount: map['extraAmount'],
+    );
   }
 }
 
@@ -108,16 +114,14 @@ abstract class MealProvider {
     return listOfDailyMeal;
   }
 
+//TODO: Eu acho que estou esquecendo de conferir se o foodswipe (DONE) ja foi e tambem se ja foi buildado as meals da semana
   static List<List<MealModel>> getWeeklyMealsFromPrefs(
       SharedPreferences prefs) {
-    var foodPrefList = prefs.getStringList(weeklyMealsPrefsKey);
-    if (foodPrefList != null)
-      return foodPrefList?.map((w) {
-        List js = json.decode(w);
-        return js.map((e) => MealModel.fromJson(e)).toList();
-      })?.toList();
-    else
-      return [];
+    var foodPrefList = prefs.getStringList(weeklyMealsPrefsKey) ?? [];
+    return foodPrefList.map((String st) {
+      List<dynamic> js = json.decode(st);
+      return js.map((s) => MealModel.fromJson(s)).toList();
+    }).toList();
   }
 }
 

@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
@@ -8,13 +7,13 @@ class QuestionModel {
   String prefs;
   List<String> options;
 
-  QuestionModel({this.question, this.prefs, this.options});
+  QuestionModel(
+      {required this.question, required this.prefs, required this.options});
 
-  QuestionModel.fromJson(Map<String, dynamic> json) {
-    question = json['question'];
-    prefs = json['prefs'];
-    options = json['options'].cast<String>();
-  }
+  factory QuestionModel.fromJson(Map<String, dynamic> json) => QuestionModel(
+      question: json['question'],
+      prefs: json['prefs'],
+      options: json['options'].cast<String>());
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -24,10 +23,10 @@ class QuestionModel {
     return data;
   }
 }
+
 const jsonPath = 'assets/jsons/questions.json';
 
-abstract class QuestionProvider{
-
+abstract class QuestionProvider {
   static _loadJson() async {
     return await rootBundle.loadString(jsonPath);
   }
@@ -37,6 +36,4 @@ abstract class QuestionProvider{
     List jsonList = json.decode(data);
     return jsonList.map((e) => QuestionModel.fromJson(e)).toList();
   }
-
-  
 }

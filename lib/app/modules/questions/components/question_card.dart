@@ -3,7 +3,7 @@ import 'package:nutri/constants.dart';
 
 class QuestionCard extends StatelessWidget {
   const QuestionCard({
-    @required this.children,
+    required this.children,
   });
 
   final List<Widget> children;

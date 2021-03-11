@@ -8,7 +8,7 @@ const foodPrefsKey = 'foodPrefs';
 class FoodSwipeProvider {
   final Future<SharedPreferences> prefs;
 
-  FoodSwipeProvider({@required this.prefs});
+  FoodSwipeProvider({required this.prefs});
 
   Future<List<FoodSwipeModel>> loadFoodSwipeList() async =>
       _buildFoodSwipeList();
