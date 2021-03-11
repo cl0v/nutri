@@ -26,6 +26,9 @@ import 'package:nutri/app/routes/app_pages.dart';
 
 //TODO: Na ultima meal, quando confirmada, mostrará as informações na tela
 
+//TODO: Salvar as refeiçoes em cache, para quando o user entrar, a home ja mostrar qual meal está
+//TODO: Resetar o index todo dia
+
 class HomeController extends GetxController {
   final HomeRepository repository;
   HomeController({@required this.repository});
@@ -77,7 +80,6 @@ class HomeController extends GetxController {
           break;
         case HomeState.SharedPrefsNull:
           Get.offAllNamed(Routes.FOOD_SWIPE);
-          //BUG: Quando a rota home é chamada novamente, ele nao entra aq
           break;
         default:
           break;

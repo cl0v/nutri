@@ -29,7 +29,7 @@ class FoodSwipeProvider {
     foodSwipeList.add(
       FoodSwipeModel(
         maximum: 7,
-        minimum: 1,
+        minimum: 3,
         category: FoodSwipeModel.getCategory(FoodCategory.meat),
         foods: meatList,
       ),

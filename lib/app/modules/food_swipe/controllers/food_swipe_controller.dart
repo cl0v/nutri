@@ -47,8 +47,7 @@ class FoodSwipeController extends GetxController {
     ++currentIndex;
     if (currentIndex == _foodSwipeList.length) {
       await _savePrefs();
-      Get.reset();
-      await Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.HOME);
     } else {
       _setShowingFoodSwipe(_foodSwipeList[currentIndex]);
       _isConfirmBtnAvailable.value = false; // Passar isso pra um metodo
