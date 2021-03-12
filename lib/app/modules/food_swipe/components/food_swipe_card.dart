@@ -65,9 +65,9 @@ class FoodSwipeCard extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.check_circle),
+                    icon: Icon(Icons.check_box),
                     color: !isChecked ? Colors.white : Colors.greenAccent,
-                    iconSize: 52,
+                    iconSize: 64,
                     onPressed: onCheckTapped,
                   ),
                   Text(

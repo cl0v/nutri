@@ -34,6 +34,7 @@ class RegisterView extends GetView<RegisterController> {
             pageSnapping: true,
             physics: NeverScrollableScrollPhysics(),
             children: [
+              //TODO: Remover esse carinha primeiro e só liberar na hora do pagamento
               Center(
                 child: Container(
                   height: 450,
@@ -90,21 +91,25 @@ class RegisterView extends GetView<RegisterController> {
                       SizedBox(
                         height: 16,
                       ),
-                      Obx(()=>TextFormField(
-                        controller: controller.passwordController,
-                        obscureText: controller.isObscurePassword,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.lock),
-                          suffixIcon: IconButton(icon: Icon(Icons.remove_red_eye), onPressed: controller.onShowPasswordPressed),
-                          hintText: 'Password',
-                          labelText: 'Password',
-                          border: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              const Radius.circular(99),
+                      Obx(
+                        () => TextFormField(
+                          controller: controller.passwordController,
+                          obscureText: controller.isObscurePassword,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.lock),
+                            suffixIcon: IconButton(
+                                icon: Icon(Icons.remove_red_eye),
+                                onPressed: controller.onShowPasswordPressed),
+                            hintText: 'Password',
+                            labelText: 'Password',
+                            border: OutlineInputBorder(
+                              borderRadius: const BorderRadius.all(
+                                const Radius.circular(99),
+                              ),
                             ),
                           ),
                         ),
-                      ),),
+                      ),
                       Spacer(),
                       Align(
                         alignment: Alignment.centerRight,
@@ -178,7 +183,7 @@ class RegisterView extends GetView<RegisterController> {
                           dense: true,
                           value: controller.thermIsChecked,
                           title: Text(
-                            'Aceitar termos e condições.',
+                            'Aceitar termos e condições.', //TODO: Criar link de termos e condições
                           ),
                           onChanged: controller.checkTerms,
                           // subtitle: Text('Aceitar termos e condições.'),
