@@ -12,7 +12,7 @@ class OverviewCard extends StatelessWidget {
       ListView.builder(
         itemCount: items.length + 1,
         itemBuilder: (ct, idx) {
-          if (idx == 0) return Text('Refeições de hoje', style: TextStyle(color: Colors.white, fontSize: 32,),textAlign: TextAlign.center,);
+          if (idx == 0) return Text('Refeições do dia:', style: TextStyle(color: Colors.white, fontSize: 32,),textAlign: TextAlign.center,);//Refeições do dia
           return AspectRatio(
             aspectRatio: 2.9,
             child: FoodCard(

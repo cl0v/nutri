@@ -259,17 +259,19 @@ class HomeController extends GetxController {
   showReviewCard() {
     //TODO: Implement: Mostrar o card final
     //TODO: Pular para a página de overview
+    //TODO: Ver dia de amanha está bugado, preciso ver exatamente o dia de amanha
     _homeBodyState.value = HomeBodyState.Review;
   }
 
   showTomorrowOverView() {
+    //TODO: Estudar esse carinha
     _homeBodyState.value = HomeBodyState.TomorrowOverView;
-    _showDayOverView(todayIndex + 1);
-    //Ou outro dia
-    //OtherDaysOverView??
+    _showDayOverView(1);
   }
+  //TODO: Ver hoje precisa retornar para hoje, no estado que estava
 
   _showDayOverView(int day) async {
+    
     _homeBodyState.value = HomeBodyState.TomorrowOverView;
     var dailyMeals =
         await repository.fetchDailyMeals(day: (todayIndex + day - 1) % 7);
@@ -294,7 +296,11 @@ class HomeController extends GetxController {
     //TODO: Implement _updateDayOnTitle
     // dayIndex vai obrigatorioamente de 0 a 6
     dayIndex.value += val;
-    _showDayOverView(dayIndex.value);
+    if(dayIndex.value != 0)
+      _showDayOverView(dayIndex.value);
+      //TODO: Quando volta para o dia de hoje, preciso retornar a pagina que estava, de 0 a 5, etc
+      // else
+      // _homeBodyState.value == Ultimo estado salvo
   }
 
   void onPreviewDayPressed() {
