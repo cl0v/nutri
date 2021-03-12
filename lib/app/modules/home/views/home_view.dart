@@ -28,19 +28,31 @@ class HomeView extends GetView<HomeController> {
                     elevation: 0,
                     child: Obx(
                       () {
-                        if (controller.homeCardState == HomeCardState.Overview)
-                          return ElevatedButton(
+                        if (controller.homeBodyState == HomeBodyState.Overview)
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child:ElevatedButton(
                             onPressed: controller.showMealsCard,
                             child: Text('Vamos la'),
+                            style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.resolveWith(
+                                  (states) => Size(120, 42)),
+                            ),),
                           );
-                        else if (controller.homeCardState ==
-                            HomeCardState.Review)
+                        else if (controller.homeBodyState ==
+                            HomeBodyState.Review)
                           return ElevatedButton(
-                            onPressed: controller.onNextDayPressed,
+                            onPressed: controller.showTomorrowOverView,
                             child: Text('Conferir dia de amanha'),
                           );
-                        else if (controller.homeCardState ==
-                            HomeCardState.Meals)
+                        else if (controller.homeBodyState ==
+                            HomeBodyState.TomorrowOverView)
+                          return ElevatedButton(
+                            onPressed: controller.showReviewCard,
+                            child: Text('Ver hoje'), //FIXME: Rename
+                          );
+                        else if (controller.homeBodyState ==
+                            HomeBodyState.Meals)
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 8.0),
                             child: Row(

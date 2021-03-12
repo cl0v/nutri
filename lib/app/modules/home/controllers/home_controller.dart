@@ -28,10 +28,14 @@ import 'package:nutri/app/routes/app_pages.dart';
 
 //- Resetar o index todo dia(//TODO:Precisa ser testado)
 
-enum HomeCardState {
+//TODO: Quando o user termina as refeições do dia ele vai pra a review page
+// Na review page voce pode dar um overview no proximo dia, o botao irá alterar para ser, 'ver review de hoje'
+enum HomeBodyState {
+  Loading,
   Overview,
   Meals,
   Review,
+  TomorrowOverView, //TODO: Implement TomorrowOverView
 }
 
 class HomeController extends GetxController {
@@ -55,11 +59,14 @@ class HomeController extends GetxController {
   int todayDayIndex = 0;
 
   int mealIndex = 0;
+  int pageIndex = 0;
 
   final selectedMainFoodIdx = 0.obs;
 
   final _selectedExtrasList = <int>[].obs;
   List<int> get selectedExtrasList => _selectedExtrasList;
+
+  List<Map<String, String>> overViewMeals = [];
 
   List<FoodModel> selectedExtras = [];
 
@@ -68,26 +75,29 @@ class HomeController extends GetxController {
 
   int indexOfTheDayOnWeek = 0;
 
-  PageController pageController = PageController();
 
   final mealCategory = 'Café da manhã'.obs;
+
+  Rx<HomeBodyState> _homeBodyState = HomeBodyState.Loading.obs;
+  HomeBodyState get homeBodyState => _homeBodyState.value!;
 
 //IDEIA: Fluxo basico > a home vai enviando dados durante o dia para o provider
 // O provider vai salvando
 // No final do dia, na ultima refeição, um metodo que te dá o resultado do dia é chamado
 // E os parametros basicos sao resetados, meal, day etc
 
+   late PageController pageController ;
+
   @override
   void onInit() {
     super.onInit();
-
-    _initHome();
+    
   }
 
   @override
-  void onClose() {
-    super.onClose();
-    repository.closeHomeStream();
+  void onReady() {
+    super.onReady();
+    _initHome();
   }
 
   _initHome() async {
@@ -104,21 +114,84 @@ class HomeController extends GetxController {
       }
     });
     await _setDayOfTheWeek();
-    // mealIndex = await repository.getActualMealPrefs(todayDayIndex);
-    _fetchTodayMeals();
+    // var meali =;
+    // _fetchPageIndex(0);
+    _fetchPageIndex(await repository.getPageIndex(todayDayIndex));
+    //TODO: Ele está uma refeição atrás da salva
   }
 
-  _fetchTodayMeals() async {
-    var dailyMeals = await repository.fetchDailyMeals(
-        day: DateTime.now().weekday); //FIXME: Erro aq
-    if (dailyMeals.isNotEmpty) {
-      mealsOfTheDay.assignAll(
-          (dailyMeals).map((meal) => MealCardModel(mealModel: meal)));
-      _setMeal(mealsOfTheDay[mealIndex].mealModel);
+  _fetchPageIndex(int idx) async {
+    //TODO: Se page Index for 0, overview, se for de 1 a 4, os meal em ordem, se for 5, review
+    // if (pageController.hasClients) {
+      pageController = PageController(initialPage:idx);
+    // }
+    await _fetchTodayMeals(); //TODO: Trocar a hora em que o home decide se mostra ou nao HomeState.Ready
+    _setHomeCardState(idx);
+  }
+
+  _savePageIndex(int idx) {
+    repository.setPageIndex(idx, todayDayIndex);
+  }
+
+  onPageChanged(int idx) async {
+    pageIndex = idx; //TODO: Remover pageIndex
+    _setHomeCardState(idx);
+
+    _savePageIndex(idx);
+    //TODO: Estudar se esse cara deve ficar aqui
+    //Ta bugado a refeição que deve aparecer depois de abrir o app novamente
+    //O bug é que o index da page é inicializado novamente, logo, quando o lanche da tarde completa e vai pra janta(se começar no lanche), a proxima refeição vira index 1 e aparece o café da manha
+  }
+
+  _setHomeCardState(int idx) async {
+    print('idx dentro do homecardstate: $idx');
+    switch (idx) {
+      case 0:
+        _homeBodyState.value = HomeBodyState.Overview;
+        break;
+      case 5:
+        _homeBodyState.value = HomeBodyState.Review;
+        break;
+      default:
+        _homeBodyState.value = HomeBodyState.Meals;
+        _setMeal(idx - 1);
+        break;
     }
   }
 
-  _setMeal(MealModel meal) async {
+//TODO: Posso receber o pgIndex para saber se está na overview ou na review
+// Caso seja diferente de 0, atribui o valor ao mealIndex(1-4),
+// 0 - OverView
+// 1-4 - Meal
+// 5 - Review
+
+  @override
+  void onClose() {
+    super.onClose();
+    repository.closeHomeStream(); //TODO: Conferir se é necessario
+  }
+
+  _fetchTodayMeals() async {
+    var dailyMeals =
+        await repository.fetchDailyMeals(day: todayDayIndex); //FIXME: Erro aq
+    if (dailyMeals.isNotEmpty) {
+      mealsOfTheDay.assignAll(
+          (dailyMeals).map((meal) => MealCardModel(mealModel: meal)));
+    }
+    overViewMeals = dailyMeals
+        .map(
+          (meal) => {
+            'image': meal.mainFoodList.first.img,
+            'title':
+                '${MealModelHelper.getTranslatedMeal(meal.mealType)}:\n${meal.mainFoodList.first.title}',
+          },
+        )
+        .toList();
+  }
+
+  _setMeal(int idx) async {
+    print('idx que deverá decidir o meal 0 a 3: $idx');
+    var meal = mealsOfTheDay[idx].mealModel;
     selectedMainFoodIdx.value = 0;
     mainFoodsAvailable.assignAll(meal.mainFoodList);
     extraFoodsAvailable.assignAll(meal.extraList);
@@ -174,40 +247,42 @@ class HomeController extends GetxController {
 
   onDonePressed() {
     //TODO: Implement onDonePressed
-    _saveMealOfTheDay();
     _nextPage();
   }
 
   onSkippedPressed() {
     //TODO: Implement onSkippedPressed
 
-    _saveMealOfTheDay();
     _nextPage();
   }
 
   _nextPage() {
-    mealIndex++;
+    //TODO: Se page Index for 0, overview, se for de 1 a 4, os meal em ordem, se for 5, review
     if (mealIndex >= mealsOfTheDay.length) {
-      return _showReviewCard();
+      return showReviewCard();
     } else {
-      repository.setActualMealPrefs(mealIndex, todayDayIndex);
       pageController.nextPage(
         duration: Duration(microseconds: 100),
         curve: Curves.ease,
       );
-      _setMeal(mealsOfTheDay[mealIndex].mealModel);
+      // _setMeal(mealsOfTheDay[mealIndex].mealModel); //TODO: Conferir esse cara
     }
   }
 
-  Rx<HomeCardState> _homeCardState = HomeCardState.Overview.obs;
-  HomeCardState get homeCardState => _homeCardState.value!;
-  _showReviewCard() {
+  showReviewCard() {
     //TODO: Implement: Mostrar o card final
-    _homeCardState.value = HomeCardState.Review;
+    //TODO: Pular para a página de overview
+    _homeBodyState.value = HomeBodyState.Review;
+  }
+
+  showTomorrowOverView() {
+    _homeBodyState.value = HomeBodyState.TomorrowOverView; //Ou outro dia
+    //OtherDaysOverView??
   }
 
   showMealsCard() {
-    _homeCardState.value = HomeCardState.Meals;
+    pageController.jumpToPage(1);
+    _homeBodyState.value = HomeBodyState.Meals;
     //TODO: Alterar o botao da navbar para poder ser 'Vamos lá'
   }
 

@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // Salvar o index de qual refeição é a proxima(Se confirmei o cafe da manha, a proxima refeição, para quando eu abrir o app, deverá ser o almoço)
 // Lembrar que isso pode afetar o dia seguinte....
 
-const mealIndexKey = 'mealIndexKey';
+const pageIndexKey = 'pageIndexKey';
 const dayIndexKey = 'dayIndexKey';
 
 enum HomeState {
@@ -99,16 +99,16 @@ class HomeProvider {
       MealProvider.saveWeeklyMealsOnPrefs(
           await sharedPreferences, listOfDailyMeal);
 
-  Future<int> getActualMealPrefs(int day) async {
+  Future<int> getPageIndexFromPrefs(int day) async {
     var lastSavedDay = (await sharedPreferences).getInt(dayIndexKey);
     if (lastSavedDay == day)
-      return (await sharedPreferences).getInt(mealIndexKey) ?? 0;
+      return (await sharedPreferences).getInt(pageIndexKey) ?? 0;
     return 0;
   }
 
-  setActualMealPrefs(int mealIdx, int day) async {
+  setPageIndexOnPrefs(int mealIdx, int day) async {
     var prefs = (await sharedPreferences);
     prefs.setInt(dayIndexKey, day);
-    prefs.setInt(mealIndexKey, mealIdx);
+    prefs.setInt(pageIndexKey, mealIdx);
   }
 }

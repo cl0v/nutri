@@ -12,12 +12,15 @@ class HomeBody extends GetView<HomeController> {
     return PageView.builder(
       physics: NeverScrollableScrollPhysics(),
       controller: controller.pageController,
+      onPageChanged: controller.onPageChanged,
       itemBuilder: (c, idx) => Obx(() {
-        if (controller.homeCardState == HomeCardState.Review)
+        if (controller.homeBodyState == HomeBodyState.Review)
           return ReviewCard();
-        else if (controller.homeCardState == HomeCardState.Overview)
-          return OverviewCard();
-        else
+        else if (controller.homeBodyState == HomeBodyState.Overview)
+          return OverviewCard(items:controller.overViewMeals);
+        else if (controller.homeBodyState == HomeBodyState.TomorrowOverView)
+          return OverviewCard(items:[]); // TODO: Passar a lista de refeições (Apenas o prato principal e qual refeição mealType)
+        else if (controller.homeBodyState == HomeBodyState.Meals)
           return SingleChildScrollView(
             child: SafeArea(
               child: Column(
@@ -40,6 +43,10 @@ class HomeBody extends GetView<HomeController> {
                 ],
               ),
             ),
+          );
+        else
+          return Center(
+            child: CircularProgressIndicator(),
           );
       }),
     );

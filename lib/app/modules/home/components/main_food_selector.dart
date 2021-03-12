@@ -20,8 +20,10 @@ class MainFoodSelector extends StatelessWidget {
           child: Obx(
             () => controller.mainFoodsAvailable.isNotEmpty
                 ? FoodCard(
-                    food: controller.mainFoodsAvailable[
-                        controller.selectedMainFoodIdx.value],
+                    image: controller.mainFoodsAvailable[
+                        controller.selectedMainFoodIdx.value].img,
+                    title: controller.mainFoodsAvailable[
+                        controller.selectedMainFoodIdx.value].title,
                   )
                 : Container(),
           ),
