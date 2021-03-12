@@ -9,6 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 // Salvar o index de qual refeição é a proxima(Se confirmei o cafe da manha, a proxima refeição, para quando eu abrir o app, deverá ser o almoço)
 // Lembrar que isso pode afetar o dia seguinte....
 
+const mealIndexKey = 'mealIndexKey';
+const dayIndexKey = 'dayIndexKey';
+
 enum HomeState {
   Error,
   Ready,
@@ -24,7 +27,7 @@ class HomeProvider {
   Stream<HomeState> getHomeState() => homeStateOutput;
   closeHomeStream() => homeStateController.close();
 
-  Future<List<MealModel>> fetchDailyMeals({int day = 1}) async => 
+  Future<List<MealModel>> fetchDailyMeals({int day = 1}) async =>
       _fetchDailyMeals(await sharedPreferences, day: day);
 
   Future<List<List<MealModel>>> fetchMealsOfTheWeek() async =>
@@ -58,8 +61,10 @@ class HomeProvider {
   }
 
   Future<List<MealModel>> _fetchDailyMeals(sharedPreferences,
-      {int day = 1}) async { //TODO: Aqui que deve ser chamado o builde semanal
-    var weeklyMeals = await _fetchWeeklyMeals(sharedPreferences); //FIXME:erro aq
+      {int day = 1}) async {
+    //TODO: Aqui que deve ser chamado o builde semanal
+    var weeklyMeals =
+        await _fetchWeeklyMeals(sharedPreferences); //FIXME:erro aq
 
     return weeklyMeals.isNotEmpty ? weeklyMeals[day - 1] : [];
   }
@@ -93,4 +98,17 @@ class HomeProvider {
           sharedPreferences, List<List<MealModel>> listOfDailyMeal) async =>
       MealProvider.saveWeeklyMealsOnPrefs(
           await sharedPreferences, listOfDailyMeal);
+
+  Future<int> getActualMealPrefs(int day) async {
+    var lastSavedDay = (await sharedPreferences).getInt(dayIndexKey);
+    if (lastSavedDay == day)
+      return (await sharedPreferences).getInt(mealIndexKey) ?? 0;
+    return 0;
+  }
+
+  setActualMealPrefs(int mealIdx, int day) async {
+    var prefs = (await sharedPreferences);
+    prefs.setInt(dayIndexKey, day);
+    prefs.setInt(mealIndexKey, mealIdx);
+  }
 }

@@ -55,6 +55,7 @@ Future<void> main() async {
         getPages: AppPages.routes,
         theme: theme,
         debugShowCheckedModeBanner: false,
+        enableLog: false,
       ),
     ),
   );

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
@@ -13,21 +12,18 @@ import 'package:nutri/app/routes/app_pages.dart';
 // TODO: Quando chega no ultimo item, nao tem pra onde ir, dar um feedback ou parabenizar a pessoa(pontos concluidos)
 // IDEIA: (10/10) Criar um card para o final da lista(Card indicando os pontos da pessoa e talvez um pequeno resuminho)
 // Pode ser um card xapado azul da cor do tema, apenas um overview do dia;
+//TODO: Na ultima meal, quando confirmada, mostrará as informações na tela
 
 //TODO: Quando a pessoa toca no info do card de cada refeição, explica aquela refeição
 
 // TODO: O widget de extras mostrará apenas imagens com base na quantidade, de 1 a 3
-// TODO: O widget de opçoes será centralizado com base na quantidade disponivel(1 fica no meio, 2 fica cada um de um lado, 3 fica do jeito q ta)
 
-//TODO: Salvar os dados da refeição a medida que o usuário for preenchendo(posso usar o shared, porem na ultima do dia, salvar no banco);
+//TODO: Salvar os dados da refeição a medida que o usuário for preenchendo(Para dar feedback no final do dia) (posso usar o shared, porem na ultima do dia, salvar no banco);
+//TODO: Resetar o index todo dia(Pode bugar caso a pessoa abra o app apenas uma vez na semana e novamente no mesmo dia Sab-Sab, coincidentemente)
 
-//sharedPrefs = todayBreakfast : ['refeiçao principal', 'primeiro acompanhamento', 'segundo', 'terceiro']
-//salvar assim que confirmar, para nao correr o risco de a pessoa esquecer de marcar o ultimoe  ficar sem salvar
+//TODO: Futuramente pegar o horario e definir se ela pulou a refeição com base em horarios
 
-//TODO: Na ultima meal, quando confirmada, mostrará as informações na tela
-
-//TODO: Salvar as refeiçoes em cache, para quando o user entrar, a home ja mostrar qual meal está
-//TODO: Resetar o index todo dia
+//- Resetar o index todo dia(//TODO:Precisa ser testado)
 
 class HomeController extends GetxController {
   final HomeRepository repository;
@@ -67,9 +63,25 @@ class HomeController extends GetxController {
 
   final mealCategory = 'Café da manhã'.obs;
 
+//IDEIA: Fluxo basico > a home vai enviando dados durante o dia para o provider
+// O provider vai salvando
+// No final do dia, na ultima refeição, um metodo que te dá o resultado do dia é chamado
+// E os parametros basicos sao resetados, meal, day etc
+
   @override
   void onInit() {
     super.onInit();
+
+    _initHome();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    repository.closeHomeStream();
+  }
+
+  _initHome() async {
     repository.getHomeState().listen((state) {
       switch (state) {
         case HomeState.Ready:
@@ -82,23 +94,14 @@ class HomeController extends GetxController {
           break;
       }
     });
-    _initHome();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-    repository.closeHomeStream();
-  }
-
-  _initHome() async {
-    _setDayOfTheWeek();
+    await _setDayOfTheWeek();
+    mealIndex = await repository.getActualMealPrefs(todayDayIndex);
     _fetchTodayMeals();
   }
 
   _fetchTodayMeals() async {
-    var dailyMeals =
-        await repository.fetchDailyMeals(day: DateTime.now().weekday); //FIXME: Erro aq
+    var dailyMeals = await repository.fetchDailyMeals(
+        day: DateTime.now().weekday); //FIXME: Erro aq
     if (dailyMeals.isNotEmpty) {
       mealsOfTheDay.assignAll(
           (dailyMeals).map((meal) => MealCardModel(mealModel: meal)));
@@ -172,18 +175,18 @@ class HomeController extends GetxController {
     _nextPage();
   }
 
-  var pgIdx = 0;
   _nextPage() {
-    pgIdx++;
-    if (pgIdx >= mealsOfTheDay.length)
-      //TODO: Conferir se está bloqueando a ultima pagina
+    print(mealIndex);
+    mealIndex++;
+    if (mealIndex >= mealsOfTheDay.length) {
       return _showFinalCard();
-    else {
+    } else {
+      repository.setActualMealPrefs(mealIndex, todayDayIndex);
       pageController.nextPage(
         duration: Duration(microseconds: 100),
         curve: Curves.ease,
       );
-      _setMeal(mealsOfTheDay[++mealIndex].mealModel);
+      _setMeal(mealsOfTheDay[mealIndex].mealModel);
     }
   }
 
