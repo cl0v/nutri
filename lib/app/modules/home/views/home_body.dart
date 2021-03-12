@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/modules/home/components/extra_food_selector.dart';
 import 'package:nutri/app/modules/home/components/main_food_selector.dart';
+import 'package:nutri/app/modules/home/components/review_card.dart';
 import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 
 class HomeBody extends GetView<HomeController> {
@@ -10,7 +11,7 @@ class HomeBody extends GetView<HomeController> {
     return PageView.builder(
       physics: NeverScrollableScrollPhysics(),
       controller: controller.pageController,
-      itemBuilder: (c, idx) => SingleChildScrollView(
+      itemBuilder: (c, idx) => Obx(()=>!controller.showFinalCard ? SingleChildScrollView(
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,7 +32,7 @@ class HomeBody extends GetView<HomeController> {
             ],
           ),
         ),
-      ),
+      ): ReviewCard()),
     );
   }
 }

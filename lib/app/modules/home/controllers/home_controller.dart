@@ -18,10 +18,8 @@ import 'package:nutri/app/routes/app_pages.dart';
 
 // TODO: O widget de extras mostrará apenas imagens com base na quantidade, de 1 a 3
 
-
 //TODO: Pagina inicial mostrando um overview das refeições que a pessoa vai comer no dia
 //Esse overview é exatamente igual as paginas do livro, so que em formato de lista
-
 
 //TODO: Salvar os dados da refeição a medida que o usuário for preenchendo(Para dar feedback no final do dia) (posso usar o shared, porem na ultima do dia, salvar no banco);
 //TODO: Resetar o index todo dia(Pode bugar caso a pessoa abra o app apenas uma vez na semana e novamente no mesmo dia Sab-Sab, coincidentemente)
@@ -176,7 +174,7 @@ class HomeController extends GetxController {
 
   onSkippedPressed() {
     //TODO: Implement onSkippedPressed
-    
+
     _saveMealOfTheDay();
     _nextPage();
   }
@@ -184,7 +182,7 @@ class HomeController extends GetxController {
   _nextPage() {
     mealIndex++;
     if (mealIndex >= mealsOfTheDay.length) {
-      return _showFinalCard();
+      return _showReviewCard();
     } else {
       repository.setActualMealPrefs(mealIndex, todayDayIndex);
       pageController.nextPage(
@@ -195,8 +193,11 @@ class HomeController extends GetxController {
     }
   }
 
-  _showFinalCard() {
+  RxBool _showFinalCard = false.obs;
+  bool get showFinalCard => _showFinalCard.value!;
+  _showReviewCard() {
     //TODO: Implement: Mostrar o card final
+    _showFinalCard.value = true;
   }
 
   void onPreviewDayPressed() {

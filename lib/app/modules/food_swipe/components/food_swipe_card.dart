@@ -71,7 +71,7 @@ class FoodSwipeCard extends StatelessWidget {
                     onPressed: onCheckTapped,
                   ),
                   Text(
-                    '*Toque na imagem para ver mais informações*',
+                    '*Toque na imagem para ver mais informações*', //TODO: Remover
                     style: TextStyle(color: Colors.white, fontSize: 8),
                   ),
                   Text(
