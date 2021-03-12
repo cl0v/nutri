@@ -27,7 +27,7 @@ class HomeProvider {
   Stream<HomeState> getHomeState() => homeStateOutput;
   closeHomeStream() => homeStateController.close();
 
-  Future<List<MealModel>> fetchDailyMeals({int day = 1}) async =>
+  Future<List<MealModel>> fetchDailyMeals({int day = 0}) async =>
       _fetchDailyMeals(await sharedPreferences, day: day);
 
   Future<List<List<MealModel>>> fetchMealsOfTheWeek() async =>
@@ -61,12 +61,12 @@ class HomeProvider {
   }
 
   Future<List<MealModel>> _fetchDailyMeals(sharedPreferences,
-      {int day = 1}) async {
+      {int day = 0}) async {
     //TODO: Aqui que deve ser chamado o builde semanal
     var weeklyMeals =
         await _fetchWeeklyMeals(sharedPreferences); //FIXME:erro aq
 
-    return weeklyMeals.isNotEmpty ? weeklyMeals[day - 1] : [];
+    return weeklyMeals.isNotEmpty ? weeklyMeals[day] : []; //TODO: Remover esse dia menos 1
   }
 
   Future<List<List<MealModel>>> _buildMealsOfTheWeek(sharedPreferences) async {

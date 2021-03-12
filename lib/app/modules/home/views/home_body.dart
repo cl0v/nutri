@@ -19,7 +19,7 @@ class HomeBody extends GetView<HomeController> {
         else if (controller.homeBodyState == HomeBodyState.Overview)
           return OverviewCard(items:controller.overViewMeals);
         else if (controller.homeBodyState == HomeBodyState.TomorrowOverView)
-          return OverviewCard(items:[]); // TODO: Passar a lista de refeições (Apenas o prato principal e qual refeição mealType)
+          return OverviewCard(items:controller.overViewMealsOfOtherDay); // TODO: Passar a lista de refeições (Apenas o prato principal e qual refeição mealType)
         else if (controller.homeBodyState == HomeBodyState.Meals)
           return SingleChildScrollView(
             child: SafeArea(

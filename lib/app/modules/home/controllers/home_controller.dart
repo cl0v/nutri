@@ -30,6 +30,7 @@ import 'package:nutri/app/routes/app_pages.dart';
 
 //TODO: Quando o user termina as refeições do dia ele vai pra a review page
 // Na review page voce pode dar um overview no proximo dia, o botao irá alterar para ser, 'ver review de hoje'
+
 enum HomeBodyState {
   Loading,
   Overview,
@@ -46,8 +47,10 @@ class HomeController extends GetxController {
 
   final mealListLenght = 0.obs;
 
-  final isPreviewBtnDisabled = true.obs;
-  final isNextBtnDisabled = false.obs;
+  final isPreviewBtnDisabled =
+      true.obs; //TODO: Mostrar pagina de review de dias anteriores
+  final isNextBtnDisabled =
+      false.obs; //TODO: Mostrar pagina de overview de dias seguintes
 
   final mainFoodsAvailable = <FoodModel>[].obs;
   final extraFoodsAvailable = <FoodModel>[].obs;
@@ -55,8 +58,8 @@ class HomeController extends GetxController {
   final RxBool _showHomeContent = false.obs;
   bool get showHomeContent => _showHomeContent.value!;
 
-  final showingDayIndex = 0.obs;
-  int todayDayIndex = 0;
+  final dayIndex = 0.obs;
+  int todayIndex = 0;
 
   int mealIndex = 0;
   int pageIndex = 0;
@@ -67,31 +70,23 @@ class HomeController extends GetxController {
   List<int> get selectedExtrasList => _selectedExtrasList;
 
   List<Map<String, String>> overViewMeals = [];
+  List<Map<String, String>> overViewMealsOfOtherDay = [];
 
   List<FoodModel> selectedExtras = [];
 
   final _extrasAmount = 3.obs;
   int get extrasAmount => _extrasAmount.value;
 
-  int indexOfTheDayOnWeek = 0;
-
-
   final mealCategory = 'Café da manhã'.obs;
 
   Rx<HomeBodyState> _homeBodyState = HomeBodyState.Loading.obs;
   HomeBodyState get homeBodyState => _homeBodyState.value!;
 
-//IDEIA: Fluxo basico > a home vai enviando dados durante o dia para o provider
-// O provider vai salvando
-// No final do dia, na ultima refeição, um metodo que te dá o resultado do dia é chamado
-// E os parametros basicos sao resetados, meal, day etc
-
-   late PageController pageController ;
+  late PageController pageController;
 
   @override
   void onInit() {
     super.onInit();
-    
   }
 
   @override
@@ -114,23 +109,17 @@ class HomeController extends GetxController {
       }
     });
     await _setDayOfTheWeek();
-    // var meali =;
-    // _fetchPageIndex(0);
-    _fetchPageIndex(await repository.getPageIndex(todayDayIndex));
-    //TODO: Ele está uma refeição atrás da salva
+    _fetchPageIndex(await repository.getPageIndex(todayIndex));
   }
 
   _fetchPageIndex(int idx) async {
-    //TODO: Se page Index for 0, overview, se for de 1 a 4, os meal em ordem, se for 5, review
-    // if (pageController.hasClients) {
-      pageController = PageController(initialPage:idx);
-    // }
+    pageController = PageController(initialPage: idx);
     await _fetchTodayMeals(); //TODO: Trocar a hora em que o home decide se mostra ou nao HomeState.Ready
     _setHomeCardState(idx);
   }
 
   _savePageIndex(int idx) {
-    repository.setPageIndex(idx, todayDayIndex);
+    repository.setPageIndex(idx, todayIndex);
   }
 
   onPageChanged(int idx) async {
@@ -144,7 +133,6 @@ class HomeController extends GetxController {
   }
 
   _setHomeCardState(int idx) async {
-    print('idx dentro do homecardstate: $idx');
     switch (idx) {
       case 0:
         _homeBodyState.value = HomeBodyState.Overview;
@@ -173,7 +161,7 @@ class HomeController extends GetxController {
 
   _fetchTodayMeals() async {
     var dailyMeals =
-        await repository.fetchDailyMeals(day: todayDayIndex); //FIXME: Erro aq
+        await repository.fetchDailyMeals(day: todayIndex - 1); //FIXME: Erro aq
     if (dailyMeals.isNotEmpty) {
       mealsOfTheDay.assignAll(
           (dailyMeals).map((meal) => MealCardModel(mealModel: meal)));
@@ -202,8 +190,7 @@ class HomeController extends GetxController {
   }
 
   _setDayOfTheWeek() {
-    showingDayIndex.value = DateTime.now().weekday;
-    todayDayIndex = DateTime.now().weekday;
+    todayIndex = DateTime.now().weekday;
   }
 
   getSelectedIndex(int idx) => _selectedExtrasList.contains(idx);
@@ -276,8 +263,25 @@ class HomeController extends GetxController {
   }
 
   showTomorrowOverView() {
-    _homeBodyState.value = HomeBodyState.TomorrowOverView; //Ou outro dia
+    _homeBodyState.value = HomeBodyState.TomorrowOverView;
+    _showDayOverView(todayIndex + 1);
+    //Ou outro dia
     //OtherDaysOverView??
+  }
+
+  _showDayOverView(int day) async {
+    _homeBodyState.value = HomeBodyState.TomorrowOverView;
+    var dailyMeals =
+        await repository.fetchDailyMeals(day: (todayIndex + day - 1) % 7);
+    overViewMealsOfOtherDay = dailyMeals
+        .map(
+          (meal) => {
+            'image': meal.mainFoodList.first.img,
+            'title':
+                '${MealModelHelper.getTranslatedMeal(meal.mealType)}:\n${meal.mainFoodList.first.title}',
+          },
+        )
+        .toList();
   }
 
   showMealsCard() {
@@ -286,36 +290,59 @@ class HomeController extends GetxController {
     //TODO: Alterar o botao da navbar para poder ser 'Vamos lá'
   }
 
+  _updateTitle(int val) {
+    //TODO: Implement _updateDayOnTitle
+    // dayIndex vai obrigatorioamente de 0 a 6
+    dayIndex.value += val;
+    _showDayOverView(dayIndex.value);
+  }
+
   void onPreviewDayPressed() {
-    //TODO: Sempre que solicitar um dia, será o provider quem fornecerá, para nao precisar ficar com tanto espaço na memoria
-    //TODO: Implement set meals of the day x;
-    showingDayIndex.value--;
-    if (indexOfTheDayOnWeek >= 0) {
-      isNextBtnDisabled.value = false;
-      indexOfTheDayOnWeek--;
-    }
-    if (indexOfTheDayOnWeek <= 0) {
+    _updateTitle(-1);
+    isNextBtnDisabled.value = false;
+    if (dayIndex.value <= 0) {
       isPreviewBtnDisabled.value = true;
+    } else {
+      isPreviewBtnDisabled.value = false;
     }
   }
 
-  void onNextDayPressed() {
-    showingDayIndex.value++;
-    if (indexOfTheDayOnWeek <= 6) {
-      isPreviewBtnDisabled.value = false;
-      indexOfTheDayOnWeek++;
-    }
-    if (indexOfTheDayOnWeek >= 6) {
-      isNextBtnDisabled.value = true;
-    }
+  onNextDayPressed() {
+    _updateTitle(1);
+    if (dayIndex.value >= 6)
+      return isNextBtnDisabled.value = true;
+    else
+      isNextBtnDisabled.value = false;
+    isPreviewBtnDisabled.value = false;
+    // if (dayIndex.value < 6) {
+    //   print('ultimo toque ${dayIndex.value}');
+
+    // } else {
+    //   //BUG: Está dando um bug em que da pra ir um a mais
+    //   isNextBtnDisabled.value = true;
+    // }
   }
+
+//Se eu criar a diferenca de dias, eu sei que -1 é ontem, 0 é hoje, +1 é amanha
+// Eu posso informar a diferença de dias
 
   String getDayTitle() =>
-      HomeScreenHelper.getDayTitle(todayDayIndex, showingDayIndex.value);
+      HomeScreenHelper.getDayTitle(dayIndex.value, todayIndex);
 }
 
 abstract class HomeScreenHelper {
-  static dayOnTheWeekToString(int dayNum) {
+  static String getDayTitle(int dayIndex, int todayIndex) {
+    if (dayIndex == 1) {
+      return 'AMANHÃ';
+    } else if (dayIndex == -1) {
+      return 'ONTEM';
+    } else if (dayIndex == 0) {
+      return 'HOJE';
+    } else
+      return getDayOfTheWeekString(dayOnTheWeekToString(todayIndex + dayIndex));
+  }
+
+  static int dayOnTheWeekToString(int dayNum) {
     if (dayNum > 7) {
       dayNum = (dayNum % 7);
     } else if (dayNum < 1) {
@@ -324,17 +351,6 @@ abstract class HomeScreenHelper {
     if (dayNum == 0) dayNum = 7;
 
     return dayNum;
-  }
-
-  static getDayTitle(int today, int showingDay) {
-    if (showingDay == today + 1) {
-      return 'AMANHÃ';
-    } else if (showingDay == today - 1) {
-      return 'ONTEM';
-    } else if (showingDay == today) {
-      return 'HOJE';
-    } else
-      return getDayOfTheWeekString(dayOnTheWeekToString(showingDay));
   }
 
   static String getDayOfTheWeekString(int day) {
