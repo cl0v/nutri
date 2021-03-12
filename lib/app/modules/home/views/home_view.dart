@@ -23,40 +23,58 @@ class HomeView extends GetView<HomeController> {
                   body: HomeBody(),
                   extendBodyBehindAppBar: true,
                   backgroundColor: Colors.transparent,
-                  bottomNavigationBar:
-                      BottomAppBar(
+                  bottomNavigationBar: BottomAppBar(
                     color: Colors.transparent,
                     elevation: 0,
-                    child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            ElevatedButton(
-                              style: ButtonStyle(
-                                  minimumSize:
-                                      MaterialStateProperty.resolveWith(
-                                          (states) => Size(120, 36)),
-                                  backgroundColor:
-                                      MaterialStateProperty.resolveWith(
-                                          (states) => Colors.red)),
-                              onPressed: controller.onSkippedPressed,
-                              child: Text('Pulei'),
+                    child: Obx(
+                      () {
+                        if (controller.homeCardState == HomeCardState.Overview)
+                          return ElevatedButton(
+                            onPressed: controller.showMealsCard,
+                            child: Text('Vamos la'),
+                          );
+                        else if (controller.homeCardState ==
+                            HomeCardState.Review)
+                          return ElevatedButton(
+                            onPressed: controller.onNextDayPressed,
+                            child: Text('Conferir dia de amanha'),
+                          );
+                        else if (controller.homeCardState ==
+                            HomeCardState.Meals)
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                      minimumSize:
+                                          MaterialStateProperty.resolveWith(
+                                              (states) => Size(120, 36)),
+                                      backgroundColor:
+                                          MaterialStateProperty.resolveWith(
+                                              (states) => Colors.red)),
+                                  onPressed: controller.onSkippedPressed,
+                                  child: Text('Pulei'),
+                                ),
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                      minimumSize:
+                                          MaterialStateProperty.resolveWith(
+                                              (states) => Size(120, 36)),
+                                      backgroundColor:
+                                          MaterialStateProperty.resolveWith(
+                                              (states) => Colors.green)),
+                                  onPressed: controller.onDonePressed,
+                                  child: Text('Concluí'),
+                                ),
+                              ],
                             ),
-                            ElevatedButton(
-                              style: ButtonStyle(
-                                  minimumSize:
-                                      MaterialStateProperty.resolveWith(
-                                          (states) => Size(120, 36)),
-                                  backgroundColor:
-                                      MaterialStateProperty.resolveWith(
-                                          (states) => Colors.green)),
-                              onPressed: controller.onDonePressed,
-                              child: Text('Concluí'),
-                            )
-                          ],
-                        ),),
+                          );
+                        return Container();
+                      },
+                    ),
                   ),
                   appBar: AppBar(
                     backgroundColor: Colors.transparent,

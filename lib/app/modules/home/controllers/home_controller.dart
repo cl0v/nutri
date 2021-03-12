@@ -28,6 +28,12 @@ import 'package:nutri/app/routes/app_pages.dart';
 
 //- Resetar o index todo dia(//TODO:Precisa ser testado)
 
+enum HomeCardState {
+  Overview,
+  Meals,
+  Review,
+}
+
 class HomeController extends GetxController {
   final HomeRepository repository;
   HomeController({required this.repository});
@@ -98,7 +104,7 @@ class HomeController extends GetxController {
       }
     });
     await _setDayOfTheWeek();
-    mealIndex = await repository.getActualMealPrefs(todayDayIndex);
+    // mealIndex = await repository.getActualMealPrefs(todayDayIndex);
     _fetchTodayMeals();
   }
 
@@ -193,11 +199,16 @@ class HomeController extends GetxController {
     }
   }
 
-  RxBool _showFinalCard = false.obs;
-  bool get showFinalCard => _showFinalCard.value!;
+  Rx<HomeCardState> _homeCardState = HomeCardState.Overview.obs;
+  HomeCardState get homeCardState => _homeCardState.value!;
   _showReviewCard() {
     //TODO: Implement: Mostrar o card final
-    _showFinalCard.value = true;
+    _homeCardState.value = HomeCardState.Review;
+  }
+
+  showMealsCard() {
+    _homeCardState.value = HomeCardState.Meals;
+    //TODO: Alterar o botao da navbar para poder ser 'Vamos lá'
   }
 
   void onPreviewDayPressed() {
