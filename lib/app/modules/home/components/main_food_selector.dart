@@ -54,19 +54,6 @@ class MainFoodSelector extends StatelessWidget {
                         ),
                       );
                     }).toList())
-
-                // ListView.builder(
-                //     scrollDirection: Axis.horizontal,
-                //     itemExtent: width / 3,
-                //     itemCount: controller.mainFoodsAvailable.length,
-                //     itemBuilder: (context, idx) => Obx(
-                //       () => MainFoodSelectableCard(
-                //         food: controller.mainFoodsAvailable[idx],
-                //         onTap: () => controller.onMainFoodTapped(idx),
-                //         selected: controller.isMainFoodSelected(idx),
-                //       ),
-                //     ),
-                //   )
                 : Container(),
           ),
         )

@@ -16,7 +16,7 @@ class HomeBody extends GetView<HomeController> {
       itemBuilder: (c, idx) => Obx(() {
         switch (controller.homeBodyState) {
           case HomeBodyState.Review:
-            return ReviewCard();
+            return ReviewCard(items: controller.reviewMeals);
           case HomeBodyState.Overview:
             return OverviewCard(items: controller.overViewMeals);
           case HomeBodyState.OtherDayOverview:

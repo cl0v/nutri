@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class FoodCard extends StatelessWidget {
   final String image;
   final String title;
+  final Color? color;
 
   const FoodCard({
     required this.image,
     required this.title,
+    this.color,
   });
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class FoodCard extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
+              color: color ?? null,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,

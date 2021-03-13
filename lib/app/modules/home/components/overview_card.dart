@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nutri/app/modules/home/components/food_card.dart';
+import 'package:nutri/app/modules/home/models/meal_card_model.dart';
+import 'package:nutri/constants.dart';
 
 class OverviewCard extends StatelessWidget {
+  const OverviewCard({required this.items});
+  
   final List<Map<String, String>> items;
 
-  const OverviewCard({required this.items});
   @override
   Widget build(BuildContext context) {
     return SafeArea(

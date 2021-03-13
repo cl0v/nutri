@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const pageIndexKey = 'pageIndexKey';
 const dayIndexKey = 'dayIndexKey';
+const savedMealCardListPrefsKey = 'savedMealCardListPrefsKey';
 
 enum HomeState {
   Error,
@@ -66,7 +67,9 @@ class HomeProvider {
     var weeklyMeals =
         await _fetchWeeklyMeals(sharedPreferences); //FIXME:erro aq
 
-    return weeklyMeals.isNotEmpty ? weeklyMeals[day] : []; //TODO: Remover esse dia menos 1
+    return weeklyMeals.isNotEmpty
+        ? weeklyMeals[day]
+        : []; //TODO: Remover esse dia menos 1
   }
 
   Future<List<List<MealModel>>> _buildMealsOfTheWeek(sharedPreferences) async {
@@ -110,5 +113,25 @@ class HomeProvider {
     var prefs = (await sharedPreferences);
     prefs.setInt(dayIndexKey, day);
     prefs.setInt(pageIndexKey, mealIdx);
+  }
+
+  Future<List<String>> getMealsCard() async {
+    List<String> mealTypeStringList = [
+      MealType.breakfast.toString(),
+      MealType.lunch.toString(),
+      MealType.snack.toString(),
+      MealType.dinner.toString(),
+    ];
+    List<String> list = [];
+    mealTypeStringList.forEach((mealType) async {
+      var val = (await sharedPreferences).getString('mealType $mealType');
+      if (val != null) list.add(val);
+    });
+    return list;
+  }
+
+  saveMealCard(String mealType, String s) async {
+    (await sharedPreferences).setString('mealType $mealType', s);
+    // meals of the day tipo lista de string;
   }
 }

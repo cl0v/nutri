@@ -71,14 +71,10 @@ class FoodSwipeCard extends StatelessWidget {
                     onPressed: onCheckTapped,
                   ),
                   Text(
-                    '*Toque na imagem para ver mais informações*', //TODO: Remover
-                    style: TextStyle(color: Colors.white, fontSize: 8),
-                  ),
-                  Text(
                     'Por favor marque caso queira que esse alimento esteja em seu cardápio.',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 8,
+                      fontSize: 12,
                     ),
                     textAlign: TextAlign.center,
                   ),

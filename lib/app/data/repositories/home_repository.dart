@@ -12,14 +12,18 @@ class HomeRepository {
   Future<List<List<MealModel>>> fetchDailyMenuOfTheWeek() =>
       provider.fetchMealsOfTheWeek();
 
-  getHomeState() => provider.getHomeState();
+  Stream<HomeState> getHomeState() => provider.getHomeState();
   closeHomeStream() => provider.closeHomeStream();
 
   Future<List<MealModel>> fetchDailyMeals({int day = 0}) =>
       provider.fetchDailyMeals(day: day);
 
   Future<int> getPageIndex(int day) => provider.getPageIndexFromPrefs(day);
-  void setPageIndex(int pageIdx, int day) => provider.setPageIndexOnPrefs(pageIdx, day);
+  void setPageIndex(int pageIdx, int day) =>
+      provider.setPageIndexOnPrefs(pageIdx, day);
+
+  Future<List<String>> getMealsCard() => provider.getMealsCard();
+  saveMealCard(String mealType, String s) => provider.saveMealCard(mealType, s);
 
   // Future saveMealPrefs(String mealType, List<String> list) =>
   // provider.saveMealPrefs(mealType, list);
