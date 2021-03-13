@@ -32,11 +32,11 @@ import 'package:nutri/app/routes/app_pages.dart';
 // Na review page voce pode dar um overview no proximo dia, o botao irá alterar para ser, 'ver review de hoje'
 
 enum HomeBodyState {
-  Loading,
+  Loading, //TODO: Trabalhar com o loading
   Overview,
   Meals,
   Review,
-  TomorrowOverView, //TODO: Implement TomorrowOverView
+  OtherDayOverview,
 }
 
 class HomeController extends GetxController {
@@ -44,6 +44,8 @@ class HomeController extends GetxController {
   HomeController({required this.repository});
 
   final mealsOfTheDay = <MealCardModel>[].obs;
+
+  var lastHomeBodyState = HomeBodyState.OtherDayOverview;
 
   final mealListLenght = 0.obs;
 
@@ -62,7 +64,6 @@ class HomeController extends GetxController {
   int todayIndex = 0;
 
   int mealIndex = 0;
-  int pageIndex = 0;
 
   final selectedMainFoodIdx = 0.obs;
 
@@ -109,7 +110,8 @@ class HomeController extends GetxController {
       }
     });
     await _setDayOfTheWeek();
-    _fetchPageIndex(await repository.getPageIndex(todayIndex));
+    _fetchPageIndex(0);
+    // _fetchPageIndex(await repository.getPageIndex(todayIndex));
   }
 
   _fetchPageIndex(int idx) async {
@@ -123,15 +125,35 @@ class HomeController extends GetxController {
   }
 
   onPageChanged(int idx) async {
-    pageIndex = idx; //TODO: Remover pageIndex
+    print(idx);
     _setHomeCardState(idx);
-
     _savePageIndex(idx);
+    //TODO: Passar as responsabilidades de [_nextPage()] para cá
+
     //TODO: Estudar se esse cara deve ficar aqui
     //Ta bugado a refeição que deve aparecer depois de abrir o app novamente
     //O bug é que o index da page é inicializado novamente, logo, quando o lanche da tarde completa e vai pra janta(se começar no lanche), a proxima refeição vira index 1 e aparece o café da manha
   }
 
+  onDonePressed() {
+    //TODO: Implement onDonePressed
+    _nextPage(); //TODO: NextPage pode se tornar nextMeal, facilitando a decisao
+  }
+
+  onSkippedPressed() {
+    //TODO: Implement onSkippedPressed
+
+    _nextPage();
+  }
+
+  _nextPage() {
+    pageController.nextPage(
+      duration: Duration(microseconds: 100),
+      curve: Curves.ease,
+    );
+  }
+
+  ///Responsável por monitorar o estado da home para cada troca de página
   _setHomeCardState(int idx) async {
     switch (idx) {
       case 0:
@@ -178,7 +200,6 @@ class HomeController extends GetxController {
   }
 
   _setMeal(int idx) async {
-    print('idx que deverá decidir o meal 0 a 3: $idx');
     var meal = mealsOfTheDay[idx].mealModel;
     selectedMainFoodIdx.value = 0;
     mainFoodsAvailable.assignAll(meal.mainFoodList);
@@ -232,102 +253,52 @@ class HomeController extends GetxController {
     //TODO: Analizar esse carinha
   }
 
-  onDonePressed() {
-    //TODO: Implement onDonePressed
-    _nextPage();
-  }
+  backToTodayPressed() => _showDayOverView(dayIndex.value = 0);
 
-  onSkippedPressed() {
-    //TODO: Implement onSkippedPressed
+  _backToToday() => _homeBodyState.value = lastHomeBodyState;
 
-    _nextPage();
-  }
-
-  _nextPage() {
-    //TODO: Se page Index for 0, overview, se for de 1 a 4, os meal em ordem, se for 5, review
-    if (mealIndex >= mealsOfTheDay.length) {
-      return showReviewCard();
-    } else {
-      pageController.nextPage(
-        duration: Duration(microseconds: 100),
-        curve: Curves.ease,
-      );
-      // _setMeal(mealsOfTheDay[mealIndex].mealModel); //TODO: Conferir esse cara
-    }
-  }
-
-  showReviewCard() {
-    //TODO: Implement: Mostrar o card final
-    //TODO: Pular para a página de overview
-    //TODO: Ver dia de amanha está bugado, preciso ver exatamente o dia de amanha
-    _homeBodyState.value = HomeBodyState.Review;
-  }
-
-  showTomorrowOverView() {
-    //TODO: Estudar esse carinha
-    _homeBodyState.value = HomeBodyState.TomorrowOverView;
-    _showDayOverView(1);
-  }
-  //TODO: Ver hoje precisa retornar para hoje, no estado que estava
+  onShowTomorrowOverViewPressed() => _showDayOverView(dayIndex.value = 1);
 
   _showDayOverView(int day) async {
-    
-    _homeBodyState.value = HomeBodyState.TomorrowOverView;
+    if (homeBodyState != HomeBodyState.OtherDayOverview)
+      lastHomeBodyState = homeBodyState;
+    if (day <= 0) {
+      isPreviewBtnDisabled.value = true;
+      return _backToToday();
+    } else {
+      isPreviewBtnDisabled.value = false;
+      _homeBodyState.value = HomeBodyState.OtherDayOverview;
+    }
+    if (day >= 6) {
+      isNextBtnDisabled.value = true;
+    } else {
+      isNextBtnDisabled.value = false;
+    }
+    //TODO: Acho que preciso esperar os dados chegarem, circular progress indicator
     var dailyMeals =
-        await repository.fetchDailyMeals(day: (todayIndex + day - 1) % 7);
-    overViewMealsOfOtherDay = dailyMeals
-        .map(
-          (meal) => {
-            'image': meal.mainFoodList.first.img,
-            'title':
-                '${MealModelHelper.getTranslatedMeal(meal.mealType)}:\n${meal.mainFoodList.first.title}',
-          },
-        )
-        .toList();
+        await repository.fetchDailyMeals(day: ((todayIndex + day) - 1) % 7);
+    overViewMealsOfOtherDay = dailyMeals.map(
+      (meal) {
+        return {
+          'image': meal.mainFoodList.first.img,
+          'title':
+              '${MealModelHelper.getTranslatedMeal(meal.mealType)}:\n${meal.mainFoodList.first.title}',
+        };
+      },
+    ).toList();
   }
 
   showMealsCard() {
     pageController.jumpToPage(1);
     _homeBodyState.value = HomeBodyState.Meals;
-    //TODO: Alterar o botao da navbar para poder ser 'Vamos lá'
   }
 
-  _updateTitle(int val) {
-    //TODO: Implement _updateDayOnTitle
-    // dayIndex vai obrigatorioamente de 0 a 6
-    dayIndex.value += val;
-    if(dayIndex.value != 0)
-      _showDayOverView(dayIndex.value);
-      //TODO: Quando volta para o dia de hoje, preciso retornar a pagina que estava, de 0 a 5, etc
-      // else
-      // _homeBodyState.value == Ultimo estado salvo
-  }
+  void onPreviewDayPressed() => _showDayOverView(--dayIndex.value);
+  // isNextBtnDisabled.value = false;
 
-  void onPreviewDayPressed() {
-    _updateTitle(-1);
-    isNextBtnDisabled.value = false;
-    if (dayIndex.value <= 0) {
-      isPreviewBtnDisabled.value = true;
-    } else {
-      isPreviewBtnDisabled.value = false;
-    }
-  }
-
-  onNextDayPressed() {
-    _updateTitle(1);
-    if (dayIndex.value >= 6)
-      return isNextBtnDisabled.value = true;
-    else
-      isNextBtnDisabled.value = false;
-    isPreviewBtnDisabled.value = false;
-    // if (dayIndex.value < 6) {
-    //   print('ultimo toque ${dayIndex.value}');
-
-    // } else {
-    //   //BUG: Está dando um bug em que da pra ir um a mais
-    //   isNextBtnDisabled.value = true;
-    // }
-  }
+//BUG: O dia de amanha está mostrando o overview igual ao do dia de hoje quando toco na seta
+//BUG: Comportamento estranho em algumas refeições especificas quando vai passando os dias do overview
+  onNextDayPressed() => _showDayOverView(++dayIndex.value);
 
 //Se eu criar a diferenca de dias, eu sei que -1 é ontem, 0 é hoje, +1 é amanha
 // Eu posso informar a diferença de dias

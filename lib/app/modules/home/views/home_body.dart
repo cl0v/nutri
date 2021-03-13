@@ -14,40 +14,44 @@ class HomeBody extends GetView<HomeController> {
       controller: controller.pageController,
       onPageChanged: controller.onPageChanged,
       itemBuilder: (c, idx) => Obx(() {
-        if (controller.homeBodyState == HomeBodyState.Review)
-          return ReviewCard();
-        else if (controller.homeBodyState == HomeBodyState.Overview)
-          return OverviewCard(items:controller.overViewMeals);
-        else if (controller.homeBodyState == HomeBodyState.TomorrowOverView)
-          return OverviewCard(items:controller.overViewMealsOfOtherDay); // TODO: Passar a lista de refeições (Apenas o prato principal e qual refeição mealType)
-        else if (controller.homeBodyState == HomeBodyState.Meals)
-          return SingleChildScrollView(
-            child: SafeArea(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Obx(
-                    () => Text(
-                      '${controller.mealCategory}',
-                      style: Get.textTheme!.headline5!
-                          .copyWith(color: Colors.white),
+        switch (controller.homeBodyState) {
+          case HomeBodyState.Review:
+            return ReviewCard();
+          case HomeBodyState.Overview:
+            return OverviewCard(items: controller.overViewMeals);
+          case HomeBodyState.OtherDayOverview:
+            return OverviewCard(items: controller.overViewMealsOfOtherDay);
+          case HomeBodyState.Loading:
+            return Center(child: CircularProgressIndicator());
+          case HomeBodyState.Meals:
+            return SingleChildScrollView(
+              child: SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Obx(
+                      () => Text(
+                        '${controller.mealCategory}',
+                        style: Get.textTheme!.headline5!
+                            .copyWith(color: Colors.white),
+                      ),
                     ),
-                  ),
-                  MainFoodSelector(),
-                  Divider(),
-                  Obx(
-                    () => controller.extraFoodsAvailable.isNotEmpty
-                        ? ExtraFoodSelector()
-                        : Container(),
-                  ),
-                ],
+                    MainFoodSelector(),
+                    Divider(),
+                    Obx(
+                      () => controller.extraFoodsAvailable.isNotEmpty
+                          ? ExtraFoodSelector()
+                          : Container(),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        else
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+            );
+          default:
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+        }
       }),
     );
   }

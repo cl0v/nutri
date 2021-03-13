@@ -399,10 +399,8 @@ main() {
     test(
         'The first daily meal of the week should be the same as the day 1 on fetchDailyMeals by day',
         () async {
-      // weeklyMeals primeira refeição deverá ser a mesma que fetch daily meal (1)
-      //weeklyMeal.first == dailyMeal(1)
       weeklyMeals = await repository.fetchDailyMenuOfTheWeek();
-      var dailyMeal = await repository.fetchDailyMeals(day: 1);
+      var dailyMeal = await repository.fetchDailyMeals(day: 0);
       expect(weeklyMeals.first, dailyMeal);
     });
 

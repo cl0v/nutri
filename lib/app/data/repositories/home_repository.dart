@@ -15,7 +15,7 @@ class HomeRepository {
   getHomeState() => provider.getHomeState();
   closeHomeStream() => provider.closeHomeStream();
 
-  Future<List<MealModel>> fetchDailyMeals({int day = 1}) =>
+  Future<List<MealModel>> fetchDailyMeals({int day = 0}) =>
       provider.fetchDailyMeals(day: day);
 
   Future<int> getPageIndex(int day) => provider.getPageIndexFromPrefs(day);
