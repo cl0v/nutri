@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nutri/app/components/widgets/global_text_field.dart';
 import 'package:nutri/app/modules/login/controllers/login_controller.dart';
 import 'package:nutri/constants.dart';
 
@@ -31,60 +32,57 @@ class LoginView extends GetView<LoginController> {
                 children: [
                   Text(
                     'Bem-vindo',
-                    style: Get.theme!.textTheme.headline4!.copyWith(color: Colors.black),
+                    style: Get.theme!.textTheme.headline4!
+                        .copyWith(color: Colors.black),
                   ),
                   Divider(),
                   Spacer(),
-                  TextFormField(
+                  GlobalTextField(
                     validator: (s) {
                       if (!GetUtils.isEmail(s!))
                         return 'Por favor insira um email valido';
                       return null;
                     },
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    keyboardType: TextInputType.emailAddress,
-                    controller: controller.emailController,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.email),
-                      hintText: 'E-mail',
-                      labelText: 'E-mail',
-                      border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(99),
-                        ),
-                      ),
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: Colors.grey,
                     ),
+                    controller: controller.emailController,
+                    hint: 'E-mail',
                   ),
                   SizedBox(
                     height: 16,
                   ),
-                  Obx(()=>TextFormField(
-                    controller: controller.passwordController,
-                    obscureText: controller.isObscurePassword,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.lock),
-                      suffixIcon: IconButton(icon: Icon(Icons.remove_red_eye), onPressed: controller.onShowPasswordPressed),
-                      hintText: 'Password',
-                      labelText: 'Password',
-                      border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(99),
-                        ),
+                  Obx(
+                    () => GlobalTextField(
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: Colors.grey,
                       ),
+                      obscureText: controller.isObscurePassword,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.remove_red_eye,
+                          color: Colors.grey,
+                        ),
+                        onPressed: controller.onShowPasswordPressed,
+                      ),
+                      controller: controller.passwordController,
+                      hint: 'Password',
                     ),
-                  ),),
+                  ),
                   Obx(
                     () => controller.loginError
-                        ? Text(controller.errorMsg, style: TextStyle(color: kErrorColor),)
+                        ? Text(
+                            controller.errorMsg,
+                            style: TextStyle(color: kErrorColor),
+                          )
                         : Container(),
                   ),
                   TextButton(
                     onPressed: controller.onForgetPasswordPressed,
                     child: Text(
                       'Esqueceu sua senha?',
-                      style: TextStyle(
-                        color: Color.fromRGBO(248, 225, 185, 1),
-                      ),
                     ),
                   ),
                   Align(
@@ -102,17 +100,22 @@ class LoginView extends GetView<LoginController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('Ainda não tem conta? '),
-                       TextButton(
-                         style: ButtonStyle(padding: MaterialStateProperty.resolveWith((states) => EdgeInsets.all(0))),
-                          onPressed: controller.onCreateAccountPressed,
-                          child: Text( //TODO: Remover espaçamento do botao
-                            'Criar',
-                            style: TextStyle(
-                              color: Colors.black,
-                              decoration: TextDecoration.underline,
-                            ),
+                      Text(
+                        'Ainda não tem conta?',
+                        style: Get.textTheme!.bodyText2!.copyWith(
+                          color: Colors.black,
+                        ),
+                      ),
+                      TextButton(
+                        style: ButtonStyle(alignment: Alignment.centerLeft, ),
+                        onPressed: controller.onCreateAccountPressed,
+                        child: Text(
+                          'Criar',
+                          style: TextStyle(
+                            color: Colors.black,
+                            decoration: TextDecoration.underline,
                           ),
+                        ),
                       ),
                     ],
                   )

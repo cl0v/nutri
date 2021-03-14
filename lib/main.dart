@@ -59,15 +59,46 @@ Future<void> main() async {
         darkTheme: newTheme,
         debugShowCheckedModeBanner: false,
         enableLog: false,
-        
       ),
     ),
   );
 }
 
 var newTheme = ThemeData(
+  inputDecorationTheme: InputDecorationTheme(
+    labelStyle: TextStyle(
+      color: Colors.grey,
+    ),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(99.0),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(99.0),
+      borderSide: BorderSide(
+        color: Colors.green,
+        width: 1.0,
+      ),
+    ),
+    
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(99.0),
+      borderSide: BorderSide(
+        color: Colors.grey,
+        width: 1.0,
+      ),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(99.0),
+      borderSide: BorderSide(
+        color: Colors.red,
+        width: 1.0,
+      ),
+    ),
+    
+  ),
   brightness: kBrightness,
   // textButtonTheme: ,
+  
   primaryColorBrightness: kBrightness,
   accentColorBrightness: kBrightness,
   textTheme: kTextTheme,
