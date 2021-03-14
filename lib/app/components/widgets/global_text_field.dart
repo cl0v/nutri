@@ -8,6 +8,8 @@ class GlobalTextField extends StatelessWidget {
   final obscureText;
   final suffixIcon;
   final hint;
+  final suffix;
+  final keyboardType;
 
   const GlobalTextField({
     this.validator,
@@ -15,7 +17,9 @@ class GlobalTextField extends StatelessWidget {
     this.hint,
     this.prefixIcon,
     this.suffixIcon,
+    this.keyboardType,
     this.obscureText,
+    this.suffix,
   });
 
   @override
@@ -24,11 +28,12 @@ class GlobalTextField extends StatelessWidget {
       validator: validator,
       obscureText: obscureText ?? false,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: keyboardType,
       controller: controller,
       style: Get.textTheme!.bodyText1!.copyWith(color: Colors.black),
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
+        suffix: suffix,
         suffixIcon: suffixIcon,
         hintText: hint,
         labelText: hint,

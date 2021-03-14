@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nutri/app/components/widgets/global_text_field.dart';
 import 'package:nutri/app/modules/register/controllers/register_controller.dart';
 import 'package:nutri/constants.dart';
 
@@ -48,66 +49,56 @@ class RegisterView extends GetView<RegisterController> {
                     children: [
                       Text(
                         'Criar conta',
-                        style: Get.theme!.textTheme.headline4,
+                        style: Get.theme!.textTheme.headline4!
+                            .copyWith(color: Colors.grey),
                       ),
                       Divider(),
                       Spacer(),
-                      TextFormField(
-                        controller: controller.nameController,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.person),
-                          hintText: 'Nome completo',
-                          labelText: 'Nome completo',
-                          border: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              const Radius.circular(99),
-                            ),
-                          ),
+                      GlobalTextField(
+                        prefixIcon: Icon(
+                          Icons.person,
+                          color: Colors.grey,
                         ),
+                        controller: controller.nameController,
+                        hint: 'Nome completo',
                       ),
                       SizedBox(
                         height: 16,
                       ),
-                      TextFormField(
+                      GlobalTextField(
+                        // autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (s) {
                           if (!GetUtils.isEmail(s!))
                             return 'Por favor insira um email valido';
                           return null;
                         },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.emailAddress,
-                        controller: controller.emailController,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.email),
-                          hintText: 'E-mail',
-                          labelText: 'E-mail',
-                          border: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              const Radius.circular(99),
-                            ),
-                          ),
+                        prefixIcon: Icon(
+                          Icons.email,
+                          color: Colors.grey,
                         ),
+                        controller: controller.emailController,
+                        hint: 'E-mail',
                       ),
                       SizedBox(
                         height: 16,
                       ),
                       Obx(
-                        () => TextFormField(
-                          controller: controller.passwordController,
-                          obscureText: controller.isObscurePassword,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.lock),
-                            suffixIcon: IconButton(
-                                icon: Icon(Icons.remove_red_eye),
-                                onPressed: controller.onShowPasswordPressed),
-                            hintText: 'Password',
-                            labelText: 'Password',
-                            border: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(99),
-                              ),
-                            ),
+                        () => GlobalTextField(
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            color: Colors.grey,
                           ),
+                          obscureText: controller.isObscurePassword,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              Icons.remove_red_eye,
+                              color: Colors.grey,
+                            ),
+                            onPressed: controller.onShowPasswordPressed,
+                          ),
+                          controller: controller.passwordController,
+                          hint: 'Password',
                         ),
                       ),
                       Spacer(),
@@ -140,42 +131,33 @@ class RegisterView extends GetView<RegisterController> {
                     children: [
                       Text(
                         'Criar conta',
-                        style: Get.theme!.textTheme.headline4,
+                        style: Get.theme!.textTheme.headline4!
+                            .copyWith(color: Colors.grey),
                       ),
                       Divider(),
                       Spacer(),
-                      TextFormField(
-                        controller: controller.heightController,
+                      GlobalTextField(
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.height),
-                          hintText: 'Altura',
-                          labelText: 'Altura',
-                          suffix: Text('cm'),
-                          border: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              const Radius.circular(99),
-                            ),
-                          ),
+                        prefixIcon: Icon(
+                          Icons.height,
+                          color: Colors.grey,
                         ),
+                        controller: controller.heightController,
+                        hint: 'Altura',
+                        suffix: Text('cm'),
                       ),
                       SizedBox(
                         height: 16,
                       ),
-                      TextFormField(
-                        controller: controller.weightController,
+                      GlobalTextField(
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.fitness_center), //icons.speed
-                          hintText: 'Peso',
-                          labelText: 'Peso',
-                          suffix: Text('kg'),
-                          border: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              const Radius.circular(99),
-                            ),
-                          ),
+                        prefixIcon: Icon(
+                          Icons.fitness_center,
+                          color: Colors.grey,
                         ),
+                        controller: controller.weightController,
+                        hint: 'Peso',
+                        suffix: Text('kg'),
                       ),
                       Obx(
                         () => CheckboxListTile(
@@ -183,7 +165,8 @@ class RegisterView extends GetView<RegisterController> {
                           dense: true,
                           value: controller.thermIsChecked,
                           title: Text(
-                            'Aceitar termos e condições.', //TODO: Criar link de termos e condições
+                            'Aceitar termos e condições.',  //TODO: Criar link de termos e condições
+                            style: Get.textTheme!.bodyText2!.copyWith(color: Colors.grey),
                           ),
                           onChanged: controller.checkTerms,
                           // subtitle: Text('Aceitar termos e condições.'),
@@ -194,7 +177,6 @@ class RegisterView extends GetView<RegisterController> {
                         alignment: Alignment.centerRight,
                         child: ElevatedButton(
                           child: Text('Confirmar'),
-                          // textTheme: Get.theme.buttonTheme.textTheme,
                           onPressed: () => controller.onConfirmPressed(context),
                         ),
                       ),

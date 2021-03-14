@@ -5,6 +5,17 @@ import 'package:nutri/app/modules/questions/components/question_options.dart';
 import 'package:nutri/app/modules/questions/controllers/questions_controller.dart';
 import 'package:nutri/constants.dart';
 
+/*
+//BUG:
+The following assertion was thrown during layout:
+A RenderFlex overflowed by 152 pixels on the bottom.
+
+The relevant error-causing widget was:
+  Column
+  file:///Users/marcelov/dev/apps/nutri/lib/app/modules/questions/components/que
+  stion_card.dart:20:14
+*/
+
 //TODO: Escurecer a letra das respostas do question (Sugestao mae)
 //TODO: Testar essa página
 

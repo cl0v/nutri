@@ -43,6 +43,7 @@ class LoginView extends GetView<LoginController> {
                         return 'Por favor insira um email valido';
                       return null;
                     },
+                    keyboardType: TextInputType.emailAddress,
                     prefixIcon: Icon(
                       Icons.email,
                       color: Colors.grey,
