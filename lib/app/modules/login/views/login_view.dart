@@ -8,30 +8,30 @@ class LoginView extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          height: double.infinity,
-          width: double.infinity,
-          child: Image.asset(
-            'assets/Profile.jpg',
-            fit: BoxFit.cover,
-          ),
-        ),
+        // Container(
+        //   height: double.infinity,
+        //   width: double.infinity,
+        //   child: Image.asset(
+        //     'assets/Profile.jpg',
+        //     fit: BoxFit.cover,
+        //   ),
+        // ),
         Scaffold(
-          backgroundColor: Colors.transparent,
+          // backgroundColor: Colors.transparent,
           body: Center(
             child: Container(
               height: 450,
               margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
               padding: EdgeInsets.all(kDefaultPadding),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: kBoxColor,
                 borderRadius: BorderRadius.circular(25),
               ),
               child: Column(
                 children: [
                   Text(
                     'Bem-vindo',
-                    style: Get.theme!.textTheme.headline4,
+                    style: Get.theme!.textTheme.headline4!.copyWith(color: Colors.black),
                   ),
                   Divider(),
                   Spacer(),
@@ -75,7 +75,7 @@ class LoginView extends GetView<LoginController> {
                   ),),
                   Obx(
                     () => controller.loginError
-                        ? Text(controller.errorMsg, style: TextStyle(color: kRedColor),)
+                        ? Text(controller.errorMsg, style: TextStyle(color: kErrorColor),)
                         : Container(),
                   ),
                   TextButton(

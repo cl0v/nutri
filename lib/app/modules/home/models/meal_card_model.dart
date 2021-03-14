@@ -7,8 +7,8 @@ class MealCardModel {
   final MealModel mealModel;
   //enum
   late MealCardState mealCardState;
-  late FoodModel? selectedFood;
-  late List<FoodModel> selectedExtras;
+  FoodModel? selectedFood;
+  List<FoodModel> selectedExtras;
 
   MealCardModel({
     required this.mealModel,

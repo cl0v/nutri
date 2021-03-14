@@ -8,12 +8,6 @@ import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 import 'package:nutri/app/data/providers/home_provider.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
-//TODO: Implementar o review card
-// - Salvar cada refeição nas prefs para pegar cada umas das 4 e dar o feedback final(Revisao)
-// - Cada botao de confirmar ou pular marcará como concluido ou nao concluido e vai pular para a proxima refeição
-// - Não terá pontos atualmente, será exatamente o card de overview, porém mostrará a comida(PRINCIPAL) escolhida
-// - estará pintada de vermelho ou verde, concluido ou pulado, apenaaas
-
 //TODO: Receber o dia que foi buildado as refeições semanais
 //O dia máximo que o user pode olhar é até 6 dias incluindo o dia do build;(Ou 7, começando de amanha??)
 //O user pode olhar os dias anteriores, até no maximo o dia que foi buildado
@@ -63,7 +57,7 @@ class HomeController extends GetxController {
   final isPreviewBtnDisabled = true.obs;
   //TODO: Mostrar pagina de review de dias anteriores
   final isNextBtnDisabled =
-      false.obs; //TODO: Mostrar pagina de overview de dias seguintes
+      false.obs;
 
   final mainFoodsAvailable = <FoodModel>[].obs;
   final extraFoodsAvailable = <FoodModel>[].obs;
@@ -131,6 +125,8 @@ class HomeController extends GetxController {
 
   _fetchPageIndex() async {
     var pgIndex = await repository.getPageIndex(todayIndex);
+
+    // pgIndex = 0; //TODO:REMOVER
     pageController = PageController(initialPage: pgIndex);
     await _fetchTodayMeals(); //TODO: Trocar a hora em que o home decide se mostra ou nao HomeState.Ready
     _setHomeCardState(pgIndex);

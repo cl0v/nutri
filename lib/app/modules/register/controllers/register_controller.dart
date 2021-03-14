@@ -52,7 +52,7 @@ class RegisterController extends GetxController {
       return Get.snackbar(
         'Confirme os termos',
         'Por favor confirme os termos antes de continuar.',
-        backgroundColor: kRedColor,
+        backgroundColor: kErrorColor,
         colorText: Colors.white,
       );
 

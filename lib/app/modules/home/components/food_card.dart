@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class FoodCard extends StatelessWidget {
   final String image;
@@ -50,11 +51,7 @@ class FoodCard extends StatelessWidget {
                   child: Text(
                     title,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Get.theme!.textTheme.headline6,
                   ),
                 ),
               ],

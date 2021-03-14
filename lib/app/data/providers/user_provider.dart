@@ -12,7 +12,7 @@ class UserProvider extends GetConnect {
   Future<void> onInit() async {
     await Firebase.initializeApp();
   }
-
+//TODO: Monitorar o estado do login, em caso de erros o estado se torna Error e o metodo retorna uma string
   Future<bool> signin(String email, String password) async {
     await Future.delayed(Duration(seconds: 0));
     if (email == 'teste@t.com' && password == '123456')

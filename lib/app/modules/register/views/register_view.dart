@@ -10,16 +10,16 @@ class RegisterView extends GetView<RegisterController> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          height: double.infinity,
-          width: double.infinity,
-          child: Image.asset(
-            'assets/Profile.jpg',
-            fit: BoxFit.cover,
-          ),
-        ),
+        // Container(
+        //   height: double.infinity,
+        //   width: double.infinity,
+        //   child: Image.asset(
+        //     'assets/Profile.jpg',
+        //     fit: BoxFit.cover,
+        //   ),
+        // ),
         Scaffold(
-          backgroundColor: Colors.transparent,
+          // backgroundColor: Colors.transparent,
           extendBodyBehindAppBar: true,
           appBar: AppBar(
             leading: IconButton(

@@ -10,16 +10,16 @@ class FoodSwipeView extends GetView<FoodSwipeController> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          height: double.infinity,
-          width: double.infinity,
-          child: Image.asset(
-            'assets/Profile.jpg',
-            fit: BoxFit.cover,
-          ),
-        ),
+        // Container(
+        //   height: double.infinity,
+        //   width: double.infinity,
+        //   child: Image.asset(
+        //     'assets/Profile.jpg',
+        //     fit: BoxFit.cover,
+        //   ),
+        // ),
         Scaffold(
-          backgroundColor: Colors.transparent,
+          // backgroundColor: Colors.transparent,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,

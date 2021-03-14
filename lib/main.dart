@@ -2,9 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:nutri/constants.dart';
 import 'app/routes/app_pages.dart';
 
-//TODO: Voltar criando pagina por página ja definindo o estilo 
+//TODO: Voltar criando pagina por página ja definindo o estilo
 // mockar dados para login por exemplo para fazer todo o fluxo de uso
 //
 
@@ -53,22 +54,36 @@ Future<void> main() async {
         title: "Nutri Nest (Nutricionista Virtual)",
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
-        theme: theme,
+        theme: newTheme,
+        themeMode: ThemeMode.dark,
+        darkTheme: newTheme,
         debugShowCheckedModeBanner: false,
         enableLog: false,
+        
       ),
     ),
   );
 }
 
-var theme = ThemeData(
-  // brightness: Brightness.dark,
+var newTheme = ThemeData(
+  brightness: kBrightness,
+  // textButtonTheme: ,
+  primaryColorBrightness: kBrightness,
+  accentColorBrightness: kBrightness,
+  textTheme: kTextTheme,
+  primarySwatch: kPrimarySwatch,
+  scaffoldBackgroundColor: kScaffoldBackgroundColor,
+  primaryColor: kPrimaryColor,
+  accentColor: kAccentColor,
+  backgroundColor: kBackgroundColor,
+);
 
-  accentColor: Color.fromRGBO(244, 208, 120, 1),
+var theme = ThemeData(
+  primaryColor: kGreenColor,
+  accentColor: kErrorColor,
   textTheme:
       TextTheme(button: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
   scaffoldBackgroundColor: Colors.white,
-
   buttonTheme: ButtonThemeData(
     buttonColor: Color.fromRGBO(244, 208, 120, 1),
     colorScheme: ColorScheme.dark(),
