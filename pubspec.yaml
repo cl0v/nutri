@@ -50,9 +50,12 @@ dev_dependencies:
   flutter_launcher_icons: ^0.9.0
 
 flutter_icons:
-  image_path: "assets/launcher_icon/logo.png"
+  image_path: "assets/launcher_icon/LogoNutri.png"
   android: true
   ios: true
+  adaptive_icon_foreground: "assets/launcher_icon/LogoNutri.png"
+  adaptive_icon_background: "#111938"
+  remove_alpha_ios: true
   
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

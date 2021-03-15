@@ -51,12 +51,13 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (value) => runApp(
       GetMaterialApp(
+        onGenerateTitle: (ctx)=>'Nutricionista Virtual',
         title: "Nutri Nest (Nutricionista Virtual)",
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
         theme: newTheme,
-        themeMode: ThemeMode.dark,
-        darkTheme: newTheme,
+        // themeMode: ThemeMode.dark,
+        // darkTheme: newTheme,
         debugShowCheckedModeBanner: false,
         enableLog: false,
       ),
@@ -66,9 +67,6 @@ Future<void> main() async {
 
 var newTheme = ThemeData(
   inputDecorationTheme: InputDecorationTheme(
-    labelStyle: TextStyle(
-      color: Colors.grey,
-    ),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(99.0),
     ),
@@ -98,7 +96,7 @@ var newTheme = ThemeData(
   ),
   brightness: kBrightness,
   // textButtonTheme: ,
-  
+
   primaryColorBrightness: kBrightness,
   accentColorBrightness: kBrightness,
   textTheme: kTextTheme,
@@ -107,20 +105,4 @@ var newTheme = ThemeData(
   primaryColor: kPrimaryColor,
   accentColor: kAccentColor,
   backgroundColor: kBackgroundColor,
-);
-
-var theme = ThemeData(
-  primaryColor: kGreenColor,
-  accentColor: kErrorColor,
-  textTheme:
-      TextTheme(button: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-  scaffoldBackgroundColor: Colors.white,
-  buttonTheme: ButtonThemeData(
-    buttonColor: Color.fromRGBO(244, 208, 120, 1),
-    colorScheme: ColorScheme.dark(),
-    shape: RoundedRectangleBorder(
-      borderRadius: new BorderRadius.circular(9.0),
-    ),
-    //   textTheme: ButtonTextTheme.primary,
-  ),
 );

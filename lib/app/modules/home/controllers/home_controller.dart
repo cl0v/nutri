@@ -9,10 +9,15 @@ import 'package:nutri/app/data/providers/home_provider.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
 //TODO: Receber o dia que foi buildado as refeições semanais
+// - Receber qual a semana do ano, por exemplo o ano tem aprox 52 semanas
+// - Salva o dia da semana e a semana do ano, se tiver no mesmo dia na semana seuginte, mostra o food swipe
 //O dia máximo que o user pode olhar é até 6 dias incluindo o dia do build;(Ou 7, começando de amanha??)
 //O user pode olhar os dias anteriores, até no maximo o dia que foi buildado
 // Ex, se eu buildei na segunda, só posso olhar até segunda que vem(ou dom da msm semana, sendo a segunda tb um dos dias do build da semana)
 // Entao obrigar a pessoa a escolher novamente o foodswipe na segunda que vem
+
+//BUG:? Quando termino de escolher as comidas do foodswipe apos criar uma conta,
+  // ela ja vem com as comidas salvas antes de criar a conta
 
 // IDEIA: Sugerir as mais importantes(maior PE) ja marcadas
 
@@ -86,6 +91,7 @@ class HomeController extends GetxController {
   int get extrasAmount => _extrasAmount.value;
 
   final mealCategory = 'Café da manhã'.obs;
+  
 
   Rx<HomeBodyState> _homeBodyState = HomeBodyState.Loading.obs;
   HomeBodyState get homeBodyState => _homeBodyState.value!;
@@ -126,7 +132,6 @@ class HomeController extends GetxController {
   _fetchPageIndex() async {
     var pgIndex = await repository.getPageIndex(todayIndex);
 
-    // pgIndex = 0; //TODO:REMOVER
     pageController = PageController(initialPage: pgIndex);
     await _fetchTodayMeals(); //TODO: Trocar a hora em que o home decide se mostra ou nao HomeState.Ready
     _setHomeCardState(pgIndex);
