@@ -428,6 +428,12 @@ main() {
       expect(weeklyMeals, 9);
     });
   }, skip: true);
+
+  group('HomeProviderHelper', () {
+    test('Getting the number of the week', () {
+      
+    });
+  });
 }
 
 //TODO: Testar a quantidade de extras que pode ser selecionado cada dia

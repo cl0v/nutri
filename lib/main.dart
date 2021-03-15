@@ -5,10 +5,6 @@ import 'package:get/get.dart';
 import 'package:nutri/constants.dart';
 import 'app/routes/app_pages.dart';
 
-//TODO: Voltar criando pagina por página ja definindo o estilo
-// mockar dados para login por exemplo para fazer todo o fluxo de uso
-//
-
 //FIXME: Pulando a splash
 
 //Definir o fluxo do app
@@ -56,8 +52,6 @@ Future<void> main() async {
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
         theme: newTheme,
-        // themeMode: ThemeMode.dark,
-        // darkTheme: newTheme,
         debugShowCheckedModeBanner: false,
         enableLog: false,
       ),
