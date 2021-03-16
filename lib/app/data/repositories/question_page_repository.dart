@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:nutri/app/data/model/question_model.dart';
 import 'package:nutri/app/data/providers/question_page_provider.dart';
 

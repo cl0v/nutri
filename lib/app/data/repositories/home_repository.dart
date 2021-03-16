@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/data/providers/home_provider.dart';
 

@@ -68,8 +68,8 @@ class LoginView extends GetView<LoginController> {
                           prefixIcon: Icon(
                             Icons.lock,
                           ),
-                          hintText: 'Password',
-                          labelText: 'Password',
+                          hintText: 'Senha',
+                          labelText: 'Senha',
                         ),
                       ),
                     ),

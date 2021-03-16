@@ -1,4 +1,4 @@
-package com.example.nutri
+package br.com.hl.nutrinest
 
 import io.flutter.embedding.android.FlutterActivity
 

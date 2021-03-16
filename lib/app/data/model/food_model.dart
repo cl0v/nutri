@@ -183,8 +183,7 @@ abstract class FoodModelHelper {
 
   static Future<List<FoodModel>> _loadFoodsFromPreferences(
       List<String> prefs) async {
-    if (prefs == null) return [];
-    var json = await (_loadJson() as FutureOr<List<dynamic>>);
+    var json = await (_loadJson());
     return json
         .where((map) => prefs.contains(map['title']))
         .map((map) => FoodModel.fromMap(map))
