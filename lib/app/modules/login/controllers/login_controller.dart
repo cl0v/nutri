@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nutri/app/data/providers/user_provider.dart';
 import 'package:nutri/app/data/repositories/user_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
@@ -18,6 +19,26 @@ class LoginController extends GetxController {
   String get errorMsg => _errorMsg.value!;
   bool get isObscurePassword => _isObscurePassword.value!;
 
+  Rx<UserConnectionState> _userConnectionState = UserConnectionState.Idle.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    ever(_userConnectionState, userConnectionStateChanged);
+    _userConnectionState.bindStream(repository.getUserConnectionState());
+  }
+
+  userConnectionStateChanged(state) {
+    switch (state) {
+      case UserConnectionState.Error:
+        _showLoginErrors(repository.getUserLoginError());
+        break;
+      case UserConnectionState.Connected:
+        Get.offAllNamed(Routes.HOME);
+        break;
+    }
+  }
+
   onCreateAccountPressed() {
     Get.toNamed(Routes.REGISTER);
   }
@@ -32,19 +53,9 @@ class LoginController extends GetxController {
     super.onClose();
   }
 
-  onEnterPressed() async {
-    var response =
-        await repository.signin(emailController.text, passwordController.text);
-    // FocusScope.of(Get.context).unfocus();
-    if (response)
-      //TODO: Receber as infos pra saber do fluxo do app, pra onde enviar o cliente, question, swipe ou home
-      Get.offAllNamed(Routes.HOME);
-    else {
-      //TODO: Implement mensagem de erro
-      // String msg = await repository.getError();
-      _showLoginErrors('Error ao efetuar login');
-    }
-  }
+  onEnterPressed() async =>
+      await repository.signin(emailController.text, passwordController.text);
+  // FocusScope.of(Get.context).unfocus();
 
   _showLoginErrors(msg) {
     _loginError.value = true;

@@ -116,7 +116,7 @@ class HomeController extends GetxController {
       case HomeState.Ready:
         _showHomeContent.value = true;
         break;
-      case HomeState.SharedPrefsNull:
+      case HomeState.Error:
         Get.offAllNamed(Routes.FOOD_SWIPE);
         break;
       default:
@@ -322,8 +322,8 @@ class HomeController extends GetxController {
   }
 
   showMealsCard() {
-    pageController.jumpToPage(1);
     _homeBodyState.value = HomeBodyState.Meals;
+    pageController.jumpToPage(1);
   }
 
   void onPreviewDayPressed() => _showDayOverView(--dayIndex.value);

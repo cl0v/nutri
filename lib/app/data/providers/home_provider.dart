@@ -14,10 +14,9 @@ const dayIndexKey = 'dayIndexKey';
 const savedMealCardListPrefsKey = 'savedMealCardListPrefsKey';
 
 enum HomeState {
-  Error,
   Ready,
   Loading,
-  SharedPrefsNull,
+  Error,
 }
 
 class HomeProvider {
@@ -49,7 +48,7 @@ class HomeProvider {
   Future<List<List<MealModel>>> _fetchWeeklyMeals(sharedPreferences) async {
     List foodPrefs = _getFoodPrefs(sharedPreferences);
     if (foodPrefs.isEmpty) {
-      homeStateInput.add(HomeState.SharedPrefsNull);
+      homeStateInput.add(HomeState.Error);
       return [];
     } else {
       var weeklyMeals = _getWeeklyMeals(sharedPreferences);

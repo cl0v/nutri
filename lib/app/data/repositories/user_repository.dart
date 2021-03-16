@@ -5,7 +5,11 @@ class UserRepository {
 
   UserRepository({required this.provider});
 
-  Future<bool> signin(String email, String password) =>
+  Stream<UserConnectionState> getUserConnectionState() => provider.getUserConnectionState();
+  String getUserLoginError() => provider.getUserLoginError();
+  String getUserRegisterError() => provider.getUserRegisterError();
+
+  signin(String email, String password) =>
       provider.signin(email, password);
 
   register(String email, String password) => provider.register(email, password);

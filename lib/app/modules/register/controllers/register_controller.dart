@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nutri/app/data/providers/user_provider.dart';
 import 'package:nutri/app/data/repositories/user_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
-import 'package:nutri/constants.dart';
 
 class RegisterController extends GetxController {
   final UserRepository repository;
@@ -14,32 +14,40 @@ class RegisterController extends GetxController {
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
 
-  PageController pageController = PageController(); 
-
-  final RxBool _thermIsChecked = false.obs;
   final RxBool _isObscurePassword = true.obs;
 
-  bool get thermIsChecked => _thermIsChecked.value!;
   bool get isObscurePassword => _isObscurePassword.value!;
+
+  RxBool _registerError = false.obs;
+  RxString _errorMsg = ''.obs;
+  bool get registerError => _registerError.value!;
+  String get errorMsg => _errorMsg.value!;
+  Rx<UserConnectionState> _userConnectionState = UserConnectionState.Idle.obs;
 
   @override
   void onInit() {
     super.onInit();
+    ever(_userConnectionState, userConnectionStateChanged);
+    _userConnectionState.bindStream(repository.getUserConnectionState());
   }
 
-  void onContinuePressed() {
-    //TODO: Implement onContinuePressed
-    //TODO: Marcar como obrigatório os campos
-    pageController.nextPage(
-        duration: Duration(milliseconds: 300), curve: Curves.ease);
+  userConnectionStateChanged(state) {
+    print(state);
+    switch (state) {
+      case UserConnectionState.Error:
+        _showErrors(repository.getUserRegisterError());
+        break;
+      case UserConnectionState.Connected:
+        Get.offAllNamed(Routes.QUESTIONS);
+
+        break;
+    }
   }
 
-  checkTerms(bool? val) =>
-    _thermIsChecked.value = val;
-  
-
-  _createAccount() async => repository.register(emailController.text, passwordController.text);
-
+  _showErrors(msg) {
+    _registerError.value = true;
+    _errorMsg.value = msg;
+  }
 
   @override
   void onClose() {
@@ -47,26 +55,11 @@ class RegisterController extends GetxController {
     super.onClose();
   }
 
-  void onConfirmPressed(context) async {
-    if (!thermIsChecked)
-      return Get.snackbar(
-        'Confirme os termos',
-        'Por favor confirme os termos antes de continuar.',
-        backgroundColor: kErrorColor,
-        colorText: Colors.white,
-      );
-
-    await _createAccount();
-    Get.offAllNamed(Routes.QUESTIONS);
+  void onConfirmPressed() async {
+    if (emailController.text != '' && passwordController.text != '') {
+      await repository.register(emailController.text, passwordController.text);
+    }
   }
 
-  void onCancelRegisterPressed() {
-    // TODO: Mostrar mensagem de aviso caso algo tenha sido preenchido
-    // TODO: Implement onCancelRegisterPressed
-    Get.back();
-  }
-
-  void onShowPasswordPressed() =>
-    _isObscurePassword.toggle();
-  
+  void onShowPasswordPressed() => _isObscurePassword.toggle();
 }

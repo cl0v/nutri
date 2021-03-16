@@ -60,7 +60,7 @@ main() {
           repository.getHomeState(),
           emitsInOrder([
             HomeState.Loading,
-            HomeState.SharedPrefsNull,
+            HomeState.Error,
           ]));
       repository.fetchDailyMenuOfTheWeek();
     }, skip: true);

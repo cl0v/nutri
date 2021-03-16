@@ -1,44 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/routes/app_pages.dart';
+import 'package:nutri/app/modules/splash/controllers/splash_controller.dart';
 
-class SplashView extends StatefulWidget {
-  @override
-  _SplashPageState createState() => _SplashPageState();
-}
-
-class _SplashPageState extends State<SplashView> {
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration(seconds: 2), () => Get.offAllNamed(Routes.LOGIN));
-  }
-
+class SplashView extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Image.asset(
-        'assets/Profile.jpg',
-        fit: BoxFit.fill,
-      ),
-      Container(
-        child: Column(children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(top: 200, bottom: 10),
+    return Stack(
+      children: [
+        Image.asset(
+          'assets/Profile.jpg',
+          fit: BoxFit.fill,
+        ),
+        Center(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(300),
             child: Container(
               height: 200,
-              width: 200,
+              width: 300,
+              color: Colors.black26,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  
+                      Text(
+                        'H&L',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 64,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                  Text(
+                    'Saúde e Vida',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+                  SizedBox(height: 32,),
+                  Container(child: LinearProgressIndicator(), width: 100,)
+                ],
+              ),
             ),
           ),
-          Text(
-            'CONNECT',
-            style: TextStyle(
-                color: Colors.greenAccent,
-                fontSize: 20,
-                decoration: TextDecoration.none),
-          ),
-        ]),
-      ),
-    ]);
+        ),
+      ],
+    );
   }
 }

@@ -20,7 +20,7 @@ class LoginView extends GetView<LoginController> {
             ),
             child: Center(
               child: Container(
-                height: 450,
+                height: 420,
                 margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
                 padding: EdgeInsets.all(kDefaultPadding),
                 decoration: BoxDecoration(
@@ -43,7 +43,7 @@ class LoginView extends GetView<LoginController> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.emailAddress,
                       controller: controller.emailController,
-                      decoration: InputDecoration(
+                      decoration: InputDecoration( //FIXME: Catch email badly formated
                         prefixIcon: Icon(Icons.email),
                         hintText: 'E-mail',
                         labelText: 'E-mail',
@@ -77,17 +77,20 @@ class LoginView extends GetView<LoginController> {
                       () => controller.loginError
                           ? Text(
                               controller.errorMsg,
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: kErrorColor), //Alterar para error text
                             )
                           : Container(),
                     ),
-                    TextButton(
-                      onPressed: controller.onForgetPasswordPressed,
-                      child: Text(
-                        'Esqueceu sua senha?',
-                      ),
-                    ),
+                    SizedBox(height: 8,),
+
+                    // TextButton(
+                    //   onPressed: controller.onForgetPasswordPressed,
+                    //   child: Text(
+                    //     'Esqueceu sua senha?',
+                    //   ),
+                    // ),
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
