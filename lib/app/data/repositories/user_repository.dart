@@ -5,12 +5,13 @@ class UserRepository {
 
   UserRepository({required this.provider});
 
-  Stream<UserConnectionState> getUserConnectionState() => provider.getUserConnectionState();
+  Stream<UserConnectionState> getUserConnectionState() =>
+      provider.getUserConnectionState();
+  closeUserConnectionState() => provider.closeUserConnectionState();
   String getUserLoginError() => provider.getUserLoginError();
   String getUserRegisterError() => provider.getUserRegisterError();
 
-  signin(String email, String password) =>
-      provider.signin(email, password);
+  signin(String email, String password) => provider.signin(email, password);
 
   register(String email, String password) => provider.register(email, password);
 }

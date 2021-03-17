@@ -18,6 +18,12 @@ class SplashController extends GetxController {
     userConnectionState.bindStream(userRepository.getUserConnectionState());
   }
 
+  @override
+  onClose() {
+    super.onClose();
+    userRepository.closeUserConnectionState();
+  }
+
   onUserConnectionStateChange(state) {
     switch (state) {
       case UserConnectionState.Connected:

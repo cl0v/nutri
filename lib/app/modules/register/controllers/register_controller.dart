@@ -52,6 +52,7 @@ class RegisterController extends GetxController {
   @override
   void onClose() {
     FocusScope.of(Get.context!).unfocus();
+    repository.closeUserConnectionState();
     super.onClose();
   }
 

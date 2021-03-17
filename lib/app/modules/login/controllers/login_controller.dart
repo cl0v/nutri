@@ -27,6 +27,7 @@ class LoginController extends GetxController {
     ever(_userConnectionState, userConnectionStateChanged);
     _userConnectionState.bindStream(repository.getUserConnectionState());
   }
+  
 
   userConnectionStateChanged(state) {
     switch (state) {
@@ -43,19 +44,19 @@ class LoginController extends GetxController {
     Get.toNamed(Routes.REGISTER);
   }
 
-  onForgetPasswordPressed() {
-    //TODO: Implement onForgetPasswordPressed
-  }
+  // onForgetPasswordPressed() {
+  //   //TODO: Implement onForgetPasswordPressed
+  // }
 
   @override
   void onClose() {
     FocusScope.of(Get.context!).unfocus();
+    repository.closeUserConnectionState();
     super.onClose();
   }
 
   onEnterPressed() async =>
       await repository.signin(emailController.text, passwordController.text);
-  // FocusScope.of(Get.context).unfocus();
 
   _showLoginErrors(msg) {
     _loginError.value = true;

@@ -48,6 +48,8 @@ class UserProvider {
     return userConnectionStateOutput;
   }
 
+  closeUserConnectionState() => userConnectionState.close();
+
   UserLoginErrorState _userLoginErrorState =
       UserLoginErrorState.None; //Se eu precisar do estado
   String _loginErrorMsg = '';
@@ -71,7 +73,6 @@ class UserProvider {
         password: password,
       );
       userConnectionStateInput.add(UserConnectionState.Connected);
-      userConnectionState.close();
     } on FirebaseAuthException catch (e) {
       userConnectionStateInput.add(UserConnectionState.Error);
       switch (e.code) {
@@ -103,7 +104,6 @@ class UserProvider {
         password: password,
       );
       userConnectionStateInput.add(UserConnectionState.Connected);
-      userConnectionState.close();
     } on FirebaseAuthException catch (e) {
       userConnectionStateInput.add(UserConnectionState.Error);
       switch (e.code) {
