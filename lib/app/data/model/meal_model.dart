@@ -11,31 +11,36 @@ enum MealType {
 
 class MealModel {
   //enum
-  final MealType type;
+  final MealType meal;
   final String img;
+  final int day;
 
   MealModel({
-    required this.type,
+    required this.meal,
     required this.img,
+    this.day = 1,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'meal': type.index,
+      'meal': meal.index,
       'img': img,
+      'day': day,
     };
   }
 
   factory MealModel.fromMap(Map<String, dynamic> map) {
     return MealModel(
-      type: MealType.values[map['meal']],
+      meal: MealType.values[map['meal']],
       img: map['img'],
+      day: map['day'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory MealModel.fromJson(String source) => MealModel.fromMap(json.decode(source));
+  factory MealModel.fromJson(String source) =>
+      MealModel.fromMap(json.decode(source));
 }
 
 const jsonPath = 'assets/jsons/meal.json';
@@ -48,8 +53,15 @@ abstract class MealProvider {
     var json = await (_loadJson());
     return json.map((map) => MealModel.fromMap(map)).toList();
   }
-}
 
+  static Future<List<MealModel>> loadMealListByDay(int day) async {
+    var json = await (_loadJson());
+    return json
+        .map((map) => MealModel.fromMap(map))
+        .where((meal) => meal.day == day)
+        .toList();
+  }
+}
 
 abstract class MealModelHelper {
   static String getTranslatedMeal(MealType m) {

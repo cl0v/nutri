@@ -25,7 +25,7 @@ class OverviewCard extends StatelessWidget {
             aspectRatio: 2.9,
             child: MealCard(
               image: items[idx - 1].img,
-              title: MealModelHelper.getTranslatedMeal(items[idx - 1].type),
+              title: MealModelHelper.getTranslatedMeal(items[idx - 1].meal),
             ),
           );
         },

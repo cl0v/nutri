@@ -1,18 +1,149 @@
 [
     {
-      "img": "assets/images/meals/0.jpg",
-      "meal": 0
+      "img": "assets/images/meals/10.png",
+      "meal": 0,
+      "day": 1
+
     },
     {
-      "img": "assets/images/meals/1.jpg",
-      "meal": 1
+      "img": "assets/images/meals/11.png",
+      "meal": 1,
+      "day": 1
+
     },
     {
-      "img": "assets/images/meals/2.jpg",
-      "meal": 2
+      "img": "assets/images/meals/12.png",
+      "meal": 2,
+      "day": 1
     },
     {
-      "img": "assets/images/meals/3.jpg",
-      "meal": 3
+      "img": "assets/images/meals/13.png",
+      "meal": 3,
+      "day": 1
+    },
+    {
+      "img": "assets/images/meals/30.png",
+      "meal": 0,
+      "day": 2
+    },
+    {
+      "img": "assets/images/meals/21.png",
+      "meal": 1,
+      "day": 2
+    },
+    {
+      "img": "assets/images/meals/22.png",
+      "meal": 2,
+      "day": 2
+    },
+    {
+      "img": "assets/images/meals/23.png",
+      "meal": 3,
+      "day": 2
+    },
+    {
+      "img": "assets/images/meals/23.png",
+      "meal": 3,
+      "day": 2
+    },
+    {
+      "img": "assets/images/meals/30.png",
+      "meal": 0,
+      "day": 3
+    },
+    {
+      "img": "assets/images/meals/31.png",
+      "meal": 1,
+      "day": 3
+    },
+    {
+      "img": "assets/images/meals/32.png",
+      "meal": 2,
+      "day": 3
+    },
+    {
+      "img": "assets/images/meals/33.png",
+      "meal": 3,
+      "day": 3
+    },
+    {
+      "img": "assets/images/meals/40.png",
+      "meal": 0,
+      "day": 4
+    },
+    {
+      "img": "assets/images/meals/41.png",
+      "meal": 1,
+      "day": 4
+    },
+    {
+      "img": "assets/images/meals/42.png",
+      "meal": 2,
+      "day": 4
+    },
+    {
+      "img": "assets/images/meals/43.png",
+      "meal": 3,
+      "day": 4
+    },
+    {
+      "img": "assets/images/meals/50.png",
+      "meal": 0,
+      "day": 5
+    },
+    {
+      "img": "assets/images/meals/51.png",
+      "meal": 1,
+      "day": 5
+    },
+    {
+      "img": "assets/images/meals/52.png",
+      "meal": 2,
+      "day": 5
+    },
+    {
+      "img": "assets/images/meals/53.png",
+      "meal": 3,
+      "day": 5
+    },
+    {
+      "img": "assets/images/meals/60.png",
+      "meal": 0,
+      "day": 6
+    },
+    {
+      "img": "assets/images/meals/61.png",
+      "meal": 1,
+      "day": 6
+    },
+    {
+      "img": "assets/images/meals/62.png",
+      "meal": 2,
+      "day": 6
+    },
+    {
+      "img": "assets/images/meals/63.png",
+      "meal": 3,
+      "day": 6
+    },
+    {
+      "img": "assets/images/meals/70.png",
+      "meal": 0,
+      "day": 7
+    },
+    {
+      "img": "assets/images/meals/71.png",
+      "meal": 1,
+      "day": 7
+    },
+    {
+      "img": "assets/images/meals/72.png",
+      "meal": 2,
+      "day": 7
+    },
+    {
+      "img": "assets/images/meals/73.png",
+      "meal": 3,
+      "day": 7
     }
 ]

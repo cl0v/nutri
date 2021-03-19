@@ -41,8 +41,8 @@ class HomeProvider {
   int daysInAWeek = 7;
   // int dailyMealAmount = 4;
 
-  Future<List<MealModel>> getMeals() async {
-    return await MealProvider.loadMealsFromJson();
+  Future<List<MealModel>> getMeals({int day = 1}) async {
+    return await MealProvider.loadMealListByDay(day);
   }
 
   BehaviorSubject<HomeState> homeStateController =

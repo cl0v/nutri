@@ -73,7 +73,7 @@ class HomeController extends GetxController {
   bool get showHomeContent => _showHomeContent.value!;
 
   final dayIndex = 0.obs;
-  int todayIndex = 0;
+  int todayIndex = 1;
 
   int mealIndex = 0;
 
@@ -113,7 +113,7 @@ class HomeController extends GetxController {
   }
 
   _getOverViewList() async {
-    overViewList = await repository.getMeals();
+    overViewList = await repository.getMeals(day: todayIndex);
   }
 
   onHomeStateChanged(state) {
@@ -136,6 +136,7 @@ class HomeController extends GetxController {
 
   _fetchPageIndex() async {
     var pgIndex = await repository.getPageIndex(todayIndex);
+    pgIndex = 0;
 
     pageController = PageController(initialPage: pgIndex);
     await _fetchTodayMeals(); //TODO: Trocar a hora em que o home decide se mostra ou nao HomeState.Ready
@@ -306,17 +307,17 @@ class HomeController extends GetxController {
       isNextBtnDisabled.value = false;
     }
     //TODO: Acho que preciso esperar os dados chegarem, circular progress indicator
-    var dailyMeals =
-        await repository.fetchDailyMeals(day: ((todayIndex + day) - 1) % 7);
-    overViewMealsOfOtherDay = dailyMeals.map(
-      (meal) {
-        return {
-          'image': meal.mainFoodList.first.img,
-          'title':
-              '${MealModelHelper.getTranslatedMeal(meal.mealType)}:\n${meal.mainFoodList.first.title}',
-        };
-      },
-    ).toList();
+    overViewList =
+        await repository.getMeals(day: ((todayIndex + day) - 1) % 7);
+    // overViewMealsOfOtherDay = dailyMeals.map(
+    //   (meal) {
+    //     return {
+    //       'image': meal.mainFoodList.first.img,
+    //       'title':
+    //           '${MealModelHelper.getTranslatedMeal(meal.mealType)}:\n${meal.mainFoodList.first.title}',
+    //     };
+    //   },
+    // ).toList();
   }
 
   showMealsCard() {

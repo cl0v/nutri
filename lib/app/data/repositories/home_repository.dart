@@ -8,7 +8,7 @@ class HomeRepository {
     required this.provider,
   });
 
-  getMeals() => provider.getMeals();
+  getMeals({int day = 1}) => provider.getMeals(day: day);
 
   Future<List<List<MenuModel>>> fetchDailyMenuOfTheWeek() =>
       provider.fetchMealsOfTheWeek();
