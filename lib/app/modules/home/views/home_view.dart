@@ -17,12 +17,10 @@ class HomeView extends GetView<HomeController> {
                   body: Obx(
                     () {
                       switch (controller.homeBodyState) {
-                        case HomeBodyState.Review:
-                          return ReviewPage(items: controller.reviewMeals); //TODO: esses itens ele vai receber do controller
+                        // case HomeBodyState.Review: //TODO: Liberar o review
+                        //   return Obx(()=> controller.isReviewReady.value! ? ReviewPage(items: controller.reviewMeals) : CircularProgressIndicator()); //TODO: esses itens ele vai receber do controller
                         case HomeBodyState.Overview:
-                          return OverviewPage(items: controller.overViewList);
-                        case HomeBodyState.OtherDayOverview:
-                          return OverviewPage(items: controller.overViewList);
+                          return Obx(()=> controller.isOverViewReady.value! ? OverviewPage(items: controller.overViewList) : CircularProgressIndicator());
                         case HomeBodyState.Loading:
                           return Center(child: CircularProgressIndicator());
                         case HomeBodyState.Meals:
@@ -47,17 +45,6 @@ class HomeView extends GetView<HomeController> {
                               return ElevatedButton(
                                 onPressed: controller.showMealsCard,
                                 child: Text('Vamos la'),
-                              );
-                            case HomeBodyState.Review:
-                              return ElevatedButton(
-                                onPressed:
-                                    controller.onShowTomorrowOverViewPressed,
-                                child: Text('Conferir dia de amanha'),
-                              );
-                            case HomeBodyState.OtherDayOverview:
-                              return ElevatedButton(
-                                onPressed: controller.backToTodayPressed,
-                                child: Text('Ver hoje'),
                               );
                             case HomeBodyState.Loading:
                               return Container();

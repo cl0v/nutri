@@ -31,9 +31,7 @@ class HomeProvider {
   Stream<HomeState> getHomeState() => homeStateOutput;
   closeHomeStream() => homeStateController.close();
 
-  String getDayTitle({int day = 1}){
-    return HomeHelper.getDayTitle(day, weekDay);
-  }
+  String getDayTitle({int day = 1}) => HomeHelper.getDayTitle(day, weekDay);
 
   Future<List<MenuModel>> fetchDailyMeals() async =>
       _fetchDailyMeals(await sharedPreferences, day: weekDay);

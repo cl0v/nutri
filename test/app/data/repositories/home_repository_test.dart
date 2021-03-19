@@ -401,7 +401,7 @@ main() {
         'The first daily meal of the week should be the same as the day 1 on fetchDailyMeals by day',
         () async {
       weeklyMeals = await repository.fetchDailyMenuOfTheWeek();
-      var dailyMeal = await repository.fetchDailyMeals(day: 0);
+      var dailyMeal = await repository.fetchDailyMeals();
       expect(weeklyMeals.first, dailyMeal);
     });
 
@@ -413,9 +413,9 @@ main() {
     });
 
     test('Any day of the week should be the same if requested twice', () async {
-      var anyDay = Random().nextInt(7) + 1;
-      var dayMeal = await repository.fetchDailyMeals(day: anyDay);
-      var sameDayMeal = await repository.fetchDailyMeals(day: anyDay);
+      // var anyDay = Random().nextInt(7) + 1;
+      var dayMeal = await repository.fetchDailyMeals();
+      var sameDayMeal = await repository.fetchDailyMeals();
       expect(dayMeal, sameDayMeal);
     });
   });

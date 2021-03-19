@@ -47,7 +47,6 @@ enum HomeBodyState {
   Overview,
   Meals,
   Review,
-  OtherDayOverview,
 }
 
 //Home controller ficará responsável pelo estado e pelo titulo, pelos botoes no titulo e pelos botoes na navbar
@@ -62,30 +61,25 @@ class HomeController extends GetxController {
 
   final mealCardsOfTheDay = <MealCardModel>[].obs;
 
-  var lastHomeBodyState = HomeBodyState.OtherDayOverview;
-
-  final mealListLenght = 0.obs;
-
-  List<FoodModel> mainFoodsAvailable = <FoodModel>[];
+  List<FoodModel> mainFoodsAvailable = [];
   RxBool isMainFoodsReady = false.obs;
   final extraFoodsAvailable = <FoodModel>[].obs;
 
   List<MealModel> overViewList = [];
+  RxBool isOverViewReady = false.obs;
+
+  // RxBool isReviewReady = false.obs; //TODO: Ainda nem to usando isso
 
   final RxBool _showHomeContent = false.obs;
   bool get showHomeContent => _showHomeContent.value!;
 
   final dayIndex = 0.obs;
 
-  int mealIndex = 0;
-
   final selectedMainFoodIdx = 0.obs;
 
   final _selectedExtrasList = <int>[].obs;
   List<int> get selectedExtrasList => _selectedExtrasList;
 
-  List<Map<String, String>> overViewMeals = [];
-  List<Map<String, String>> overViewMealsOfOtherDay = [];
   List<Map<String, String>> reviewMeals = [];
   List<MealCardModel> reviewMealCards = [];
 
@@ -110,31 +104,25 @@ class HomeController extends GetxController {
 
     ever(homeState, onHomeStateChanged);
     ever(_homeBodyState, onHomeBodyStateChanged);
-    _getOverViewList(0); //TODO: Setar o dia que quero o overview
+    _getOverViewList(1);
     _fetchPageIndex();
   }
 
   onHomeBodyStateChanged(state) {
     switch (state) {
       case HomeBodyState.Overview:
-        print('over');
         break;
       case HomeBodyState.Review:
-        _fetchReview();
-
         print('review');
+        //TODO: Ta chegando aq
+        _fetchReview();
         break;
       case HomeBodyState.Meals:
         _onPageChanged(0);
         _setMeal(0);
-
         break;
       default:
     }
-  }
-
-  _getOverViewList(day) async {
-    overViewList = await repository.getMeals(day: day);
   }
 
   onHomeStateChanged(state) {
@@ -150,23 +138,32 @@ class HomeController extends GetxController {
     }
   }
 
+  _getOverViewList(day) async {
+    overViewList = await repository.getMeals(day: day);
+    isOverViewReady.value = true;
+  }
+
   onPageChanged(int idx) => _onPageChanged(idx);
 
-  String getDayTitle()  =>  repository
-      .getDayTitle(day: dayIndex.value); //TODO: Esse pode ser mais complicado
+  String getDayTitle() => repository.getDayTitle(
+      day: dayIndex.value); //TODO: Esse pode ser mais complicado
 
   _fetchPageIndex() async {
-    var pgIndex = await repository.getPageIndex();
-    pgIndex = 0;
+    var pgIdx = await repository.getPageIndex();
+    pgIdx = 0;
 
-    pageController = PageController(initialPage: pgIndex);
+    //FIXME: Esse pgidx não deve informar a pagina geral e sim o estado da página, caso o estado seja meal, deve informar o index
+
+    pageController = PageController(initialPage: pgIdx);
     await _fetchTodayMeals(); //TODO: Trocar a hora em que o home decide se mostra ou nao HomeState.Ready
-    if (pgIndex == 0) _homeBodyState.value = HomeBodyState.Overview;
+    if (pgIdx == 0) _homeBodyState.value = HomeBodyState.Overview;
     // if (pgIndex) _homeBodyState.value = HomeBodyState.Overview;
   }
 
   _onPageChanged(int idx) async {
+    if (idx >= 4) return _homeBodyState.value = HomeBodyState.Review;
     _savePageIndex(idx);
+    _setMeal(idx);
   }
 
   _savePageIndex(int idx) => repository.setPageIndex(idx);
@@ -220,15 +217,6 @@ class HomeController extends GetxController {
       mealCardsOfTheDay.assignAll(
           (dailyMeals).map((meal) => MealCardModel(mealModel: meal)));
     }
-    overViewMeals = dailyMeals
-        .map(
-          (meal) => {
-            'image': meal.mainFoodList.first.img,
-            'title':
-                '${MealModelHelper.getTranslatedMeal(meal.mealType)}:\n${meal.mainFoodList.first.title}',
-          },
-        )
-        .toList();
   }
 
   late MenuModel myMeal;
@@ -266,41 +254,11 @@ class HomeController extends GetxController {
     }
   }
 
-  _saveMealOfTheDay() {
-    mealCardsOfTheDay[mealIndex].mealCardState = MealCardState.Done;
-    mealCardsOfTheDay[mealIndex].selectedFood = mealCardsOfTheDay[mealIndex]
-        .mealModel
-        .mainFoodList[selectedMainFoodIdx.value];
-    mealCardsOfTheDay[mealIndex].selectedExtras = selectedExtras;
-    _buildAndSavePrefs(mealCardsOfTheDay[mealIndex]);
-  }
-
-  _buildAndSavePrefs(MealCardModel mealCard) {
-    List<String> prefStringList = [];
-    var extrasStringList = mealCard.selectedExtras.map((extra) => extra.title);
-    prefStringList.add(mealCard.mealCardState.toString());
-    prefStringList.add(mealCard.selectedFood!.title);
-    prefStringList.addAll(extrasStringList);
-    // repository.saveMealPrefs(
-    //     mealCard.mealModel.mealType.toString(), prefStringList);
-    //TODO: Analizar esse carinha
-  }
-
-  backToTodayPressed() => _showDayOverView(dayIndex.value = 0);
-
-  _backToToday() => _homeBodyState.value = lastHomeBodyState;
-
-  onShowTomorrowOverViewPressed() => _showDayOverView(dayIndex.value = 1);
-
   _showDayOverView(int day) async {
-    if (homeBodyState != HomeBodyState.OtherDayOverview)
-      lastHomeBodyState = homeBodyState;
     if (day <= 0) {
       isPreviewBtnDisabled.value = true;
-      return _backToToday();
     } else {
       isPreviewBtnDisabled.value = false;
-      _homeBodyState.value = HomeBodyState.OtherDayOverview;
     }
     if (day >= 6) {
       isNextBtnDisabled.value = true;
@@ -319,8 +277,26 @@ class HomeController extends GetxController {
   // isNextBtnDisabled.value = false;
 
   onNextDayPressed() => _showDayOverView(++dayIndex.value);
-
-//Se eu criar a diferenca de dias, eu sei que -1 é ontem, 0 é hoje, +1 é amanha
-// Eu posso informar a diferença de dias
-
 }
+
+
+
+  // _saveMealOfTheDay() {
+  //   mealCardsOfTheDay[mealIndex].mealCardState = MealCardState.Done;
+  //   mealCardsOfTheDay[mealIndex].selectedFood = mealCardsOfTheDay[mealIndex]
+  //       .mealModel
+  //       .mainFoodList[selectedMainFoodIdx.value];
+  //   mealCardsOfTheDay[mealIndex].selectedExtras = selectedExtras;
+  //   _buildAndSavePrefs(mealCardsOfTheDay[mealIndex]);
+  // }
+
+  // _buildAndSavePrefs(MealCardModel mealCard) {
+  //   List<String> prefStringList = [];
+  //   var extrasStringList = mealCard.selectedExtras.map((extra) => extra.title);
+  //   prefStringList.add(mealCard.mealCardState.toString());
+  //   prefStringList.add(mealCard.selectedFood!.title);
+  //   prefStringList.addAll(extrasStringList);
+  //   // repository.saveMealPrefs(
+  //   //     mealCard.mealModel.mealType.toString(), prefStringList);
+  //   //TODO: Analizar esse carinha
+  // }
