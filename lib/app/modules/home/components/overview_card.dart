@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/data/model/meal_model.dart';
+import 'package:nutri/app/modules/home/models/meal_model.dart';
 import 'package:nutri/app/modules/home/components/food_card.dart';
 import 'package:nutri/app/modules/home/components/meal_card.dart';
 

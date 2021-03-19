@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
-import 'package:nutri/app/data/model/meal_model.dart';
-import 'package:nutri/app/data/model/menu_model.dart';
-import 'package:nutri/app/data/repositories/home_repository.dart';
+import 'package:nutri/app/modules/home/models/meal_model.dart';
+import 'package:nutri/app/modules/home/models/menu_model.dart';
+import 'package:nutri/app/modules/home/repositories/home_repository.dart';
 import 'package:nutri/app/modules/home/helpers/home_screen_helper.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
-import 'package:nutri/app/data/providers/home_provider.dart';
+import 'package:nutri/app/modules/home/providers/home_provider.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
 //TODO: Receber o dia que foi buildado as refeições semanais

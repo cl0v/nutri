@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:nutri/app/data/providers/home_provider.dart';
-import 'package:nutri/app/data/repositories/home_repository.dart';
+import 'package:nutri/app/modules/home/providers/home_provider.dart';
+import 'package:nutri/app/modules/home/repositories/home_repository.dart';
 import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

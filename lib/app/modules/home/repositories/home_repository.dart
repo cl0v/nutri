@@ -1,5 +1,5 @@
-import 'package:nutri/app/data/model/menu_model.dart';
-import 'package:nutri/app/data/providers/home_provider.dart';
+import 'package:nutri/app/modules/home/models/menu_model.dart';
+import 'package:nutri/app/modules/home/providers/home_provider.dart';
 
 class HomeRepository {
   final HomeProvider provider;

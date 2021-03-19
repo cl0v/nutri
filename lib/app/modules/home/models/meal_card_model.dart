@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:nutri/app/data/model/food_model.dart';
-import 'package:nutri/app/data/model/menu_model.dart';
+import 'package:nutri/app/modules/home/models/menu_model.dart';
 
 class MealCardModel {
   final MenuModel mealModel;

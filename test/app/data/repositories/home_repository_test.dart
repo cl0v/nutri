@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/data/model/food_model.dart';
-import 'package:nutri/app/data/model/meal_model.dart';
-import 'package:nutri/app/data/model/menu_model.dart';
-import 'package:nutri/app/data/providers/home_provider.dart';
-import 'package:nutri/app/data/repositories/home_repository.dart';
+import 'package:nutri/app/modules/home/models/meal_model.dart';
+import 'package:nutri/app/modules/home/models/menu_model.dart';
+import 'package:nutri/app/modules/home/providers/home_provider.dart';
+import 'package:nutri/app/modules/home/repositories/home_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //TODO: Criar testes quando nenhuma comida for selecionada na foodPrefs
