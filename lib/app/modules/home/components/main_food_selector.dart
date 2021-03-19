@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/modules/home/components/food_card.dart';
 import 'package:nutri/app/modules/home/components/food_selectable_card.dart';
@@ -10,7 +9,6 @@ import 'package:nutri/app/modules/home/components/food_selectable_card.dart';
 //FIXME: Não está intuitivo o suficiente que é para tocar em alguma das comidas
 
 class MainFoodSelector extends StatelessWidget {
-
   final String selectedFoodImg;
   final String selectedFoodTitle;
   final List<FoodModel> foods;

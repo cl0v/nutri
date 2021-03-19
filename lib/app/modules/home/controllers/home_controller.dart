@@ -4,10 +4,10 @@ import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/modules/home/models/meal_model.dart';
 import 'package:nutri/app/modules/home/models/menu_model.dart';
 import 'package:nutri/app/modules/home/repositories/home_repository.dart';
-import 'package:nutri/app/modules/home/helpers/home_helper.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 import 'package:nutri/app/modules/home/providers/home_provider.dart';
 import 'package:nutri/app/routes/app_pages.dart';
+
 
 //TODO: Receber o dia que foi buildado as refeições semanais
 // - Receber qual a semana do ano, por exemplo o ano tem aprox 52 semanas
@@ -68,7 +68,7 @@ class HomeController extends GetxController {
   List<MealModel> overViewList = [];
   RxBool isOverViewReady = false.obs;
 
-  // RxBool isReviewReady = false.obs; //TODO: Ainda nem to usando isso
+  RxBool isReviewReady = false.obs; //TODO: Ainda nem to usando isso
 
   final RxBool _showHomeContent = false.obs;
   bool get showHomeContent => _showHomeContent.value!;
@@ -114,7 +114,6 @@ class HomeController extends GetxController {
         break;
       case HomeBodyState.Review:
         print('review');
-        //TODO: Ta chegando aq
         _fetchReview();
         break;
       case HomeBodyState.Meals:
@@ -145,8 +144,7 @@ class HomeController extends GetxController {
 
   onPageChanged(int idx) => _onPageChanged(idx);
 
-  String getDayTitle() => repository.getDayTitle(
-      day: dayIndex.value); //TODO: Esse pode ser mais complicado
+  String getDayTitle() => repository.getDayTitle(day: dayIndex.value);
 
   _fetchPageIndex() async {
     var pgIdx = await repository.getPageIndex();

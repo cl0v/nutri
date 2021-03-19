@@ -10,10 +10,10 @@ import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 //TODO: O que fazer quando nenhum acompanhamento for selecionado?
 
 class ExtraFoodSelector extends StatelessWidget {
+    final controller = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    final controller = Get.find<HomeController>();
     return Column(
       children: [
         AspectRatio(

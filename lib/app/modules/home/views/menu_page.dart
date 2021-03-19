@@ -36,12 +36,16 @@ class MenuPage extends StatelessWidget {
                           .mainFoodsAvailable[
                               controller.selectedMainFoodIdx.value]
                           .title,
-                          foods: controller.mainFoodsAvailable,
-                          onTap: controller.onMainFoodTapped,
-                          isSelected: controller.isMainFoodSelected,
+                      foods: controller.mainFoodsAvailable,
+                      onTap: controller.onMainFoodTapped,
+                      isSelected: controller.isMainFoodSelected,
                     )
                   : Container()),
-              Divider(),
+              Obx(
+                () => controller.extraFoodsAvailable.isNotEmpty
+                    ? Divider()
+                    : Container(),
+              ),
               Obx(
                 () => controller.extraFoodsAvailable.isNotEmpty
                     ? ExtraFoodSelector()
