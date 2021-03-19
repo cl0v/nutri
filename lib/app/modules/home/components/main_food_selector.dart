@@ -18,7 +18,7 @@ class MainFoodSelector extends StatelessWidget {
         AspectRatio(
           aspectRatio: 2.2,
           child: Obx(
-            () => controller.mainFoodsAvailable.isNotEmpty
+            () => controller.isMainFoodsReady.value!
                 ? FoodCard(
                     image: controller.mainFoodsAvailable[
                         controller.selectedMainFoodIdx.value].img,
@@ -29,7 +29,7 @@ class MainFoodSelector extends StatelessWidget {
           ),
         ),
         Obx(
-          () => controller.mainFoodsAvailable.length > 1
+          () => controller.isMainFoodsReady.value! && controller.mainFoodsAvailable.length > 1
               ? Text(
                   'Selecione uma opção',
                   style: TextStyle(color: Colors.white),
@@ -39,7 +39,7 @@ class MainFoodSelector extends StatelessWidget {
         AspectRatio(
           aspectRatio: 5,
           child: Obx(
-            () => controller.mainFoodsAvailable.isNotEmpty &&
+            () => controller.isMainFoodsReady.value! && controller.mainFoodsAvailable.isNotEmpty &&
                     controller.mainFoodsAvailable.length > 1
                 ? Row(
                     mainAxisSize: MainAxisSize.min,

@@ -4,7 +4,7 @@ import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/modules/home/models/meal_model.dart';
 import 'package:nutri/app/modules/home/models/menu_model.dart';
 import 'package:nutri/app/modules/home/repositories/home_repository.dart';
-import 'package:nutri/app/modules/home/helpers/home_screen_helper.dart';
+import 'package:nutri/app/modules/home/helpers/home_helper.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 import 'package:nutri/app/modules/home/providers/home_provider.dart';
 import 'package:nutri/app/routes/app_pages.dart';
@@ -50,9 +50,15 @@ enum HomeBodyState {
   OtherDayOverview,
 }
 
+//Home controller ficará responsável pelo estado e pelo titulo, pelos botoes no titulo e pelos botoes na navbar
+
 class HomeController extends GetxController {
   HomeController({required this.repository});
   final HomeRepository repository;
+
+  final isPreviewBtnDisabled = true.obs;
+  //TODO: Mostrar pagina de review de dias anteriores
+  final isNextBtnDisabled = false.obs;
 
   final mealCardsOfTheDay = <MealCardModel>[].obs;
 
@@ -60,11 +66,8 @@ class HomeController extends GetxController {
 
   final mealListLenght = 0.obs;
 
-  final isPreviewBtnDisabled = true.obs;
-  //TODO: Mostrar pagina de review de dias anteriores
-  final isNextBtnDisabled = false.obs;
-
-  final mainFoodsAvailable = <FoodModel>[].obs;
+  List<FoodModel> mainFoodsAvailable = <FoodModel>[];
+  RxBool isMainFoodsReady = false.obs;
   final extraFoodsAvailable = <FoodModel>[].obs;
 
   List<MealModel> overViewList = [];
@@ -73,7 +76,6 @@ class HomeController extends GetxController {
   bool get showHomeContent => _showHomeContent.value!;
 
   final dayIndex = 0.obs;
-  int todayIndex = 1;
 
   int mealIndex = 0;
 
@@ -107,13 +109,32 @@ class HomeController extends GetxController {
     homeState.bindStream(repository.getHomeState());
 
     ever(homeState, onHomeStateChanged);
-    _getOverViewList();
-    _setDayOfTheWeek();
+    ever(_homeBodyState, onHomeBodyStateChanged);
+    _getOverViewList(0); //TODO: Setar o dia que quero o overview
     _fetchPageIndex();
   }
 
-  _getOverViewList() async {
-    overViewList = await repository.getMeals(day: todayIndex);
+  onHomeBodyStateChanged(state) {
+    switch (state) {
+      case HomeBodyState.Overview:
+        print('over');
+        break;
+      case HomeBodyState.Review:
+        _fetchReview();
+
+        print('review');
+        break;
+      case HomeBodyState.Meals:
+        _onPageChanged(0);
+        _setMeal(0);
+
+        break;
+      default:
+    }
+  }
+
+  _getOverViewList(day) async {
+    overViewList = await repository.getMeals(day: day);
   }
 
   onHomeStateChanged(state) {
@@ -131,24 +152,24 @@ class HomeController extends GetxController {
 
   onPageChanged(int idx) => _onPageChanged(idx);
 
-  String getDayTitle() =>
-      HomeScreenHelper.getDayTitle(dayIndex.value, todayIndex);
+  String getDayTitle()  =>  repository
+      .getDayTitle(day: dayIndex.value); //TODO: Esse pode ser mais complicado
 
   _fetchPageIndex() async {
-    var pgIndex = await repository.getPageIndex(todayIndex);
+    var pgIndex = await repository.getPageIndex();
     pgIndex = 0;
 
     pageController = PageController(initialPage: pgIndex);
     await _fetchTodayMeals(); //TODO: Trocar a hora em que o home decide se mostra ou nao HomeState.Ready
-    _setHomeCardState(pgIndex);
+    if (pgIndex == 0) _homeBodyState.value = HomeBodyState.Overview;
+    // if (pgIndex) _homeBodyState.value = HomeBodyState.Overview;
   }
 
   _onPageChanged(int idx) async {
-    _setHomeCardState(idx);
     _savePageIndex(idx);
   }
 
-  _savePageIndex(int idx) => repository.setPageIndex(idx, todayIndex);
+  _savePageIndex(int idx) => repository.setPageIndex(idx);
 
   onDonePressed() => _nextMealCard(true);
 
@@ -158,7 +179,7 @@ class HomeController extends GetxController {
     myMealCard.mealCardState =
         confirmed ? MealCardState.Done : MealCardState.Skiped;
     myMealCard.selectedFood = mainFoodsAvailable[selectedMainFoodIdx.value];
-    _saveMealCard(myMealCard);
+    // _saveMealCard(myMealCard);
     _nextPage();
   }
 
@@ -171,23 +192,6 @@ class HomeController extends GetxController {
       duration: Duration(microseconds: 100),
       curve: Curves.ease,
     );
-  }
-
-  ///Responsável por monitorar o estado da home para cada troca de página
-  _setHomeCardState(int idx) async {
-    switch (idx) {
-      case 0:
-        _homeBodyState.value = HomeBodyState.Overview;
-        break;
-      case 5:
-        _fetchReview();
-        _homeBodyState.value = HomeBodyState.Review;
-        break;
-      default:
-        _homeBodyState.value = HomeBodyState.Meals;
-        _setMeal(idx - 1);
-        break;
-    }
   }
 
   _fetchReview() async {
@@ -211,7 +215,7 @@ class HomeController extends GetxController {
 
   _fetchTodayMeals() async {
     var dailyMeals =
-        await repository.fetchDailyMeals(day: todayIndex - 1); //FIXME: Erro aq
+        await repository.fetchDailyMeals(); //FIXME: Pegar o dia da semana
     if (dailyMeals.isNotEmpty) {
       mealCardsOfTheDay.assignAll(
           (dailyMeals).map((meal) => MealCardModel(mealModel: meal)));
@@ -235,15 +239,12 @@ class HomeController extends GetxController {
     myMealCard = mealCardsOfTheDay[idx];
     selectedMainFoodIdx.value = 0;
     mainFoodsAvailable.assignAll(myMeal.mainFoodList);
+    isMainFoodsReady.value = true;
     extraFoodsAvailable.assignAll(myMeal.extraList);
     _extrasAmount.value = myMeal.extraAmount;
     selectedExtras = [];
     _selectedExtrasList.assignAll([]);
     mealCategory.value = MealModelHelper.getTranslatedMeal(myMeal.mealType);
-  }
-
-  _setDayOfTheWeek() {
-    todayIndex = DateTime.now().weekday;
   }
 
   getSelectedIndex(int idx) => _selectedExtrasList.contains(idx);
@@ -306,23 +307,12 @@ class HomeController extends GetxController {
     } else {
       isNextBtnDisabled.value = false;
     }
-    //TODO: Acho que preciso esperar os dados chegarem, circular progress indicator
     overViewList =
-        await repository.getMeals(day: ((todayIndex + day) - 1) % 7);
-    // overViewMealsOfOtherDay = dailyMeals.map(
-    //   (meal) {
-    //     return {
-    //       'image': meal.mainFoodList.first.img,
-    //       'title':
-    //           '${MealModelHelper.getTranslatedMeal(meal.mealType)}:\n${meal.mainFoodList.first.title}',
-    //     };
-    //   },
-    // ).toList();
+        await repository.getMeals(day: day); //TODO: Definir o dia que quero
   }
 
   showMealsCard() {
     _homeBodyState.value = HomeBodyState.Meals;
-    pageController.jumpToPage(1);
   }
 
   void onPreviewDayPressed() => _showDayOverView(--dayIndex.value);

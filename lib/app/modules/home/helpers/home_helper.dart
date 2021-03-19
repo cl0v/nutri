@@ -1,6 +1,6 @@
 
 
-abstract class HomeScreenHelper {
+abstract class HomeHelper {
   static String getDayTitle(int dayIndex, int todayIndex) {
     if (dayIndex == 1) {
       return 'AMANHÃ';

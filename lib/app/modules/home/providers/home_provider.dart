@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/modules/home/helpers/home_helper.dart';
 import 'package:nutri/app/modules/home/models/meal_model.dart';
 import 'package:nutri/app/modules/home/models/menu_model.dart';
 import 'package:rxdart/rxdart.dart';
@@ -23,13 +24,19 @@ enum HomeState {
 class HomeProvider {
   final Future<SharedPreferences> sharedPreferences;
 
+  var weekDay = DateTime.now().weekday;
+
   HomeProvider({required this.sharedPreferences});
 
   Stream<HomeState> getHomeState() => homeStateOutput;
   closeHomeStream() => homeStateController.close();
 
-  Future<List<MenuModel>> fetchDailyMeals({int day = 0}) async =>
-      _fetchDailyMeals(await sharedPreferences, day: day);
+  String getDayTitle({int day = 1}){
+    return HomeHelper.getDayTitle(day, weekDay);
+  }
+
+  Future<List<MenuModel>> fetchDailyMeals() async =>
+      _fetchDailyMeals(await sharedPreferences, day: weekDay);
 
   Future<List<List<MenuModel>>> fetchMealsOfTheWeek() async =>
       _fetchWeeklyMeals(await sharedPreferences);
@@ -106,16 +113,16 @@ class HomeProvider {
       MenuProvider.saveWeeklyMealsOnPrefs(
           await sharedPreferences, listOfDailyMeal);
 
-  Future<int> getPageIndexFromPrefs(int day) async {
+  Future<int> getPageIndexFromPrefs() async {
     var lastSavedDay = (await sharedPreferences).getInt(dayIndexKey);
-    if (lastSavedDay == day)
+    if (lastSavedDay == weekDay)
       return (await sharedPreferences).getInt(pageIndexKey) ?? 0;
     return 0;
   }
 
-  setPageIndexOnPrefs(int mealIdx, int day) async {
+  setPageIndexOnPrefs(int mealIdx) async {
     var prefs = (await sharedPreferences);
-    prefs.setInt(dayIndexKey, day);
+    prefs.setInt(dayIndexKey, weekDay);
     prefs.setInt(pageIndexKey, mealIdx);
   }
 

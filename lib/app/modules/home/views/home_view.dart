@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 
-import 'package:nutri/app/modules/home/views/home_body.dart';
+import 'package:nutri/app/modules/home/views/menu_page.dart';
+import 'package:nutri/app/modules/home/views/overview_page.dart';
+import 'package:nutri/app/modules/home/views/review_page.dart';
 
 class HomeView extends GetView<HomeController> {
   @override
@@ -12,41 +14,55 @@ class HomeView extends GetView<HomeController> {
         Obx(
           () => controller.showHomeContent
               ? Scaffold(
-                  body: HomeBody(),
+                  body: Obx(
+                    () {
+                      switch (controller.homeBodyState) {
+                        case HomeBodyState.Review:
+                          return ReviewPage(items: controller.reviewMeals); //TODO: esses itens ele vai receber do controller
+                        case HomeBodyState.Overview:
+                          return OverviewPage(items: controller.overViewList);
+                        case HomeBodyState.OtherDayOverview:
+                          return OverviewPage(items: controller.overViewList);
+                        case HomeBodyState.Loading:
+                          return Center(child: CircularProgressIndicator());
+                        case HomeBodyState.Meals:
+                          return MenuPage();
+                        default:
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                      }
+                    },
+                  ),
                   extendBodyBehindAppBar: true,
                   bottomNavigationBar: BottomAppBar(
                     color: Colors.transparent,
                     elevation: 0,
                     child: Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Obx(
-                      () {
-                        switch (controller.homeBodyState) {
-                          case HomeBodyState.Overview:
-                            return ElevatedButton(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Obx(
+                        () {
+                          switch (controller.homeBodyState) {
+                            case HomeBodyState.Overview:
+                              return ElevatedButton(
                                 onPressed: controller.showMealsCard,
                                 child: Text('Vamos la'),
-                                style: ButtonStyle(
-                                  minimumSize:
-                                      MaterialStateProperty.resolveWith(
-                                          (states) => Size(120, 42)),
-                                ),
-                            );
-                          case HomeBodyState.Review:
-                            return ElevatedButton(
-                              onPressed:
-                                  controller.onShowTomorrowOverViewPressed,
-                              child: Text('Conferir dia de amanha'),
-                            );
-                          case HomeBodyState.OtherDayOverview:
-                            return ElevatedButton(
-                              onPressed: controller.backToTodayPressed,
-                              child: Text('Ver hoje'),
-                            );
-                          case HomeBodyState.Loading:
-                            return Container();
-                          case HomeBodyState.Meals:
-                            return Row(
+                              );
+                            case HomeBodyState.Review:
+                              return ElevatedButton(
+                                onPressed:
+                                    controller.onShowTomorrowOverViewPressed,
+                                child: Text('Conferir dia de amanha'),
+                              );
+                            case HomeBodyState.OtherDayOverview:
+                              return ElevatedButton(
+                                onPressed: controller.backToTodayPressed,
+                                child: Text('Ver hoje'),
+                              );
+                            case HomeBodyState.Loading:
+                              return Container();
+                            case HomeBodyState.Meals:
+                              return Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
@@ -74,13 +90,14 @@ class HomeView extends GetView<HomeController> {
                                     child: Text('Concluí'),
                                   ),
                                 ],
-                            );
-                          default:
-                            return Container();
-                        }
-                      },
+                              );
+                            default:
+                              return Container();
+                          }
+                        },
+                      ),
                     ),
-                  ),),
+                  ),
                   appBar: AppBar(
                     backgroundColor: Colors.transparent,
                     elevation: 0,
