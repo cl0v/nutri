@@ -1,0 +1,162 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
+import 'package:nutri/app/data/model/meal_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:nutri/app/data/model/food_model.dart';
+
+
+
+class MenuModel {
+  //enum
+  MealType mealType;
+  List<FoodModel> mainFoodList;
+  List<FoodModel> extraList;
+  int extraAmount; 
+//TODO: Remover, nem estou mais usando (fixei em sempre ter 3 acompanhamentos)
+//TODO: Solução basica é contar quantos elementos tem nos extras, se tiver vazia, nao mostra acompanhamentos
+//Se tiver 3 ou mais, mostra o selecione
+  MenuModel({
+    required this.mealType,
+    required this.mainFoodList,
+    required this.extraList,
+    this.extraAmount = 0,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'mealType': mealType.index,
+      'mainFoodList': mainFoodList.map((x) => x.toMap()).toList(),
+      'extraList': extraList.map((x) => x.toMap()).toList(),
+      'extraAmount': extraAmount,
+    };
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory MenuModel.fromJson(String source) =>
+      MenuModel.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'MealModel(mealType: $mealType)';
+  }
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is MenuModel &&
+        o.mealType == mealType &&
+        listEquals(o.mainFoodList, mainFoodList) &&
+        listEquals(o.extraList, extraList) &&
+        o.extraAmount == extraAmount;
+  }
+
+  @override
+  int get hashCode {
+    return mealType.hashCode ^
+        mainFoodList.hashCode ^
+        extraList.hashCode ^
+        extraAmount.hashCode;
+  }
+
+  // factory MealModel.fromMap(Map<String, dynamic>? map) { //TODO: Estudar esse caso
+  //   if (map == null) return null;
+  factory MenuModel.fromMap(Map<String, dynamic> map) {
+    return MenuModel(
+      mealType: MealType.values[map['mealType']],
+      mainFoodList: List<FoodModel>.from(
+          map['mainFoodList']?.map((x) => FoodModel.fromMap(x))),
+      extraList: List<FoodModel>.from(
+        map['extraList']?.map(
+              //Esse  map['extraList'] é nulo as vezes, mas nao deveria, deveria ser vazio
+              (x) => FoodModel.fromMap(x),
+            ) ??
+            [],
+      ),
+      extraAmount: map['extraAmount'],
+    );
+  }
+}
+
+
+const weeklyMealsPrefsKey = 'weeklyMeals';
+
+abstract class MenuProvider {
+  //Lembrando que o toJson é uma string, logo o sqflite aceita tambem
+
+  static List<List<MenuModel>> saveWeeklyMealsOnPrefs(
+      SharedPreferences prefs, List<List<MenuModel>> listOfDailyMeal) {
+    var list = listOfDailyMeal.map((l) => json.encode(l)).toList();
+    prefs.setStringList(weeklyMealsPrefsKey, list);
+
+    return listOfDailyMeal;
+  }
+
+//TODO: Eu acho que estou esquecendo de conferir se o foodswipe (DONE) ja foi e tambem se ja foi buildado as meals da semana
+  static List<List<MenuModel>> getWeeklyMealsFromPrefs(
+      SharedPreferences prefs) {
+    var foodPrefList = prefs.getStringList(weeklyMealsPrefsKey) ?? [];
+    return foodPrefList.map((String st) {
+      List<dynamic> js = json.decode(st);
+      return js.map((s) => MenuModel.fromJson(s)).toList();
+    }).toList();
+  }
+}
+
+abstract class MenuProviderHelper {
+  static Future<List<String>> _getFoodsPrefsList(sharedPreferences) async =>
+      FoodProvider.getFoodsPrefsList(sharedPreferences);
+
+  static Future<MenuModel> buildDinner(sharedPreferences) async {
+    var prefs = await _getFoodsPrefsList(sharedPreferences);
+// IDEIA: - Priorizar vegetais de noite
+    var mainFoodList =
+        await FoodModelHelper.loadDinnerMainFoodsFromPrefs(prefs);
+    var extraFoodList = await FoodModelHelper.loadDinnerExtrasFromPrefs(prefs);
+
+    return MenuModel(
+      mainFoodList: mainFoodList.take(3).toList(),
+      extraList: extraFoodList,
+      extraAmount: 3,
+      mealType: MealType.dinner,
+    );
+  }
+
+  static Future<MenuModel> buildSnack(sharedPreferences) async {
+    var prefs = await _getFoodsPrefsList(sharedPreferences);
+    var mainFoodList = await FoodModelHelper.loadSnackMainFoodsFromPrefs(prefs);
+    return MenuModel(
+      mainFoodList: mainFoodList.take(3).toList(),
+      extraList: [],
+      extraAmount: 0,
+      mealType: MealType.snack,
+    );
+  }
+
+  static Future<MenuModel> buildLunch(sharedPreferences) async {
+    var prefs = await _getFoodsPrefsList(sharedPreferences);
+    var mainFoodList = await FoodModelHelper.loadLunchMainFoodsFromPrefs(prefs);
+    var extraFoodList = await FoodModelHelper.loadLunchExtrasFromPrefs(prefs);
+    return MenuModel(
+      mainFoodList: mainFoodList.take(3).toList(),
+      extraList: extraFoodList,
+      extraAmount: 3,
+      mealType: MealType.lunch,
+    );
+  }
+
+  static Future<MenuModel> buildBreakfast(sharedPreferences) async {
+    var prefs = await _getFoodsPrefsList(sharedPreferences);
+    var mainFoodList =
+        await FoodModelHelper.loadBreakfastMainFoodsFromPrefs(prefs);
+    return MenuModel(
+      mainFoodList: mainFoodList.take(3).toList(),
+      extraList: [],
+      extraAmount: 0,
+      mealType: MealType.breakfast,
+    );
+  }
+}

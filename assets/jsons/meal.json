@@ -1,0 +1,18 @@
+[
+    {
+      "img": "assets/images/meals/0.jpg",
+      "meal": 0
+    },
+    {
+      "img": "assets/images/meals/1.jpg",
+      "meal": 1
+    },
+    {
+      "img": "assets/images/meals/2.jpg",
+      "meal": 2
+    },
+    {
+      "img": "assets/images/meals/3.jpg",
+      "meal": 3
+    }
+]

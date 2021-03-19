@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
+import 'package:nutri/app/data/model/menu_model.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,10 +28,10 @@ class HomeProvider {
   Stream<HomeState> getHomeState() => homeStateOutput;
   closeHomeStream() => homeStateController.close();
 
-  Future<List<MealModel>> fetchDailyMeals({int day = 0}) async =>
+  Future<List<MenuModel>> fetchDailyMeals({int day = 0}) async =>
       _fetchDailyMeals(await sharedPreferences, day: day);
 
-  Future<List<List<MealModel>>> fetchMealsOfTheWeek() async =>
+  Future<List<List<MenuModel>>> fetchMealsOfTheWeek() async =>
       _fetchWeeklyMeals(await sharedPreferences);
 
   // saveMealPrefs(String mealType, List<String> list) async =>
@@ -40,12 +41,16 @@ class HomeProvider {
   int daysInAWeek = 7;
   // int dailyMealAmount = 4;
 
+  Future<List<MealModel>> getMeals() async {
+    return await MealProvider.loadMealsFromJson();
+  }
+
   BehaviorSubject<HomeState> homeStateController =
       BehaviorSubject.seeded(HomeState.Loading);
   Stream<HomeState> get homeStateOutput => homeStateController.stream;
   Sink<HomeState> get homeStateInput => homeStateController.sink;
 
-  Future<List<List<MealModel>>> _fetchWeeklyMeals(sharedPreferences) async {
+  Future<List<List<MenuModel>>> _fetchWeeklyMeals(sharedPreferences) async {
     List foodPrefs = _getFoodPrefs(sharedPreferences);
     if (foodPrefs.isEmpty) {
       homeStateInput.add(HomeState.Error);
@@ -60,7 +65,7 @@ class HomeProvider {
     }
   }
 
-  Future<List<MealModel>> _fetchDailyMeals(sharedPreferences,
+  Future<List<MenuModel>> _fetchDailyMeals(sharedPreferences,
       {int day = 0}) async {
     //TODO: Aqui que deve ser chamado o builde semanal
     var weeklyMeals =
@@ -71,8 +76,8 @@ class HomeProvider {
         : []; //TODO: Remover esse dia menos 1
   }
 
-  Future<List<List<MealModel>>> _buildMealsOfTheWeek(sharedPreferences) async {
-    List<List<MealModel>> listOfDailyMeal = [];
+  Future<List<List<MenuModel>>> _buildMealsOfTheWeek(sharedPreferences) async {
+    List<List<MenuModel>> listOfDailyMeal = [];
     for (var i = 1; i <= daysInAWeek; i++) {
       var dailyMeal = await _buildDailyMeal(sharedPreferences);
       listOfDailyMeal.add(dailyMeal);
@@ -81,11 +86,11 @@ class HomeProvider {
     return listOfDailyMeal;
   }
 
-  Future<List<MealModel>> _buildDailyMeal(sharedPreferences) async {
-    var breakfast = await MealProviderHelper.buildBreakfast(sharedPreferences);
-    var lunch = await MealProviderHelper.buildLunch(sharedPreferences);
-    var snack = await MealProviderHelper.buildSnack(sharedPreferences);
-    var dinner = await MealProviderHelper.buildDinner(sharedPreferences);
+  Future<List<MenuModel>> _buildDailyMeal(sharedPreferences) async {
+    var breakfast = await MenuProviderHelper.buildBreakfast(sharedPreferences);
+    var lunch = await MenuProviderHelper.buildLunch(sharedPreferences);
+    var snack = await MenuProviderHelper.buildSnack(sharedPreferences);
+    var dinner = await MenuProviderHelper.buildDinner(sharedPreferences);
 
     return [breakfast, lunch, snack, dinner];
   }
@@ -93,12 +98,12 @@ class HomeProvider {
   _getFoodPrefs(sharedPreferences) =>
       FoodProvider.getFoodsPrefsList(sharedPreferences);
 
-  List<List<MealModel>> _getWeeklyMeals(sharedPreferences) =>
-      MealProvider.getWeeklyMealsFromPrefs(sharedPreferences);
+  List<List<MenuModel>> _getWeeklyMeals(sharedPreferences) =>
+      MenuProvider.getWeeklyMealsFromPrefs(sharedPreferences);
 
-  Future<List<List<MealModel>>> _saveWeeklyMeals(
-          sharedPreferences, List<List<MealModel>> listOfDailyMeal) async =>
-      MealProvider.saveWeeklyMealsOnPrefs(
+  Future<List<List<MenuModel>>> _saveWeeklyMeals(
+          sharedPreferences, List<List<MenuModel>> listOfDailyMeal) async =>
+      MenuProvider.saveWeeklyMealsOnPrefs(
           await sharedPreferences, listOfDailyMeal);
 
   Future<int> getPageIndexFromPrefs(int day) async {

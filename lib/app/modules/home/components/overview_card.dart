@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nutri/app/data/model/meal_model.dart';
 import 'package:nutri/app/modules/home/components/food_card.dart';
+import 'package:nutri/app/modules/home/components/meal_card.dart';
 
 class OverviewCard extends StatelessWidget {
   const OverviewCard({required this.items});
 
-  final List<Map<String, String>> items;
+  final List<MealModel> items;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +23,9 @@ class OverviewCard extends StatelessWidget {
             ); //Refeições do dia
           return AspectRatio(
             aspectRatio: 2.9,
-            child: FoodCard(
-              image: items[idx - 1]['image']!,
-              title: items[idx - 1]['title']!,
+            child: MealCard(
+              image: items[idx - 1].img,
+              title: MealModelHelper.getTranslatedMeal(items[idx - 1].type),
             ),
           );
         },

@@ -1,4 +1,4 @@
-import 'package:nutri/app/data/model/meal_model.dart';
+import 'package:nutri/app/data/model/menu_model.dart';
 import 'package:nutri/app/data/providers/home_provider.dart';
 
 class HomeRepository {
@@ -8,13 +8,15 @@ class HomeRepository {
     required this.provider,
   });
 
-  Future<List<List<MealModel>>> fetchDailyMenuOfTheWeek() =>
+  getMeals() => provider.getMeals();
+
+  Future<List<List<MenuModel>>> fetchDailyMenuOfTheWeek() =>
       provider.fetchMealsOfTheWeek();
 
   Stream<HomeState> getHomeState() => provider.getHomeState();
   closeHomeStream() => provider.closeHomeStream();
 
-  Future<List<MealModel>> fetchDailyMeals({int day = 0}) =>
+  Future<List<MenuModel>> fetchDailyMeals({int day = 0}) =>
       provider.fetchDailyMeals(day: day);
 
   Future<int> getPageIndex(int day) => provider.getPageIndexFromPrefs(day);

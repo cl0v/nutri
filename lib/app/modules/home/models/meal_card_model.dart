@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:nutri/app/data/model/food_model.dart';
-import 'package:nutri/app/data/model/meal_model.dart';
+import 'package:nutri/app/data/model/menu_model.dart';
 
 class MealCardModel {
-  final MealModel mealModel;
+  final MenuModel mealModel;
   //enum
   late MealCardState mealCardState;
   FoodModel? selectedFood;
@@ -25,7 +25,7 @@ class MealCardModel {
       };
 
   factory MealCardModel.fromMap(Map<String, dynamic> map) => MealCardModel(
-        mealModel: MealModel.fromMap(map['mealModel']),
+        mealModel: MenuModel.fromMap(map['mealModel']),
         mealCardState: MealCardState.values[map['mealCardState']],
         selectedFood: FoodModel.fromMap(map['selectedFood']),
         selectedExtras: List<FoodModel>.from(

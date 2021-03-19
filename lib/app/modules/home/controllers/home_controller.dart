@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
+import 'package:nutri/app/data/model/menu_model.dart';
 import 'package:nutri/app/data/repositories/home_repository.dart';
 import 'package:nutri/app/modules/home/helpers/home_screen_helper.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
@@ -17,7 +18,7 @@ import 'package:nutri/app/routes/app_pages.dart';
 // Entao obrigar a pessoa a escolher novamente o foodswipe na segunda que vem
 
 //BUG:? Quando termino de escolher as comidas do foodswipe apos criar uma conta,
-  // ela ja vem com as comidas salvas antes de criar a conta
+// ela ja vem com as comidas salvas antes de criar a conta
 
 // IDEIA: Sugerir as mais importantes(maior PE) ja marcadas
 
@@ -42,7 +43,7 @@ import 'package:nutri/app/routes/app_pages.dart';
 // Na review page voce pode dar um overview no proximo dia, o botao irá alterar para ser, 'ver review de hoje'
 
 enum HomeBodyState {
-  Loading, //TODO: Trabalhar com o loading
+  Loading,
   Overview,
   Meals,
   Review,
@@ -61,11 +62,12 @@ class HomeController extends GetxController {
 
   final isPreviewBtnDisabled = true.obs;
   //TODO: Mostrar pagina de review de dias anteriores
-  final isNextBtnDisabled =
-      false.obs;
+  final isNextBtnDisabled = false.obs;
 
   final mainFoodsAvailable = <FoodModel>[].obs;
   final extraFoodsAvailable = <FoodModel>[].obs;
+
+  List<MealModel> overViewList = [];
 
   final RxBool _showHomeContent = false.obs;
   bool get showHomeContent => _showHomeContent.value!;
@@ -91,7 +93,6 @@ class HomeController extends GetxController {
   int get extrasAmount => _extrasAmount.value;
 
   final mealCategory = 'Café da manhã'.obs;
-  
 
   Rx<HomeBodyState> _homeBodyState = HomeBodyState.Loading.obs;
   HomeBodyState get homeBodyState => _homeBodyState.value!;
@@ -106,9 +107,13 @@ class HomeController extends GetxController {
     homeState.bindStream(repository.getHomeState());
 
     ever(homeState, onHomeStateChanged);
-
+    _getOverViewList();
     _setDayOfTheWeek();
     _fetchPageIndex();
+  }
+
+  _getOverViewList() async {
+    overViewList = await repository.getMeals();
   }
 
   onHomeStateChanged(state) {
@@ -152,9 +157,8 @@ class HomeController extends GetxController {
     myMealCard.mealCardState =
         confirmed ? MealCardState.Done : MealCardState.Skiped;
     myMealCard.selectedFood = mainFoodsAvailable[selectedMainFoodIdx.value];
-    _saveMealCard(myMealCard); //save meal
+    _saveMealCard(myMealCard);
     _nextPage();
-    //selectedMainFoodIdx.value //Valor do idx da comida principal que foi selecionada //Por enquanto so preciso disso
   }
 
   _saveMealCard(MealCardModel m) {
@@ -198,12 +202,6 @@ class HomeController extends GetxController {
         .toList();
   }
 
-//TODO: Posso receber o pgIndex para saber se está na overview ou na review
-// Caso seja diferente de 0, atribui o valor ao mealIndex(1-4),
-// 0 - OverView
-// 1-4 - Meal
-// 5 - Review
-
   @override
   void onClose() {
     super.onClose();
@@ -228,7 +226,7 @@ class HomeController extends GetxController {
         .toList();
   }
 
-  late MealModel myMeal;
+  late MenuModel myMeal;
   late MealCardModel myMealCard;
 
   _setMeal(int idx) async {
@@ -329,8 +327,6 @@ class HomeController extends GetxController {
   void onPreviewDayPressed() => _showDayOverView(--dayIndex.value);
   // isNextBtnDisabled.value = false;
 
-//BUG: O dia de amanha está mostrando o overview igual ao do dia de hoje quando toco na seta
-//BUG: Comportamento estranho em algumas refeições especificas quando vai passando os dias do overview
   onNextDayPressed() => _showDayOverView(++dayIndex.value);
 
 //Se eu criar a diferenca de dias, eu sei que -1 é ontem, 0 é hoje, +1 é amanha

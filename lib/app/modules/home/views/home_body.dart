@@ -18,9 +18,9 @@ class HomeBody extends GetView<HomeController> {
           case HomeBodyState.Review:
             return ReviewCard(items: controller.reviewMeals);
           case HomeBodyState.Overview:
-            return OverviewCard(items: controller.overViewMeals);
+            return OverviewCard(items: controller.overViewList);
           case HomeBodyState.OtherDayOverview:
-            return OverviewCard(items: controller.overViewMealsOfOtherDay);
+            return OverviewCard(items: controller.overViewList);
           case HomeBodyState.Loading:
             return Center(child: CircularProgressIndicator());
           case HomeBodyState.Meals:

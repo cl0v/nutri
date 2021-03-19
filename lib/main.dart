@@ -27,8 +27,6 @@ import 'app/routes/app_pages.dart';
 //TODO: Sugerir acompanhamentos para preencher o vazio(?)
 //TODO: Melhorar o design do app
 
-//IDEIA: Card de água seria uma boa para preencher o vazio do café
-
 //IDEIA: Apenas deixar a pessoa escolher o que vai querer pra semana, depois jogar isso pruma todolist de compra
 
 /* TODO: Criar uma pagina de FAQ para responder possíveis perguntas

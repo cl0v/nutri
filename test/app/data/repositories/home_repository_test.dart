@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/data/model/meal_model.dart';
+import 'package:nutri/app/data/model/menu_model.dart';
 import 'package:nutri/app/data/providers/home_provider.dart';
 import 'package:nutri/app/data/repositories/home_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -79,7 +80,7 @@ main() {
         await prefs.setStringList(foodPrefsKey, mockedFoodPrefs));
 
 
-    List<MealModel> dailyMeals = [];
+    List<MenuModel> dailyMeals = [];
     test('No main card should be in MainOrExtra.extra category', () async {
       dailyMeals = await repository.fetchDailyMeals();
       var listOfMains = [];
@@ -165,7 +166,7 @@ main() {
     SharedPreferences.getInstance().then((prefs) async =>
         await prefs.setStringList(foodPrefsKey, mockedFoodPrefs));
 
-    List<MealModel> dailyMeals = [];
+    List<MenuModel> dailyMeals = [];
 
     test('Total meals of the day should be 4', () async {
       dailyMeals = await repository.fetchDailyMeals();
@@ -377,7 +378,7 @@ main() {
     SharedPreferences.getInstance().then((prefs) async =>
         await prefs.setStringList(foodPrefsKey, mockedFoodPrefs));
 
-    List<List<MealModel>> weeklyMeals = [];
+    List<List<MenuModel>> weeklyMeals = [];
     test('Menu of the Week should have 7 elements', () async {
       weeklyMeals = await repository.fetchDailyMenuOfTheWeek();
       expect(
