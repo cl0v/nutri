@@ -7,7 +7,7 @@ import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 
 class MenuPage extends StatelessWidget {
   final controller = Get.find<HomeController>();
-  
+
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
@@ -26,7 +26,21 @@ class MenuPage extends StatelessWidget {
                       Get.textTheme!.headline5!.copyWith(color: Colors.white),
                 ),
               ),
-              MainFoodSelector(),
+              Obx(() => controller.isMainFoodsReady.value!
+                  ? MainFoodSelector(
+                      selectedFoodImg: controller
+                          .mainFoodsAvailable[
+                              controller.selectedMainFoodIdx.value]
+                          .img,
+                      selectedFoodTitle: controller
+                          .mainFoodsAvailable[
+                              controller.selectedMainFoodIdx.value]
+                          .title,
+                          foods: controller.mainFoodsAvailable,
+                          onTap: controller.onMainFoodTapped,
+                          isSelected: controller.isMainFoodSelected,
+                    )
+                  : Container()),
               Divider(),
               Obx(
                 () => controller.extraFoodsAvailable.isNotEmpty

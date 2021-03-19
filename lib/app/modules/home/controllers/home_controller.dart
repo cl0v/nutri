@@ -239,7 +239,7 @@ class HomeController extends GetxController {
 
   onMainFoodTapped(int idx) => selectedMainFoodIdx.value = idx;
 
-  isMainFoodSelected(int idx) => selectedMainFoodIdx.value == idx;
+  bool isMainFoodSelected(int idx) => selectedMainFoodIdx.value == idx;
 
   onExtraTapped(int idx) {
     if (!_selectedExtrasList.contains(idx) &&
