@@ -37,7 +37,7 @@ class HomeProvider {
 
   int daysInAWeek = 7;
 
-  Future<List<MealModel>> getOverViewListFromPEDietSugestion() =>
+  Future<List<OverviewModel>> getOverViewListFromPEDietSugestion() =>
       PeDiet().getOverViewListFromPEDietSugestion(weekDay);
 
 //TODO: Implement getOverViewListFromPEDietSugestion
@@ -46,7 +46,7 @@ class HomeProvider {
       PeDiet().getMenuListFromPEDietSugestion();
 //TODO: Implement getMenuListFromPEDietSugestion
 
-  Future<List<MealModel>> getMeals({int day = 1}) async {
+  Future<List<OverviewModel>> getMeals({int day = 1}) async {
     return await MealProvider.loadMealListByDay(day);
   }
 
@@ -148,7 +148,7 @@ class HomeProvider {
 
 /// Tudo que tiver relação com a dieta PE está nessa classe
 class PeDiet {
-  Future<List<MealModel>> getOverViewListFromPEDietSugestion(day) =>
+  Future<List<OverviewModel>> getOverViewListFromPEDietSugestion(day) =>
       MealProvider.loadMealListByDay(day);
 //TODO: Implement getOverViewListFromPEDietSugestion
 

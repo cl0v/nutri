@@ -9,13 +9,13 @@ enum MealType {
   dinner,
 }
 
-class MealModel {
+class OverviewModel {
   //enum
   final MealType meal;
   final String img;
   final int day;
 
-  MealModel({
+  OverviewModel({
     required this.meal,
     required this.img,
     this.day = 1,
@@ -29,8 +29,8 @@ class MealModel {
     };
   }
 
-  factory MealModel.fromMap(Map<String, dynamic> map) {
-    return MealModel(
+  factory OverviewModel.fromMap(Map<String, dynamic> map) {
+    return OverviewModel(
       meal: MealType.values[map['meal']],
       img: map['img'],
       day: map['day'],
@@ -39,8 +39,8 @@ class MealModel {
 
   String toJson() => json.encode(toMap());
 
-  factory MealModel.fromJson(String source) =>
-      MealModel.fromMap(json.decode(source));
+  factory OverviewModel.fromJson(String source) =>
+      OverviewModel.fromMap(json.decode(source));
 }
 
 const jsonPath = 'assets/jsons/meal.json';
@@ -49,15 +49,15 @@ abstract class MealProvider {
   static Future<List> _loadJson() async =>
       jsonDecode(await rootBundle.loadString(jsonPath));
 
-  static Future<List<MealModel>> loadMealsFromJson() async {
+  static Future<List<OverviewModel>> loadMealsFromJson() async {
     var json = await (_loadJson());
-    return json.map((map) => MealModel.fromMap(map)).toList();
+    return json.map((map) => OverviewModel.fromMap(map)).toList();
   }
 
-  static Future<List<MealModel>> loadMealListByDay(int day) async {
+  static Future<List<OverviewModel>> loadMealListByDay(int day) async {
     var json = await (_loadJson());
     return json
-        .map((map) => MealModel.fromMap(map))
+        .map((map) => OverviewModel.fromMap(map))
         .where((meal) => meal.day == day)
         .toList();
   }

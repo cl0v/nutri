@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/modules/home/enums/home_body_state_enum.dart';
-import 'package:nutri/app/modules/home/models/home_review_model.dart';
 import 'package:nutri/app/modules/home/models/meal_model.dart';
 import 'package:nutri/app/modules/home/models/menu_model.dart';
 import 'package:nutri/app/modules/home/repositories/home_repository.dart';
-import 'package:nutri/app/modules/home/models/meal_card_model.dart';
+import 'package:nutri/app/modules/home/models/review_model.dart';
 
 //TODO: Receber o dia que foi buildado as refeições semanais
 // - Receber qual a semana do ano, por exemplo o ano tem aprox 52 semanas
@@ -55,18 +54,16 @@ class HomeController extends GetxController {
   /// Define se o botão de dia seguinte do titulo estará ou não desabilitado
   final isNextBtnDisabled = false.obs;
 
-  final mealCardsOfTheDay = <MealCardModel>[].obs;
+  List<ReviewModel> mealCardsOfTheDay = [];
 
-  List<MealModel> overViewList = [];
+  List<OverviewModel> overViewList = [];
   RxBool isOverViewReady = false.obs;
 
-  RxBool isReviewReady = true.obs; //TODO: Ainda nem to usando isso
+  RxBool isReviewReady = false.obs; //TODO: Ainda nem to usando isso
 
   final dayIndex = 1.obs;
 
   final selectedMainFoodIdx = 0.obs;
-
-  List<HomeReviewModel> reviewMeals = [];
 
   Rx<HomeBodyState> _homeBodyState = HomeBodyState.Loading.obs;
   HomeBodyState get homeBodyState => _homeBodyState.value!;
@@ -74,90 +71,49 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // ever(_homeBodyState, _onHomeBodyStateChanged);
-    // Definir um estado no home provider, que dirá em qual página deverá estar
-    // Com base em qual página estiver, os respectivos dados serão recebidos
-
     _getPEOverview();
-    _getPEMenu();
-    pageController = PageController();
-    // _getOverViewList(1);
-    // _fetchMealIndex();
+    //TODO: Receber o estado da página com base na shared prefs
   }
 
   _getPEOverview() async {
     overViewList = await repository.getOverViewListFromPEDietSugestion();
+    _homeBodyState.value = HomeBodyState.Overview;
     isOverViewReady.value = true;
   }
 
   RxBool isMenuReady = true.obs; // TODO: Isso precisa ser true para ser testado
   List<MenuModel> menuList = [];
   _getPEMenu() async {
+    pageController = PageController();
     menuList = await repository.getMenuListFromPEDietSugestion();
     isMenuReady.value = true;
-    _homeBodyState.value = HomeBodyState.Overview;
     isMainFoodsReady.value = true;
+    _homeBodyState.value = HomeBodyState.Menu;
+    //TALVEZ REMOVER
   }
 
-  _onHomeBodyStateChanged(state) {
-    switch (state) {
-      case HomeBodyState.Overview:
-        break;
-      case HomeBodyState.Review:
-        print('review');
-        _fetchReview();
-        break;
-      case HomeBodyState.Menu:
-        // _onMenuPageChanged(0);
-        // _setMeal(0);
-        break;
-      default:
-    }
-  }
-
-  _getOverViewList(day) async {
-    overViewList = await repository.getMeals(day: day);
-    isOverViewReady.value = true;
+  List<ReviewModel> reviewList = []; //TODO: Usar no review page
+  List<bool> doneList = [];
+  _getPEReview() {
+    overViewList.forEach((element) {
+      var idx = overViewList.indexOf(element);
+      reviewList
+          .add(ReviewModel(overviewModel: element, isDone: doneList[idx]));
+    });
+    isReviewReady.value = true;
+    return _homeBodyState.value = HomeBodyState.Review;
   }
 
   onPageChanged(int idx) => _onMenuPageChanged(idx);
 
   String getDayTitle() => repository.getDayTitle(day: dayIndex.value);
-
-  /// Recebe o ultimo estado salvo da home page com base no enum HomeBodyState
-  //TODO: Implement fetchHomeState
-  _fetchHomeState() {
-    HomeBodyState state = HomeBodyState.Loading;
-    switch (state) {
-      case HomeBodyState.Overview:
-        print(state);
-        break;
-      case HomeBodyState.Menu:
-        print(state);
-        //TODO: Aqui que fica o _fetchMealIndex
-        break;
-      case HomeBodyState.Review:
-        print(state);
-        break;
-      default:
-    }
-  }
-
-  /// Recebe o index da ultima refeição salva
-  //TODO: Implement _fetchMealIndex
-  _fetchMealIndex() async {
-    //TODO: Receber o home state, caso seja meal, receber o index do meal
-    var pgIdx = await repository.getPageIndex();
-    pgIdx = 0;
-    //FIXME: Esse pgidx não deve informar a pagina geral e sim o estado da página, caso o estado seja meal, deve informar o index
-    pageController = PageController(initialPage: pgIdx);
-    await _fetchTodayMeals(); //TODO: Trocar a hora em que o home decide se mostra ou nao HomeState.Ready
-    if (pgIdx == 0) _homeBodyState.value = HomeBodyState.Overview;
-  }
+  //TODO: Fazer o titulo funcionar
 
   /// Chamado toda vez que o usuário confirma ou pula alguma refeição
   _onMenuPageChanged(int idx) async {
-    if (idx >= 4) return _homeBodyState.value = HomeBodyState.Review;
+    if (idx >= 4) {
+      _getPEReview();
+    }
     _savePageIndex(idx);
     // _setMeal(idx);
   }
@@ -187,16 +143,15 @@ class HomeController extends GetxController {
   final extraFoodsAvailable = <FoodModel>[].obs;
 
   _nextMealCard(bool confirmed) {
-    myMealCard.mealCardState =
-        confirmed ? MealCardState.Done : MealCardState.Skiped;
-    myMealCard.selectedFood = mainFoodsAvailable[selectedMainFoodIdx.value];
+    //TODO: Implement  _nextMealCard
+    // myMealCard.mealCardState =
+    //     confirmed ? MealCardState.Done : MealCardState.Skiped;
+    // myMealCard.selectedFood = mainFoodsAvailable[selectedMainFoodIdx.value];
     // _saveMealCard(myMealCard);
+    doneList.add(confirmed); //TODO: Por enquanto está apenas chamando no final
     _nextPage();
   }
 
-  _saveMealCard(MealCardModel m) {
-    repository.saveMealCard(m.mealModel.mealType.toString(), m.toJson());
-  }
 
   _nextPage() {
     pageController.nextPage(
@@ -204,52 +159,12 @@ class HomeController extends GetxController {
       curve: Curves.ease,
     );
   }
-
-  _fetchReview() async {
-    //FIXME: Refazer esse cara
-    List<String> savedMealList = await repository.getMealsCard();
-    var listMealCards =
-        savedMealList.map((s) => MealCardModel.fromJson(s)).toList();
-    reviewMeals = listMealCards
-        .map((m) => HomeReviewModel(
-              image: m.selectedFood!.img,
-              title: m.selectedFood!.title,
-              done: m.mealCardState == MealCardState.Done,
-            ))
-        .toList();
-    isReviewReady.value = true;
-  }
+  //TODO: Pra salvar depois do ondone eu pego o pageController.pageIdx e seto no MealCardModel
 
   @override
   void onClose() {
     super.onClose();
     repository.closeHomeStream(); //TODO: Conferir se é necessario
-  }
-
-  _fetchTodayMeals() async {
-    //TODO: Fetch next meal
-    var dailyMeals = await repository.getMenuListFromPEDietSugestion();
-    // await repository.fetchDailyMeals(); //FIXME: Pegar o dia da semana
-    if (dailyMeals.isNotEmpty) {
-      mealCardsOfTheDay.assignAll(
-          (dailyMeals).map((meal) => MealCardModel(mealModel: meal)));
-    }
-  }
-
-  late MenuModel myMeal;
-  late MealCardModel myMealCard;
-
-  _setMeal(int idx) async {
-    myMeal = mealCardsOfTheDay[idx].mealModel;
-    myMealCard = mealCardsOfTheDay[idx];
-    selectedMainFoodIdx.value = 0;
-    mainFoodsAvailable.assignAll(myMeal.mainFoodList);
-    isMainFoodsReady.value = true;
-    extraFoodsAvailable.assignAll(myMeal.extraList);
-    _extrasAmount.value = myMeal.extraAmount;
-    selectedExtras = [];
-    _selectedExtrasList.assignAll([]);
-    mealCategory.value = MealModelHelper.getTranslatedMeal(myMeal.mealType);
   }
 
   getSelectedIndex(int idx) => _selectedExtrasList.contains(idx);
@@ -291,33 +206,11 @@ class HomeController extends GetxController {
   }
 
   showMealsCard() {
-    _homeBodyState.value = HomeBodyState.Menu;
+    _getPEMenu();
   }
 
-  void onPreviewDayPressed() => _showDayOverView(--dayIndex.value);
-  // isNextBtnDisabled.value = false;
+  onPreviewDayPressed() => _showDayOverView(--dayIndex.value);
 
   onNextDayPressed() => _showDayOverView(++dayIndex.value);
 }
 
-
-
-  // _saveMealOfTheDay() {
-  //   mealCardsOfTheDay[mealIndex].mealCardState = MealCardState.Done;
-  //   mealCardsOfTheDay[mealIndex].selectedFood = mealCardsOfTheDay[mealIndex]
-  //       .mealModel
-  //       .mainFoodList[selectedMainFoodIdx.value];
-  //   mealCardsOfTheDay[mealIndex].selectedExtras = selectedExtras;
-  //   _buildAndSavePrefs(mealCardsOfTheDay[mealIndex]);
-  // }
-
-  // _buildAndSavePrefs(MealCardModel mealCard) {
-  //   List<String> prefStringList = [];
-  //   var extrasStringList = mealCard.selectedExtras.map((extra) => extra.title);
-  //   prefStringList.add(mealCard.mealCardState.toString());
-  //   prefStringList.add(mealCard.selectedFood!.title);
-  //   prefStringList.addAll(extrasStringList);
-  //   // repository.saveMealPrefs(
-  //   //     mealCard.mealModel.mealType.toString(), prefStringList);
-  //   //TODO: Analizar esse carinha
-  // }

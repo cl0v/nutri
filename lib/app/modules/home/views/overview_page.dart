@@ -6,7 +6,7 @@ import 'package:nutri/app/modules/home/models/meal_model.dart';
 class OverviewPage extends StatelessWidget {
   const OverviewPage({required this.items});
 
-  final List<MealModel> items;
+  final List<OverviewModel> items;
 
   @override
   Widget build(BuildContext context) {

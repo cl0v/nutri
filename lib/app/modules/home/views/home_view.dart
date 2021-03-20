@@ -43,17 +43,17 @@ class HomeView extends GetView<HomeController> {
             case HomeBodyState.Review:
               return Obx(
                 () => controller.isReviewReady.value!
-                    ? ReviewPage(items: controller.reviewMeals)
-                    : CircularProgressIndicator(),
+                    ? ReviewPage(items: controller.reviewList) //TODO: Implement reviewpage
+                    // ? CircularProgressIndicator()
+                    : Center(child: CircularProgressIndicator()),
               );
             case HomeBodyState.Overview:
               return Obx(
                 () => controller.isOverViewReady.value!
                     ? OverviewPage(items: controller.overViewList)
-                    : CircularProgressIndicator(),
+                    : Center(child: CircularProgressIndicator()),
               );
             case HomeBodyState.Menu:
-              //TODO: Passar a lista para a menu
               return Obx(
                 () => controller.isMenuReady.value!
                     ? MenuPage(
@@ -64,7 +64,7 @@ class HomeView extends GetView<HomeController> {
                         onMainFoodTapped: controller.onMainFoodTapped,
                         onExtraFoodTapped: controller.onExtraTapped
                       )
-                    : CircularProgressIndicator(),
+                    : Center(child: CircularProgressIndicator()),
               );
             default:
               return Center(
@@ -76,53 +76,56 @@ class HomeView extends GetView<HomeController> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: Obx(
-            () {
-              switch (controller.homeBodyState) {
-                case HomeBodyState.Loading:
-                  return Container();
-                case HomeBodyState.Overview:
-                  return ElevatedButton(
-                    onPressed: controller.showMealsCard,
-                    child: Text('Vamos la'),
-                  );
-                case HomeBodyState
-                    .Review: //FIXME: O botao nao permite aparecer caso n exista
-                  return ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Vamos la'),
-                  );
-                case HomeBodyState.Menu:
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.resolveWith(
-                                (states) => Size(120, 36)),
-                            backgroundColor: MaterialStateProperty.resolveWith(
-                                (states) => Colors.red)),
-                        onPressed: controller.onSkippedPressed,
-                        child: Text('Pulei'),
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.resolveWith(
-                                (states) => Size(120, 36)),
-                            backgroundColor: MaterialStateProperty.resolveWith(
-                                (states) => Colors.green)),
-                        onPressed: controller.onDonePressed,
-                        child: Text('Concluí'),
-                      ),
-                    ],
-                  );
-                default:
-                  return Container();
-              }
-            },
+        child: Container(
+          height: 50,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Obx(
+              () {
+                switch (controller.homeBodyState) {
+                  case HomeBodyState.Loading:
+                    return Container();
+                  case HomeBodyState.Overview:
+                    return ElevatedButton(
+                      onPressed: controller.showMealsCard,
+                      child: Text('Vamos la'),
+                    );
+                  // case HomeBodyState
+                  //     .Review: //FIXME: O botao nao permite aparecer caso n exista
+                  //   return ElevatedButton(
+                  //     onPressed: () {},
+                  //     child: Text('Vamos la'),
+                  //   );
+                  case HomeBodyState.Menu:
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.resolveWith(
+                                  (states) => Size(120, 36)),
+                              backgroundColor: MaterialStateProperty.resolveWith(
+                                  (states) => Colors.red)),
+                          onPressed: controller.onSkippedPressed,
+                          child: Text('Pulei'),
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.resolveWith(
+                                  (states) => Size(120, 36)),
+                              backgroundColor: MaterialStateProperty.resolveWith(
+                                  (states) => Colors.green)),
+                          onPressed: controller.onDonePressed,
+                          child: Text('Concluí'),
+                        ),
+                      ],
+                    );
+                  default:
+                    return Container();
+                }
+              },
+            ),
           ),
         ),
       ),

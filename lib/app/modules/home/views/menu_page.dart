@@ -9,7 +9,7 @@ import 'package:nutri/app/modules/home/models/menu_model.dart';
 
 class MenuPage extends StatelessWidget {
   final List<MenuModel> menuList;
-  final List<MealModel> mealModel;
+  final List<OverviewModel> mealModel;
   final PageController pageController;
   final Function(int) onPageChanged;
   final Function(int) onMainFoodTapped;
@@ -46,7 +46,7 @@ class MenuPage extends StatelessWidget {
                 foodList: menuList[idx].mainFoodList,
                 onTap: onMainFoodTapped,
               ),
-              menuList[idx].extraList.isNotEmpty ? Divider() : Container(),
+              // menuList[idx].extraList.isNotEmpty ? Divider() : Container(),
               // menuList[idx].extraList.isNotEmpty ?FoodSelector(
               //   foodList: menuList[idx].extraList,
               //   onTap: onExtraFoodTapped,

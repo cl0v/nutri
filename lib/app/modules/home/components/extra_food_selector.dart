@@ -12,7 +12,7 @@ import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 class ExtraFoodSelector extends StatelessWidget {
     final controller = Get.find<HomeController>();
 
-  
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,6 @@ class ExtraFoodSelector extends StatelessWidget {
                                             .selectedExtrasList.isNotEmpty &&
                                         controller.selectedExtrasList.length >
                                             2)
-                                    //BUG: Pode ter duas imagens iguais
                                     ? controller.selectedExtrasList[2]
                                     : 2]
                                 .img,
