@@ -6,14 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:nutri/app/data/model/food_model.dart';
 
-
-
 class MenuModel {
   //enum
-  MealType mealType;
+  MealType mealType; //Isso aqui fica melhor como string
   List<FoodModel> mainFoodList;
   List<FoodModel> extraList;
-  int extraAmount; 
+  int extraAmount;
 //TODO: Remover, nem estou mais usando (fixei em sempre ter 3 acompanhamentos)
 //TODO: Solução basica é contar quantos elementos tem nos extras, se tiver vazia, nao mostra acompanhamentos
 //Se tiver 3 ou mais, mostra o selecione
@@ -81,11 +79,59 @@ class MenuModel {
   }
 }
 
-
 const weeklyMealsPrefsKey = 'weeklyMeals';
 
-abstract class MenuProvider {
+class MenuProvider {
   //Lembrando que o toJson é uma string, logo o sqflite aceita tambem
+  static Future<List<MenuModel>> peDiet() async{
+    //TODO: Isso é certamente o food provider
+    var mainFoodList = await FoodModelHelper.loadMeats();
+    var extraFoodList = await FoodModelHelper.loadVegetables();
+    return [
+      MenuModel(
+        mainFoodList: mainFoodList.take(3).toList(),
+        extraList: extraFoodList,
+        extraAmount: 5,
+        mealType: MealType.breakfast,
+      ),
+      MenuModel(
+        mainFoodList: mainFoodList.take(3).toList(),
+        extraList: extraFoodList,
+        extraAmount: 5,
+        mealType: MealType.lunch,
+      ),
+      MenuModel(
+        mainFoodList: mainFoodList.take(3).toList(),
+        extraList: [],
+        extraAmount: 0,
+        mealType: MealType.snack,
+      ),
+      MenuModel(
+        mainFoodList: mainFoodList.take(3).toList(),
+        extraList: [],
+        extraAmount: 0,
+        mealType: MealType.dinner,
+      ),
+    ];
+
+    switch (0) {
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+      case 5:
+        break;
+      case 6:
+        break;
+      case 7:
+        break;
+      default:
+    }
+  }
 
   static List<List<MenuModel>> saveWeeklyMealsOnPrefs(
       SharedPreferences prefs, List<List<MenuModel>> listOfDailyMeal) {

@@ -1,3 +1,4 @@
+import 'package:nutri/app/modules/home/models/meal_model.dart';
 import 'package:nutri/app/modules/home/models/menu_model.dart';
 import 'package:nutri/app/modules/home/providers/home_provider.dart';
 
@@ -10,13 +11,17 @@ class HomeRepository {
 
   getMeals({int day = 1}) => provider.getMeals(day: day);
 
+  Future<List<MealModel>> getOverViewListFromPEDietSugestion() =>
+      provider.getOverViewListFromPEDietSugestion(); //TODO: Remover
+  Future<List<MenuModel>> getMenuListFromPEDietSugestion() => provider.getMenuListFromPEDietSugestion();//TODO: Remover
+
   String getDayTitle({int day = 1}) => provider.getDayTitle(day: day);
 
   Future<List<List<MenuModel>>> fetchDailyMenuOfTheWeek() =>
       provider.fetchMealsOfTheWeek();
 
-  Stream<HomeState> getHomeState() => provider.getHomeState();
-  
+  // Stream<HomeState> getHomeState() => provider.getHomeState();
+
   closeHomeStream() => provider.closeHomeStream();
 
   Future<List<MenuModel>> fetchDailyMeals() => provider.fetchDailyMeals();

@@ -43,16 +43,16 @@ class FoodSwipeBody extends GetView<FoodSwipeController> {
                               child: PageView.builder(
                                 controller: controller.pageController,
                                 itemCount: controller
-                                    .currentFoodSwipeModel!.foods.length,
+                                    .currentFoodSwipeModel!.foodList.length,
                                 itemBuilder: (context, index) => Obx(
                                   () => FoodSwipeCard(
                                     food: controller
-                                        .currentFoodSwipeModel!.foods[index],
+                                        .currentFoodSwipeModel!.foodList[index],
                                     isChecked: controller.isChecked(index),
                                     onCheckTapped: () =>
                                         controller.onCheckTapped(
                                       controller
-                                          .currentFoodSwipeModel!.foods[index],
+                                          .currentFoodSwipeModel!.foodList[index],
                                       index,
                                     ),
                                   ),

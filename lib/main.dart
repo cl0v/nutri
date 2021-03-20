@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:nutri/constants.dart';
 import 'app/routes/app_pages.dart';
 
+//TODO: Buildar o app com bate na refeição do livro, depois ir atualizando
+// Remover o foodswipe temporariamente
+
 //FIXME: Pulando a splash
 
 //Definir o fluxo do app

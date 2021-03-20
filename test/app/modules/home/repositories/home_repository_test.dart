@@ -41,15 +41,15 @@ main() {
       expect(
           repository.getHomeState(),
           emitsInOrder([
-            HomeState.Loading,
+            HomeState.Idle,
           ]));
     });
     test('HomeState second event should be Ready if prefs exist', () {
       expect(
           repository.getHomeState(),
           emitsInOrder([
-            HomeState.Loading,
-            HomeState.Ready,
+            HomeState.Idle,
+            HomeState.Ok,
           ]));
       repository.fetchDailyMenuOfTheWeek();
     });
@@ -60,7 +60,7 @@ main() {
       expect(
           repository.getHomeState(),
           emitsInOrder([
-            HomeState.Loading,
+            HomeState.Idle,
             HomeState.Error,
           ]));
       repository.fetchDailyMenuOfTheWeek();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:nutri/app/modules/home/controllers/home_controller.dart';
+import 'package:nutri/app/modules/home/enums/home_body_state_enum.dart';
 
 import 'package:nutri/app/modules/home/views/menu_page.dart';
 import 'package:nutri/app/modules/home/views/overview_page.dart';
@@ -9,119 +10,122 @@ import 'package:nutri/app/modules/home/views/review_page.dart';
 class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => controller.showHomeContent //TODO: Remover esse homeContent
-          ? Scaffold(
-              extendBodyBehindAppBar: true,
-              appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                centerTitle: true,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.arrow_back_ios),
-                      onPressed: controller.isPreviewBtnDisabled.value!
-                          ? null
-                          : controller.onPreviewDayPressed,
-                    ),
-                    Text(controller.getDayTitle()),
-                    IconButton(
-                      icon: Icon(Icons.arrow_forward_ios),
-                      onPressed: controller.isNextBtnDisabled.value!
-                          ? null
-                          : controller.onNextDayPressed,
-                    ),
-                  ],
-                ),
-              ),
-              body: Obx(
-                () {
-                  switch (controller.homeBodyState) {
-                    case HomeBodyState.Loading:
-                      return Center(child: CircularProgressIndicator());
-                    case HomeBodyState.Review:
-                      return Obx(
-                        () => controller.isReviewReady.value!
-                            ? ReviewPage(items: controller.reviewMeals)
-                            : CircularProgressIndicator(),
-                      );
-                    case HomeBodyState.Overview:
-                      return Obx(
-                        () => controller.isOverViewReady.value!
-                            ? OverviewPage(items: controller.overViewList)
-                            : CircularProgressIndicator(),
-                      );
-                    case HomeBodyState.Meals:
-                      return MenuPage();
-                    default:
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                  }
-                },
-              ),
-              bottomNavigationBar: BottomAppBar(
-                color: Colors.transparent,
-                elevation: 0,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: Obx(
-                    () {
-                      switch (controller.homeBodyState) {
-                        case HomeBodyState.Loading:
-                          return Container();
-                        case HomeBodyState.Overview:
-                          return ElevatedButton(
-                            onPressed: controller.showMealsCard,
-                            child: Text('Vamos la'),
-                          );
-                        case HomeBodyState.Review: //FIXME: O botao nao permite aparecer caso n exista
-                          return ElevatedButton(
-                            onPressed: (){},
-                            child: Text('Vamos la'),
-                          );
-                        case HomeBodyState.Meals:
-                          return Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                    minimumSize:
-                                        MaterialStateProperty.resolveWith(
-                                            (states) => Size(120, 36)),
-                                    backgroundColor:
-                                        MaterialStateProperty.resolveWith(
-                                            (states) => Colors.red)),
-                                onPressed: controller.onSkippedPressed,
-                                child: Text('Pulei'),
-                              ),
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                    minimumSize:
-                                        MaterialStateProperty.resolveWith(
-                                            (states) => Size(120, 36)),
-                                    backgroundColor:
-                                        MaterialStateProperty.resolveWith(
-                                            (states) => Colors.green)),
-                                onPressed: controller.onDonePressed,
-                                child: Text('Concluí'),
-                              ),
-                            ],
-                          );
-                        default:
-                          return Container();
-                      }
-                    },
-                  ),
-                ),
-              ),
-            )
-          : Center(
-              child: CircularProgressIndicator(),
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: controller.isPreviewBtnDisabled.value!
+                  ? null
+                  : controller.onPreviewDayPressed,
             ),
+            Text(controller.getDayTitle()),
+            IconButton(
+              icon: Icon(Icons.arrow_forward_ios),
+              onPressed: controller.isNextBtnDisabled.value!
+                  ? null
+                  : controller.onNextDayPressed,
+            ),
+          ],
+        ),
+      ),
+      body: Obx(
+        () {
+          switch (controller.homeBodyState) {
+            case HomeBodyState.Loading:
+              return Center(child: CircularProgressIndicator());
+            case HomeBodyState.Review:
+              return Obx(
+                () => controller.isReviewReady.value!
+                    ? ReviewPage(items: controller.reviewMeals)
+                    : CircularProgressIndicator(),
+              );
+            case HomeBodyState.Overview:
+              return Obx(
+                () => controller.isOverViewReady.value!
+                    ? OverviewPage(items: controller.overViewList)
+                    : CircularProgressIndicator(),
+              );
+            case HomeBodyState.Menu:
+              //TODO: Passar a lista para a menu
+              return Obx(
+                () => controller.isMenuReady.value!
+                    ? MenuPage(
+                        menuList: controller.menuList,
+                        mealModel: controller.overViewList,
+                        pageController: controller.pageController,
+                        onPageChanged: controller.onPageChanged,
+                        onMainFoodTapped: controller.onMainFoodTapped,
+                        onExtraFoodTapped: controller.onExtraTapped
+                      )
+                    : CircularProgressIndicator(),
+              );
+            default:
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+          }
+        },
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent,
+        elevation: 0,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Obx(
+            () {
+              switch (controller.homeBodyState) {
+                case HomeBodyState.Loading:
+                  return Container();
+                case HomeBodyState.Overview:
+                  return ElevatedButton(
+                    onPressed: controller.showMealsCard,
+                    child: Text('Vamos la'),
+                  );
+                case HomeBodyState
+                    .Review: //FIXME: O botao nao permite aparecer caso n exista
+                  return ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Vamos la'),
+                  );
+                case HomeBodyState.Menu:
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            minimumSize: MaterialStateProperty.resolveWith(
+                                (states) => Size(120, 36)),
+                            backgroundColor: MaterialStateProperty.resolveWith(
+                                (states) => Colors.red)),
+                        onPressed: controller.onSkippedPressed,
+                        child: Text('Pulei'),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            minimumSize: MaterialStateProperty.resolveWith(
+                                (states) => Size(120, 36)),
+                            backgroundColor: MaterialStateProperty.resolveWith(
+                                (states) => Colors.green)),
+                        onPressed: controller.onDonePressed,
+                        child: Text('Concluí'),
+                      ),
+                    ],
+                  );
+                default:
+                  return Container();
+              }
+            },
+          ),
+        ),
+      ),
     );
   }
 }

@@ -11,6 +11,9 @@ import 'package:nutri/app/modules/home/controllers/home_controller.dart';
 
 class ExtraFoodSelector extends StatelessWidget {
     final controller = Get.find<HomeController>();
+
+  
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;

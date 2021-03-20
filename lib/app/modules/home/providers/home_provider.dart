@@ -7,17 +7,13 @@ import 'package:nutri/app/modules/home/models/menu_model.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-//TODO: Salvar as refeições já confirmadas do dia
-// Salvar o index de qual refeição é a proxima(Se confirmei o cafe da manha, a proxima refeição, para quando eu abrir o app, deverá ser o almoço)
-// Lembrar que isso pode afetar o dia seguinte....
-
 const pageIndexKey = 'pageIndexKey';
 const dayIndexKey = 'dayIndexKey';
 const savedMealCardListPrefsKey = 'savedMealCardListPrefsKey';
 
 enum HomeState {
-  Ready,
-  Loading,
+  Ok,
+  Idle,
   Error,
 }
 
@@ -39,22 +35,27 @@ class HomeProvider {
   Future<List<List<MenuModel>>> fetchMealsOfTheWeek() async =>
       _fetchWeeklyMeals(await sharedPreferences);
 
-  // saveMealPrefs(String mealType, List<String> list) async =>
-  //     //TODO: Implement saveMealPrefs
-  //     (await sharedPreferences).setStringList(mealType, list);
-
   int daysInAWeek = 7;
-  // int dailyMealAmount = 4;
+
+  Future<List<MealModel>> getOverViewListFromPEDietSugestion() =>
+      PeDiet().getOverViewListFromPEDietSugestion(weekDay);
+
+//TODO: Implement getOverViewListFromPEDietSugestion
+
+  Future<List<MenuModel>> getMenuListFromPEDietSugestion() =>
+      PeDiet().getMenuListFromPEDietSugestion();
+//TODO: Implement getMenuListFromPEDietSugestion
 
   Future<List<MealModel>> getMeals({int day = 1}) async {
     return await MealProvider.loadMealListByDay(day);
   }
 
   BehaviorSubject<HomeState> homeStateController =
-      BehaviorSubject.seeded(HomeState.Loading);
+      BehaviorSubject.seeded(HomeState.Idle);
   Stream<HomeState> get homeStateOutput => homeStateController.stream;
   Sink<HomeState> get homeStateInput => homeStateController.sink;
 
+//TODO: Remover temporariamente
   Future<List<List<MenuModel>>> _fetchWeeklyMeals(sharedPreferences) async {
     List foodPrefs = _getFoodPrefs(sharedPreferences);
     if (foodPrefs.isEmpty) {
@@ -62,7 +63,7 @@ class HomeProvider {
       return [];
     } else {
       var weeklyMeals = _getWeeklyMeals(sharedPreferences);
-      homeStateInput.add(HomeState.Ready);
+      homeStateInput.add(HomeState.Ok);
       if (weeklyMeals.isEmpty)
         return _buildMealsOfTheWeek(sharedPreferences);
       else
@@ -144,3 +145,16 @@ class HomeProvider {
     // meals of the day tipo lista de string;
   }
 }
+
+/// Tudo que tiver relação com a dieta PE está nessa classe
+class PeDiet {
+  Future<List<MealModel>> getOverViewListFromPEDietSugestion(day) =>
+      MealProvider.loadMealListByDay(day);
+//TODO: Implement getOverViewListFromPEDietSugestion
+
+  Future<List<MenuModel>> getMenuListFromPEDietSugestion() =>
+      MenuProvider.peDiet();
+//TODO: Implement getMenuListFromPEDietSugestion
+
+}
+// Posso criar uma classe de dieta que é extendida por outras dietas
