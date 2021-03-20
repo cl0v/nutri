@@ -16,6 +16,7 @@ class HomeRepository {
       provider.fetchMealsOfTheWeek();
 
   Stream<HomeState> getHomeState() => provider.getHomeState();
+  
   closeHomeStream() => provider.closeHomeStream();
 
   Future<List<MenuModel>> fetchDailyMeals() => provider.fetchDailyMeals();

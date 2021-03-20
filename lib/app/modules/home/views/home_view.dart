@@ -42,13 +42,11 @@ class HomeView extends GetView<HomeController> {
                     case HomeBodyState.Loading:
                       return Center(child: CircularProgressIndicator());
                     case HomeBodyState.Review:
-                      //TODO: Liberar o review
-                      // return CircularProgressIndicator();
                       return Obx(
                         () => controller.isReviewReady.value!
                             ? ReviewPage(items: controller.reviewMeals)
                             : CircularProgressIndicator(),
-                      ); //TODO: esses itens ele vai receber do controller
+                      );
                     case HomeBodyState.Overview:
                       return Obx(
                         () => controller.isOverViewReady.value!
@@ -77,6 +75,11 @@ class HomeView extends GetView<HomeController> {
                         case HomeBodyState.Overview:
                           return ElevatedButton(
                             onPressed: controller.showMealsCard,
+                            child: Text('Vamos la'),
+                          );
+                        case HomeBodyState.Review: //FIXME: O botao nao permite aparecer caso n exista
+                          return ElevatedButton(
+                            onPressed: (){},
                             child: Text('Vamos la'),
                           );
                         case HomeBodyState.Meals:

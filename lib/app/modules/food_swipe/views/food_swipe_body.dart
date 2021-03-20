@@ -9,6 +9,7 @@ import 'package:nutri/app/modules/food_swipe/controllers/food_swipe_controller.d
 //IDEIA: Caso a pessoa não queria nenhum, deixar um card no final para adicionar outro alimento ou um card que quando marcado ele fala que não quer nenhum daqueles
 //Um cardzao cinza com uma lupa no centro por exemplo
 //FIXME: A forma de selecionar as comidas nao está intuitivo o suficiente
+//TODO: Botao de sim e nao, quando toca ele pula pra prox pag na hora, pra evitar esse arrastar estranho
 class FoodSwipeBody extends GetView<FoodSwipeController> {
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,6 @@ class FoodSwipeBody extends GetView<FoodSwipeController> {
                               height: width * 1.16,
                               child: PageView.builder(
                                 controller: controller.pageController,
-                                // pageSnapping: false,
                                 itemCount: controller
                                     .currentFoodSwipeModel!.foods.length,
                                 itemBuilder: (context, index) => Obx(

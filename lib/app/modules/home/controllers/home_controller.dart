@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/modules/home/models/home_review_model.dart';
 import 'package:nutri/app/modules/home/models/meal_model.dart';
 import 'package:nutri/app/modules/home/models/menu_model.dart';
 import 'package:nutri/app/modules/home/repositories/home_repository.dart';
 import 'package:nutri/app/modules/home/models/meal_card_model.dart';
 import 'package:nutri/app/modules/home/providers/home_provider.dart';
 import 'package:nutri/app/routes/app_pages.dart';
-
 
 //TODO: Receber o dia que foi buildado as refeições semanais
 // - Receber qual a semana do ano, por exemplo o ano tem aprox 52 semanas
@@ -68,7 +68,7 @@ class HomeController extends GetxController {
   List<MealModel> overViewList = [];
   RxBool isOverViewReady = false.obs;
 
-  RxBool isReviewReady = false.obs; //TODO: Ainda nem to usando isso
+  RxBool isReviewReady = true.obs; //TODO: Ainda nem to usando isso
 
   final RxBool _showHomeContent = false.obs;
   bool get showHomeContent => _showHomeContent.value!;
@@ -80,8 +80,7 @@ class HomeController extends GetxController {
   final _selectedExtrasList = <int>[].obs;
   List<int> get selectedExtrasList => _selectedExtrasList;
 
-  List<Map<String, String>> reviewMeals = [];
-  List<MealCardModel> reviewMealCards = [];
+  List<HomeReviewModel> reviewMeals = [];
 
   List<FoodModel> selectedExtras = [];
 
@@ -101,9 +100,10 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     homeState.bindStream(repository.getHomeState());
-
     ever(homeState, onHomeStateChanged);
     ever(_homeBodyState, onHomeBodyStateChanged);
+    //TODO: Salvar e receber o ultimo homebodyState das prefs
+
     _getOverViewList(1);
     _fetchPageIndex();
   }
@@ -190,16 +190,18 @@ class HomeController extends GetxController {
   }
 
   _fetchReview() async {
+    //FIXME: Refazer esse cara
     List<String> savedMealList = await repository.getMealsCard();
     var listMealCards =
         savedMealList.map((s) => MealCardModel.fromJson(s)).toList();
     reviewMeals = listMealCards
-        .map((m) => {
-              'image': m.selectedFood!.img,
-              'title': m.selectedFood!.title,
-              'color': m.mealCardState.toString(),
-            })
+        .map((m) => HomeReviewModel(
+              image: m.selectedFood!.img,
+              title: m.selectedFood!.title,
+              done: m.mealCardState == MealCardState.Done,
+            ))
         .toList();
+    isReviewReady.value = true;
   }
 
   @override
