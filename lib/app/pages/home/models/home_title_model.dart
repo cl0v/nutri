@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 class HomeTitleModel {
+  // TODO: Estudar a possibilidade de tirar o getX daq, deixar tipos primarios
   /// Titulo do dia da semana
   RxString title = 'HOJE'.obs;
 

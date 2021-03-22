@@ -4,40 +4,42 @@ class HomeTitleViewModel {
   final HomeTitleModel model = HomeTitleModel();
 
   int _todayIndex = DateTime.now().weekday;
-  int _dayIndex = 0; 
+  int dayIndex = 0; 
   
   // TODO: Expor o dia que eu quero olhar
   //TODO:  RxInt day = 1.obs; Jogar no model
 
 
   nextDay() {
-    _dayIndex++;
+    dayIndex++;
     _showDayOverView(); //Estou repetindo codigo
   }
 
   previewDay() {
-    _dayIndex--;
+    dayIndex--;
     _showDayOverView();
   }
 
   //TODO: Refatorar
 
+
   _showDayOverView() async {
-    if (_dayIndex <= 0) {
+    if (dayIndex <= 0) {
       model.previewBtnDisabled.value = true;
     } else {
       model.previewBtnDisabled.value = false;
     }
-    if (_dayIndex >= 6) {
+    if (dayIndex >= 6) {
       model.nextBtnDisabled.value = true;
     } else {
       model.nextBtnDisabled.value = false;
     }
-    model.title.value = _getDayTitle(_dayIndex, _todayIndex);
+    model.title.value = _getDayTitle(_todayIndex);
   }
 
+  //TODO: Passar esse cara pra outro lugar
 
-  String _getDayTitle(int dayIndex, int todayIndex) {
+  String _getDayTitle( int todayIndex) {
     if (dayIndex == 1) {
       return 'AMANHÃ';
     } else if (dayIndex == -1) {

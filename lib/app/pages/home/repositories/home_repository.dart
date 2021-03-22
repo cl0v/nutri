@@ -1,5 +1,5 @@
-import 'package:nutri/app/pages/home/models/meal_model.dart';
-import 'package:nutri/app/pages/home/models/menu_model.dart';
+import 'package:nutri/app/pages/home/models/overview_model.dart';
+import 'package:nutri/app/pages/home/models/old_menu_model.dart';
 import 'package:nutri/app/pages/home/providers/home_provider.dart';
 
 class HomeRepository {
@@ -13,18 +13,18 @@ class HomeRepository {
 
   Future<List<OverviewModel>> getOverViewListFromPEDietSugestion() =>
       provider.getOverViewListFromPEDietSugestion(); //TODO: Remover
-  Future<List<MenuModel>> getMenuListFromPEDietSugestion() => provider.getMenuListFromPEDietSugestion();//TODO: Remover
+  Future<List<OldMenuModel>> getMenuListFromPEDietSugestion() => provider.getMenuListFromPEDietSugestion();//TODO: Remover
 
   String getDayTitle({int day = 1}) => provider.getDayTitle(day: day);
 
-  Future<List<List<MenuModel>>> fetchDailyMenuOfTheWeek() =>
+  Future<List<List<OldMenuModel>>> fetchDailyMenuOfTheWeek() =>
       provider.fetchMealsOfTheWeek();
 
   // Stream<HomeState> getHomeState() => provider.getHomeState();
 
   closeHomeStream() => provider.closeHomeStream();
 
-  Future<List<MenuModel>> fetchDailyMeals() => provider.fetchDailyMeals();
+  Future<List<OldMenuModel>> fetchDailyMeals() => provider.fetchDailyMeals();
 
   Future<int> getPageIndex() => provider.getPageIndexFromPrefs();
   void setPageIndex(int pageIdx) => provider.setPageIndexOnPrefs(pageIdx);

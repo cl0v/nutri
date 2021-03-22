@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/helpers/home_helper.dart';
-import 'package:nutri/app/pages/home/models/meal_model.dart';
-import 'package:nutri/app/pages/home/models/menu_model.dart';
+import 'package:nutri/app/pages/home/models/overview_model.dart';
+import 'package:nutri/app/pages/home/models/old_menu_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 const pageIndexKey = 'pageIndexKey';
@@ -29,10 +29,10 @@ class HomeProvider {
 
   String getDayTitle({int day = 1}) => HomeHelper.getDayTitle(day, weekDay);
 
-  Future<List<MenuModel>> fetchDailyMeals() async =>
+  Future<List<OldMenuModel>> fetchDailyMeals() async =>
       _fetchDailyMeals(storage, day: weekDay);
 
-  Future<List<List<MenuModel>>> fetchMealsOfTheWeek() async =>
+  Future<List<List<OldMenuModel>>> fetchMealsOfTheWeek() async =>
       _fetchWeeklyMeals(storage);
 
   int daysInAWeek = 7;
@@ -42,7 +42,7 @@ class HomeProvider {
 
 //TODO: Implement getOverViewListFromPEDietSugestion
 
-  Future<List<MenuModel>> getMenuListFromPEDietSugestion() =>
+  Future<List<OldMenuModel>> getMenuListFromPEDietSugestion() =>
       PeDiet().getMenuListFromPEDietSugestion();
 //TODO: Implement getMenuListFromPEDietSugestion
 
@@ -56,7 +56,7 @@ class HomeProvider {
   Sink<HomeState> get homeStateInput => homeStateController.sink;
 
 //TODO: Remover temporariamente
-  Future<List<List<MenuModel>>> _fetchWeeklyMeals(storage) async {
+  Future<List<List<OldMenuModel>>> _fetchWeeklyMeals(storage) async {
     List foodPrefs = _getFoodPrefs(storage);
     if (foodPrefs.isEmpty) {
       homeStateInput.add(HomeState.Error);
@@ -71,7 +71,7 @@ class HomeProvider {
     }
   }
 
-  Future<List<MenuModel>> _fetchDailyMeals(storage,
+  Future<List<OldMenuModel>> _fetchDailyMeals(storage,
       {int day = 0}) async {
     //TODO: Aqui que deve ser chamado o builde semanal
     var weeklyMeals =
@@ -82,8 +82,8 @@ class HomeProvider {
         : []; //TODO: Remover esse dia menos 1
   }
 
-  Future<List<List<MenuModel>>> _buildMealsOfTheWeek(storage) async {
-    List<List<MenuModel>> listOfDailyMeal = [];
+  Future<List<List<OldMenuModel>>> _buildMealsOfTheWeek(storage) async {
+    List<List<OldMenuModel>> listOfDailyMeal = [];
     for (var i = 1; i <= daysInAWeek; i++) {
       var dailyMeal = await _buildDailyMeal(storage);
       listOfDailyMeal.add(dailyMeal);
@@ -92,7 +92,7 @@ class HomeProvider {
     return listOfDailyMeal;
   }
 
-  Future<List<MenuModel>> _buildDailyMeal(storage) async {
+  Future<List<OldMenuModel>> _buildDailyMeal(storage) async {
     var breakfast = await MenuProviderHelper.buildBreakfast(storage);
     var lunch = await MenuProviderHelper.buildLunch(storage);
     var snack = await MenuProviderHelper.buildSnack(storage);
@@ -105,11 +105,11 @@ class HomeProvider {
   _getFoodPrefs(storage) =>
       FoodProvider.getFoodsPrefsList(storage);
 
-  Future<List<List<MenuModel>>> _getWeeklyMeals(storage) =>
+  Future<List<List<OldMenuModel>>> _getWeeklyMeals(storage) =>
       MenuProvider.getWeeklyMealsFromPrefs(storage);
 
-  Future<List<List<MenuModel>>> _saveWeeklyMeals(
-          storage, List<List<MenuModel>> listOfDailyMeal) async =>
+  Future<List<List<OldMenuModel>>> _saveWeeklyMeals(
+          storage, List<List<OldMenuModel>> listOfDailyMeal) async =>
       MenuProvider.saveWeeklyMealsOnPrefs(
           await storage, listOfDailyMeal);
 
@@ -152,7 +152,7 @@ class PeDiet {
       MealProvider.loadMealListByDay(day);
 //TODO: Implement getOverViewListFromPEDietSugestion
 
-  Future<List<MenuModel>> getMenuListFromPEDietSugestion() =>
+  Future<List<OldMenuModel>> getMenuListFromPEDietSugestion() =>
       MenuProvider.peDiet();
 //TODO: Implement getMenuListFromPEDietSugestion
 

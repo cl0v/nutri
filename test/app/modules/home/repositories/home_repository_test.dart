@@ -1,8 +1,8 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/data/model/food_model.dart';
-import 'package:nutri/app/pages/home/models/meal_model.dart';
-import 'package:nutri/app/pages/home/models/menu_model.dart';
+import 'package:nutri/app/pages/home/models/overview_model.dart';
+import 'package:nutri/app/pages/home/models/old_menu_model.dart';
 import 'package:nutri/app/pages/home/providers/home_provider.dart';
 import 'package:nutri/app/pages/home/repositories/home_repository.dart';
 import 'package:nutri/app/services/shared_local_storage_service.dart';
@@ -79,7 +79,7 @@ main() {
         await prefs.setStringList(foodPrefsKey, mockedFoodPrefs));
 
 
-    List<MenuModel> dailyMeals = [];
+    List<OldMenuModel> dailyMeals = [];
     test('No main card should be in MainOrExtra.extra category', () async {
       dailyMeals = await repository.fetchDailyMeals();
       var listOfMains = [];
@@ -165,7 +165,7 @@ main() {
     SharedPreferences.getInstance().then((prefs) async =>
         await prefs.setStringList(foodPrefsKey, mockedFoodPrefs));
 
-    List<MenuModel> dailyMeals = [];
+    List<OldMenuModel> dailyMeals = [];
 
     test('Total meals of the day should be 4', () async {
       dailyMeals = await repository.fetchDailyMeals();
@@ -377,7 +377,7 @@ main() {
     SharedPreferences.getInstance().then((prefs) async =>
         await prefs.setStringList(foodPrefsKey, mockedFoodPrefs));
 
-    List<List<MenuModel>> weeklyMeals = [];
+    List<List<OldMenuModel>> weeklyMeals = [];
     test('Menu of the Week should have 7 elements', () async {
       weeklyMeals = await repository.fetchDailyMenuOfTheWeek();
       expect(

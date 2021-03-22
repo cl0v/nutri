@@ -1,7 +1,7 @@
 
 import 'dart:convert';
 
-import 'package:nutri/app/pages/home/models/meal_model.dart';
+import 'package:nutri/app/pages/home/models/overview_model.dart';
 
 class ReviewModel {
   final OverviewModel overviewModel;

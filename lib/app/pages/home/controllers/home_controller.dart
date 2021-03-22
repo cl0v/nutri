@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:nutri/app/data/model/food_model.dart';
-import 'package:nutri/app/pages/home/enums/home_body_state_enum.dart';
-import 'package:nutri/app/pages/home/models/meal_model.dart';
-import 'package:nutri/app/pages/home/models/menu_model.dart';
-import 'package:nutri/app/pages/home/repositories/home_repository.dart';
+import 'package:nutri/app/pages/home/models/home_state_model.dart';
+import 'package:nutri/app/pages/home/models/old_menu_model.dart';
+import 'package:nutri/app/pages/home/models/overview_model.dart';
 import 'package:nutri/app/pages/home/models/review_model.dart';
+import 'package:nutri/app/pages/home/viewmodels/home_state_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_title_viewmodel.dart';
+import 'package:nutri/app/pages/home/viewmodels/menu_viewmodel.dart';
+import 'package:nutri/app/pages/home/viewmodels/overview_viewmodel.dart';
+import 'package:nutri/app/pages/home/viewmodels/review_viewmodel.dart';
 
 //TODO: Receber o dia que foi buildado as refeições semanais
-// - Receber qual a semana do ano, por exemplo o ano tem aprox 52 semanas
 // - Salva o dia da semana e a semana do ano, se tiver no mesmo dia na semana seuginte, mostra o food swipe
 //O dia máximo que o user pode olhar é até 6 dias incluindo o dia do build;(Ou 7, começando de amanha??)
 //O user pode olhar os dias anteriores, até no maximo o dia que foi buildado
@@ -22,122 +25,86 @@ import 'package:nutri/app/pages/home/viewmodels/home_title_viewmodel.dart';
 
 class HomeController extends GetxController {
   HomeController({
-    required this.repository,
     required this.titleViewModel,
+    required this.overviewViewModel,
+    required this.menuViewModel,
+    required this.reviewViewModel,
+    required this.homeStateViewModel,
   });
-  final HomeRepository repository; //TODO: Remover
 
+// title
   final HomeTitleViewModel titleViewModel;
 
   String? get title => titleViewModel.model.title.value;
   bool? get previewBtnDisabled => titleViewModel.model.previewBtnDisabled.value;
   bool? get nextBtnDisabled => titleViewModel.model.nextBtnDisabled.value;
+  int get dayIndex => titleViewModel.dayIndex;
 
   void onPreviewDayPressed() => titleViewModel.previewDay();
   void onNextDayPressed() => titleViewModel.nextDay();
 
-  late PageController pageController;
+// overview view
+  final OverviewViewModel overviewViewModel;
+  List<OverviewModel> get overViewList => overviewViewModel.overviewList;
 
-  final selectedMainFoodIdx = 0.obs;
+// menu view
+  final MenuViewModel menuViewModel;
+  PageController get pageController => menuViewModel.pageController;
+  List<OldMenuModel> get menuList => menuViewModel.menuList;
+  List<bool> get doneList => menuViewModel.doneList;
 
-  Rx<HomeBodyState> _homeBodyState = HomeBodyState.Loading.obs;
-  HomeBodyState get homeBodyState => _homeBodyState.value!;
+  onDonePressed() => menuViewModel.nextMenuItem(true);
+  onSkippedPressed() => menuViewModel.nextMenuItem(false);
+
+  onMenuPageChanged(int idx) async {
+    if (idx >= 4) {
+      homeStateViewModel.changeState(HomeState.Review);
+    }
+    menuViewModel.saveMenuPageIndex(idx);
+  }
+
+// review view
+  final ReviewViewModel reviewViewModel;
+  List<ReviewModel> get reviewList => reviewViewModel.reviewList;
+
+// home state
+  final HomeStateViewModel homeStateViewModel;
+  Rx<HomeState> get rxstate => homeStateViewModel.homeStateModel.state;
+  HomeState get state => homeStateViewModel.homeStateModel.state.value!;
+
+  showMealsCard() => homeStateViewModel.changeState(HomeState.Menu);
+
+
+
 
   @override
   void onInit() {
     super.onInit();
-    ever(_homeBodyState, onHomeBodyStateChanged);
-    _fetchInitialHomeBodyState(); // > Retorna o HomeBodyState
+    ever(rxstate, onStateChanded);
+    homeStateViewModel.init(); // > Retorna o HomeBodyState
   }
 
-  onHomeBodyStateChanged(state) {
+  onStateChanded(state) {
     switch (state) {
-      case HomeBodyState.Overview:
-        _setOverview();
+      case HomeState.Overview:
+        overviewViewModel.init();
         break;
-      case HomeBodyState.Menu:
-        _setMenu();
+      case HomeState.Menu:
+        menuViewModel.init();
         break;
-      case HomeBodyState.Review:
-        _setReview();
-        break;
-      case HomeBodyState.Loading:
+      case HomeState.Review:
+        reviewViewModel.init(overViewList, doneList);
         break;
       default:
     }
   }
 
-  _fetchInitialHomeBodyState() {
-    //TODO: Implement _fetchInitialHomeBodyState
-    _homeBodyState.value = HomeBodyState.Overview;
+// Daqui pra baixo nao estou usando nada
+  int selectedMainFoodIdx = 0;
+  onMainFoodTapped(int idx) {
+    //Se eu precisar salvar qual a proteina que o usuario escolheu
+    selectedMainFoodIdx = idx;
   }
-
-  RxBool isOverViewReady = false.obs;
-  List<OverviewModel> overViewList = [];
-  _setOverview() async {
-    overViewList = await repository.getOverViewListFromPEDietSugestion();
-    isOverViewReady.value = true;
-  }
-
-  RxBool isMenuReady = false.obs;
-  List<MenuModel> menuList = [];
-
-  _setMenu() async {
-    pageController = PageController();
-    menuList = await repository.getMenuListFromPEDietSugestion();
-    isMenuReady.value = true;
-  }
-
-  RxBool isReviewReady = false.obs; //TODO: Ainda nem to usando isso
-  List<ReviewModel> reviewList = []; //TODO: Usar no review page
-  List<bool> doneList = [];
-  _setReview() {
-    overViewList.forEach((element) {
-      var idx = overViewList.indexOf(element);
-      reviewList
-          .add(ReviewModel(overviewModel: element, isDone: doneList[idx]));
-    });
-    isReviewReady.value = true;
-  }
-
-  final dayIndex = 1.obs;
-  String getDayTitle() => repository.getDayTitle(day: dayIndex.value);
-  //FIXME: Titulo não está funcionando direito
-
-  // onPreviewDayPressed() => _showDayOverView(--dayIndex.value);
-  // onNextDayPressed() => _showDayOverView(++dayIndex.value);
-
-  // _showDayOverView(int day) async {
-  //   if (day <= 0) {
-  //     isPreviewBtnDisabled.value = true;
-  //   } else {
-  //     isPreviewBtnDisabled.value = false;
-  //   }
-  //   if (day >= 6) {
-  //     isNextBtnDisabled.value = true;
-  //   } else {
-  //     isNextBtnDisabled.value = false;
-  //   }
-  //   overViewList =
-  //       await repository.getMeals(day: day); //TODO: Definir o dia que quero
-  // }
-
-  onMenuPageChanged(int idx) => _onMenuPageChanged(idx);
-
-  /// Chamado toda vez que o usuário confirma ou pula alguma refeição
-  _onMenuPageChanged(int idx) async {
-    if (idx >= 4) {
-      _homeBodyState.value = HomeBodyState.Review;
-    }
-    _savePageIndex(idx);
-  }
-
-  onDonePressed() => _nextMealCard(true);
-
-  onSkippedPressed() => _nextMealCard(false);
-
-  /// Salva a ultima refeição mostrada para o usuário
-  _savePageIndex(int idx) => repository.setPageIndex(idx);
 
   // Menu //
 
@@ -149,28 +116,7 @@ class HomeController extends GetxController {
   final _extrasAmount = 3.obs;
   int get extrasAmount => _extrasAmount.value;
 
-  _nextMealCard(bool confirmed) {
-    //TODO: Implement  _nextMealCard
-    // myMealCard.mealCardState =
-    //     confirmed ? MealCardState.Done : MealCardState.Skiped;
-    // myMealCard.selectedFood = mainFoodsAvailable[selectedMainFoodIdx.value];
-    // _saveMealCard(myMealCard);
-    doneList.add(confirmed); //TODO: Por enquanto está apenas chamando no final
-    _nextPage();
-  }
-
-//TODO: Passar pra ViewModel
-  _nextPage() {
-    pageController.nextPage(
-      duration: Duration(microseconds: 100),
-      curve: Curves.ease,
-    );
-  }
-
-//TODO: Remover
   getSelectedIndex(int idx) => _selectedExtrasList.contains(idx);
-
-  onMainFoodTapped(int idx) => selectedMainFoodIdx.value = idx;
 
   onExtraTapped(int idx) {
     if (!_selectedExtrasList.contains(idx) &&
@@ -183,9 +129,5 @@ class HomeController extends GetxController {
       selectedExtras.remove(extraFoodsAvailable[idx]);
       return false;
     }
-  }
-
-  showMealsCard() {
-    _homeBodyState.value = HomeBodyState.Menu;
   }
 }

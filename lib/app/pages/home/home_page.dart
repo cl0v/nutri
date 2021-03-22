@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:nutri/app/pages/home/components/home_title_bar_widget.dart';
 import 'package:nutri/app/pages/home/controllers/home_controller.dart';
-import 'package:nutri/app/pages/home/enums/home_body_state_enum.dart';
+import 'package:nutri/app/pages/home/models/home_state_model.dart';
 
 import 'package:nutri/app/pages/home/views/menu_view.dart';
 import 'package:nutri/app/pages/home/views/overview_view.dart';
@@ -16,46 +17,28 @@ class HomePage extends GetView<HomeController> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Obx(()=>IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: controller.previewBtnDisabled!
-                  ? null
-                  : controller.onPreviewDayPressed,
-            )),
-            Obx(()=>Text(controller.title ?? 'Carregando titulo')),
-            Obx(()=>IconButton(
-              icon: Icon(Icons.arrow_forward_ios),
-              onPressed: controller.nextBtnDisabled!
-                  ? null
-                  : controller.onNextDayPressed,
-            )),
-          ],
-        ),
+        title: HomeTitleBarWidget(),
       ),
       body: Obx(
         () {
-          switch (controller.homeBodyState) {
-            case HomeBodyState.Loading:
+          switch (controller.state) {
+            case HomeState.Loading:
               return Center(child: CircularProgressIndicator());
-            case HomeBodyState.Review:
+            case HomeState.Review:
               return Obx(
-                () => controller.isReviewReady.value!
-                    ? ReviewView(items: controller.reviewList) //TODO: Implement reviewpage
-                    // ? CircularProgressIndicator()
+                () => controller.overViewList.length > 0
+                    ? ReviewView(items: controller.reviewList)
                     : Center(child: CircularProgressIndicator()),
               );
-            case HomeBodyState.Overview:
+            case HomeState.Overview:
               return Obx(
-                () => controller.isOverViewReady.value!
+                () => controller.overViewList.length > 0
                     ? OverviewView(items: controller.overViewList)
                     : Center(child: CircularProgressIndicator()),
               );
-            case HomeBodyState.Menu:
+            case HomeState.Menu:
               return Obx(
-                () => controller.isMenuReady.value!
+                () => controller.menuList.length > 0
                     ? MenuView(
                         menuList: controller.menuList,
                         mealModel: controller.overViewList,
@@ -81,10 +64,10 @@ class HomePage extends GetView<HomeController> {
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Obx(
               () {
-                switch (controller.homeBodyState) {
-                  case HomeBodyState.Loading:
+                switch (controller.state) {
+                  case HomeState.Loading:
                     return Container();
-                  case HomeBodyState.Overview:
+                  case HomeState.Overview:
                     return ElevatedButton(
                       onPressed: controller.showMealsCard,
                       child: Text('Vamos la'),
@@ -95,7 +78,7 @@ class HomePage extends GetView<HomeController> {
                   //     onPressed: () {},
                   //     child: Text('Vamos la'),
                   //   );
-                  case HomeBodyState.Menu:
+                  case HomeState.Menu:
                     return Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
