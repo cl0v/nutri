@@ -6,6 +6,7 @@ import 'package:nutri/app/pages/home/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
 import 'package:nutri/app/pages/home/repositories/home_repository.dart';
 import 'package:nutri/app/pages/home/models/review_model.dart';
+import 'package:nutri/app/pages/home/viewmodels/home_title_viewmodel.dart';
 
 //TODO: Receber o dia que foi buildado as refeições semanais
 // - Receber qual a semana do ano, por exemplo o ano tem aprox 52 semanas
@@ -19,17 +20,21 @@ import 'package:nutri/app/pages/home/models/review_model.dart';
 // ela ja vem com as comidas salvas antes de criar a conta
 //SOLUTION: Salvar como mapa com o nome do user user/foodprefs
 
-
-
 class HomeController extends GetxController {
-  HomeController({required this.repository});
-  final HomeRepository repository;
+  HomeController({
+    required this.repository,
+    required this.titleViewModel,
+  });
+  final HomeRepository repository; //TODO: Remover
 
-  /// Define se o botão de dia anterior do titulo estará ou não desabilitado
-  final isPreviewBtnDisabled = true.obs;
+  final HomeTitleViewModel titleViewModel;
 
-  /// Define se o botão de dia seguinte do titulo estará ou não desabilitado
-  final isNextBtnDisabled = false.obs;
+  String? get title => titleViewModel.model.title.value;
+  bool? get previewBtnDisabled => titleViewModel.model.previewBtnDisabled.value;
+  bool? get nextBtnDisabled => titleViewModel.model.nextBtnDisabled.value;
+
+  void onPreviewDayPressed() => titleViewModel.previewDay();
+  void onNextDayPressed() => titleViewModel.nextDay();
 
   late PageController pageController;
 
@@ -74,8 +79,9 @@ class HomeController extends GetxController {
     isOverViewReady.value = true;
   }
 
-  RxBool isMenuReady = true.obs;
+  RxBool isMenuReady = false.obs;
   List<MenuModel> menuList = [];
+
   _setMenu() async {
     pageController = PageController();
     menuList = await repository.getMenuListFromPEDietSugestion();
@@ -94,16 +100,30 @@ class HomeController extends GetxController {
     isReviewReady.value = true;
   }
 
-
   final dayIndex = 1.obs;
   String getDayTitle() => repository.getDayTitle(day: dayIndex.value);
   //FIXME: Titulo não está funcionando direito
-  onPreviewDayPressed() => _showDayOverView(--dayIndex.value);
 
-  onNextDayPressed() => _showDayOverView(++dayIndex.value);
+  // onPreviewDayPressed() => _showDayOverView(--dayIndex.value);
+  // onNextDayPressed() => _showDayOverView(++dayIndex.value);
+
+  // _showDayOverView(int day) async {
+  //   if (day <= 0) {
+  //     isPreviewBtnDisabled.value = true;
+  //   } else {
+  //     isPreviewBtnDisabled.value = false;
+  //   }
+  //   if (day >= 6) {
+  //     isNextBtnDisabled.value = true;
+  //   } else {
+  //     isNextBtnDisabled.value = false;
+  //   }
+  //   overViewList =
+  //       await repository.getMeals(day: day); //TODO: Definir o dia que quero
+  // }
 
   onMenuPageChanged(int idx) => _onMenuPageChanged(idx);
-  
+
   /// Chamado toda vez que o usuário confirma ou pula alguma refeição
   _onMenuPageChanged(int idx) async {
     if (idx >= 4) {
@@ -129,9 +149,6 @@ class HomeController extends GetxController {
   final _extrasAmount = 3.obs;
   int get extrasAmount => _extrasAmount.value;
 
-
-
-
   _nextMealCard(bool confirmed) {
     //TODO: Implement  _nextMealCard
     // myMealCard.mealCardState =
@@ -148,18 +165,12 @@ class HomeController extends GetxController {
       duration: Duration(microseconds: 100),
       curve: Curves.ease,
     );
-  } 
+  }
 
-
-//TODO: Remover 
+//TODO: Remover
   getSelectedIndex(int idx) => _selectedExtrasList.contains(idx);
 
-  onMainFoodTapped(int idx) =>
-     selectedMainFoodIdx.value = idx;
-  
-
-
-
+  onMainFoodTapped(int idx) => selectedMainFoodIdx.value = idx;
 
   onExtraTapped(int idx) {
     if (!_selectedExtrasList.contains(idx) &&
@@ -174,23 +185,7 @@ class HomeController extends GetxController {
     }
   }
 
-  _showDayOverView(int day) async {
-    if (day <= 0) {
-      isPreviewBtnDisabled.value = true;
-    } else {
-      isPreviewBtnDisabled.value = false;
-    }
-    if (day >= 6) {
-      isNextBtnDisabled.value = true;
-    } else {
-      isNextBtnDisabled.value = false;
-    }
-    overViewList =
-        await repository.getMeals(day: day); //TODO: Definir o dia que quero
-  }
-
   showMealsCard() {
     _homeBodyState.value = HomeBodyState.Menu;
   }
-
 }

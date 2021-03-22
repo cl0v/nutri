@@ -19,19 +19,19 @@ class HomePage extends GetView<HomeController> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
+            Obx(()=>IconButton(
               icon: Icon(Icons.arrow_back_ios),
-              onPressed: controller.isPreviewBtnDisabled.value!
+              onPressed: controller.previewBtnDisabled!
                   ? null
                   : controller.onPreviewDayPressed,
-            ),
-            Text(controller.getDayTitle()),
-            IconButton(
+            )),
+            Obx(()=>Text(controller.title ?? 'Carregando titulo')),
+            Obx(()=>IconButton(
               icon: Icon(Icons.arrow_forward_ios),
-              onPressed: controller.isNextBtnDisabled.value!
+              onPressed: controller.nextBtnDisabled!
                   ? null
                   : controller.onNextDayPressed,
-            ),
+            )),
           ],
         ),
       ),

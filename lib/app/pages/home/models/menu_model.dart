@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/models/meal_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:nutri/app/data/model/food_model.dart';
 
