@@ -29,7 +29,7 @@ class ReviewView extends StatelessWidget {
             child: FoodCardWidget(
               image: items[idx - 1].overviewModel.img,
               title: MealModelHelper.getTranslatedMeal(items[idx - 1].overviewModel.meal),
-              color: items[idx - 1].isDone
+              color: items[idx - 1].done
                   ? kGreenColor.withOpacity(.4)
                   : kErrorColor.withOpacity(.4),
             ),

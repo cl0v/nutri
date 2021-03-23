@@ -1,35 +1,30 @@
+import 'package:get/get.dart';
 import 'package:nutri/app/pages/home/models/home_title_model.dart';
 
 class HomeTitleViewModel {
   final HomeTitleModel model = HomeTitleModel();
+  //TODO: Quanto toco para ver o dia seguinte, alterar para o overview independente do estado da home
 
   int _todayIndex = DateTime.now().weekday;
-  int dayIndex = 0; 
-  
-  // TODO: Expor o dia que eu quero olhar
-  //TODO:  RxInt day = 1.obs; Jogar no model
-
+  RxInt day = 1.obs;
+  int get _dayIndex => day.value - 1;
+  set _dayIndex(int d) => day.value = d + 1;
 
   nextDay() {
-    dayIndex++;
-    _showDayOverView(); //Estou repetindo codigo
+    _showDayOverView(_dayIndex++);
   }
 
   previewDay() {
-    dayIndex--;
-    _showDayOverView();
+    _showDayOverView(_dayIndex--);
   }
 
-  //TODO: Refatorar
-
-
-  _showDayOverView() async {
-    if (dayIndex <= 0) {
+  _showDayOverView(_) async {
+    if (_dayIndex <= 0) {
       model.previewBtnDisabled.value = true;
     } else {
       model.previewBtnDisabled.value = false;
     }
-    if (dayIndex >= 6) {
+    if (_dayIndex >= 6) {
       model.nextBtnDisabled.value = true;
     } else {
       model.nextBtnDisabled.value = false;
@@ -37,18 +32,16 @@ class HomeTitleViewModel {
     model.title.value = _getDayTitle(_todayIndex);
   }
 
-  //TODO: Passar esse cara pra outro lugar
-
-  String _getDayTitle( int todayIndex) {
-    if (dayIndex == 1) {
+  String _getDayTitle(int todayIndex) {
+    if (_dayIndex == 1) {
       return 'AMANHÃ';
-    } else if (dayIndex == -1) {
+    } else if (_dayIndex == -1) {
       return 'ONTEM';
-    } else if (dayIndex == 0) {
+    } else if (_dayIndex == 0) {
       return 'HOJE';
     } else
       return _getDayOfTheWeekString(
-          _dayOnTheWeekToString(todayIndex + dayIndex));
+          _dayOnTheWeekToString(todayIndex + _dayIndex));
   }
 
   int _dayOnTheWeekToString(int dayNum) {
@@ -82,6 +75,5 @@ class HomeTitleViewModel {
         return 'HOJE';
     }
   }
-  //BOTOES TAMBEM PASSAM PRAK
 
 }

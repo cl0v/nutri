@@ -1,32 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:nutri/app/pages/home/models/old_menu_model.dart';
+import 'package:nutri/app/interfaces/repositories/diet_interface.dart';
+import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
+import 'package:nutri/app/pages/home/models/menu_model.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/pages/home/repositories/home_repository.dart';
 
 class MenuViewModel {
-  final menuList = <OldMenuModel>[].obs;
+  final menuList = <MenuModel>[].obs;
   List<bool> doneList = [];
-  final HomeRepository repository;
 
-  PageController pageController = PageController();
-   
+  final IDiet repository;
+  final ILocalStorage storage;
 
-  MenuViewModel({required this.repository});
+  late PageController pageController;
+
+  final String _menuIndexKey = 'menuIndex';
+  String get menuIndexKey => '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day.toString()}/$_menuIndexKey';
+
+
+  MenuViewModel({
+    required this.repository,
+    required this.storage,
+  });
 
   init() async {
-    menuList.assignAll(await repository.getMenuListFromPEDietSugestion());
+    int menuIndex = await storage.get(menuIndexKey) ?? 0;
+    if(menuIndex > 3) pageController = PageController(initialPage: 3);
+    else pageController = PageController(initialPage: menuIndex);
+    menuList.assignAll(await repository.getMenuList());
   }
 
   nextMenuItem(bool val) {
-    //TODO:Renomear
-    doneList.add(val);
+    doneList.add(val); //TODO: Remover
+    var pgIdx = pageController.page!.toInt();
+    //TODO: Refatorar
+    _saveMenuOptions(pgIdx, val);
     pageController.nextPage(
       duration: Duration(microseconds: 100),
       curve: Curves.ease,
     );
   }
 
-  saveMenuPageIndex(int idx){
-    repository.setPageIndex(idx);
+  _saveMenuOptions(int idx, bool done) {
+    storage.put(menuIndexKey, idx + 1);
+    var overview = menuList[idx].overview;
+    repository.setReview(overview, done);
   }
 }

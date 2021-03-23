@@ -37,8 +37,6 @@ class HomeProvider {
 
   int daysInAWeek = 7;
 
-  Future<List<OverviewModel>> getOverViewListFromPEDietSugestion() =>
-      PeDiet().getOverViewListFromPEDietSugestion(weekDay);
 
 //TODO: Implement getOverViewListFromPEDietSugestion
 

@@ -6,24 +6,24 @@ import 'package:nutri/app/pages/home/models/overview_model.dart';
 class ReviewModel {
   final OverviewModel overviewModel;
   //enum
-  final bool isDone;
+  final bool done;
 
   ReviewModel({
     required this.overviewModel,
-    required this.isDone,
+    required this.done,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'overviewModel': overviewModel.toMap(),
-      'isDone': isDone,
+      'isDone': done,
     };
   }
 
   factory ReviewModel.fromMap(Map<String, dynamic> map) {
     return ReviewModel(
       overviewModel: OverviewModel.fromMap(map['overviewModel']),
-      isDone: map['isDone'],
+      done: map['isDone'],
     );
   }
 

@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 const foodPrefsKey = 'foodPrefs';
 

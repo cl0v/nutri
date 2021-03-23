@@ -26,7 +26,7 @@ class HomePage extends GetView<HomeController> {
               return Center(child: CircularProgressIndicator());
             case HomeState.Review:
               return Obx(
-                () => controller.overViewList.length > 0
+                () => controller.reviewList.length > 0
                     ? ReviewView(items: controller.reviewList)
                     : Center(child: CircularProgressIndicator()),
               );
@@ -41,11 +41,9 @@ class HomePage extends GetView<HomeController> {
                 () => controller.menuList.length > 0
                     ? MenuView(
                         menuList: controller.menuList,
-                        mealModel: controller.overViewList,
                         pageController: controller.pageController,
                         onPageChanged: controller.onMenuPageChanged,
-                        onExtraFoodTapped: controller.onExtraTapped
-                      )
+                        onExtraFoodTapped: controller.onExtraTapped)
                     : Center(child: CircularProgressIndicator()),
               );
             default:
@@ -87,8 +85,9 @@ class HomePage extends GetView<HomeController> {
                           style: ButtonStyle(
                               minimumSize: MaterialStateProperty.resolveWith(
                                   (states) => Size(120, 36)),
-                              backgroundColor: MaterialStateProperty.resolveWith(
-                                  (states) => Colors.red)),
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith(
+                                      (states) => Colors.red)),
                           onPressed: controller.onSkippedPressed,
                           child: Text('Pulei'),
                         ),
@@ -96,8 +95,9 @@ class HomePage extends GetView<HomeController> {
                           style: ButtonStyle(
                               minimumSize: MaterialStateProperty.resolveWith(
                                   (states) => Size(120, 36)),
-                              backgroundColor: MaterialStateProperty.resolveWith(
-                                  (states) => Colors.green)),
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith(
+                                      (states) => Colors.green)),
                           onPressed: controller.onDonePressed,
                           child: Text('Concluí'),
                         ),

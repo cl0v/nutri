@@ -1,24 +1,26 @@
 import 'package:get/get.dart';
+import 'package:nutri/app/interfaces/repositories/diet_interface.dart';
 import 'package:nutri/app/pages/home/models/overview_model.dart';
 import 'package:nutri/app/pages/home/repositories/home_repository.dart';
 
 class OverviewViewModel {
-  final HomeRepository repository;
-
   OverviewViewModel({
     required this.repository,
-  }); //TODO: Implement
+  });
+
+  final IDiet repository;
 
   final overviewList = <OverviewModel>[].obs;
 
-//TODO: Implement onInit
   init() async {
     overviewList.assignAll(
-      await repository.getOverViewListFromPEDietSugestion(),
+      await repository.getOverviewList(DateTime.now().weekday),
     );
   }
 
-  changeOverview(int day) {
-    //TODO: Implement changeOverview
+  changeOverview(int day) async {
+    overviewList.assignAll(
+      await repository.getOverviewList(day),
+    );
   }
 }

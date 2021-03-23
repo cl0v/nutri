@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/pages/home/models/home_state_model.dart';
-import 'package:nutri/app/pages/home/models/old_menu_model.dart';
+import 'package:nutri/app/pages/home/models/menu_model.dart';
 import 'package:nutri/app/pages/home/models/overview_model.dart';
 import 'package:nutri/app/pages/home/models/review_model.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_state_viewmodel.dart';
@@ -38,7 +38,7 @@ class HomeController extends GetxController {
   String? get title => titleViewModel.model.title.value;
   bool? get previewBtnDisabled => titleViewModel.model.previewBtnDisabled.value;
   bool? get nextBtnDisabled => titleViewModel.model.nextBtnDisabled.value;
-  int get dayIndex => titleViewModel.dayIndex;
+  RxInt get dayIndex => titleViewModel.day;
 
   void onPreviewDayPressed() => titleViewModel.previewDay();
   void onNextDayPressed() => titleViewModel.nextDay();
@@ -50,7 +50,7 @@ class HomeController extends GetxController {
 // menu view
   final MenuViewModel menuViewModel;
   PageController get pageController => menuViewModel.pageController;
-  List<OldMenuModel> get menuList => menuViewModel.menuList;
+  List<MenuModel> get menuList => menuViewModel.menuList;
   List<bool> get doneList => menuViewModel.doneList;
 
   onDonePressed() => menuViewModel.nextMenuItem(true);
@@ -60,7 +60,7 @@ class HomeController extends GetxController {
     if (idx >= 4) {
       homeStateViewModel.changeState(HomeState.Review);
     }
-    menuViewModel.saveMenuPageIndex(idx);
+    // menuViewModel.saveMenuPageIndex(idx);
   }
 
 // review view
@@ -74,27 +74,24 @@ class HomeController extends GetxController {
 
   showMealsCard() => homeStateViewModel.changeState(HomeState.Menu);
 
-
-
-
   @override
   void onInit() {
     super.onInit();
     ever(rxstate, onStateChanded);
-    homeStateViewModel.init(); // > Retorna o HomeBodyState
+    ever(dayIndex, onDayChanged);
+    homeStateViewModel.init();
   }
 
-  onStateChanded(state) {
+  onDayChanged(int day) => overviewViewModel.changeOverview(day);
+
+  onStateChanded(HomeState? state) {
     switch (state) {
       case HomeState.Overview:
-        overviewViewModel.init();
-        break;
+        return overviewViewModel.init();
       case HomeState.Menu:
-        menuViewModel.init();
-        break;
+        return menuViewModel.init();
       case HomeState.Review:
-        reviewViewModel.init(overViewList, doneList);
-        break;
+        return reviewViewModel.init();
       default:
     }
   }

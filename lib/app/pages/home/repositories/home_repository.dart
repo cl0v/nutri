@@ -11,8 +11,6 @@ class HomeRepository {
 
   getMeals({int day = 1}) => provider.getMeals(day: day);
 
-  Future<List<OverviewModel>> getOverViewListFromPEDietSugestion() =>
-      provider.getOverViewListFromPEDietSugestion(); //TODO: Remover
   Future<List<OldMenuModel>> getMenuListFromPEDietSugestion() => provider.getMenuListFromPEDietSugestion();//TODO: Remover
 
   String getDayTitle({int day = 1}) => provider.getDayTitle(day: day);
