@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/pages/home/models/home_state_model.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
@@ -11,17 +10,6 @@ import 'package:nutri/app/pages/home/viewmodels/home_title_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/menu_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/overview_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/review_viewmodel.dart';
-
-//TODO: Receber o dia que foi buildado as refeições semanais
-// - Salva o dia da semana e a semana do ano, se tiver no mesmo dia na semana seuginte, mostra o food swipe
-//O dia máximo que o user pode olhar é até 6 dias incluindo o dia do build;(Ou 7, começando de amanha??)
-//O user pode olhar os dias anteriores, até no maximo o dia que foi buildado
-// Ex, se eu buildei na segunda, só posso olhar até segunda que vem(ou dom da msm semana, sendo a segunda tb um dos dias do build da semana)
-// Entao obrigar a pessoa a escolher novamente o foodswipe na segunda que vem
-
-//BUG:? Quando termino de escolher as comidas do foodswipe apos criar uma conta,
-// ela ja vem com as comidas salvas antes de criar a conta
-//SOLUTION: Salvar como mapa com o nome do user user/foodprefs
 
 class HomeController extends GetxController {
   HomeController({
@@ -38,7 +26,8 @@ class HomeController extends GetxController {
   String? get title => titleViewModel.model.title.value;
   bool? get previewBtnDisabled => titleViewModel.model.previewBtnDisabled.value;
   bool? get nextBtnDisabled => titleViewModel.model.nextBtnDisabled.value;
-  RxInt get dayIndex => titleViewModel.day;
+  RxInt get showingDayIndex => titleViewModel.day;
+  int get todayIndex => titleViewModel.todayIndex;
 
   void onPreviewDayPressed() => titleViewModel.previewDay();
   void onNextDayPressed() => titleViewModel.nextDay();
@@ -46,6 +35,8 @@ class HomeController extends GetxController {
 // overview view
   final OverviewViewModel overviewViewModel;
   List<OverviewModel> get overViewList => overviewViewModel.overviewList;
+
+  bool isTodayOverview = true;
 
 // menu view
   final MenuViewModel menuViewModel;
@@ -57,10 +48,7 @@ class HomeController extends GetxController {
   onSkippedPressed() => menuViewModel.nextMenuItem(false);
 
   onMenuPageChanged(int idx) async {
-    if (idx >= 4) {
-      homeStateViewModel.changeState(HomeState.Review);
-    }
-    // menuViewModel.saveMenuPageIndex(idx);
+    if (idx >= 4) homeStateViewModel.changeState(HomeState.Review);
   }
 
 // review view
@@ -69,7 +57,7 @@ class HomeController extends GetxController {
 
 // home state
   final HomeStateViewModel homeStateViewModel;
-  Rx<HomeState> get rxstate => homeStateViewModel.homeStateModel.state;
+  Rx<HomeState> get homeState => homeStateViewModel.homeStateModel.state;
   HomeState get state => homeStateViewModel.homeStateModel.state.value!;
 
   showMealsCard() => homeStateViewModel.changeState(HomeState.Menu);
@@ -77,21 +65,34 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    ever(rxstate, onStateChanded);
-    ever(dayIndex, onDayChanged);
+    ever(homeState, onStateChanded);
+    ever(showingDayIndex, onDayChanged);
     homeStateViewModel.init();
   }
 
-  onDayChanged(int day) => overviewViewModel.changeOverview(day);
+  onDayChanged(int day) async {
+    if (day == todayIndex) {
+      isTodayOverview = true;
+      homeStateViewModel
+          .changeStateWhithoutSave(await homeStateViewModel.getTodayState());
+    } else {
+      isTodayOverview = false;
+      homeStateViewModel.changeStateWhithoutSave(HomeState.Overview);
+    }
+    overviewViewModel.changeOverview(day);
+  }
 
   onStateChanded(HomeState? state) {
     switch (state) {
       case HomeState.Overview:
-        return overviewViewModel.init();
+        overviewViewModel.init();
+        break;
       case HomeState.Menu:
-        return menuViewModel.init();
+        menuViewModel.init();
+        break;
       case HomeState.Review:
-        return reviewViewModel.init();
+        reviewViewModel.init();
+        break;
       default:
     }
   }

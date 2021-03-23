@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:nutri/app/pages/home/providers/home_provider.dart';
-import 'package:nutri/app/pages/home/repositories/home_repository.dart';
 import 'package:nutri/app/pages/home/controllers/home_controller.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_state_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_title_viewmodel.dart';

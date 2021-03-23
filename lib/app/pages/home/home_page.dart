@@ -66,9 +66,14 @@ class HomePage extends GetView<HomeController> {
                   case HomeState.Loading:
                     return Container();
                   case HomeState.Overview:
+                  if(controller.isTodayOverview)
                     return ElevatedButton(
                       onPressed: controller.showMealsCard,
                       child: Text('Vamos la'),
+                    );
+                    else return ElevatedButton(
+                      onPressed: controller.showMealsCard,
+                      child: Text('Ver hoje'),
                     );
                   // case HomeBodyState
                   //     .Review: //FIXME: O botao nao permite aparecer caso n exista

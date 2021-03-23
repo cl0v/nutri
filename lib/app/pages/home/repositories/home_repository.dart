@@ -1,4 +1,3 @@
-import 'package:nutri/app/pages/home/models/overview_model.dart';
 import 'package:nutri/app/pages/home/models/old_menu_model.dart';
 import 'package:nutri/app/pages/home/providers/home_provider.dart';
 
@@ -11,9 +10,7 @@ class HomeRepository {
 
   getMeals({int day = 1}) => provider.getMeals(day: day);
 
-  Future<List<OldMenuModel>> getMenuListFromPEDietSugestion() => provider.getMenuListFromPEDietSugestion();//TODO: Remover
 
-  String getDayTitle({int day = 1}) => provider.getDayTitle(day: day);
 
   Future<List<List<OldMenuModel>>> fetchDailyMenuOfTheWeek() =>
       provider.fetchMealsOfTheWeek();

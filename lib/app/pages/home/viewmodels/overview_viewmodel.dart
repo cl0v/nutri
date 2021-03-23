@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:nutri/app/interfaces/repositories/diet_interface.dart';
 import 'package:nutri/app/pages/home/models/overview_model.dart';
-import 'package:nutri/app/pages/home/repositories/home_repository.dart';
 
 class OverviewViewModel {
   OverviewViewModel({

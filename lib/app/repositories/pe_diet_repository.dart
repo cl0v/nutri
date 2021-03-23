@@ -9,7 +9,6 @@ import 'package:nutri/app/pages/home/models/overview_model.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
 
 class PeDietRepository implements IDiet {
-  //Preciso ou nao das shared prefs?
 
   final ILocalStorage storage;
 

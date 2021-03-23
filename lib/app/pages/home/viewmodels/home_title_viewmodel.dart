@@ -5,10 +5,9 @@ class HomeTitleViewModel {
   final HomeTitleModel model = HomeTitleModel();
   //TODO: Quanto toco para ver o dia seguinte, alterar para o overview independente do estado da home
 
-  int _todayIndex = DateTime.now().weekday;
+  int todayIndex = DateTime.now().weekday;
   RxInt day = 1.obs;
-  int get _dayIndex => day.value - 1;
-  set _dayIndex(int d) => day.value = d + 1;
+  int _dayIndex = 0;
 
   nextDay() {
     _showDayOverView(_dayIndex++);
@@ -19,6 +18,7 @@ class HomeTitleViewModel {
   }
 
   _showDayOverView(_) async {
+    setShowingDayIndex();
     if (_dayIndex <= 0) {
       model.previewBtnDisabled.value = true;
     } else {
@@ -29,7 +29,11 @@ class HomeTitleViewModel {
     } else {
       model.nextBtnDisabled.value = false;
     }
-    model.title.value = _getDayTitle(_todayIndex);
+    model.title.value = _getDayTitle(todayIndex);
+  }
+
+  setShowingDayIndex() {
+    day.value = (todayIndex + _dayIndex - 1) % 7 + 1;
   }
 
   String _getDayTitle(int todayIndex) {
@@ -75,5 +79,4 @@ class HomeTitleViewModel {
         return 'HOJE';
     }
   }
-
 }

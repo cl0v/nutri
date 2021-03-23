@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
-import 'package:nutri/app/pages/home/helpers/home_helper.dart';
 import 'package:nutri/app/pages/home/models/overview_model.dart';
 import 'package:nutri/app/pages/home/models/old_menu_model.dart';
 import 'package:rxdart/rxdart.dart';
@@ -27,7 +26,7 @@ class HomeProvider {
   Stream<HomeState> getHomeState() => homeStateOutput;
   closeHomeStream() => homeStateController.close();
 
-  String getDayTitle({int day = 1}) => HomeHelper.getDayTitle(day, weekDay);
+  // String getDayTitle({int day = 1}) => HomeHelper.getDayTitle(day, weekDay);
 
   Future<List<OldMenuModel>> fetchDailyMeals() async =>
       _fetchDailyMeals(storage, day: weekDay);

@@ -65,6 +65,19 @@ import 'app/routes/app_pages.dart';
  - Descobrir quantas refeições a pessoa costuma fazer
 */
 
+
+//BUG:? Quando termino de escolher as comidas do foodswipe apos criar uma conta,
+// ela ja vem com as comidas salvas antes de criar a conta
+//SOLUTION: Salvar como mapa com o nome do user user/foodprefs
+
+
+//TODO: Receber o dia que foi buildado as refeições semanais
+// - Salva o dia da semana e a semana do ano, se tiver no mesmo dia na semana seuginte, mostra o food swipe
+//O dia máximo que o user pode olhar é até 6 dias incluindo o dia do build;(Ou 7, começando de amanha??)
+//O user pode olhar os dias anteriores, até no maximo o dia que foi buildado
+// Ex, se eu buildei na segunda, só posso olhar até segunda que vem(ou dom da msm semana, sendo a segunda tb um dos dias do build da semana)
+// Entao obrigar a pessoa a escolher novamente o foodswipe na segunda que vem
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
