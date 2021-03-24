@@ -1,10 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:nutri/app_widget.dart';
-import 'package:nutri/constants.dart';
-import 'app/routes/app_pages.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+    (value) => runApp(MyApp()),
+  );
+}
 
 //TODO: Buildar o app com bate na refeição do livro, depois ir atualizando
 // Remover o foodswipe temporariamente
@@ -78,11 +84,3 @@ import 'app/routes/app_pages.dart';
 // Ex, se eu buildei na segunda, só posso olhar até segunda que vem(ou dom da msm semana, sendo a segunda tb um dos dias do build da semana)
 // Entao obrigar a pessoa a escolher novamente o foodswipe na segunda que vem
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
-    (value) => runApp(MyApp()),
-  );
-}

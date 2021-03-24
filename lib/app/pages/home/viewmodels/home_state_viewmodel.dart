@@ -13,7 +13,7 @@ class HomeStateViewModel {
   String get homeStateKey =>
       '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day.toString()}/$_homeStateKey';
 
-  init() async {
+  Future init() async {
     homeStateModel.state.value = await getTodayState();
   }
 

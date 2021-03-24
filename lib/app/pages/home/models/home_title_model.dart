@@ -5,6 +5,10 @@ class HomeTitleModel {
   /// Titulo do dia da semana
   RxString title = 'HOJE'.obs;
 
+  RxInt showingDay = 1.obs;
+
+  int todayIndex = DateTime.now().weekday;
+
   /// Define se o botão de dia anterior do titulo estará ou não desabilitado
   RxBool previewBtnDisabled = true.obs;
 

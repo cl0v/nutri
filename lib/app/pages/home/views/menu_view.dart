@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nutri/app/pages/home/components/extra_food_selector_widget.dart';
 import 'package:nutri/app/pages/home/components/food_card_widget.dart';
-import 'package:nutri/app/pages/home/components/food_selector_widget.dart';
+import 'package:nutri/app/pages/home/components/main_food_selector_widget.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
-import 'package:nutri/app/pages/home/models/overview_model.dart';
 
 class MenuView extends StatelessWidget {
   final List<MenuModel> menuList;
@@ -30,14 +30,18 @@ class MenuView extends StatelessWidget {
             children: <Widget>[
               AspectRatio(
                 aspectRatio: 2.2,
-                child: FoodCardWidget(
+                child: FoodBannerCardWidget(
                   image: menuList[idx].overview.img,
-                  title: MealModelHelper.getTranslatedMeal(menuList[idx].overview.meal),
+                  title: menuList[idx].overview.mealTypeToString()
                 ),
               ),
-              FoodSelectorWidget(
+              MainFoodSelectorWidget(
                 foodList: menuList[idx].mainFoodList,
               ),
+              ExtraFoodSelectorWidget(
+                extraList: menuList[idx].extraFoodList,
+              ),
+
               // menuList[idx].extraList.isNotEmpty ? Divider() : Container(),
               // menuList[idx].extraList.isNotEmpty ?FoodSelector(
               //   foodList: menuList[idx].extraList,

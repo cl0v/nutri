@@ -1,10 +1,10 @@
 
 import 'dart:convert';
 
-import 'package:nutri/app/pages/home/models/overview_model.dart';
+import 'package:nutri/app/pages/home/models/meal_model.dart';
 
 class ReviewModel {
-  final OverviewModel overviewModel;
+  final MealModel overviewModel;
   //enum
   final bool done;
 
@@ -22,7 +22,7 @@ class ReviewModel {
 
   factory ReviewModel.fromMap(Map<String, dynamic> map) {
     return ReviewModel(
-      overviewModel: OverviewModel.fromMap(map['overviewModel']),
+      overviewModel: MealModel.fromMap(map['overviewModel']),
       done: map['isDone'],
     );
   }

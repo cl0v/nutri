@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class FoodCardWidget extends StatelessWidget {
+class FoodBannerCardWidget extends StatelessWidget {
   final String image;
   final String title;
   final Color? color;
 
-  const FoodCardWidget({
+  const FoodBannerCardWidget({
     required this.image,
     required this.title,
     this.color,

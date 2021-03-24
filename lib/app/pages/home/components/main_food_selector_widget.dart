@@ -1,33 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
-import 'package:nutri/app/pages/home/controllers/home_controller.dart';
 
 // Quando escolher, esconde as opçoes e aparece uma pequena seta para expandir
 //IDEIA: Quando seleciona ele esconde, e vira uma setinha que quando clica ele expande novamente
 
 //FIXME: Não está intuitivo o suficiente que é para tocar em alguma das comidas
 
-class FoodSelectorWidget extends StatefulWidget {
+class MainFoodSelectorWidget extends StatefulWidget {
   final List<FoodModel> foodList;
 
-  FoodSelectorWidget({
+  MainFoodSelectorWidget({
     required this.foodList,
   });
 
   @override
-  _FoodSelectorWidgetState createState() => _FoodSelectorWidgetState();
+  _MainFoodSelectorWidgetState createState() => _MainFoodSelectorWidgetState();
 }
 
-class _FoodSelectorWidgetState extends State<FoodSelectorWidget> {
-  var selectedIndex = 0;
+class _MainFoodSelectorWidgetState extends State<MainFoodSelectorWidget> {
+  var _selectedIndex = 0;
 
-  final controller = Get.find<HomeController>();
-
+  // final controller = Get.find<HomeController>();
   onTap(int idx) {
-    controller.onMainFoodTapped(idx);
+    // controller.onMainFoodTapped(idx);
     setState(() {
-      selectedIndex = idx;
+      _selectedIndex = idx;
     });
   }
 
@@ -50,10 +47,10 @@ class _FoodSelectorWidgetState extends State<FoodSelectorWidget> {
                   children: widget.foodList.map((f) {
                     var idx = widget.foodList.indexOf(f);
                     return Expanded(
-                      child: MainFoodSelectableCardWidget(
+                      child: FoodSelectableCardWidget(
                         food: f,
                         onTap: () => onTap(idx),
-                        selected: idx == selectedIndex,
+                        selected: idx == _selectedIndex,
                       ),
                     );
                   }).toList())
@@ -64,12 +61,12 @@ class _FoodSelectorWidgetState extends State<FoodSelectorWidget> {
   }
 }
 
-class MainFoodSelectableCardWidget extends StatelessWidget {
+class FoodSelectableCardWidget extends StatelessWidget {
   final FoodModel food;
-  final Function onTap;
+  final VoidCallback onTap;
   final bool? selected;
 
-  MainFoodSelectableCardWidget({
+  FoodSelectableCardWidget({
     required this.food,
     required this.onTap,
     this.selected = false,
@@ -78,7 +75,7 @@ class MainFoodSelectableCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap as void Function()?,
+      onTap: onTap,
       child: Container(
         margin: EdgeInsets.all(4.0),
         decoration: BoxDecoration(

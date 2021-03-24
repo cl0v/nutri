@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:nutri/app/interfaces/repositories/diet_interface.dart';
-import 'package:nutri/app/pages/home/models/overview_model.dart';
+import 'package:nutri/app/pages/home/models/meal_model.dart';
 
 class OverviewViewModel {
   OverviewViewModel({
@@ -9,7 +9,7 @@ class OverviewViewModel {
 
   final IDiet repository;
 
-  final overviewList = <OverviewModel>[].obs;
+  final overviewList = <MealModel>[].obs;
 
   init() async {
     overviewList.assignAll(

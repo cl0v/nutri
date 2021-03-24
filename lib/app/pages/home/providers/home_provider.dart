@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
-import 'package:nutri/app/pages/home/models/overview_model.dart';
+import 'package:nutri/app/pages/home/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/old_menu_model.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -43,7 +43,7 @@ class HomeProvider {
       PeDiet().getMenuListFromPEDietSugestion();
 //TODO: Implement getMenuListFromPEDietSugestion
 
-  Future<List<OverviewModel>> getMeals({int day = 1}) async {
+  Future<List<MealModel>> getMeals({int day = 1}) async {
     return await MealProvider.loadMealListByDay(day);
   }
 
@@ -145,7 +145,7 @@ class HomeProvider {
 
 /// Tudo que tiver relação com a dieta PE está nessa classe
 class PeDiet {
-  Future<List<OverviewModel>> getOverViewListFromPEDietSugestion(day) =>
+  Future<List<MealModel>> getOverViewListFromPEDietSugestion(day) =>
       MealProvider.loadMealListByDay(day);
 //TODO: Implement getOverViewListFromPEDietSugestion
 

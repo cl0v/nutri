@@ -5,7 +5,7 @@ import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/interfaces/repositories/diet_interface.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/models/review_model.dart';
-import 'package:nutri/app/pages/home/models/overview_model.dart';
+import 'package:nutri/app/pages/home/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
 
 class PeDietRepository implements IDiet {
@@ -19,6 +19,7 @@ class PeDietRepository implements IDiet {
 
   @override
   Future<List<MenuModel>> getMenuList() async {
+    //TODO: Corrigir a forma que recebo o menu
     var mainFoodList = await FoodModelHelper.loadMeats();
     var extraFoodList = await FoodModelHelper.loadVegetables();
     var overviewList = await getOverviewList(DateTime.now().weekday);
@@ -27,20 +28,20 @@ class PeDietRepository implements IDiet {
           (e) => MenuModel(
             overview: e,
             mainFoodList: mainFoodList.take(3).toList(),
-            extraList: extraFoodList,
+            extraFoodList: extraFoodList.take(9).toList(),
           ),
         )
         .toList();
   }
 
   @override
-  Future<List<OverviewModel>> getOverviewList(int day) async {
+  Future<List<MealModel>> getOverviewList(int day) async {
     var json =
         await jsonDecode(await rootBundle.loadString('assets/jsons/meal.json'))
             as List;
 
     return json
-        .map((map) => OverviewModel.fromMap(map))
+        .map((map) => MealModel.fromMap(map))
         .where((meal) => meal.day == day)
         .toList();
   }
@@ -52,7 +53,7 @@ class PeDietRepository implements IDiet {
   }
 
   @override
-  Future setReview(OverviewModel overviewModel, bool done) async {
+  Future setReview(MealModel overviewModel, bool done) async {
     List<ReviewModel> reviewList = await getReviewList();
     ReviewModel reviewModel =
         ReviewModel(overviewModel: overviewModel, done: done);

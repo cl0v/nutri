@@ -1,12 +1,11 @@
-import 'package:get/get.dart';
 import 'package:nutri/app/pages/home/models/home_title_model.dart';
 
 class HomeTitleViewModel {
   final HomeTitleModel model = HomeTitleModel();
 
-  int todayIndex = DateTime.now().weekday;
-  RxInt day = 1.obs;
   int _dayIndex = 0;
+
+//TODO: Esse cara precisa ter um init para setar os valores do model
 
   nextDay() {
     _showDayOverView(_dayIndex++);
@@ -20,8 +19,9 @@ class HomeTitleViewModel {
     _showDayOverView(_dayIndex = 0);
   }
 
+
   _showDayOverView(_) async {
-    setShowingDayIndex();
+    _setShowingDayIndex();
     if (_dayIndex <= 0) {
       model.previewBtnDisabled.value = true;
     } else {
@@ -32,11 +32,11 @@ class HomeTitleViewModel {
     } else {
       model.nextBtnDisabled.value = false;
     }
-    model.title.value = _getDayTitle(todayIndex);
+    model.title.value = _getDayTitle(model.todayIndex);
   }
 
-  setShowingDayIndex() {
-    day.value = (todayIndex + _dayIndex - 1) % 7 + 1;
+  _setShowingDayIndex() {
+    model.showingDay.value = (model.todayIndex + _dayIndex - 1) % 7 + 1;
   }
 
   String _getDayTitle(int todayIndex) {

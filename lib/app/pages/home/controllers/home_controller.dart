@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:nutri/app/data/model/food_model.dart';
 import 'package:nutri/app/pages/home/models/home_state_model.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
-import 'package:nutri/app/pages/home/models/overview_model.dart';
+import 'package:nutri/app/pages/home/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/review_model.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_state_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_title_viewmodel.dart';
@@ -26,8 +26,8 @@ class HomeController extends GetxController {
   String? get title => titleViewModel.model.title.value;
   bool? get previewBtnDisabled => titleViewModel.model.previewBtnDisabled.value;
   bool? get nextBtnDisabled => titleViewModel.model.nextBtnDisabled.value;
-  RxInt get showingDayIndex => titleViewModel.day;
-  int get todayIndex => titleViewModel.todayIndex;
+  RxInt get showingDayIndex => titleViewModel.model.showingDay;
+  int get todayIndex => titleViewModel.model.todayIndex;
 
   void onPreviewDayPressed() => titleViewModel.previewDay();
   void onNextDayPressed() => titleViewModel.nextDay();
@@ -35,7 +35,7 @@ class HomeController extends GetxController {
 
 // overview view
   final OverviewViewModel overviewViewModel;
-  List<OverviewModel> get overViewList => overviewViewModel.overviewList;
+  List<MealModel> get overViewList => overviewViewModel.overviewList;
 
   bool isTodayOverview = true;
 
@@ -43,7 +43,6 @@ class HomeController extends GetxController {
   final MenuViewModel menuViewModel;
   PageController get pageController => menuViewModel.pageController;
   List<MenuModel> get menuList => menuViewModel.menuList;
-  List<bool> get doneList => menuViewModel.doneList;
 
   onDonePressed() => menuViewModel.nextMenuItem(true);
   onSkippedPressed() => menuViewModel.nextMenuItem(false);
@@ -66,16 +65,17 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    ever(homeState, onStateChanded);
-    ever(showingDayIndex, onDayChanged);
+    ever(homeState, _onStateChanded);
+    ever(showingDayIndex, _onDayChanged);
     homeStateViewModel.init();
   }
 
-  onDayChanged(int day) async {
+  _onDayChanged(int day) async {
     if (day == todayIndex) {
       isTodayOverview = true;
-      homeStateViewModel
-          .changeStateWhithoutSave(await homeStateViewModel.getTodayState());
+      homeStateViewModel.changeStateWhithoutSave(
+        await homeStateViewModel.getTodayState(),
+      );
     } else {
       isTodayOverview = false;
       homeStateViewModel.changeStateWhithoutSave(HomeState.Overview);
@@ -83,7 +83,7 @@ class HomeController extends GetxController {
     overviewViewModel.changeOverview(day);
   }
 
-  onStateChanded(HomeState? state) {
+  _onStateChanded(HomeState? state) {
     switch (state) {
       case HomeState.Overview:
         overviewViewModel.init();
@@ -97,6 +97,7 @@ class HomeController extends GetxController {
       default:
     }
   }
+
 
 // Daqui pra baixo nao estou usando nada
   int selectedMainFoodIdx = 0;

@@ -88,7 +88,7 @@ class QuestionsController extends GetxController {
           duration: Duration(milliseconds: 250), curve: Curves.ease);
     } else {
       _saveAnswers(_answers);
-      Get.offAllNamed(Routes.FOOD_SWIPE);
+      Get.offAllNamed(Routes.HOME);
     }
   }
 }

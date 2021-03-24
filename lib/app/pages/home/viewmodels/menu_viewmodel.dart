@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 
 class MenuViewModel {
   final menuList = <MenuModel>[].obs;
-  List<bool> doneList = [];
 
   final IDiet repository;
   final ILocalStorage storage;
@@ -24,15 +23,14 @@ class MenuViewModel {
 
   init() async {
     int menuIndex = await storage.get(menuIndexKey) ?? 0;
-    if(menuIndex > 3) pageController = PageController(initialPage: 3);
-    else pageController = PageController(initialPage: menuIndex);
+    pageController = PageController(initialPage: menuIndex);
     menuList.assignAll(await repository.getMenuList());
   }
 
+  
+
   nextMenuItem(bool val) {
-    doneList.add(val); //TODO: Remover
     var pgIdx = pageController.page!.toInt();
-    //TODO: Refatorar
     _saveMenuOptions(pgIdx, val);
     pageController.nextPage(
       duration: Duration(microseconds: 100),
@@ -41,7 +39,8 @@ class MenuViewModel {
   }
 
   _saveMenuOptions(int idx, bool done) {
-    storage.put(menuIndexKey, idx + 1);
+    if(idx + 1 <= 3)
+      storage.put(menuIndexKey, idx + 1);
     var overview = menuList[idx].overview;
     repository.setReview(overview, done);
   }

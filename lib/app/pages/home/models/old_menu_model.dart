@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
-import 'package:nutri/app/pages/home/models/overview_model.dart';
+import 'package:nutri/app/pages/home/models/meal_model.dart';
 
 import 'package:nutri/app/data/model/food_model.dart';
+
+//TODO: REMOVER
 
 class OldMenuModel {
   //TODO: Remover OldMenu e passar para Menu

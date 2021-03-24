@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/pages/home/components/food_card_widget.dart';
-import 'package:nutri/app/pages/home/models/overview_model.dart';
 import 'package:nutri/app/pages/home/models/review_model.dart';
 import 'package:nutri/constants.dart';
 
@@ -26,9 +25,9 @@ class ReviewView extends StatelessWidget {
             ); //Refeições do dia
           return AspectRatio(
             aspectRatio: 2.9,
-            child: FoodCardWidget(
+            child: FoodBannerCardWidget(
               image: items[idx - 1].overviewModel.img,
-              title: MealModelHelper.getTranslatedMeal(items[idx - 1].overviewModel.meal),
+              title: items[idx - 1].overviewModel.mealTypeToString(),
               color: items[idx - 1].done
                   ? kGreenColor.withOpacity(.4)
                   : kErrorColor.withOpacity(.4),

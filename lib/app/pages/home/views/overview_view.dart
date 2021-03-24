@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/pages/home/components/meal_card_widget.dart';
-import 'package:nutri/app/pages/home/models/overview_model.dart';
+import 'package:nutri/app/pages/home/components/food_card_widget.dart';
+import 'package:nutri/app/pages/home/models/meal_model.dart';
 
 class OverviewView extends StatelessWidget {
   const OverviewView({required this.items});
 
-  final List<OverviewModel> items;
+  final List<MealModel> items;
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +20,11 @@ class OverviewView extends StatelessWidget {
               style: Get.textTheme!.headline4,
               textAlign: TextAlign.center,
             ); //Refeições do dia
-          return AspectRatio(
+          return AspectRatio( 
             aspectRatio: 2.9,
-            child: MealCardWidget(
+            child: FoodBannerCardWidget(
               image: items[idx - 1].img,
-              title: MealModelHelper.getTranslatedMeal(items[idx - 1].meal),
+              title: items[idx - 1].mealTypeToString(),
             ),
           );
         },
