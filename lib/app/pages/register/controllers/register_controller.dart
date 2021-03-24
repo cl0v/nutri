@@ -38,7 +38,7 @@ class RegisterController extends GetxController {
         _showErrors(repository.getUserRegisterError());
         break;
       case UserConnectionState.Connected:
-        Get.offAllNamed(Routes.QUESTIONS);
+        Get.offAllNamed(Routes.HOME);
 
         break;
     }

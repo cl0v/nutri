@@ -9,29 +9,47 @@ import 'package:nutri/app/pages/home/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
 
 class PeDietRepository implements IDiet {
-
   final ILocalStorage storage;
 
   PeDietRepository({required this.storage});
 
   final _reviewKey = 'reviewListKey';
-  String get reviewKey => '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day.toString()}/$_reviewKey';
+  String get reviewKey =>
+      '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day.toString()}/$_reviewKey';
 
   @override
   Future<List<MenuModel>> getMenuList() async {
     //TODO: Corrigir a forma que recebo o menu
     var mainFoodList = await FoodModelHelper.loadMeats();
+    var drinkFoodList = await FoodModelHelper.loadDrinks();
+    // var snackFoodList = await FoodModelHelper.load
     var extraFoodList = await FoodModelHelper.loadVegetables();
+    var dinnerExtrasFoodList = await FoodModelHelper.loadTubers();
     var overviewList = await getOverviewList(DateTime.now().weekday);
-    return overviewList
-        .map(
-          (e) => MenuModel(
-            overview: e,
+    return [
+      
+      MenuModel(
+            overview: overviewList[0],
+            mainFoodList: drinkFoodList.take(3).toList(),
+            extraFoodList: [],
+          ),
+      MenuModel(
+            overview: overviewList[1],
             mainFoodList: mainFoodList.take(3).toList(),
             extraFoodList: extraFoodList.take(9).toList(),
           ),
-        )
-        .toList();
+      MenuModel(
+            overview: overviewList[2],
+            mainFoodList: [],
+            extraFoodList: [],
+          ),
+      MenuModel(
+            overview: overviewList[3],
+            mainFoodList: mainFoodList.take(3).toList(),
+            extraFoodList: dinnerExtrasFoodList.take(9).toList(),
+          ),
+    ];
+   
   }
 
   @override

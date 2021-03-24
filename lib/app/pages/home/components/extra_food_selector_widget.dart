@@ -9,7 +9,7 @@ import 'package:nutri/app/pages/home/components/main_food_selector_widget.dart';
 
 //TODO: O que fazer quando nenhum acompanhamento for selecionado?
 
-class ExtraFoodSelectorWidget extends StatefulWidget {
+class ExtraFoodSelectorWidget extends StatefulWidget { //TODO: Passar para o main_food...
   final List<FoodModel> extraList;
 
   ExtraFoodSelectorWidget({

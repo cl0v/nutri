@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nutri/app/pages/home/components/extra_food_selector_widget.dart';
-import 'package:nutri/app/pages/home/components/food_card_widget.dart';
+import 'package:nutri/app/pages/home/components/food_banner_card_widget.dart';
 import 'package:nutri/app/pages/home/components/main_food_selector_widget.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
 

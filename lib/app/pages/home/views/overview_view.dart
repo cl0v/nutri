@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/pages/home/components/food_card_widget.dart';
+import 'package:nutri/app/pages/home/components/food_banner_card_widget.dart';
 import 'package:nutri/app/pages/home/models/meal_model.dart';
 
 class OverviewView extends StatelessWidget {

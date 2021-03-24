@@ -14,6 +14,7 @@ class MealModel {
   final MealType type;
   final String img;
   final int day;
+  //TODO: Adicionar o titulo da refeição e mostrar no lugar de qual refeição será
 
   MealModel({
     required this.type,
