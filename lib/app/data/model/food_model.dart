@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 
 const foodPrefsKey = 'foodPrefs';
 
@@ -69,12 +68,12 @@ class FoodModel {
   }
 
   factory FoodModel.fromMap(Map<String, dynamic> map) => FoodModel(
-      title: map['title'],
-      img: map['img'],
-      desc: map['desc'],
-      category: FoodCategory.values[map['category']],
-      mainOrExtra: MainOrExtra.values[map['mainOrExtra']],
-    );
+        title: map['title'],
+        img: map['img'],
+        desc: map['desc'],
+        category: FoodCategory.values[map['category']],
+        mainOrExtra: MainOrExtra.values[map['mainOrExtra']],
+      );
 
   String toJson() => json.encode(toMap());
 
@@ -90,7 +89,6 @@ class FoodModel {
 const jsonPath = 'assets/jsons/food_data.json';
 
 abstract class FoodModelHelper {
-
   ///Meal builder methods
   static Future<List<FoodModel>> loadLunchMainFoodsFromPrefs(
           List<String> prefs) =>
@@ -132,7 +130,7 @@ abstract class FoodModelHelper {
   ///Recebe todas as frutas cadastradas no banco
   static Future<List<FoodModel>> loadLowSugarFruits() =>
       _sortJsonByCategory(FoodCategory.lowSugarFruits);
-  
+
   ///Recebe todas os tuberculos cadastrados no banco
   static Future<List<FoodModel>> loadTubers() =>
       _sortJsonByCategory(FoodCategory.tuber);
@@ -155,7 +153,6 @@ abstract class FoodModelHelper {
 
   static Future<List<FoodModel>> _loadEggs() async =>
       await _sortJsonByCategory(FoodCategory.eggs);
-
 
   static Future<List> _loadJson() async =>
       jsonDecode(await rootBundle.loadString(jsonPath));
@@ -191,8 +188,7 @@ abstract class FoodModelHelper {
   }
 }
 
-
-abstract class FoodProvider{
-  static List<String> getFoodsPrefsList(SharedPreferences prefs) =>
-    prefs.getStringList(foodPrefsKey) ?? [];
+abstract class FoodProvider {
+  static List<String> getFoodsPrefsList(ILocalStorage storage) =>
+      storage.get(foodPrefsKey) as List<String>;
 }

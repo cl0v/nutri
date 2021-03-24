@@ -6,11 +6,6 @@ const kErrorColor = Color(0xFFE92E30);
 const kGrayColor = Color(0xFFC1C1C1);
 const kBlackColor = Color(0xFF101010);
 
-// const kPrimaryColor = Color(0xFF8B94BC);
-// class Values {
-//   final kPrimaryColor = Colors.purple.shade900;
-
-// }
 
 final kPrimaryColor = Colors.purple.shade900;
 const kPrimarySwatch = Colors.indigo;

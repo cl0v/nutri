@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 enum UserConnectionState {
@@ -31,35 +33,68 @@ class UserProvider {
 
   UserProvider({required this.auth});
 
+  // ignore: close_sinks
+  StreamController<UserConnectionState> userConnectionState =
+      StreamController();
+
+  Stream<UserConnectionState> get userConnectionStateOutput =>
+      userConnectionState.stream;
+
+  Sink<UserConnectionState> get userConnectionStateInput =>
+      userConnectionState.sink;
+
+  Stream<UserConnectionState> getUserConnectionState() {
+    _getUser();
+    return userConnectionStateOutput;
+  }
+
+  closeUserConnectionState() => userConnectionState.close();
+
+  UserLoginErrorState _userLoginErrorState =
+      UserLoginErrorState.None; //Se eu precisar do estado
+  String _loginErrorMsg = '';
+  String _registerErrorMsg = '';
+
+  String getUserLoginError() => _loginErrorMsg;
+  String getUserRegisterError() => _registerErrorMsg;
+
+  _getUser() {
+    var user = auth.currentUser;
+    if (user == null)
+      userConnectionStateInput.add(UserConnectionState.Disconected);
+    else
+      userConnectionStateInput.add(UserConnectionState.Connected);
+  }
+
   signin(String email, String password) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return true;
+      userConnectionStateInput.add(UserConnectionState.Connected);
     } on FirebaseAuthException catch (e) {
-      UserLoginErrorState userErrorState = UserLoginErrorState.None;
-      print(e.code);
-      if (e.code == 'user-not-found') {
-        userErrorState = UserLoginErrorState.UserNotFound;
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        userErrorState = UserLoginErrorState.WrongPassword;
-        print('Wrong password provided for that user.');
-      } else if (e.code == 'invalid-email') {
-        userErrorState = UserLoginErrorState.InvalidEmail;
-        print('Invalid email');
-      } else if (e.code == 'user-disabled') {
-        userErrorState = UserLoginErrorState.UserDisabled;
-        print('User disabled.');
-      } else {
-        userErrorState = UserLoginErrorState.UnknowError;
+      userConnectionStateInput.add(UserConnectionState.Error);
+      switch (e.code) {
+        case 'user-not-found':
+          _loginErrorMsg = 'Email não encontrado';
+          break;
+        case 'wrong-password':
+          _loginErrorMsg = 'Senha incorreta';
+          break;
+        case 'invalid-email':
+          _loginErrorMsg = 'Email inválido';
+          break;
+        case 'user-disabled':
+          _loginErrorMsg = 'Usuário desativado';
+          break;
+        default:
+          _loginErrorMsg = 'Verifique se os dados preenchidos estão corretos';
+          return;
       }
-      return userErrorState;
-    } catch (e) {
-      print(e);
     }
+    userConnectionStateInput.add(UserConnectionState.Idle);
+    //TODO: Provavelmente nao vale a pena
   }
 
   register(String email, String password) async {
@@ -68,25 +103,27 @@ class UserProvider {
         email: email,
         password: password,
       );
+      userConnectionStateInput.add(UserConnectionState.Connected);
     } on FirebaseAuthException catch (e) {
-      UserRegisterErrorState userRegisterErrorState =
-          UserRegisterErrorState.None;
-      if (e.code == 'email-already-in-use') {
-        userRegisterErrorState = UserRegisterErrorState.EmailAlreadyInUse;
-        print('The password provided is too weak.');
-      } else if (e.code == 'invalid-email') {
-        userRegisterErrorState = UserRegisterErrorState.InvalidEmail;
-        print('The account already exists for that email.');
-      } else if (e.code == 'operation-not-allowed') {
-        userRegisterErrorState = UserRegisterErrorState.OperationNotAllowed;
-        print('The account already exists for that email.');
-      } else if (e.code == 'weak-password') {
-        userRegisterErrorState = UserRegisterErrorState.WeakPassword;
-        print('The account already exists for that email.');
-      } else {}
-      return userRegisterErrorState;
-    } catch (e) {
-      print(e);
+      userConnectionStateInput.add(UserConnectionState.Error);
+      switch (e.code) {
+        case 'email-already-in-use':
+          _registerErrorMsg = 'Email já está em uso';
+          break;
+        case 'invalid-email':
+          _registerErrorMsg = 'Email inválido';
+          break;
+        case 'operation-not-allowed':
+          _registerErrorMsg = 'Operação não permitida';
+          break;
+        case 'weak-password':
+          _registerErrorMsg = 'Senha muito fraca (8 digitos)';
+          break;
+        default:
+          _registerErrorMsg = 'Ocorreu um erro';
+          return;
+      }
+      userConnectionStateInput.add(UserConnectionState.Idle);
     }
   }
 }
