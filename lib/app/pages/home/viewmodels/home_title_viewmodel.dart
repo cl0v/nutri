@@ -3,7 +3,6 @@ import 'package:nutri/app/pages/home/models/home_title_model.dart';
 
 class HomeTitleViewModel {
   final HomeTitleModel model = HomeTitleModel();
-  //TODO: Quanto toco para ver o dia seguinte, alterar para o overview independente do estado da home
 
   int todayIndex = DateTime.now().weekday;
   RxInt day = 1.obs;
@@ -15,6 +14,10 @@ class HomeTitleViewModel {
 
   previewDay() {
     _showDayOverView(_dayIndex--);
+  }
+
+  backToToday() {
+    _showDayOverView(_dayIndex = 0);
   }
 
   _showDayOverView(_) async {

@@ -31,6 +31,7 @@ class HomeController extends GetxController {
 
   void onPreviewDayPressed() => titleViewModel.previewDay();
   void onNextDayPressed() => titleViewModel.nextDay();
+  void onBackToTodayPressed() => titleViewModel.backToToday();
 
 // overview view
   final OverviewViewModel overviewViewModel;
