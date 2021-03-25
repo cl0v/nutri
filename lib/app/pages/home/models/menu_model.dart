@@ -1,4 +1,4 @@
-import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/models/food_model.dart';
 import 'package:nutri/app/pages/home/models/meal_model.dart';
 
 class MenuModel {

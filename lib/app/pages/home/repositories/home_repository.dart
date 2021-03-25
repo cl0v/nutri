@@ -1,6 +1,8 @@
 import 'package:nutri/app/pages/home/models/old_menu_model.dart';
 import 'package:nutri/app/pages/home/providers/home_provider.dart';
 
+//TODO: Esse cara será completamente removido
+
 class HomeRepository {
   final HomeProvider provider;
 

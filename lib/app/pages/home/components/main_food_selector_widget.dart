@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/models/food_model.dart';
 
 // Quando escolher, esconde as opçoes e aparece uma pequena seta para expandir
 //IDEIA: Quando seleciona ele esconde, e vira uma setinha que quando clica ele expande novamente

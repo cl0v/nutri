@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:nutri/app/interfaces/repositories/diet_interface.dart';
+import 'package:nutri/app/interfaces/repositories/pe_diet_interface.dart';
 import 'package:nutri/app/pages/home/models/meal_model.dart';
 
 class OverviewViewModel {
@@ -7,7 +7,7 @@ class OverviewViewModel {
     required this.repository,
   });
 
-  final IDiet repository;
+  final IPeDiet repository;
 
   final overviewList = <MealModel>[].obs;
 

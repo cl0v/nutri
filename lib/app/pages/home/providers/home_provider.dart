@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/models/food_model.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/old_menu_model.dart';
@@ -9,6 +9,9 @@ import 'package:rxdart/rxdart.dart';
 const pageIndexKey = 'pageIndexKey';
 const dayIndexKey = 'dayIndexKey';
 const savedMealCardListPrefsKey = 'savedMealCardListPrefsKey';
+
+
+//TODO: Esse cara será completamente removido
 
 enum HomeState {
   Ok,

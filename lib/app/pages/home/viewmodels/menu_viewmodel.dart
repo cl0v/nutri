@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutri/app/interfaces/repositories/diet_interface.dart';
+import 'package:nutri/app/interfaces/repositories/pe_diet_interface.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
 import 'package:get/get.dart';
@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 class MenuViewModel {
   final menuList = <MenuModel>[].obs;
 
-  final IDiet repository;
+  final IPeDiet repository;
   final ILocalStorage storage;
 
   late PageController pageController;
@@ -26,8 +26,6 @@ class MenuViewModel {
     pageController = PageController(initialPage: menuIndex);
     menuList.assignAll(await repository.getMenuList());
   }
-
-  
 
   nextMenuItem(bool val) {
     var pgIdx = pageController.page!.toInt();

@@ -94,7 +94,7 @@ class LoginView extends GetView<LoginController> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
-                        onPressed: controller.onEnterPressed,
+                        onPressed: controller.onLoginPressed,
                         child: Text(
                           'Entrar',
                           style: TextStyle(fontSize: 26),

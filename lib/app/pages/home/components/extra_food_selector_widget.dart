@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/models/food_model.dart';
 import 'package:nutri/app/pages/home/components/main_food_selector_widget.dart';
 
 // Mostrar as comidas selecionadas de forma a ir aparecendo uma por uma

@@ -1,37 +1,26 @@
 import 'package:get/get.dart';
-import 'package:nutri/app/data/providers/user_provider.dart';
-import 'package:nutri/app/data/repositories/user_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
+import 'package:nutri/app/viewmodels/user_auth_viewmodel.dart';
 
 class SplashController extends GetxController {
-  final UserRepository userRepository;
 
-  SplashController({required this.userRepository});
+  SplashController({
+    required this.userAuthViewModel,
+  });
 
-  late Rx<UserConnectionState> userConnectionState =
-      UserConnectionState.Idle.obs;
+  final UserAuthViewModel userAuthViewModel;
+
 
   @override
   void onInit() {
     super.onInit();
-    ever(userConnectionState, onUserConnectionStateChange);
-    userConnectionState.bindStream(userRepository.getUserConnectionState());
+    init();
   }
 
-  @override
-  onClose() {
-    super.onClose();
-    userRepository.closeUserConnectionState();
+  init() async {
+    var userConnected = await userAuthViewModel.isUserConnected();
+    if (userConnected) Get.offAllNamed(Routes.HOME);
+    else Get.offAllNamed(Routes.LOGIN);
   }
 
-  onUserConnectionStateChange(state) {
-    switch (state) {
-      case UserConnectionState.Connected:
-        Get.offAllNamed(Routes.HOME);
-        break;
-      case UserConnectionState.Disconected:
-        Get.offAllNamed(Routes.LOGIN);
-        break;
-    }
-  }
 }

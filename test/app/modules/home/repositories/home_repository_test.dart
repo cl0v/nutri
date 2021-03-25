@@ -2,7 +2,7 @@
 @Skip('Refatoração sendo feita')
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/models/food_model.dart';
 import 'package:nutri/app/pages/home/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/old_menu_model.dart';
 import 'package:nutri/app/pages/home/providers/home_provider.dart';

@@ -1,17 +1,17 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:nutri/app/data/model/food_model.dart';
-import 'package:nutri/app/interfaces/repositories/diet_interface.dart';
+import 'package:nutri/app/models/food_model.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
-import 'package:nutri/app/pages/home/models/review_model.dart';
 import 'package:nutri/app/pages/home/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
+import 'package:nutri/app/pages/home/models/review_model.dart';
+import 'package:nutri/app/interfaces/repositories/pe_diet_interface.dart';
 
-class PeDietRepository implements IDiet {
-  final ILocalStorage storage;
+class DefaultPeDietRepository implements IPeDiet {
+ final ILocalStorage storage;
 
-  PeDietRepository({required this.storage});
+  DefaultPeDietRepository({required this.storage});
 
   final _reviewKey = 'reviewListKey';
   String get reviewKey =>
