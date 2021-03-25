@@ -5,16 +5,11 @@ import 'package:nutri/app/pages/splash/controllers/splash_controller.dart';
 class SplashView extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Image.asset(
-          'assets/Profile.jpg',
-          fit: BoxFit.fill,
-        ),
+    return Scaffold(body:
         Center(
-          child: Image.asset('assets/launcher/logon.png')
+          child: Image.asset('assets/launcher/icon.png')
         ),
-      ],
+    
     );
   }
 }

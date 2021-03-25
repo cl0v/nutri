@@ -69,7 +69,7 @@ class HomePage extends GetView<HomeController> {
                   if(controller.isTodayOverview)
                     return ElevatedButton(
                       onPressed: controller.showMealsCard,
-                      child: Text('Vamos la'),
+                      child: Text('Começar'),
                     );
                     else return ElevatedButton(
                       onPressed: controller.onBackToTodayPressed,
