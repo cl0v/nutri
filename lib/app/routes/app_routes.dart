@@ -6,9 +6,9 @@ abstract class Routes {
   static const REGISTER = '/register';
   static const LOGIN = '/login';
   static const SPLASH = '/splash';
-  static const QUESTIONS = '/questions';
-  static const PROFILE = '/profile';
-  static const FOOD_SWIPE = '/food-swipe';
-  static const PAYMENT = '/payment';
-  static const FAQ = '/faq';
+  // static const QUESTIONS = '/questions';
+  // static const PROFILE = '/profile';
+  // static const FOOD_SWIPE = '/food-swipe';
+  // static const PAYMENT = '/payment';
+  // static const FAQ = '/faq';
 }

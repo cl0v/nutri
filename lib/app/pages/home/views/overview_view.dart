@@ -20,12 +20,9 @@ class OverviewView extends StatelessWidget {
               style: Get.textTheme!.headline4,
               textAlign: TextAlign.center,
             ); //Refeições do dia
-          return AspectRatio( 
-            aspectRatio: 2.9,
-            child: FoodBannerCardWidget(
+          return  FoodBannerCardWidget(
               image: items[idx - 1].img,
               title: items[idx - 1].mealTypeToString(),
-            ),
           );
         },
       ),

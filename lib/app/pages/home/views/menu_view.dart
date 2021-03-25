@@ -28,13 +28,11 @@ class MenuView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              AspectRatio(
-                aspectRatio: 2.2,
-                child: FoodBannerCardWidget(
+               FoodBannerCardWidget(
+                 ratio: 2.2,
                   image: menuList[idx].overview.img,
                   title: menuList[idx].overview.mealTypeToString()
                 ),
-              ),
               MainFoodSelectorWidget(
                 foodList: menuList[idx].mainFoodList,
               ),

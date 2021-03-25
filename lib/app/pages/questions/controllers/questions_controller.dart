@@ -48,7 +48,7 @@ class QuestionsController extends GetxController {
   }
 
   onSkipPressed() {
-    Get.offAndToNamed(Routes.FOOD_SWIPE);
+    // Get.offAndToNamed(Routes.FOOD_SWIPE);
   }
 
   Map<String, String> _answers = {};

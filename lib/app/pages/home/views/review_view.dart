@@ -22,16 +22,14 @@ class ReviewView extends StatelessWidget {
               'Revisão do dia:',
               style: Get.textTheme!.headline4,
               textAlign: TextAlign.center,
-            ); //Refeições do dia
-          return AspectRatio(
-            aspectRatio: 2.9,
-            child: FoodBannerCardWidget(
+            );
+          return FoodBannerCardWidget(
               image: items[idx - 1].overviewModel.img,
               title: items[idx - 1].overviewModel.mealTypeToString(),
               color: items[idx - 1].done
                   ? kGreenColor.withOpacity(.4)
                   : kErrorColor.withOpacity(.4),
-            ),
+            
           );
         },
       ),
