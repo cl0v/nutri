@@ -1,20 +1,20 @@
 [
   {
-    "title": "Peito de Frango",
+    "title": "Frango",
     "img": "assets/images/foods/peito de frango.jpg",
     "desc": "Peito de frango é uma alternativa excelente para perder peso e ganhar músculos.",
     "category": 2,
     "mainOrExtra": 0
   },
   {
-    "title": "Salmão",
+    "title": "Peixe",
     "img": "assets/images/foods/salmão.jpg",
     "desc": "Esse saboroso peixe é rico em omega 3.",
     "category": 2,
     "mainOrExtra": 0
   },
   {
-    "title": "Picanha",
+    "title": "Carne",
     "img": "assets/images/foods/picanha.jpg",
     "desc": "Picanha é uma excelente carne para seu dia a dia, pegue a mais magra possível.",
     "category": 2,

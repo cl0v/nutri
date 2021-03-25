@@ -1,9 +1,6 @@
 @Skip('Refatoração sendo feita')
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/data/model/food_model.dart';
-import 'package:nutri/app/data/model/food_swipe_model.dart';
-import 'package:nutri/app/data/providers/food_swipe_provider.dart';
-import 'package:nutri/app/data/repositories/food_swipe_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final mockedFoodPrefs = [
