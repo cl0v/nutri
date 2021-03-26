@@ -43,7 +43,7 @@ class LoginView extends GetView<LoginController> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.emailAddress,
                       controller: controller.emailController,
-                      decoration: InputDecoration( //FIXME: Catch email badly formated
+                      decoration: InputDecoration(
                         prefixIcon: Icon(Icons.email),
                         hintText: 'E-mail',
                         labelText: 'E-mail',

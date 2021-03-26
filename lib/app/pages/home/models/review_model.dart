@@ -1,28 +1,28 @@
 
 import 'dart:convert';
 
-import 'package:nutri/app/pages/home/models/meal_model.dart';
+import 'package:nutri/app/models/meal_model.dart';
 
 class ReviewModel {
-  final MealModel overviewModel;
+  final MealModel meal;
   //enum
   final bool done;
 
   ReviewModel({
-    required this.overviewModel,
+    required this.meal,
     required this.done,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'overviewModel': overviewModel.toMap(),
+      'meal': meal.toMap(),
       'isDone': done,
     };
   }
 
   factory ReviewModel.fromMap(Map<String, dynamic> map) {
     return ReviewModel(
-      overviewModel: MealModel.fromMap(map['overviewModel']),
+      meal: MealModel.fromMap(map['meal']),
       done: map['isDone'],
     );
   }

@@ -15,7 +15,7 @@ class SharedLocalStorageService implements ILocalStorage {
   }
 
   @override
-  Future put(String key, value) async {
+  Future put(String key, dynamic value) async {
     var shared = await SharedPreferences.getInstance();
     //TODO: Testar e substituir para switch
     if (value is bool) {

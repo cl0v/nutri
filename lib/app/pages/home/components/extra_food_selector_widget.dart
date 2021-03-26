@@ -3,12 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:nutri/app/models/food_model.dart';
 import 'package:nutri/app/pages/home/components/main_food_selector_widget.dart';
 
-// Mostrar as comidas selecionadas de forma a ir aparecendo uma por uma
-// se apenas uma for selecionada, ela ocupa todo o espaço
-// caso duas sejam selecionadas, ocupar metade do espaço
-
-//TODO: O que fazer quando nenhum acompanhamento for selecionado?
-
 class ExtraFoodSelectorWidget extends StatefulWidget { //TODO: Passar para o main_food...
   final List<FoodModel> extraList;
 

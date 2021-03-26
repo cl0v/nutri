@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:nutri/app/pages/register/controllers/register_controller.dart';
 import 'package:nutri/constants.dart';
 
-//TODO: Definir campos obrigatórios
 //FIXME: Tamanho da tela não está respeitando todos os dispositivos(Testado no emulador)
 
 class RegisterView extends GetView<RegisterController> {
