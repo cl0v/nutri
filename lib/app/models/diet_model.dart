@@ -12,4 +12,5 @@ class DietModel {
     required this.mainFoodList,
     required this.extraFoodList,
   });
+
 }

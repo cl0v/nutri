@@ -6,11 +6,11 @@ import 'package:nutri/app/models/diet_model.dart';
 import 'package:nutri/app/models/meal_model.dart';
 import 'package:nutri/app/interfaces/providers/pe_diet_interface.dart';
 
-class DefaultPeDietProvider implements IPeDiet {
+class DefaultPeDietProvider extends IPeDiet {
 
   Future<MealModel> _fetchMealModel(day, idx) async {
     var json =
-        await jsonDecode(await rootBundle.loadString('assets/jsons/meal.json'))
+        await jsonDecode(await rootBundle.loadString('assets/jsons/meal.json')) //TODO: Renomear o json para default_pe_diet
             as List;
 
     return json

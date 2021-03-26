@@ -1,23 +1,24 @@
 import 'package:nutri/app/models/diet_model.dart';
-import 'package:nutri/app/models/food_model.dart';
-import 'package:nutri/app/models/meal_model.dart';
 
-class MenuModel {
-  MealModel meal;
-  List<FoodModel> mainFoodList;
-  List<FoodModel> extraFoodList;
+import 'home_model.dart';
 
+class MenuModel extends HomeModel {
   MenuModel({
-    required this.meal,
-    required this.mainFoodList,
-    required this.extraFoodList,
-  });
+    required meal,
+    required mainFoodList,
+    required extraFoodList,
+  }) : super(
+          meal: meal,
+          mainFoodList: mainFoodList,
+          extraFoodList: extraFoodList,
+        );
 
-  factory MenuModel.fromDietModel(DietModel diet) {
+  factory MenuModel.fromDietModel(DietModel diet) { //TODO: Ver como remover isso
     return MenuModel(
       meal: diet.meal,
       mainFoodList: diet.mainFoodList,
       extraFoodList: diet.extraFoodList,
     );
   }
+
 }

@@ -14,6 +14,10 @@ class MealModel {
   final MealType type;
   final String img;
   final int day;
+
+  //FoodCategory foodCategoryRequired
+  //FoodCategory extraFoodCategoryRequired
+
   //TODO: Adicionar o titulo da refeição e mostrar no lugar de qual refeição será
 
   MealModel({
@@ -30,22 +34,18 @@ class MealModel {
     };
   }
 
-  factory MealModel.fromMap(Map<String, dynamic> map) {
-    return MealModel(
-      type: MealType.values[map['meal']],
-      img: map['img'],
-      day: map['day'],
-    );
-  }
+  MealModel.fromMap(Map<String, dynamic>? map)
+      : type = MealType.values[map?['meal']],
+        img = map?['img'],
+        day = map?['day'];
 
   String toJson() => json.encode(toMap());
 
   factory MealModel.fromJson(String source) =>
       MealModel.fromMap(json.decode(source));
 
-
-      String mealTypeToString(){
-        switch (type) {
+  String mealTypeToString() {
+    switch (type) {
       case MealType.breakfast:
         return "Café da manhã";
       case MealType.lunch:
@@ -57,7 +57,7 @@ class MealModel {
       default:
         return '';
     }
-      }
+  }
 }
 
 const jsonPath = 'assets/jsons/meal.json';

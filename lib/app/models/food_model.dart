@@ -28,7 +28,7 @@ class FoodModel {
   //enum
   FoodCategory category;
   //enum
-  MainOrExtra mainOrExtra;
+  // MainOrExtra mainOrExtra;
 
 
   FoodModel({
@@ -36,7 +36,7 @@ class FoodModel {
     required this.img,
     // this.desc,
     required this.category,
-    required this.mainOrExtra,
+    // required this.mainOrExtra,
   });
 
   Map<String, dynamic> toMap() {
@@ -45,7 +45,7 @@ class FoodModel {
       'img': img,
       // 'desc': desc,
       'category': category.index,
-      'mainOrExtra': mainOrExtra.index,
+      // 'mainOrExtra': mainOrExtra.index,
     };
   }
 
@@ -54,7 +54,7 @@ class FoodModel {
         img: map['img'],
         // desc: map['desc'],
         category: FoodCategory.values[map['category']],
-        mainOrExtra: MainOrExtra.values[map['mainOrExtra']],
+        // mainOrExtra: MainOrExtra.values[map['mainOrExtra']],
       );
 
   String toJson() => json.encode(toMap());
