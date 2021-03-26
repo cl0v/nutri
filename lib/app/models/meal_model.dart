@@ -11,33 +11,32 @@ enum MealType {
 
 class MealModel {
   //enum
-  final MealType type;
+  final MealType meal;
   final String img;
   final int day;
-
+  //TODO: Adicionar o titulo da refeição e mostrar no lZugar de qual refeição será
+//TODO: Proxima minor update
   //FoodCategory foodCategoryRequired
   //FoodCategory extraFoodCategoryRequired
 
-  //TODO: Adicionar o titulo da refeição e mostrar no lugar de qual refeição será
-
   MealModel({
-    required this.type,
+    required this.meal,
     required this.img,
     this.day = 1,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'meal': type.index,
+      'meal': meal.index,
       'img': img,
       'day': day,
     };
   }
 
-  MealModel.fromMap(Map<String, dynamic>? map)
-      : type = MealType.values[map?['meal']],
-        img = map?['img'],
-        day = map?['day'];
+  MealModel.fromMap(Map<String, dynamic> map)
+      : this.meal = MealType.values[map['meal']],
+        this.img = map['img'],
+        this.day = map['day'];
 
   String toJson() => json.encode(toMap());
 
@@ -45,7 +44,7 @@ class MealModel {
       MealModel.fromMap(json.decode(source));
 
   String mealTypeToString() {
-    switch (type) {
+    switch (meal) {
       case MealType.breakfast:
         return "Café da manhã";
       case MealType.lunch:

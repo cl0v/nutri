@@ -22,8 +22,8 @@ class ReviewView extends StatelessWidget {
               textAlign: TextAlign.center,
             );
           return FoodBannerCardWidget(
-              image: items[idx - 1].meal.img,
-              title: items[idx - 1].meal.mealTypeToString(),
+              image: items[idx - 1].img,
+              title: items[idx - 1].mealTypeToString(),
               color: items[idx - 1].done
                   ? kGreenColor.withOpacity(.4)
                   : kErrorColor.withOpacity(.4),

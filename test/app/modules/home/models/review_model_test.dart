@@ -1,17 +1,20 @@
-import 'dart:convert';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/pages/home/models/review_model.dart';
 
 main() {
   test('Testing review model from json', () {
     var review = ReviewModel.fromMap(map);
-    expect(review.meal.img, equals('img'));
+    expect(review.img, equals('img'));
+  });
+
+  test('Testing review to map', () {
+    var review = ReviewModel.fromMap(map);
+    expect(review.toMap(), equals(map));
   });
 }
 
-final map = {
-  'type': 0,
+const map = {
+  'meal': 0,
   'img': 'img',
   'day': 1,
   'isDone': true,

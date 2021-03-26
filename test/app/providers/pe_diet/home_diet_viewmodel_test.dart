@@ -20,12 +20,12 @@ main() {
       expect(list.length, equals(4));
     });
     test('Overview meal shoul be 0 to 3 in order', () async {
-      var list = (await future).map((e) => e.type.index).toList();
+      var list = (await future).map((e) => e.meal.index).toList();
       expect(list, equals([0, 1, 2, 3]));
     });
 
     test('Overview meal shoul be Breakfast to Dinner in order', () async {
-      var list = (await future).map((e) => e.type).toList();
+      var list = (await future).map((e) => e.meal).toList();
       expect(
           list,
           containsAllInOrder([

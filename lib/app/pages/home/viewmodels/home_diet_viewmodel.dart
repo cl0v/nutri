@@ -41,13 +41,12 @@ class HomeDietViewModel {
 
   Future<List<ReviewModel>> getReviewList() async {
     List<dynamic> json = await storage.get(reviewKey) ?? [];
-    //FIXME: Ta rolando um bug quando fica nulo, mudei a chave
     return json.map((e) => ReviewModel.fromJson(e)).toList();
   }
 
   Future setReview(MealModel overviewModel, bool done) async {
     List<ReviewModel> reviewList = await getReviewList();
-    ReviewModel reviewModel = ReviewModel(meal: overviewModel, done: done);
+    ReviewModel reviewModel = ReviewModel.fromMealModel(overviewModel, done);
     reviewList.add(reviewModel);
     List<String> list = [];
     list.addAll(reviewList.map((e) => e.toJson()));
