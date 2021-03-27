@@ -4,9 +4,7 @@ class HomeTitleViewModel {
   final HomeTitleModel model = HomeTitleModel();
 
   int _dayIndex = 0;
-
-//TODO: Esse cara precisa ter um init para setar os valores do model
-
+  
   nextDay() {
     _showDayOverView(_dayIndex++);
   }

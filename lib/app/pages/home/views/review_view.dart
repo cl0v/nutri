@@ -1,5 +1,3 @@
-//TODO: Implement reviewPage
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/pages/home/components/food_banner_card_widget.dart';
@@ -24,8 +22,8 @@ class ReviewView extends StatelessWidget {
               textAlign: TextAlign.center,
             );
           return FoodBannerCardWidget(
-              image: items[idx - 1].overviewModel.img,
-              title: items[idx - 1].overviewModel.mealTypeToString(),
+              image: items[idx - 1].img,
+              title: items[idx - 1].mealTypeToString(),
               color: items[idx - 1].done
                   ? kGreenColor.withOpacity(.4)
                   : kErrorColor.withOpacity(.4),

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/data/providers/user_provider.dart';
-import 'package:nutri/app/data/repositories/user_repository.dart';
+import 'package:nutri/app/models/user_auth_model.dart';
 import 'package:nutri/app/routes/app_pages.dart';
+import 'package:nutri/app/viewmodels/user_auth_viewmodel.dart';
 
 class RegisterController extends GetxController {
-  final UserRepository repository;
-  RegisterController({required this.repository});
+  RegisterController({
+    required this.userAuthViewModel,
+  });
+  UserAuthViewModel userAuthViewModel;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -15,50 +17,42 @@ class RegisterController extends GetxController {
   TextEditingController weightController = TextEditingController();
 
   final RxBool _isObscurePassword = true.obs;
-
   bool get isObscurePassword => _isObscurePassword.value!;
 
   RxBool _registerError = false.obs;
-  RxString _errorMsg = ''.obs;
   bool get registerError => _registerError.value!;
+  RxString _errorMsg = ''.obs;
   String get errorMsg => _errorMsg.value!;
-  Rx<UserConnectionState> _userConnectionState = UserConnectionState.Idle.obs;
 
   @override
   void onInit() {
     super.onInit();
-    ever(_userConnectionState, userConnectionStateChanged);
-    _userConnectionState.bindStream(repository.getUserConnectionState());
+    ever(userAuthViewModel.model.registerState, userUserRegisterStateChanged);
   }
 
-  userConnectionStateChanged(state) {
-    print(state);
+  userUserRegisterStateChanged(state) async {
     switch (state) {
-      case UserConnectionState.Error:
-        _showErrors(repository.getUserRegisterError());
-        break;
-      case UserConnectionState.Connected:
+      case RegisterState.Created:
         Get.offAllNamed(Routes.HOME);
-
         break;
+      case RegisterState.Error:
+        _registerError.value = true;
+        _errorMsg.value = await userAuthViewModel.getError();
+        break;
+      default:
     }
-  }
-
-  _showErrors(msg) {
-    _registerError.value = true;
-    _errorMsg.value = msg;
   }
 
   @override
   void onClose() {
     FocusScope.of(Get.context!).unfocus();
-    repository.closeUserConnectionState();
     super.onClose();
   }
 
   void onConfirmPressed() async {
     if (emailController.text != '' && passwordController.text != '') {
-      await repository.register(emailController.text, passwordController.text);
+      await userAuthViewModel.register(
+          emailController.text, passwordController.text);
     }
   }
 

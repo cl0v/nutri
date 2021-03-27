@@ -2,9 +2,7 @@
   {
     "title": "Frango",
     "img": "assets/images/foods/peito de frango.jpg",
-    "desc": "Peito de frango é uma alternativa excelente para perder peso e ganhar músculos.",
-    "category": 2,
-    "mainOrExtra": 0
+    "category": 2
   },
   {
     "title": "Peixe",

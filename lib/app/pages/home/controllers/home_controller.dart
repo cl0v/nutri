@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/data/model/food_model.dart';
+import 'package:nutri/app/models/food_model.dart';
 import 'package:nutri/app/pages/home/models/home_state_model.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
-import 'package:nutri/app/pages/home/models/meal_model.dart';
+import 'package:nutri/app/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/review_model.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_state_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_title_viewmodel.dart';
-import 'package:nutri/app/pages/home/viewmodels/menu_viewmodel.dart';
+import 'package:nutri/app/pages/home/viewmodels/home_menu_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/overview_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/review_viewmodel.dart';
 
@@ -40,7 +40,7 @@ class HomeController extends GetxController {
   bool isTodayOverview = true;
 
 // menu view
-  final MenuViewModel menuViewModel;
+  final HomeMenuViewModel menuViewModel;
   PageController get pageController => menuViewModel.pageController;
   List<MenuModel> get menuList => menuViewModel.menuList;
 

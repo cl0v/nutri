@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:nutri/app/interfaces/repositories/diet_interface.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
 import 'package:get/get.dart';
+import 'package:nutri/app/pages/home/viewmodels/home_diet_viewmodel.dart';
 
-class MenuViewModel {
+class HomeMenuViewModel {
   final menuList = <MenuModel>[].obs;
 
-  final IDiet repository;
+  final HomeDietViewModel viewModel;
   final ILocalStorage storage;
 
   late PageController pageController;
@@ -16,18 +16,16 @@ class MenuViewModel {
   String get menuIndexKey => '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day.toString()}/$_menuIndexKey';
 
 
-  MenuViewModel({
-    required this.repository,
+  HomeMenuViewModel({
+    required this.viewModel,
     required this.storage,
   });
 
   init() async {
     int menuIndex = await storage.get(menuIndexKey) ?? 0;
     pageController = PageController(initialPage: menuIndex);
-    menuList.assignAll(await repository.getMenuList());
+    menuList.assignAll(await viewModel.getMenuList(DateTime.now().weekday));
   }
-
-  
 
   nextMenuItem(bool val) {
     var pgIdx = pageController.page!.toInt();
@@ -41,7 +39,7 @@ class MenuViewModel {
   _saveMenuOptions(int idx, bool done) {
     if(idx + 1 <= 3)
       storage.put(menuIndexKey, idx + 1);
-    var overview = menuList[idx].overview;
-    repository.setReview(overview, done);
+    var overview = menuList[idx].meal;
+    viewModel.setReview(overview, done);
   }
 }

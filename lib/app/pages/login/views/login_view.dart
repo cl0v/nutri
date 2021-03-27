@@ -43,7 +43,7 @@ class LoginView extends GetView<LoginController> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.emailAddress,
                       controller: controller.emailController,
-                      decoration: InputDecoration( //FIXME: Catch email badly formated
+                      decoration: InputDecoration(
                         prefixIcon: Icon(Icons.email),
                         hintText: 'E-mail',
                         labelText: 'E-mail',
@@ -94,7 +94,7 @@ class LoginView extends GetView<LoginController> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
-                        onPressed: controller.onEnterPressed,
+                        onPressed: controller.onLoginPressed,
                         child: Text(
                           'Entrar',
                           style: TextStyle(fontSize: 26),

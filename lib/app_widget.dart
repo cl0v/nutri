@@ -1,22 +1,20 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 import 'package:nutri/constants.dart';
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return 
-GetMaterialApp(
-        onGenerateTitle: (ctx)=>'Nutricionista Virtual',
-        title: "Nutri Nest (Nutricionista Virtual)",
-        initialRoute: AppPages.INITIAL,
-        getPages: AppPages.routes,
-        theme: newTheme,
-        debugShowCheckedModeBanner: false,
-        enableLog: false,
-      );
+    return GetMaterialApp(
+      onGenerateTitle: (ctx) => 'Nutricionista Virtual',
+      title: "Nutri Nest (Nutricionista Virtual)",
+      initialRoute: AppPages.INITIAL,
+      getPages: AppPages.routes,
+      theme: newTheme,
+      debugShowCheckedModeBanner: false,
+      enableLog: false,
+    );
   }
 }
 
@@ -32,7 +30,6 @@ var newTheme = ThemeData(
         width: 1.0,
       ),
     ),
-    
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(99.0),
       borderSide: BorderSide(
@@ -47,7 +44,6 @@ var newTheme = ThemeData(
         width: 1.0,
       ),
     ),
-    
   ),
   brightness: kBrightness,
   // textButtonTheme: ,

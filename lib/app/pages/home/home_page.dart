@@ -75,12 +75,6 @@ class HomePage extends GetView<HomeController> {
                       onPressed: controller.onBackToTodayPressed,
                       child: Text('Ver hoje'),
                     );
-                  // case HomeBodyState
-                  //     .Review: //FIXME: O botao nao permite aparecer caso n exista
-                  //   return ElevatedButton(
-                  //     onPressed: () {},
-                  //     child: Text('Vamos la'),
-                  //   );
                   case HomeState.Menu:
                     return Row(
                       crossAxisAlignment: CrossAxisAlignment.start,

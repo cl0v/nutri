@@ -30,8 +30,8 @@ class MenuView extends StatelessWidget {
             children: <Widget>[
                FoodBannerCardWidget(
                  ratio: 2.2,
-                  image: menuList[idx].overview.img,
-                  title: menuList[idx].overview.mealTypeToString()
+                  image: menuList[idx].meal.img,
+                  title: menuList[idx].meal.mealTypeToString()
                 ),
               MainFoodSelectorWidget(
                 foodList: menuList[idx].mainFoodList,
