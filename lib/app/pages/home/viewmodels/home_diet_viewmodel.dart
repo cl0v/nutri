@@ -5,6 +5,10 @@ import 'package:nutri/app/pages/home/models/menu_model.dart';
 import 'package:nutri/app/pages/home/models/review_model.dart';
 
 class HomeDietViewModel {
+  //TODO: Esse cara vai sair sim e vai descer outro pra fazer esse papel, dietController ou coisa do tipo
+  //TODO: O nome desse cara será diferente
+
+  //TODO: Tentar modificar esse carinha, pois nao existe um model chamado de home que esteja sendo utilizado
   final ILocalStorage storage;
   final IDiet diet;
 

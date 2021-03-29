@@ -4,22 +4,22 @@ import 'package:nutri/app/pages/home/viewmodels/home_diet_viewmodel.dart';
 
 class OverviewViewModel {
   OverviewViewModel({
-    required this.viewModel,
+    required this.homeDietViewModel,
   });
 
-  final HomeDietViewModel viewModel;
+  final HomeDietViewModel homeDietViewModel;
 
   final overviewList = <MealModel>[].obs;
 
   init() async {
     overviewList.assignAll(
-      await viewModel.getOverviewList(DateTime.now().weekday),
+      await homeDietViewModel.getOverviewList(DateTime.now().weekday),
     );
   }
 
   changeOverview(int day) async {
     overviewList.assignAll(
-      await viewModel.getOverviewList(day),
+      await homeDietViewModel.getOverviewList(day),
     );
   }
 }

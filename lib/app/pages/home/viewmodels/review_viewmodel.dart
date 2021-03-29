@@ -5,13 +5,13 @@ import 'package:nutri/app/pages/home/viewmodels/home_diet_viewmodel.dart';
 class ReviewViewModel {
   final reviewList = <ReviewModel>[].obs;
 
-  final HomeDietViewModel viewModel; //TODO: Rename in bindings
+  final HomeDietViewModel homeDietViewModel; //TODO: Rename in bindings
 
   ReviewViewModel({
-    required this.viewModel,
+    required this.homeDietViewModel,
   });
 
   init() async {
-    reviewList.assignAll(await viewModel.getReviewList());
+    reviewList.assignAll(await homeDietViewModel.getReviewList());
   }
 }

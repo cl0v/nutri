@@ -17,7 +17,15 @@ class HomePage extends GetView<HomeController> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: HomeTitleBarWidget(),
+        title: Obx(
+          () => HomeTitleBarWidget(
+            onNextDayPressed: controller.homeTitleController.onNextDayPressed,
+            onPreviewDayPressed: controller.homeTitleController.onPreviewDayPressed,
+            title: controller.homeTitleController.title,
+            isNextBtnDisabled: controller.homeTitleController.nextBtnDisabled,
+            isPreviewBtnDisabled: controller.homeTitleController.previewBtnDisabled,
+          ),
+        ),
       ),
       body: Obx(
         () {
@@ -26,23 +34,30 @@ class HomePage extends GetView<HomeController> {
               return Center(child: CircularProgressIndicator());
             case HomeState.Review:
               return Obx(
-                () => controller.reviewList.length > 0
-                    ? ReviewView(items: controller.reviewList)
+                () => controller.homeReviewViewController.reviewList.length > 0
+                    ? ReviewView(
+                        items: controller.homeReviewViewController.reviewList)
                     : Center(child: CircularProgressIndicator()),
               );
             case HomeState.Overview:
               return Obx(
-                () => controller.overViewList.length > 0
-                    ? OverviewView(items: controller.overViewList)
+                () => controller
+                            .homeOverviewViewController.overViewList.length >
+                        0
+                    ? OverviewView(
+                        items:
+                            controller.homeOverviewViewController.overViewList)
                     : Center(child: CircularProgressIndicator()),
               );
             case HomeState.Menu:
               return Obx(
-                () => controller.menuList.length > 0
+                () => controller.homeMenuViewController.menuList.length > 0
                     ? MenuView(
-                        menuList: controller.menuList,
-                        pageController: controller.pageController,
-                        onPageChanged: controller.onMenuPageChanged,
+                        menuList: controller.homeMenuViewController.menuList,
+                        pageController:
+                            controller.homeMenuViewController.pageController,
+                        onPageChanged:
+                            controller.homeMenuViewController.onMenuPageChanged,
                         onExtraFoodTapped: controller.onExtraTapped)
                     : Center(child: CircularProgressIndicator()),
               );
@@ -66,15 +81,16 @@ class HomePage extends GetView<HomeController> {
                   case HomeState.Loading:
                     return Container();
                   case HomeState.Overview:
-                  if(controller.isTodayOverview)
-                    return ElevatedButton(
-                      onPressed: controller.showMealsCard,
-                      child: Text('Começar'),
-                    );
-                    else return ElevatedButton(
-                      onPressed: controller.onBackToTodayPressed,
-                      child: Text('Ver hoje'),
-                    );
+                    if (controller.homeOverviewViewController.isTodayOverview)
+                      return ElevatedButton(
+                        onPressed: controller.showMealsCard,
+                        child: Text('Começar'),
+                      );
+                    else
+                      return ElevatedButton(
+                        onPressed: controller.homeTitleController.onBackToTodayPressed,
+                        child: Text('Ver hoje'),
+                      );
                   case HomeState.Menu:
                     return Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +103,8 @@ class HomePage extends GetView<HomeController> {
                               backgroundColor:
                                   MaterialStateProperty.resolveWith(
                                       (states) => Colors.red)),
-                          onPressed: controller.onSkippedPressed,
+                          onPressed: controller
+                              .homeMenuViewController.onSkippedPressed,
                           child: Text('Pulei'),
                         ),
                         ElevatedButton(
@@ -97,7 +114,8 @@ class HomePage extends GetView<HomeController> {
                               backgroundColor:
                                   MaterialStateProperty.resolveWith(
                                       (states) => Colors.green)),
-                          onPressed: controller.onDonePressed,
+                          onPressed:
+                              controller.homeMenuViewController.onDonePressed,
                           child: Text('Concluí'),
                         ),
                       ],

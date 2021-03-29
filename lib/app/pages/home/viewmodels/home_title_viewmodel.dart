@@ -4,31 +4,30 @@ class HomeTitleViewModel {
   final HomeTitleModel model = HomeTitleModel();
 
   int _dayIndex = 0;
-  
+
   nextDay() {
-    _showDayOverView(_dayIndex++);
+    _showDay(_dayIndex++);
   }
 
-  previewDay() {
-    _showDayOverView(_dayIndex--);
+  Function? previewDay() {
+    _showDay(_dayIndex--);
   }
 
-  backToToday() {
-    _showDayOverView(_dayIndex = 0);
+  Function? backToToday() {
+    _showDay(_dayIndex = 0);
   }
 
-
-  _showDayOverView(_) async {
+  _showDay(_) async {
     _setShowingDayIndex();
     if (_dayIndex <= 0) {
-      model.previewBtnDisabled.value = true;
+      model.previewBtnDisabled = true;
     } else {
-      model.previewBtnDisabled.value = false;
+      model.previewBtnDisabled = false;
     }
     if (_dayIndex >= 6) {
-      model.nextBtnDisabled.value = true;
+      model.nextBtnDisabled = true;
     } else {
-      model.nextBtnDisabled.value = false;
+      model.nextBtnDisabled = false;
     }
     model.title.value = _getDayTitle(model.todayIndex);
   }

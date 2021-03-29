@@ -10,9 +10,9 @@ class HomeTitleModel {
   int todayIndex = DateTime.now().weekday;
 
   /// Define se o botão de dia anterior do titulo estará ou não desabilitado
-  RxBool previewBtnDisabled = true.obs;
+bool previewBtnDisabled = true;
 
   /// Define se o botão de dia seguinte do titulo estará ou não desabilitado
-  RxBool nextBtnDisabled = false.obs; //Renomear
+  bool nextBtnDisabled = false; //Renomear
 
 }

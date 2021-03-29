@@ -13,8 +13,8 @@ class HomeMenuViewModel {
   late PageController pageController;
 
   final String _menuIndexKey = 'menuIndex';
-  String get menuIndexKey => '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day.toString()}/$_menuIndexKey';
-
+  String get menuIndexKey =>
+      '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day.toString()}/$_menuIndexKey';
 
   HomeMenuViewModel({
     required this.viewModel,
@@ -22,12 +22,21 @@ class HomeMenuViewModel {
   });
 
   init() async {
-    int menuIndex = await storage.get(menuIndexKey) ?? 0;
+    int menuIndex = await storage.get(menuIndexKey) ??
+        0; //Responsabilidade de alguem que tem acesso aos dados da home por completo
     pageController = PageController(initialPage: menuIndex);
     menuList.assignAll(await viewModel.getMenuList(DateTime.now().weekday));
   }
 
-  nextMenuItem(bool val) {
+  onMenuDone() {
+    _nextMenuItem(true);
+  }
+
+  onMenuSkipped() {
+    _nextMenuItem(false);
+  }
+
+  _nextMenuItem(bool val) {
     var pgIdx = pageController.page!.toInt();
     _saveMenuOptions(pgIdx, val);
     pageController.nextPage(
@@ -37,8 +46,7 @@ class HomeMenuViewModel {
   }
 
   _saveMenuOptions(int idx, bool done) {
-    if(idx + 1 <= 3)
-      storage.put(menuIndexKey, idx + 1);
+    if (idx + 1 <= 3) storage.put(menuIndexKey, idx + 1);
     var overview = menuList[idx].meal;
     viewModel.setReview(overview, done);
   }
