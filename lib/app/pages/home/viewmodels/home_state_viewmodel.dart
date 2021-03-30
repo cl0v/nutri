@@ -2,18 +2,20 @@ import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/models/home_state_model.dart';
 
 class HomeStateViewModel {
-  final HomeStateModel homeStateModel = HomeStateModel();
+  final HomeStateModel _homeStateModel = HomeStateModel();
   final ILocalStorage storage;
 
   HomeStateViewModel({
     required this.storage,
   });
 
+  get state => _homeStateModel.state;
+
   final String _homeStateKey =
       '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day.toString()}/homeState';
 
   Future init() async {
-    homeStateModel.state.value = await getTodayState();
+    _homeStateModel.state.value = await getTodayState();
   }
 
   Future<HomeState> getTodayState() async {
@@ -22,8 +24,8 @@ class HomeStateViewModel {
   }
 
   changeState(HomeState state) {
-    homeStateModel.state.value = state;
-    storage.put(_homeStateKey, homeStateModel.state.value!.index);
+    _homeStateModel.state.value = state;
+    storage.put(_homeStateKey, _homeStateModel.state.value!.index);
   }
 
   changeStateToReview() {
@@ -31,8 +33,7 @@ class HomeStateViewModel {
   }
 
   changeStateWhithoutSave(HomeState state) {
-    homeStateModel.state.value = state;
-    // print(state);
+    _homeStateModel.state.value = state;
     // storage.put(homeStateKey, homeStateModel.state.value!.index);
   }
 }

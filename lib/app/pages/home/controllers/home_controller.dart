@@ -1,12 +1,11 @@
 import 'package:get/get.dart';
+import 'package:nutri/app/interfaces/providers/diet_interface.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
-import 'package:nutri/app/models/food_model.dart';
 import 'package:nutri/app/pages/home/controllers/home_menu_view_controller.dart';
 import 'package:nutri/app/pages/home/controllers/home_overview_view_controller.dart';
 import 'package:nutri/app/pages/home/controllers/home_review_view_controller.dart';
 import 'package:nutri/app/pages/home/controllers/home_title_controller.dart';
 import 'package:nutri/app/pages/home/models/home_state_model.dart';
-import 'package:nutri/app/pages/home/viewmodels/home_diet_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_state_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_title_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_menu_viewmodel.dart';
@@ -15,17 +14,12 @@ import 'package:nutri/app/pages/home/viewmodels/review_viewmodel.dart';
 
 class HomeController extends GetxController {
   final ILocalStorage storage;
-  final HomeDietViewModel homeDietViewModel;
+  final IDiet diet;
+
   HomeController({
-    required this.homeDietViewModel,
+    required this.diet,
     required this.storage,
-    required this.homeStateViewModel,
   });
-
-// title
-
-// Criar controller pra a menu view e passar os parametros por contrutor
-// final HomeMenuController homeMenuController()
 
   late HomeTitleController homeTitleController;
 
@@ -35,12 +29,9 @@ class HomeController extends GetxController {
 
   late HomeReviewViewController homeReviewViewController;
 
-// review view
+  late HomeStateViewModel homeStateViewModel;
 
-// home state
-  final HomeStateViewModel homeStateViewModel;
-  Rx<HomeState> get homeState => homeStateViewModel.homeStateModel.state;
-  HomeState get state => homeStateViewModel.homeStateModel.state.value!;
+  HomeState get state => homeStateViewModel.state.value!;
 
   showMealsCard() => homeStateViewModel.changeState(HomeState.Menu);
 
@@ -52,28 +43,34 @@ class HomeController extends GetxController {
       titleViewModel: HomeTitleViewModel(),
     );
 
+    homeStateViewModel = HomeStateViewModel(
+      storage: storage,
+    );
+
     homeOverviewViewController = HomeOverviewViewController(
       overviewViewModel: OverviewViewModel(
-        homeDietViewModel: homeDietViewModel,
-      ),
-    );
-    homeMenuViewController = HomeMenuViewController(
-      stateViewModel: homeStateViewModel,
-      menuViewModel: HomeMenuViewModel(
-        storage: storage,
-        viewModel: homeDietViewModel,
+        diet: diet,
       ),
     );
 
     homeReviewViewController = HomeReviewViewController(
       reviewViewModel: ReviewViewModel(
-        homeDietViewModel: homeDietViewModel,
+        storage: storage,
       ),
     );
 
-    ever(homeState, _onStateChanded);
-    ever(homeTitleController.showingDayIndex, _onDayChanged);
+    homeMenuViewController = HomeMenuViewController(
+      stateViewModel: homeStateViewModel,
+      menuViewModel: HomeMenuViewModel(
+        setReview: homeReviewViewController.setReview,
+        diet: diet,
+        storage: storage,
+      ),
+    );
+
     homeStateViewModel.init();
+    ever(homeStateViewModel.state, _onStateChanded);
+    ever(homeTitleController.showingDayIndex, _onDayChanged);
   }
 
   _onDayChanged(int day) async {
@@ -86,19 +83,19 @@ class HomeController extends GetxController {
       homeOverviewViewController.isTodayOverview = false;
       homeStateViewModel.changeStateWhithoutSave(HomeState.Overview);
     }
-    homeOverviewViewController.overviewViewModel.changeOverview(day);
+    homeOverviewViewController.changeOverview(day);
   }
 
   _onStateChanded(HomeState? state) {
     switch (state) {
       case HomeState.Overview:
-        homeOverviewViewController.overviewViewModel.init();
+        homeOverviewViewController.init();
         break;
       case HomeState.Menu:
-        homeMenuViewController.menuViewModel.init();
+        homeMenuViewController.init();
         break;
       case HomeState.Review:
-        homeReviewViewController.reviewViewModel.init();
+        homeReviewViewController.init();
         break;
       default:
     }
@@ -109,30 +106,5 @@ class HomeController extends GetxController {
   onMainFoodTapped(int idx) {
     //Se eu precisar salvar qual a proteina que o usuario escolheu
     selectedMainFoodIdx = idx;
-  }
-
-  // Menu //
-
-//TODO: Remover a selecao dos extras nesse formato
-  final _selectedExtrasList = <int>[].obs;
-  List<int> get selectedExtrasList => _selectedExtrasList;
-  final extraFoodsAvailable = <FoodModel>[].obs;
-  List<FoodModel> selectedExtras = [];
-  final _extrasAmount = 3.obs;
-  int get extrasAmount => _extrasAmount.value;
-
-  getSelectedIndex(int idx) => _selectedExtrasList.contains(idx);
-
-  onExtraTapped(int idx) {
-    if (!_selectedExtrasList.contains(idx) &&
-        _selectedExtrasList.length < extrasAmount) {
-      _selectedExtrasList.add(idx);
-      selectedExtras.add(extraFoodsAvailable[idx]);
-      return true;
-    } else {
-      _selectedExtrasList.remove(idx);
-      selectedExtras.remove(extraFoodsAvailable[idx]);
-      return false;
-    }
   }
 }

@@ -4,7 +4,7 @@ import 'package:nutri/app/models/meal_model.dart';
 main() {
   test('Meal from json', () {
     var meal = MealModel.fromMap(map);
-    expect(meal.meal, equals(MealType.dinner));
+    expect(meal.type, equals(MealType.dinner));
   });
 }
 

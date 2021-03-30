@@ -1,17 +1,17 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:nutri/app/interfaces/providers/diet_interface.dart';
 import 'package:nutri/app/modelhelpers/food_modelhelper.dart';
 import 'package:nutri/app/models/diet_model.dart';
 import 'package:nutri/app/models/meal_model.dart';
-import 'package:nutri/app/interfaces/providers/pe_diet_interface.dart';
 
-class DefaultPeDietProvider extends IPeDiet {
-
+class DefaultPeDietProvider extends IDiet {
   Future<MealModel> _fetchMealModel(day, idx) async {
     var json =
-        await jsonDecode(await rootBundle.loadString('assets/jsons/meal.json')) //TODO: Renomear o json para default_pe_diet
+        await jsonDecode(await rootBundle.loadString('assets/jsons/meal.json'))
             as List;
+    //TODO: Renomear o json para default_pe_diet
 
     return json
         .map((map) => MealModel.fromMap(map))
@@ -28,7 +28,6 @@ class DefaultPeDietProvider extends IPeDiet {
       mainFoodList: mainFoodList,
       extraFoodList: [],
     );
-   
   }
 
   @override

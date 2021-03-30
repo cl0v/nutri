@@ -8,13 +8,11 @@ class MenuView extends StatelessWidget {
   final List<MenuModel> menuList;
   final PageController pageController;
   final Function(int) onPageChanged;
-  final Function(int) onExtraFoodTapped;
 
   MenuView({
     required this.menuList,
     required this.pageController,
     required this.onPageChanged,
-    required this.onExtraFoodTapped,
   });
 
   @override
@@ -30,8 +28,8 @@ class MenuView extends StatelessWidget {
             children: <Widget>[
                FoodBannerCardWidget(
                  ratio: 2.2,
-                  image: menuList[idx].meal.img,
-                  title: menuList[idx].meal.mealTypeToString()
+                  image: menuList[idx].img,
+                  title: menuList[idx].mealTypeToString()
                 ),
               MainFoodSelectorWidget(
                 foodList: menuList[idx].mainFoodList,

@@ -4,12 +4,14 @@ import 'package:nutri/app/pages/home/viewmodels/home_menu_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_state_viewmodel.dart';
 
 class HomeMenuViewController {
-  //TODO: Fazer isso com as outras views
   final HomeMenuViewModel menuViewModel;
   final HomeStateViewModel stateViewModel;
 
-  HomeMenuViewController(
-      {required this.menuViewModel, required this.stateViewModel});
+  HomeMenuViewController({
+    required this.menuViewModel,
+    required this.stateViewModel,
+  });
+
 
   PageController get pageController => menuViewModel.pageController;
   List<MenuModel> get menuList => menuViewModel.menuList;
@@ -17,7 +19,10 @@ class HomeMenuViewController {
   onDonePressed() => menuViewModel.onMenuDone();
   onSkippedPressed() => menuViewModel.onMenuSkipped();
 
+  init() => menuViewModel.init();
+
   onMenuPageChanged(int idx) async {
     if (idx >= 4) stateViewModel.changeStateToReview();
+    //TODO: Eu deveria receber o estado da home aq? provavelmente nao
   }
 }

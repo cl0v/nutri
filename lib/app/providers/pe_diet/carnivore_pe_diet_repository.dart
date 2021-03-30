@@ -1,7 +1,7 @@
-import 'package:nutri/app/interfaces/providers/pe_diet_interface.dart';
+import 'package:nutri/app/interfaces/providers/diet_interface.dart';
 import 'package:nutri/app/models/diet_model.dart';
 
-class CarnivorePeDietRepository implements IPeDiet{
+class CarnivorePeDietRepository implements IDiet{
   CarnivorePeDietRepository();
 
   @override

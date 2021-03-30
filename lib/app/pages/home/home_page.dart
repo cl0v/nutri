@@ -20,10 +20,12 @@ class HomePage extends GetView<HomeController> {
         title: Obx(
           () => HomeTitleBarWidget(
             onNextDayPressed: controller.homeTitleController.onNextDayPressed,
-            onPreviewDayPressed: controller.homeTitleController.onPreviewDayPressed,
+            onPreviewDayPressed:
+                controller.homeTitleController.onPreviewDayPressed,
             title: controller.homeTitleController.title,
             isNextBtnDisabled: controller.homeTitleController.nextBtnDisabled,
-            isPreviewBtnDisabled: controller.homeTitleController.previewBtnDisabled,
+            isPreviewBtnDisabled:
+                controller.homeTitleController.previewBtnDisabled,
           ),
         ),
       ),
@@ -58,7 +60,7 @@ class HomePage extends GetView<HomeController> {
                             controller.homeMenuViewController.pageController,
                         onPageChanged:
                             controller.homeMenuViewController.onMenuPageChanged,
-                        onExtraFoodTapped: controller.onExtraTapped)
+                      )
                     : Center(child: CircularProgressIndicator()),
               );
             default:
@@ -88,7 +90,8 @@ class HomePage extends GetView<HomeController> {
                       );
                     else
                       return ElevatedButton(
-                        onPressed: controller.homeTitleController.onBackToTodayPressed,
+                        onPressed:
+                            controller.homeTitleController.onBackToTodayPressed,
                         child: Text('Ver hoje'),
                       );
                   case HomeState.Menu:
