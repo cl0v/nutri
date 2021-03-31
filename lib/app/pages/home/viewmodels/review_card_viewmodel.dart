@@ -3,7 +3,6 @@ import 'package:nutri/app/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/review_model.dart';
 
 class ReviewCardViewModel {
-//DONE
   final ILocalStorage storage;
 
   ReviewCardViewModel({
@@ -15,7 +14,7 @@ class ReviewCardViewModel {
       '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day.toString()}/$_reviewKey';
 
 
-  fetchReviewList() async {
+  Future<List<ReviewCardModel>> fetchReviewList() async {
     List<dynamic> json = await storage.get(reviewKey) ?? [];
     return json.map((e) => ReviewCardModel.fromJson(e)).toList();
   }
@@ -24,8 +23,7 @@ class ReviewCardViewModel {
     List<ReviewCardModel> reviewList = await fetchReviewList();
     ReviewCardModel reviewModel = ReviewCardModel.fromMealModel(overviewModel, done);
     reviewList.add(reviewModel);
-    List<String> list = [];
-    list.addAll(reviewList.map((e) => e.toJson())); //TODO: Fazer direto
+    List<String> list = reviewList.map((e) => e.toJson()).toList();
     storage.put(reviewKey, list);
   }
 }

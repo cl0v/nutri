@@ -58,7 +58,7 @@ class HomePage extends GetView<HomeController> {
                         menuList: controller.homeMenuViewController.menuList,
                         pageController:
                             controller.homeMenuViewController.pageController,
-                        onPageChanged: controller.onMenuPageChanged,
+                        onPageChanged: controller.homeMenuViewController.onMenuPageChanged,
                       )
                     : Center(child: CircularProgressIndicator()),
               );

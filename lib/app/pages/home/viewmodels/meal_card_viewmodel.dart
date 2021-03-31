@@ -2,7 +2,6 @@ import 'package:nutri/app/interfaces/providers/diet_interface.dart';
 import 'package:nutri/app/pages/home/models/meal_card_model.dart';
 
 class MealCardViewModel {
-  //DONE
   final IDiet diet;
 
   MealCardViewModel({

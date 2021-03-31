@@ -3,7 +3,6 @@ import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
 
 class MenuViewModel {
-
   final IDiet diet;
   final ILocalStorage storage;
 
@@ -16,11 +15,11 @@ class MenuViewModel {
   String get menuIndexKey =>
       '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day.toString()}/$_menuIndexKey';
 
-  Future<int> fetchMenuPageIndex() async {
+  Future<int> fetchMenuIndex() async {
     return await storage.get(menuIndexKey) ?? 0;
   }
 
-  Future<void> setMenuPageIndex(idx) async {
+  Future<void> setMenuIndex(idx) async {
     await storage.put(menuIndexKey, idx);
   }
 

@@ -4,7 +4,6 @@ import 'package:nutri/app/pages/home/viewmodels/meal_card_viewmodel.dart';
 import 'package:get/get.dart';
 
 class HomeOverviewController {
-  //DONE
   late MealCardViewModel mealCardViewModel;
 
   HomeOverviewController({

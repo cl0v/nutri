@@ -7,7 +7,6 @@ import 'package:nutri/app/pages/home/controllers/home_review_controller.dart';
 import 'package:nutri/app/pages/home/controllers/home_title_controller.dart';
 import 'package:nutri/app/pages/home/models/home_state_model.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_state_viewmodel.dart';
-import 'package:nutri/app/pages/home/viewmodels/home_title_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/menu_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/meal_card_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/review_card_viewmodel.dart';
@@ -21,8 +20,6 @@ class HomeController extends GetxController {
     required this.storage,
   });
 
-  late HomeTitleController homeTitleController;
-
   late HomeOverviewController homeOverviewViewController;
 
   late HomeMenuController homeMenuViewController;
@@ -31,6 +28,7 @@ class HomeController extends GetxController {
 
   late HomeStateViewModel homeStateViewModel;
 
+  final HomeTitleController homeTitleController = HomeTitleController();
   HomeState get state => homeStateViewModel.state.value!;
 
   showMealsCard() => homeStateViewModel.changeState(HomeState.Menu);
@@ -41,10 +39,6 @@ class HomeController extends GetxController {
 
     homeStateViewModel = HomeStateViewModel(
       storage: storage,
-    );
-
-    homeTitleController = HomeTitleController(
-      titleViewModel: HomeTitleViewModel(),
     );
 
     homeOverviewViewController = HomeOverviewController(
@@ -79,6 +73,7 @@ class HomeController extends GetxController {
         break;
       case HomeState.Menu:
         homeMenuViewController = HomeMenuController(
+          homeStateViewModel: homeStateViewModel,
           reviewViewModel: ReviewCardViewModel(
             storage: storage,
           ),
@@ -99,9 +94,5 @@ class HomeController extends GetxController {
         break;
       default:
     }
-  }
-
-  onMenuPageChanged(int idx) async {
-    if (idx >= 4) homeStateViewModel.setStateToReview();
   }
 }

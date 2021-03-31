@@ -1,19 +1,54 @@
 import 'package:get/get.dart';
-import 'package:nutri/app/pages/home/viewmodels/home_title_viewmodel.dart';
+import 'package:nutri/app/pages/home/helpers/home_title_helper.dart';
 
 class HomeTitleController {
-  late HomeTitleViewModel titleViewModel;
+  final HomeTitleHelper titleHelper = HomeTitleHelper();
 
-  HomeTitleController({required this.titleViewModel});
+  HomeTitleController();
 
+  RxString _title = 'HOJE'.obs;
+  String get title => _title.value ?? 'Carregando';
 
-  String get title => titleViewModel.model.title.value ?? 'Carregando';
-  bool get previewBtnDisabled => titleViewModel.model.previewBtnDisabled;
-  bool get nextBtnDisabled => titleViewModel.model.nextBtnDisabled;
-  RxInt get showingDayIndex => titleViewModel.model.showingDay;
-  int get todayIndex => titleViewModel.model.todayIndex;
+  RxBool _previewBtnDisabled = true.obs;
+  RxBool _nextBtnDisabled = false.obs;
 
-  void onPreviewDayPressed() => titleViewModel.previewDay();
-  void onNextDayPressed() => titleViewModel.nextDay();
-  void onBackToTodayPressed() => titleViewModel.backToToday();
+  bool get previewBtnDisabled => _previewBtnDisabled.value!;
+  bool get nextBtnDisabled => _nextBtnDisabled.value!;
+
+  RxInt showingDayIndex = 1.obs;
+
+  int todayIndex = DateTime.now().weekday;
+
+  int _dayIndex = 0;
+
+  Function? onPreviewDayPressed() {
+    _showDay(_dayIndex--);
+  }
+
+  Function? onNextDayPressed() {
+    _showDay(_dayIndex++);
+  }
+
+  Function? onBackToTodayPressed() {
+    _showDay(_dayIndex = 0);
+  }
+
+  _showDay(_) async {
+    _setShowingDayIndex();
+    if (_dayIndex <= 0) {
+      _previewBtnDisabled.value = true;
+    } else {
+      _previewBtnDisabled.value = false;
+    }
+    if (_dayIndex >= 6) {
+      _nextBtnDisabled.value = true;
+    } else {
+      _nextBtnDisabled.value = false;
+    }
+    _title.value = titleHelper.getDayTitle(todayIndex, _dayIndex);
+  }
+
+  _setShowingDayIndex() {
+    showingDayIndex.value = (todayIndex + _dayIndex - 1) % 7 + 1;
+  }
 }

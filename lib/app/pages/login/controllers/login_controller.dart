@@ -53,7 +53,7 @@ class LoginController extends GetxController {
   }
 
   onForgetPasswordPressed() {
-    //   //TODO: Implement onForgetPasswordPressed
+    //TODO: Implement onForgetPasswordPressed
   }
 
   @override

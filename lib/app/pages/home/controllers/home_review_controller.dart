@@ -5,15 +5,14 @@ import 'package:get/get.dart';
 
 class HomeReviewController {
   //DONE: Revisar
-   ReviewCardViewModel reviewViewModel;
+  ReviewCardViewModel reviewViewModel;
 
-  HomeReviewController({required this.reviewViewModel});
+  HomeReviewController({required this.reviewViewModel,});
 
   final _reviewList = <ReviewCardModel>[].obs;
 
   List<ReviewCardModel> get reviewList => _reviewList;
   
-
   void init() async {
     _reviewList.assignAll(await reviewViewModel.fetchReviewList());
   }
