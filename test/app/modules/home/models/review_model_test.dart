@@ -3,12 +3,12 @@ import 'package:nutri/app/pages/home/models/review_model.dart';
 
 main() {
   test('Testing review model from json', () {
-    var review = ReviewModel.fromMap(map);
+    var review = ReviewCardModel.fromMap(map);
     expect(review.img, equals('img'));
   });
 
   test('Testing review to map', () {
-    var review = ReviewModel.fromMap(map);
+    var review = ReviewCardModel.fromMap(map);
     expect(review.toMap(), equals(map));
   });
 }

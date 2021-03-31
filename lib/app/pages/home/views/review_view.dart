@@ -5,7 +5,7 @@ import 'package:nutri/app/pages/home/models/review_model.dart';
 import 'package:nutri/constants.dart';
 
 class ReviewView extends StatelessWidget {
-  final List<ReviewModel> items;
+  final List<ReviewCardModel> items;
 
   const ReviewView({required this.items});
 

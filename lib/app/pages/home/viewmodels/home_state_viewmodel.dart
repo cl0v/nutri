@@ -2,6 +2,7 @@ import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/models/home_state_model.dart';
 
 class HomeStateViewModel {
+  //TODO: Passar para a home_controller algumas responsabilidades
   final HomeStateModel _homeStateModel = HomeStateModel();
   final ILocalStorage storage;
 
@@ -28,7 +29,7 @@ class HomeStateViewModel {
     storage.put(_homeStateKey, _homeStateModel.state.value!.index);
   }
 
-  changeStateToReview() {
+  setStateToReview() {
     changeState(HomeState.Review);
   }
 
