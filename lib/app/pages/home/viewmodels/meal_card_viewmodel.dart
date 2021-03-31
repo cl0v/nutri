@@ -1,7 +1,8 @@
+import 'package:nutri/app/interfaces/pages/home/viewmodels/meal_card_viewmodel_interface.dart';
 import 'package:nutri/app/interfaces/providers/diet_interface.dart';
 import 'package:nutri/app/pages/home/models/meal_card_model.dart';
 
-class MealCardViewModel {
+class MealCardViewModel implements IMealCardVM {
   final IDiet diet;
 
   MealCardViewModel({

@@ -9,13 +9,13 @@ class HomeTitleController {
   RxString _title = 'HOJE'.obs;
   String get title => _title.value ?? 'Carregando';
 
-  RxBool _previewBtnDisabled = true.obs;
-  RxBool _nextBtnDisabled = false.obs;
+  //TODO: Ta faltando um init
 
-  bool get previewBtnDisabled => _previewBtnDisabled.value!;
-  bool get nextBtnDisabled => _nextBtnDisabled.value!;
 
-  RxInt showingDayIndex = 1.obs;
+  bool  previewBtnDisabled = true;
+  bool  nextBtnDisabled = false;
+
+  RxInt showingDayIndex = DateTime.now().weekday.obs;
 
   int todayIndex = DateTime.now().weekday;
 
@@ -36,14 +36,14 @@ class HomeTitleController {
   _showDay(_) async {
     _setShowingDayIndex();
     if (_dayIndex <= 0) {
-      _previewBtnDisabled.value = true;
+      previewBtnDisabled = true;
     } else {
-      _previewBtnDisabled.value = false;
+      previewBtnDisabled = false;
     }
     if (_dayIndex >= 6) {
-      _nextBtnDisabled.value = true;
+      nextBtnDisabled = true;
     } else {
-      _nextBtnDisabled.value = false;
+      nextBtnDisabled = false;
     }
     _title.value = titleHelper.getDayTitle(todayIndex, _dayIndex);
   }

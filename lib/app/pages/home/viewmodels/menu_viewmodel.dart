@@ -1,8 +1,9 @@
+import 'package:nutri/app/interfaces/pages/home/viewmodels/menu_viewmodel_interface.dart';
 import 'package:nutri/app/interfaces/providers/diet_interface.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
 
-class MenuViewModel {
+class MenuViewModel extends IMenuVM{
   final IDiet diet;
   final ILocalStorage storage;
 

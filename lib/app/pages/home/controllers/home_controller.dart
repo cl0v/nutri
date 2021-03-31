@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:nutri/app/interfaces/pages/home/viewmodels/home_state_viewmodel_interface.dart';
 import 'package:nutri/app/interfaces/providers/diet_interface.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/controllers/home_menu_controller.dart';
@@ -26,12 +27,12 @@ class HomeController extends GetxController {
 
   late HomeReviewController homeReviewViewController;
 
-  late HomeStateViewModel homeStateViewModel;
+  late IHomeStateVM homeStateViewModel;
 
   final HomeTitleController homeTitleController = HomeTitleController();
-  HomeState get state => homeStateViewModel.state.value!;
+  HomeState get state => homeStateViewModel.getHomeState.value!;
 
-  showMealsCard() => homeStateViewModel.changeState(HomeState.Menu);
+  showMealsCard() => homeStateViewModel.onOverViewNextState();
 
   @override
   void onInit() {
@@ -47,17 +48,21 @@ class HomeController extends GetxController {
       ),
     );
 
-    homeStateViewModel.init();
+    _fetchHomeState();
 
-    ever(homeStateViewModel.state, _onStateChanded);
+    ever(homeStateViewModel.getHomeState, _onStateChanded);
     ever(homeTitleController.showingDayIndex, _onDayChanged);
+  }
+
+  _fetchHomeState() async {
+    homeStateViewModel.setHomeState = await homeStateViewModel.fetchHomeState();
   }
 
   _onDayChanged(int day) async {
     if (day == DateTime.now().weekday) {
       homeOverviewViewController.isTodayOverview = true;
       homeStateViewModel.changeStateWhithoutSave(
-        await homeStateViewModel.getTodayState(),
+        await homeStateViewModel.fetchHomeState(),
       );
     } else {
       homeOverviewViewController.isTodayOverview = false;

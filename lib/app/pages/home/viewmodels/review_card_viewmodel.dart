@@ -1,8 +1,9 @@
+import 'package:nutri/app/interfaces/pages/home/viewmodels/review_card_viewmodel_interface.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/review_model.dart';
 
-class ReviewCardViewModel {
+class ReviewCardViewModel implements IReviewCardVM{
   final ILocalStorage storage;
 
   ReviewCardViewModel({

@@ -1,11 +1,11 @@
+import 'package:nutri/app/interfaces/pages/home/viewmodels/review_card_viewmodel_interface.dart';
 import 'package:nutri/app/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/review_model.dart';
-import 'package:nutri/app/pages/home/viewmodels/review_card_viewmodel.dart';
 import 'package:get/get.dart';
 
 class HomeReviewController {
   //DONE: Revisar
-  ReviewCardViewModel reviewViewModel;
+  IReviewCardVM reviewViewModel;
 
   HomeReviewController({required this.reviewViewModel,});
 

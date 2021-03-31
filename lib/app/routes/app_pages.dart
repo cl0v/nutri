@@ -12,7 +12,7 @@ import 'package:nutri/app/pages/splash/views/splash_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -35,25 +35,5 @@ class AppPages {
       page: () => SplashView(),
       binding: SplashBinding(),
     ),
-    // GetPage(
-    //   name: Routes.QUESTIONS,
-    //   page: () => QuestionsView(),
-    //   binding: QuestionsBinding(),
-    // ),
-    // GetPage(
-    //   name: Routes.PROFILE,
-    //   page: () => ProfileView(),
-    //   binding: ProfileBinding(),
-    // ),
-    // GetPage(
-    //   name: Routes.FOOD_SWIPE,
-    //   page: () => FoodSwipeView(),
-    //   binding: FoodSwipeBinding(),
-    // ),
-    // GetPage(
-    //   name: Routes.FAQ,
-    //   page: () => FaqView(),
-    //   binding: FaqBinding(),
-    // ),
   ];
 }
