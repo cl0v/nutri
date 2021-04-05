@@ -13,7 +13,6 @@ class ReviewCardModel extends MealCardModel {
   }) : super(
           img: mealCardModel.img,
           type: mealCardModel.type,
-          day: mealCardModel.day,
         );
 
   Map<String, dynamic> toMap() {
@@ -29,7 +28,7 @@ class ReviewCardModel extends MealCardModel {
 
   ReviewCardModel.fromMealModel(MealModel meal, bool done)
       : this.done = done,
-        super(img: meal.img, type: meal.type, day: meal.day);
+        super(img: meal.img, type: meal.type);
 
   String toJson() => json.encode(toMap());
 

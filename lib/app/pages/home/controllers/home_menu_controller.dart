@@ -21,13 +21,11 @@ class HomeMenuController {
 
   late PageController pageController;
 
-  init() async {
+  init(String day) async {
     int menuIndex = await menuViewModel.fetchMenuIndex();
     pageController = PageController(initialPage: menuIndex);
     menuList.assignAll(
-      await menuViewModel.fetchMenuList(
-        DateTime.now().weekday,
-      ),
+      await menuViewModel.fetchMenuList(day),
     );
   }
 
@@ -52,7 +50,6 @@ class HomeMenuController {
     if (idx + 1 <= 3) menuViewModel.setMenuIndex(idx + 1);
     reviewViewModel.setReview(menuList[idx], done);
   }
-
 
   onMenuPageChanged(int idx) async {
     if (idx >= 4) homeStateViewModel.onMenuNextState();

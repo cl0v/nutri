@@ -11,7 +11,6 @@ class MealModel {
   //enum
   final MealType type;
   final String img;
-  final int day;
   //TODO: Adicionar o titulo da refeição e mostrar no lugar de qual refeição será(Proxima minor update)
   //FoodCategory foodCategoryRequired
   //FoodCategory extraFoodCategoryRequired
@@ -19,21 +18,18 @@ class MealModel {
   MealModel({
     required this.type,
     required this.img,
-    this.day = 1,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'type': type.index,
       'img': img,
-      'day': day,
     };
   }
 
   MealModel.fromMap(Map<String, dynamic> map)
       : this.type = MealType.values[map['type']],
-        this.img = map['img'],
-        this.day = map['day'];
+        this.img = map['img'];
 
   String toJson() => json.encode(toMap());
 
@@ -54,4 +50,16 @@ class MealModel {
         return '';
     }
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+  
+    return other is MealModel &&
+      other.type == type &&
+      other.img == img;
+  }
+
+  @override
+  int get hashCode => type.hashCode ^ img.hashCode;
 }

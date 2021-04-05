@@ -1,144 +1,116 @@
 [
     {
       "img": "assets/images/meals/10.png",
-      "type": 0,
-      "day": 1
+      "type": 0
 
     },
     {
       "img": "assets/images/meals/11.png",
-      "type": 1,
-      "day": 1
+      "type": 1
 
     },
     {
       "img": "assets/images/meals/12.png",
-      "type": 2,
-      "day": 1
+      "type": 2
     },
     {
       "img": "assets/images/meals/13.png",
-      "type": 3,
-      "day": 1
+      "type": 3
     },
     {
       "img": "assets/images/meals/30.png",
-      "type": 0,
-      "day": 2
+      "type": 0
     },
     {
       "img": "assets/images/meals/21.png",
-      "type": 1,
-      "day": 2
+      "type": 1
     },
     {
       "img": "assets/images/meals/22.png",
-      "type": 2,
-      "day": 2
+      "type": 2
     },
     {
       "img": "assets/images/meals/23.png",
-      "type": 3,
-      "day": 2
+      "type": 3
     },
     {
       "img": "assets/images/meals/30.png",
-      "type": 0,
-      "day": 3
+      "type": 0
     },
     {
       "img": "assets/images/meals/31.png",
-      "type": 1,
-      "day": 3
+      "type": 1
     },
     {
       "img": "assets/images/meals/32.png",
-      "type": 2,
-      "day": 3
+      "type": 2
     },
     {
       "img": "assets/images/meals/33.png",
-      "type": 3,
-      "day": 3
+      "type": 3
     },
     {
       "img": "assets/images/meals/40.png",
-      "type": 0,
-      "day": 4
+      "type": 0
     },
     {
       "img": "assets/images/meals/41.png",
-      "type": 1,
-      "day": 4
+      "type": 1
     },
     {
       "img": "assets/images/meals/42.png",
-      "type": 2,
-      "day": 4
+      "type": 2
     },
     {
       "img": "assets/images/meals/43.png",
-      "type": 3,
-      "day": 4
+      "type": 3
     },
     {
       "img": "assets/images/meals/50.png",
-      "type": 0,
-      "day": 5
+      "type": 0
     },
     {
       "img": "assets/images/meals/51.png",
-      "type": 1,
-      "day": 5
+      "type": 1
     },
     {
       "img": "assets/images/meals/52.png",
-      "type": 2,
-      "day": 5
+      "type": 2
     },
     {
       "img": "assets/images/meals/53.png",
-      "type": 3,
-      "day": 5
+      "type": 3
     },
     {
       "img": "assets/images/meals/60.png",
-      "type": 0,
-      "day": 6
+      "type": 0
     },
     {
       "img": "assets/images/meals/61.png",
-      "type": 1,
-      "day": 6
+      "type": 1
     },
     {
       "img": "assets/images/meals/62.png",
-      "type": 2,
-      "day": 6
+      "type": 2
     },
     {
       "img": "assets/images/meals/63.png",
-      "type": 3,
-      "day": 6
+      "type": 3
     },
     {
       "img": "assets/images/meals/70.png",
-      "type": 0,
-      "day": 7
+      "type": 0
     },
     {
       "img": "assets/images/meals/71.png",
-      "type": 1,
-      "day": 7
+      "type": 1
     },
     {
       "img": "assets/images/meals/72.png",
-      "type": 2,
-      "day": 7
+      "type": 2
     },
     {
       "img": "assets/images/meals/73.png",
-      "type": 3,
-      "day": 7
+      "type": 3
     }
 ]

@@ -12,7 +12,9 @@ class HomeBinding extends Bindings {
       HomeController(
         diet: PeDietRepository(
           foodProvider: FoodProvider(),
-          mealProvider: MealProvider(),
+          mealProvider: MealProvider(
+            storage: SharedLocalStorageService(),
+          ),
         ),
         storage: SharedLocalStorageService(),
       ),

@@ -23,9 +23,9 @@ class HomePage extends GetView<HomeController> {
             onPreviewDayPressed:
                 controller.homeTitleController.onPreviewDayPressed,
             title: controller.homeTitleController.title,
-            isNextBtnDisabled: controller.homeTitleController.nextBtnDisabled,
-            isPreviewBtnDisabled:
-                controller.homeTitleController.previewBtnDisabled,
+            isNextBtnEnabled: controller.homeTitleController.nextBtnEnabled,
+            isPreviewBtnEnabled:
+                controller.homeTitleController.previewBtnEnabled,
           ),
         ),
       ),

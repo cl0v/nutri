@@ -28,7 +28,7 @@ class HomeController extends GetxController {
 
   late IHomeStateVM homeStateViewModel;
 
-  final HomeTitleController homeTitleController = HomeTitleController();
+  final HomeTitleController homeTitleController = HomeTitleController()..init();
   HomeState get state => homeStateViewModel.homeState.value!;
 
   showMealsCard() => homeStateViewModel.onOverViewNextState();
@@ -67,13 +67,15 @@ class HomeController extends GetxController {
       homeOverviewViewController.isTodayOverview = false;
       homeStateViewModel.changeStateWhithoutSave(HomeState.Overview);
     }
-    homeOverviewViewController.changeOverview(day);
+    //TODO: Esse day nao funcionará
+    
+    homeOverviewViewController.changeOverview(homeTitleController.showingDayDate);
   }
 
   _onStateChanded(HomeState? state) async {
     switch (state) {
       case HomeState.Overview:
-        homeOverviewViewController.init();
+        homeOverviewViewController.init(homeTitleController.todayDate); //TODO: Criar um getter
         break;
       case HomeState.Menu:
         homeMenuViewController = HomeMenuController(
@@ -86,7 +88,7 @@ class HomeController extends GetxController {
             storage: storage,
           ),
         );
-        homeMenuViewController.init();
+        homeMenuViewController.init(homeTitleController.todayDate);
         break;
       case HomeState.Review:
         homeReviewViewController = HomeReviewController(

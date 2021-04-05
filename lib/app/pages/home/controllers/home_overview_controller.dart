@@ -16,15 +16,13 @@ class HomeOverviewController {
 
   bool isTodayOverview = true;
 
-  init() async {
+  init(String day) async {
     _overviewList.assignAll(
-      await mealCardViewModel.fetchMealCardList(
-        DateTime.now().weekday,
-      ),
+      await mealCardViewModel.fetchMealCardList(day),
     );
   }
 
-  changeOverview(int day) async {
+  changeOverview(String day) async {
     _overviewList.assignAll(await mealCardViewModel.fetchMealCardList(day));
   }
 }

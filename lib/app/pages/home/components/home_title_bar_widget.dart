@@ -4,15 +4,15 @@ class HomeTitleBarWidget extends StatelessWidget {
   final Function() onPreviewDayPressed;
   final Function() onNextDayPressed;
   final String title;
-  final bool isPreviewBtnDisabled;
-  final bool isNextBtnDisabled;
+  final bool isPreviewBtnEnabled;
+  final bool isNextBtnEnabled;
 
   HomeTitleBarWidget({
     required this.onPreviewDayPressed,
     required this.onNextDayPressed,
     required this.title,
-    required this.isPreviewBtnDisabled,
-    required this.isNextBtnDisabled,
+    required this.isPreviewBtnEnabled,
+    required this.isNextBtnEnabled,
   });
 
   @override
@@ -22,12 +22,12 @@ class HomeTitleBarWidget extends StatelessWidget {
       children: [
         IconButton(
           icon: Icon(Icons.arrow_back_ios),
-          onPressed: isPreviewBtnDisabled ? null : onPreviewDayPressed,
+          onPressed: isPreviewBtnEnabled ? onPreviewDayPressed : null,
         ),
         Text(title),
         IconButton(
           icon: Icon(Icons.arrow_forward_ios),
-          onPressed: isNextBtnDisabled ? null :  onNextDayPressed,
+          onPressed: isNextBtnEnabled ? onNextDayPressed : null,
         ),
       ],
     );

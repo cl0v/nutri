@@ -2,13 +2,11 @@ import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
 import 'package:nutri/app/repositories/pe_diet_repository.dart';
 
-
 abstract class IMenuVM {
   Future<int> fetchMenuIndex();
   Future<void> setMenuIndex(int idx);
-  Future<List<MenuModel>> fetchMenuList(int day);
+  Future<List<MenuModel>> fetchMenuList(String day);
 }
-
 
 class MenuViewModel extends IMenuVM {
   final IDiet diet;
@@ -22,7 +20,7 @@ class MenuViewModel extends IMenuVM {
   final String _menuIndexKey = 'menuIndex';
   //TODO: Testar se da pra fazer sem o get
   String get menuIndexKey =>
-      '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day.toString()}/$_menuIndexKey';
+      '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}/$_menuIndexKey';
 
   Future<int> fetchMenuIndex() async {
     return await storage.get(menuIndexKey) ?? 0;
@@ -32,7 +30,8 @@ class MenuViewModel extends IMenuVM {
     await storage.put(menuIndexKey, idx);
   }
 
-  Future<List<MenuModel>> fetchMenuList(int day) async {
+//TODO: Encontrar item a item? Ou ja pegar os do dia todo?
+  Future<List<MenuModel>> fetchMenuList(day) async {
     return [
       MenuModel.fromDietModel((await diet.getBreakfast(day))),
       MenuModel.fromDietModel((await diet.getLunch(day))),

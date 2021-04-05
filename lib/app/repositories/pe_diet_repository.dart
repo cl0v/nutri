@@ -4,10 +4,10 @@ import 'package:nutri/app/providers/food_provider.dart';
 import 'package:nutri/app/providers/meal_provider.dart';
 
 abstract class IDiet {
-  Future<DietModel> getBreakfast(int day);
-  Future<DietModel> getLunch(int day);
-  Future<DietModel> getSnack(int day);
-  Future<DietModel> getDinner(int day);
+  Future<DietModel> getBreakfast(String day);
+  Future<DietModel> getLunch(String day);
+  Future<DietModel> getSnack(String day);
+  Future<DietModel> getDinner(String day);
 }
 
 class PeDietRepository extends IDiet {
@@ -31,7 +31,7 @@ class PeDietRepository extends IDiet {
   }
 
   @override
-  Future<DietModel> getLunch(int day) async {
+  Future<DietModel> getLunch(day) async {
     var meal = await mealProvider.fetchMeal(day, MealType.lunch);
     var mainFoodList = await foodProvider.loadMeats();
     var extraFoodList = await foodProvider.loadVegetables();
@@ -43,7 +43,7 @@ class PeDietRepository extends IDiet {
   }
 
   @override
-  Future<DietModel> getSnack(int day) async {
+  Future<DietModel> getSnack(day) async {
     var meal = await mealProvider.fetchMeal(day, MealType.snack);
     // var mainFoodList = await FoodModelHelper().loadMeats();
     return DietModel(
@@ -54,7 +54,7 @@ class PeDietRepository extends IDiet {
   }
 
   @override
-  Future<DietModel> getDinner(int day) async {
+  Future<DietModel> getDinner(day) async {
     var meal = await mealProvider.fetchMeal(day, MealType.dinner);
     var mainFoodList = await foodProvider.loadMeats();
     var extraFoodList = await foodProvider.loadVegetables();

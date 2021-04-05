@@ -13,7 +13,6 @@ class MenuModel extends MealCardModel {
     required this.extraFoodList,
   }) : super(
           type: meal.type,
-          day: meal.day,
           img: meal.img,
         );
 
