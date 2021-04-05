@@ -1,7 +1,7 @@
-import 'package:nutri/app/interfaces/pages/home/viewmodels/meal_card_viewmodel_interface.dart';
 import 'package:nutri/app/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/meal_card_model.dart';
 import 'package:get/get.dart';
+import 'package:nutri/app/pages/home/viewmodels/meal_card_viewmodel.dart';
 
 class HomeOverviewController {
   late IMealCardVM mealCardViewModel;

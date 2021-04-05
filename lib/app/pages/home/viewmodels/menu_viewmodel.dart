@@ -1,9 +1,16 @@
-import 'package:nutri/app/interfaces/pages/home/viewmodels/menu_viewmodel_interface.dart';
-import 'package:nutri/app/interfaces/providers/diet_interface.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
+import 'package:nutri/app/repositories/pe_diet_repository.dart';
 
-class MenuViewModel extends IMenuVM{
+
+abstract class IMenuVM {
+  Future<int> fetchMenuIndex();
+  Future<void> setMenuIndex(int idx);
+  Future<List<MenuModel>> fetchMenuList(int day);
+}
+
+
+class MenuViewModel extends IMenuVM {
   final IDiet diet;
   final ILocalStorage storage;
 
@@ -13,6 +20,7 @@ class MenuViewModel extends IMenuVM{
   });
 
   final String _menuIndexKey = 'menuIndex';
+  //TODO: Testar se da pra fazer sem o get
   String get menuIndexKey =>
       '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day.toString()}/$_menuIndexKey';
 

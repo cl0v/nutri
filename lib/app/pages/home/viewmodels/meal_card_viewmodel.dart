@@ -1,6 +1,9 @@
-import 'package:nutri/app/interfaces/pages/home/viewmodels/meal_card_viewmodel_interface.dart';
-import 'package:nutri/app/interfaces/providers/diet_interface.dart';
 import 'package:nutri/app/pages/home/models/meal_card_model.dart';
+import 'package:nutri/app/repositories/pe_diet_repository.dart';
+
+abstract class IMealCardVM {
+  Future<List<MealCardModel>> fetchMealCardList(int day);
+}
 
 class MealCardViewModel implements IMealCardVM {
   final IDiet diet;

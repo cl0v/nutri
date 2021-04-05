@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
-
 enum MealType {
   breakfast,
   lunch,
@@ -55,25 +53,5 @@ class MealModel {
       default:
         return '';
     }
-  }
-}
-
-const jsonPath = 'assets/jsons/meal.json';
-
-abstract class MealProvider {
-  static Future<List> _loadJson() async =>
-      jsonDecode(await rootBundle.loadString(jsonPath));
-
-  static Future<List<MealModel>> loadMealsFromJson() async {
-    var json = await (_loadJson());
-    return json.map((map) => MealModel.fromMap(map)).toList();
-  }
-
-  static Future<List<MealModel>> loadMealListByDay(int day) async {
-    var json = await (_loadJson());
-    return json
-        .map((map) => MealModel.fromMap(map))
-        .where((meal) => meal.day == day)
-        .toList();
   }
 }

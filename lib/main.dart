@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nutri/app_widget.dart';
 
+//TODO: Adicionar sexo da pessoa, masculino ou feminino
+//
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nutri/app/interfaces/pages/home/viewmodels/home_state_viewmodel_interface.dart';
-import 'package:nutri/app/interfaces/pages/home/viewmodels/menu_viewmodel_interface.dart';
-import 'package:nutri/app/interfaces/pages/home/viewmodels/review_card_viewmodel_interface.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_state_viewmodel.dart';
 import 'package:get/get.dart';
+import 'package:nutri/app/pages/home/viewmodels/menu_viewmodel.dart';
+import 'package:nutri/app/pages/home/viewmodels/review_card_viewmodel.dart';
 
 class HomeMenuController {
   //DONE: REVISAR AINDA

@@ -12,8 +12,8 @@ class HomeTitleController {
   //TODO: Ta faltando um init
 
 
-  bool  previewBtnDisabled = true;
-  bool  nextBtnDisabled = false;
+  bool  previewBtnDisabled = true; // Trocar para enabled
+  bool  nextBtnDisabled = false; // Trocar para enabled
 
   RxInt showingDayIndex = DateTime.now().weekday.obs;
 
