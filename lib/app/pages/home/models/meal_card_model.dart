@@ -10,4 +10,7 @@ class MealCardModel extends MealModel {
         );
 
   MealCardModel.fromMap(Map<String, dynamic> map) : super.fromMap(map);
+
+  factory MealCardModel.fromMealModel(MealModel meal) =>
+      MealCardModel(img: meal.img, type: meal.type);
 }

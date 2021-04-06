@@ -33,10 +33,10 @@ class MenuViewModel extends IMenuVM {
 //TODO: Encontrar item a item? Ou ja pegar os do dia todo?
   Future<List<MenuModel>> fetchMenuList(day) async {
     return [
-      MenuModel.fromDietModel((await diet.getBreakfast(day))),
-      MenuModel.fromDietModel((await diet.getLunch(day))),
-      MenuModel.fromDietModel((await diet.getSnack(day))),
-      MenuModel.fromDietModel((await diet.getDinner(day))),
+      MenuModel.fromDietModel((await diet.breakfast(day))),
+      MenuModel.fromDietModel((await diet.lunch(day))),
+      MenuModel.fromDietModel((await diet.snack(day))),
+      MenuModel.fromDietModel((await diet.dinner(day))),
     ];
   }
 }

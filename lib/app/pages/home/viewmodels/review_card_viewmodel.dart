@@ -2,9 +2,13 @@ import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/review_model.dart';
 
-abstract class IReviewCardVM {
+
+abstract class IReviewCardSetter{
+Future<void> setReview(MealModel meal, bool done);
+}
+
+abstract class IReviewCardVM implements IReviewCardSetter{
   Future<List<ReviewCardModel>> fetchReviewList();
-  Future<void> setReview(MealModel meal, bool done);
 }
 
 final _reviewKey = 'reviewListKey';

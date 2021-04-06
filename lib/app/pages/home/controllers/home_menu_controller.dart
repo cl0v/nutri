@@ -8,7 +8,7 @@ import 'package:nutri/app/pages/home/viewmodels/review_card_viewmodel.dart';
 class HomeMenuController {
   //DONE: REVISAR AINDA
   final IMenuVM menuViewModel;
-  final IReviewCardVM reviewViewModel;
+  final IReviewCardSetter reviewViewModel;
   final IHomeStateVM homeStateViewModel;
 
   HomeMenuController({

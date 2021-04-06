@@ -17,7 +17,6 @@ class MenuModel extends MealCardModel {
         );
 
   factory MenuModel.fromDietModel(DietModel diet) {
-    //TODO: Ver como remover isso
     return MenuModel(
       meal: diet.meal,
       mainFoodList: diet.mainFoodList,

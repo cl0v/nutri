@@ -14,8 +14,7 @@ main() {
 }
 
 const map = {
-  'meal': 0,
+  'type': 0,
   'img': 'img',
-  'day': 1,
   'isDone': true,
 };

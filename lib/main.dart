@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:nutri/app_widget.dart';
 
 //TODO: Adicionar sexo da pessoa, masculino ou feminino
-//
+//BUG: Quando a pessoa nao incia o dia, mas ja olha as refeições de dias seguintes, fica aparecendo o botao de comecar, deveria ser ver hoje
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -13,9 +13,6 @@ Future<void> main() async {
     (value) => runApp(MyApp()),
   );
 }
-
-//TODO: Buildar o app com base na refeição do livro, depois ir atualizando
-// Remover o foodswipe temporariamente
 
 //IDEIA: Mostrar pagina de review de dias anteriores
 //Página de historico (Provavelmente uma opção da página de perfil por enquanto)

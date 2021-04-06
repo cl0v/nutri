@@ -16,14 +16,14 @@ class MealProvider implements IMealProvider {
   });
 
   Future<MealModel> fetchMeal(day, mealType) async {
-    List<MealModel> meals = await _fetchDailyMeals(day);
+    List<MealModel> meals = await _requestDailyMeals(day);
     return meals.firstWhere((meal) => meal.type == mealType);
   }
 
   Future<List> _loadJson() async =>
       jsonDecode(await rootBundle.loadString('assets/jsons/meal.json'));
 
-  Future<List<MealModel>> _fetchDailyMeals(String day) async {
+  Future<List<MealModel>> _requestDailyMeals(String day) async {
     List? list = await storage.get('$day/meals');
     if (list == null) {
       await _buildDailyMeals(day);
@@ -44,8 +44,5 @@ class MealProvider implements IMealProvider {
       meals.firstWhere((meal) => meal.type == MealType.dinner).toJson(),
     ];
     await storage.put('$day/meals', list);
-    //Cria a lista de meals do dia, caso a pessoa aperte para ver mais um dia, vai criar esse tambem e deixar salvo...
-    //cria a medida que for solicitado
-    //Lembrando que quero apenas os meals e nao o menu(diet)
   }
 }

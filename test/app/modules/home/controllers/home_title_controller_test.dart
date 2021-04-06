@@ -1,3 +1,4 @@
+@Skip('Equanto estou testando coisas mais importantes')
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/pages/home/controllers/home_title_controller.dart';
 

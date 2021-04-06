@@ -13,27 +13,15 @@ class MealCardViewModel implements IMealCardVM {
   });
 
   Future<List<MealCardModel>> fetchMealCardList(day) async {
-    var breakfast = (await diet.getBreakfast(day)).meal;
-    var lunch = (await diet.getLunch(day)).meal;
-    var snack = (await diet.getSnack(day)).meal;
-    var dinner = (await diet.getDinner(day)).meal;
+    var breakfast = (await diet.breakfast(day)).meal;
+    var lunch = (await diet.lunch(day)).meal;
+    var snack = (await diet.snack(day)).meal;
+    var dinner = (await diet.dinner(day)).meal;
     return [
-      MealCardModel(
-        img: breakfast.img,
-        type: breakfast.type,
-      ),
-      MealCardModel(
-        img: lunch.img,
-        type: lunch.type,
-      ),
-      MealCardModel(
-        img: snack.img,
-        type: snack.type,
-      ),
-      MealCardModel(
-        img: dinner.img,
-        type: dinner.type,
-      ),
+      MealCardModel.fromMealModel(breakfast),
+      MealCardModel.fromMealModel(lunch),
+      MealCardModel.fromMealModel(snack),
+      MealCardModel.fromMealModel(dinner),
     ];
   }
 }
