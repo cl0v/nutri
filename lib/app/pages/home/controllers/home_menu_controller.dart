@@ -21,7 +21,9 @@ class HomeMenuController {
 
   late PageController pageController;
 
+  late MenuModel menuItem;
   init(String day) async {
+    // menuItem = menuViewModel.fetchMenuItem(day, 0);
     int menuIndex = await menuViewModel.fetchMenuIndex();
     pageController = PageController(initialPage: menuIndex);
     menuList.assignAll(
@@ -41,7 +43,7 @@ class HomeMenuController {
     var pgIdx = pageController.page!.toInt();
     _saveMenuOptions(pgIdx, val);
     pageController.nextPage(
-      duration: Duration(microseconds: 100),
+      duration: Duration(microseconds: 1),
       curve: Curves.ease,
     );
   }
@@ -52,6 +54,7 @@ class HomeMenuController {
   }
 
   onMenuPageChanged(int idx) async {
-    if (idx >= 4) homeStateViewModel.onMenuNextState();
+    //TODO: Remover isso e botar o lenght das refeiçoes
+    if (idx >= menuList.length) homeStateViewModel.onMenuNextState();
   }
 }

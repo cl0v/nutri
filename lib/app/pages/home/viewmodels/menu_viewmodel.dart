@@ -1,4 +1,5 @@
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
+import 'package:nutri/app/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/menu_model.dart';
 import 'package:nutri/app/repositories/pe_diet_repository.dart';
 
@@ -32,11 +33,13 @@ class MenuViewModel extends IMenuVM {
 
 //TODO: Encontrar item a item? Ou ja pegar os do dia todo?
   Future<List<MenuModel>> fetchMenuList(day) async {
-    return [
-      MenuModel.fromDietModel((await diet.breakfast(day))),
-      MenuModel.fromDietModel((await diet.lunch(day))),
-      MenuModel.fromDietModel((await diet.snack(day))),
-      MenuModel.fromDietModel((await diet.dinner(day))),
-    ];
+    return (await diet.fetchDietList(day))
+        .map((dietModel) => MenuModel.fromDietModel(dietModel))
+        .toList();
+  }
+
+  Future<MenuModel> fetchMenuItem(String day, int idx) async {
+    var mealType = MealType.values[idx];
+    return MenuModel.fromDietModel(await diet.fetchDietMeal(day, mealType));
   }
 }

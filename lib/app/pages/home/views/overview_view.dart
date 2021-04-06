@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/pages/home/components/food_banner_card_widget.dart';
 import 'package:nutri/app/models/meal_model.dart';
+import 'package:nutri/app/pages/home/models/meal_card_model.dart';
 
 class OverviewView extends StatelessWidget {
   const OverviewView({required this.items});
 
-  final List<MealModel> items;
+  final List<MealCardModel> items;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,8 @@ class OverviewView extends StatelessWidget {
             ); //Refeições do dia
           return  FoodBannerCardWidget(
               image: items[idx - 1].img,
-              title: items[idx - 1].mealTypeToString(),
+              title: items[idx - 1].title,
+              type: items[idx - 1].mealTypeToString(),
           );
         },
       ),

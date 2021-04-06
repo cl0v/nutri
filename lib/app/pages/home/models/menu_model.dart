@@ -14,6 +14,7 @@ class MenuModel extends MealCardModel {
   }) : super(
           type: meal.type,
           img: meal.img,
+          title: meal.title
         );
 
   factory MenuModel.fromDietModel(DietModel diet) {

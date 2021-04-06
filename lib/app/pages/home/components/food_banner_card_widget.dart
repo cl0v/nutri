@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 class FoodBannerCardWidget extends StatelessWidget {
   final String image;
   final String title;
+  final String type;
   final Color? color;
   final double ratio;
 
   const FoodBannerCardWidget({
     required this.image,
+    required this.type,
     required this.title,
     this.color,
     this.ratio = 2.9,
@@ -53,7 +55,7 @@ class FoodBannerCardWidget extends StatelessWidget {
                           ),
                     ),
                     child: Text(
-                      title,
+                      '$type\n$title',
                       textAlign: TextAlign.center,
                       style: Get.theme!.textTheme.headline6,
                     ),

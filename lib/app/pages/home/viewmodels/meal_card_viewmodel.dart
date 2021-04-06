@@ -13,15 +13,9 @@ class MealCardViewModel implements IMealCardVM {
   });
 
   Future<List<MealCardModel>> fetchMealCardList(day) async {
-    var breakfast = (await diet.breakfast(day)).meal;
-    var lunch = (await diet.lunch(day)).meal;
-    var snack = (await diet.snack(day)).meal;
-    var dinner = (await diet.dinner(day)).meal;
-    return [
-      MealCardModel.fromMealModel(breakfast),
-      MealCardModel.fromMealModel(lunch),
-      MealCardModel.fromMealModel(snack),
-      MealCardModel.fromMealModel(dinner),
-    ];
+    return (await diet.fetchDietList(day))
+        .map((dietModel) => dietModel.meal)
+        .map((meal) => MealCardModel.fromMealModel(meal))
+        .toList();
   }
 }

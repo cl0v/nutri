@@ -12,7 +12,7 @@ class HomeOverviewController {
 
   final _overviewList = <MealCardModel>[].obs;
 
-  List<MealModel> get overViewList => _overviewList;
+  List<MealCardModel> get overViewList => _overviewList;
 
   bool isTodayOverview = true;
 
