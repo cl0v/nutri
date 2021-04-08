@@ -13,7 +13,7 @@ class HomeOverviewController {
 
   List<HomeMealModel> get overViewList => _overviewList;
 
-  bool isTodayOverview = true;
+  bool isTodayOverview = true; //TODO: Remover
 
   init(String day) async {
     _overviewList.assignAll(

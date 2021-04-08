@@ -1,23 +1,18 @@
 import 'package:get/get.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
-import 'package:nutri/app/pages/home/controllers/home_menu_controller.dart';
 import 'package:nutri/app/pages/home/controllers/home_overview_controller.dart';
-import 'package:nutri/app/pages/home/controllers/home_review_controller.dart';
 import 'package:nutri/app/pages/home/helpers/home_title_helper.dart';
 import 'package:nutri/app/pages/home/models/home_card_model.dart';
-import 'package:nutri/app/pages/home/models/home_state_model.dart';
-import 'package:nutri/app/pages/home/viewmodels/home_state_viewmodel.dart';
+import 'package:nutri/app/pages/home/viewmodels/home_card_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/meal_card_viewmodel.dart';
-import 'package:nutri/app/pages/home/viewmodels/menu_viewmodel.dart';
-import 'package:nutri/app/pages/home/viewmodels/review_card_viewmodel.dart';
 import 'package:nutri/app/repositories/pe_diet_repository.dart';
 
 abstract class IHomeController {
-  late final List<HomeCardModel>
-      homeCardList; //Recebe essa lista do banco de dados
-  late HomeTitleController homeTitleController; //Controller do titulo
+  late final List<HomeCardModel> homeCardList;
+  //Recebe essa lista do banco de dados
+  late final HomeTitleController homeTitleController; //Controller do titulo
   void onBannerTapped(int idx); // Ação ao clicar no banner
-  late HomeOverviewController homeOverviewViewController; //TODO: Remover
+  late final IHomeCardBloc homeCardViewModel;
 }
 
 class HomeController extends GetxController implements IHomeController {
@@ -27,31 +22,22 @@ class HomeController extends GetxController implements IHomeController {
   HomeController({
     required this.diet,
     required this.storage,
+    required this.homeCardViewModel,
   });
 
   late HomeOverviewController homeOverviewViewController;
 
-  late HomeMenuController homeMenuViewController;
-
-  late HomeReviewController homeReviewViewController;
-
-  late IHomeStateVM homeStateViewModel;
 
   final HomeTitleController homeTitleController = HomeTitleController()..init();
-  HomeState get state => homeStateViewModel.homeState.value!;
 
-  showMealsCard() {
-    homeStateViewModel.onOverViewNextState();
-    homeTitleController.onBackToTodayPressed();
-  }
+  late List<HomeCardModel> homeCardList;
 
   @override
   void onInit() {
     super.onInit();
+    init();
 
-    homeStateViewModel = HomeStateViewModel(
-      storage: storage,
-    );
+    
 
     homeOverviewViewController = HomeOverviewController(
       mealCardViewModel: MealCardViewModel(
@@ -59,54 +45,39 @@ class HomeController extends GetxController implements IHomeController {
       ),
     );
 
-    _fetchHomeState();
+    homeOverviewViewController.init(homeTitleController.todayDate);
 
-    ever(homeTitleController.showingDayIndex, _onDayChanged);
-    ever(homeStateViewModel.homeState, _onStateChanded);
+    // _fetchHomeState();
+    // ever(homeTitleController.showingDayIndex, _onDayChanged);
   }
 
-  _fetchHomeState() async {
-    homeStateViewModel.setHomeState = await homeStateViewModel.fetchHomeState();
+  init() async {
+    homeCardList = await homeCardViewModel.fetchHomeCardList();
   }
 
-  _onDayChanged(int day) async {
-    if (day == DateTime.now().weekday) {
-      homeOverviewViewController.isTodayOverview = true;
-      homeStateViewModel.changeStateWhithoutSave(
-        await homeStateViewModel.fetchHomeState(),
-      );
-    } else {
-      homeOverviewViewController.isTodayOverview = false;
-      homeStateViewModel.changeStateWhithoutSave(HomeState.Overview);
-    }}
+  // _fetchHomeState() async {
+  //   homeStateViewModel.setHomeState = await homeStateViewModel.fetchHomeState();
+  // }
 
-    _onStateChanded(HomeState? state) async {
-      switch (state) {
-        case HomeState.Overview:
-          homeOverviewViewController
-              .init(homeTitleController.todayDate); //TODO: Criar um getter
-          break;
-        case HomeState.Loading:
-          // TODO: Handle this case.
-          break;
-        case HomeState.Menu:
-          // TODO: Handle this case.
-          break;
-        case HomeState.Review:
-          // TODO: Handle this case.
-          break;
-        default:
-      }
-    
+  // _onDayChanged(int day) async {
+  //   if (day == DateTime.now().weekday) {
+  //     homeOverviewViewController.isTodayOverview = true;
+  //     homeStateViewModel.changeStateWhithoutSave(
+  //       await homeStateViewModel.fetchHomeState(),
+  //     );
+  //   } else {
+  //     homeOverviewViewController.isTodayOverview = false;
+  //     homeStateViewModel.changeStateWhithoutSave(HomeState.Overview);
+  //   }
 
-    //TODO: Esse day nao funcionará
-
-    homeOverviewViewController
-        .changeOverview(homeTitleController.showingDayDate);
-  }
+  //   homeOverviewViewController
+  //       .changeOverview(homeTitleController.showingDayDate);
+  // }
 
   @override
-  late List<HomeCardModel> homeCardList;
+  void onBannerTapped(int idx) {
+    // TODO: implement onBannerTapped
+  }
 
   @override
   set homeTitleController(HomeTitleController _homeTitleController) {
@@ -114,9 +85,7 @@ class HomeController extends GetxController implements IHomeController {
   }
 
   @override
-  void onBannerTapped(int idx) {
-    // TODO: implement onBannerTapped
-  }
+  IHomeCardBloc homeCardViewModel;
 }
 
 class HomeTitleController {

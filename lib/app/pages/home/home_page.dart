@@ -19,24 +19,26 @@ class HomePage extends GetView<HomeController> {
     );
   }
 
-  title() => Obx(()=>Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: controller.homeTitleController.previewBtnEnabled
-                ? controller.homeTitleController.onPreviewDayPressed
-                : null,
-          ),
-          Text(controller.homeTitleController.title),
-          IconButton(
-            icon: Icon(Icons.arrow_forward_ios),
-            onPressed: controller.homeTitleController.nextBtnEnabled
-                ? controller.homeTitleController.onNextDayPressed
-                : null,
-          ),
-        ],
-  ));
+  title() => Obx(
+        () => Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: controller.homeTitleController.previewBtnEnabled
+                  ? controller.homeTitleController.onPreviewDayPressed
+                  : null,
+            ),
+            Text(controller.homeTitleController.title),
+            IconButton(
+              icon: Icon(Icons.arrow_forward_ios),
+              onPressed: controller.homeTitleController.nextBtnEnabled
+                  ? controller.homeTitleController.onNextDayPressed
+                  : null,
+            ),
+          ],
+        ),
+      );
 
   body() {
     return Obx(

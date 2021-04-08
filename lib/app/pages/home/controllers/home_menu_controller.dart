@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nutri/app/pages/home/models/home_meal_menu_model.dart';
-import 'package:nutri/app/pages/home/viewmodels/home_state_viewmodel.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/pages/home/viewmodels/menu_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/review_card_viewmodel.dart';
@@ -9,12 +8,10 @@ class HomeMenuController {
   //DONE: REVISAR AINDA
   final IMenuVM menuViewModel;
   final IReviewCardSetter reviewViewModel;
-  final IHomeStateVM homeStateViewModel;
 
   HomeMenuController({
     required this.menuViewModel,
     required this.reviewViewModel,
-    required this.homeStateViewModel,
   });
 
   final menuList = <HomeMealMenuModel>[].obs;
@@ -53,8 +50,8 @@ class HomeMenuController {
     reviewViewModel.setReview(menuList[idx], done);
   }
 
-  onMenuPageChanged(int idx) async {
-    //TODO: Remover isso e botar o lenght das refeiçoes
-    if (idx >= menuList.length) homeStateViewModel.onMenuNextState();
-  }
+  // onMenuPageChanged(int idx) async {
+  //   //TODO: Remover isso e botar o lenght das refeiçoes
+  //   if (idx >= menuList.length) homeStateViewModel.onMenuNextState();
+  // }
 }
