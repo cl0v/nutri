@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
-import 'package:nutri/app/pages/home/pages/meal/interfaces/meal_controller_interface.dart';
 
+import 'interfaces/meal_controller_interface.dart';
 import 'meal_card_model.dart';
+
 class MealController extends GetxController implements IMealController {
 
   @override

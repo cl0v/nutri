@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import 'package:nutri/app/pages/home/bindings/home_binding.dart';
+import 'package:nutri/app/pages/home/home_binding.dart';
 import 'package:nutri/app/pages/home/home_page.dart';
 import 'package:nutri/app/pages/home/pages/meal/meal_binding.dart';
 import 'package:nutri/app/pages/home/pages/meal/meal_page.dart';

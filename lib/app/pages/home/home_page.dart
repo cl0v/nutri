@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:nutri/app/pages/home/components/home_title_bar_widget.dart';
-import 'package:nutri/app/pages/home/controllers/home_controller.dart';
-import 'package:nutri/app/pages/home/models/home_state_model.dart';
 
-import 'package:nutri/app/pages/home/views/overview_view.dart';
-import 'package:nutri/app/pages/home/views/review_view.dart';
+import 'home_controller.dart';
+import 'components/food_banner_card_widget.dart';
 
 class HomePage extends GetView<HomeController> {
   @override
@@ -16,92 +13,58 @@ class HomePage extends GetView<HomeController> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: Obx(
-          () => HomeTitleBarWidget(
-            onNextDayPressed: controller.homeTitleController.onNextDayPressed,
-            onPreviewDayPressed:
-                controller.homeTitleController.onPreviewDayPressed,
-            title: controller.homeTitleController.title,
-            isNextBtnEnabled: controller.homeTitleController.nextBtnEnabled,
-            isPreviewBtnEnabled:
-                controller.homeTitleController.previewBtnEnabled,
-          ),
-        ),
+        title: title(),
       ),
       body: body(),
-      bottomNavigationBar: bottomNavBar(),
     );
   }
+
+  title() => Obx(()=>Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: controller.homeTitleController.previewBtnEnabled
+                ? controller.homeTitleController.onPreviewDayPressed
+                : null,
+          ),
+          Text(controller.homeTitleController.title),
+          IconButton(
+            icon: Icon(Icons.arrow_forward_ios),
+            onPressed: controller.homeTitleController.nextBtnEnabled
+                ? controller.homeTitleController.onNextDayPressed
+                : null,
+          ),
+        ],
+  ));
 
   body() {
     return Obx(
-      () {
-        switch (controller.state) {
-          case HomeState.Loading:
-            return Center(child: CircularProgressIndicator());
-          case HomeState.Review:
-            return Obx(
-              () => controller.homeReviewViewController.reviewList.length > 0
-                  ? ReviewView(
-                      items: controller.homeReviewViewController.reviewList)
-                  : Center(child: CircularProgressIndicator()),
-            );
-          case HomeState.Overview:
-            return Obx(
-              () => controller.homeOverviewViewController.overViewList.length >
-                      0
-                  ? OverviewView(
-                      items: controller.homeOverviewViewController.overViewList,
-                      onBannerTapped: () {
-                        print('tocado');
-                        //TODO: Implement
-                      },
-                    )
-                  : Center(child: CircularProgressIndicator()),
-            );
-
-          default:
-            return Center(
+      () => controller.homeOverviewViewController.overViewList.length > 0
+          ? SafeArea(
+              child: ListView.builder(
+                itemCount:
+                    controller.homeOverviewViewController.overViewList.length,
+                itemBuilder: (ctx, idx) {
+                  return FoodBannerCardWidget(
+                    image: controller
+                        .homeOverviewViewController.overViewList[idx].img,
+                    title: controller
+                        .homeOverviewViewController.overViewList[idx].title,
+                    type: controller
+                        .homeOverviewViewController.overViewList[idx]
+                        .mealTypeToString(),
+                    onBannerTapped: () {
+                      //TODO: Implement
+                      print('banner tocado');
+                    },
+                  );
+                },
+              ),
+            )
+          : Center(
               child: CircularProgressIndicator(),
-            );
-        }
-      },
-    );
-  }
-
-  bottomNavBar() {
-    return BottomAppBar(
-      color: Colors.transparent,
-      elevation: 0,
-      child: Container(
-        height: 50,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: Obx(
-            () {
-              switch (controller.state) {
-                case HomeState.Loading:
-                  return Container();
-                case HomeState.Overview:
-                  if (controller.homeOverviewViewController.isTodayOverview)
-                    return ElevatedButton(
-                      onPressed: controller.showMealsCard,
-                      child: Text('Começar'),
-                    );
-                  else
-                    return ElevatedButton(
-                      onPressed:
-                          controller.homeTitleController.onBackToTodayPressed,
-                      child: Text('Ver hoje'),
-                    );
-
-                default:
-                  return Container();
-              }
-            },
-          ),
-        ),
-      ),
+            ),
     );
   }
 }
