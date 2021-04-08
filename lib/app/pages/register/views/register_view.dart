@@ -147,16 +147,16 @@ class RegisterView extends GetView<RegisterController> {
                         suffix: Text('kg'),
                       ),
                     ),
-                    CheckboxListTile(
-                      value: !controller.isMale,
-                      onChanged: controller.toggleSex,
-                      title: Text('Mulher'),
-                    ),
-                    CheckboxListTile(
-                      value: controller.isMale,
-                      onChanged: controller.toggleSex,
-                      title: Text('Homem'),
-                    ),
+                    Obx(() => CheckboxListTile(
+                          value: !controller.isMale,
+                          onChanged: controller.toggleSex,
+                          title: Text('Mulher'),
+                        )),
+                    Obx(() => CheckboxListTile(
+                          value: controller.isMale,
+                          onChanged: controller.toggleSex,
+                          title: Text('Homem'),
+                        )),
                     Spacer(),
                     Align(
                       alignment: Alignment.centerRight,

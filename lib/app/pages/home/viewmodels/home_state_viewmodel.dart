@@ -39,6 +39,7 @@ class HomeStateViewModel implements IHomeStateVM {
   void onMenuNextState() {
     _changeState(HomeState.Review);
   }
+  //TODO: Criar funcao chamada nextState que descobre qual o estado e define qual o proximo 
 
   void onOverViewNextState() {
     _changeState(HomeState.Menu);

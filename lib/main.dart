@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nutri/app_widget.dart';
 
-//TODO: Adicionar sexo da pessoa, masculino ou feminino
 //BUG: Quando a pessoa nao incia o dia, mas ja olha as refeições de dias seguintes, fica aparecendo o botao de comecar, deveria ser ver hoje
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

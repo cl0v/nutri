@@ -66,7 +66,7 @@ class RegisterController extends GetxController {
   }
 
   void toggleSex(v) {
-    _isMale.value = v;
+    _isMale.toggle();
   }
 
   void onShowPasswordPressed() => _isObscurePassword.toggle();
