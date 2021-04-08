@@ -4,7 +4,6 @@ import 'package:nutri/app/pages/home/components/home_title_bar_widget.dart';
 import 'package:nutri/app/pages/home/controllers/home_controller.dart';
 import 'package:nutri/app/pages/home/models/home_state_model.dart';
 
-import 'package:nutri/app/pages/home/views/menu_view.dart';
 import 'package:nutri/app/pages/home/views/overview_view.dart';
 import 'package:nutri/app/pages/home/views/review_view.dart';
 
@@ -52,21 +51,15 @@ class HomePage extends GetView<HomeController> {
               () => controller.homeOverviewViewController.overViewList.length >
                       0
                   ? OverviewView(
-                      items: controller.homeOverviewViewController.overViewList)
-                  : Center(child: CircularProgressIndicator()),
-            );
-          case HomeState.Menu:
-            return Obx(
-              () => controller.homeMenuViewController.menuList.length > 0
-                  ? MenuView(
-                      menuList: controller.homeMenuViewController.menuList,
-                      pageController:
-                          controller.homeMenuViewController.pageController,
-                      onPageChanged:
-                          controller.homeMenuViewController.onMenuPageChanged,
+                      items: controller.homeOverviewViewController.overViewList,
+                      onBannerTapped: () {
+                        print('tocado');
+                        //TODO: Implement
+                      },
                     )
                   : Center(child: CircularProgressIndicator()),
             );
+
           default:
             return Center(
               child: CircularProgressIndicator(),
@@ -101,33 +94,7 @@ class HomePage extends GetView<HomeController> {
                           controller.homeTitleController.onBackToTodayPressed,
                       child: Text('Ver hoje'),
                     );
-                case HomeState.Menu:
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.resolveWith(
-                                (states) => Size(120, 36)),
-                            backgroundColor: MaterialStateProperty.resolveWith(
-                                (states) => Colors.red)),
-                        onPressed:
-                            controller.homeMenuViewController.onSkippedPressed,
-                        child: Text('Pulei'),
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.resolveWith(
-                                (states) => Size(120, 36)),
-                            backgroundColor: MaterialStateProperty.resolveWith(
-                                (states) => Colors.green)),
-                        onPressed:
-                            controller.homeMenuViewController.onDonePressed,
-                        child: Text('Concluí'),
-                      ),
-                    ],
-                  );
+
                 default:
                   return Container();
               }

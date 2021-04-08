@@ -22,6 +22,7 @@ class ReviewView extends StatelessWidget {
               textAlign: TextAlign.center,
             );
           return FoodBannerCardWidget(
+            onBannerTapped: (){},
               image: items[idx - 1].img,
               title: items[idx-1].title,
               type: items[idx - 1].mealTypeToString(),

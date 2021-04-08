@@ -12,7 +12,6 @@ class MealModel {
   final MealType type;
   final String img;
   final String title;
-  //TODO: Adicionar o titulo da refeição e mostrar no lugar de qual refeição será(Proxima minor update)
   //FoodCategory foodCategoryRequired
   //FoodCategory extraFoodCategoryRequired
 

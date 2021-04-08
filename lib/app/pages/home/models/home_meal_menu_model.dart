@@ -20,8 +20,8 @@ class HomeMealMenuModel extends HomeMealModel {
   factory HomeMealMenuModel.fromDietModel(DietModel diet) {
     return HomeMealMenuModel(
       meal: diet.meal,
-      mainFoodList: diet.mainFoodList,
-      extraFoodList: diet.extraFoodList,
+      mainFoodList: diet.mainFoodList!,
+      extraFoodList: diet.extraFoodList!,
     );
   }
 }
