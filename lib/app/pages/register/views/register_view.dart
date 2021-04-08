@@ -33,105 +33,143 @@ class RegisterView extends GetView<RegisterController> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(25),
             ),
-            child: Column(
+            child: PageView(
+              controller: controller.pageController,
               children: [
-                Text(
-                  'Criar conta',
-                  style: Get.theme!.textTheme.headline4!
-                      .copyWith(color: Colors.black54),
-                ),
-                Divider(),
-                Spacer(),
-                TextFormField(
-                  validator: (s) {
-                    if (!GetUtils.isEmail(s!))
-                      return 'Por favor insira um email valido';
-                    return null;
-                  },
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.emailAddress,
-                  controller: controller.emailController,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.email),
-                    hintText: 'E-mail',
-                    labelText: 'E-mail',
-                  ),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Obx(
-                  () => TextFormField(
-                    obscureText: controller.isObscurePassword,
-                    controller: controller.passwordController,
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          controller.isObscurePassword
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                Column(
+                  children: [
+                    Text(
+                      'Criar conta',
+                      style: Get.theme!.textTheme.headline4!
+                          .copyWith(color: Colors.black54),
+                    ),
+                    Divider(),
+                    Spacer(),
+                    TextFormField(
+                      validator: (s) {
+                        if (!GetUtils.isEmail(s!))
+                          return 'Por favor insira um email valido';
+                        return null;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      keyboardType: TextInputType.emailAddress,
+                      controller: controller.emailController,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.email),
+                        hintText: 'E-mail',
+                        labelText: 'E-mail',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Obx(
+                      () => TextFormField(
+                        obscureText: controller.isObscurePassword,
+                        controller: controller.passwordController,
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              controller.isObscurePassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                            onPressed: controller.onShowPasswordPressed,
+                          ),
+                          prefixIcon: Icon(
+                            Icons.lock,
+                          ),
+                          hintText: 'Senha',
+                          labelText: 'Senha',
                         ),
-                        onPressed: controller.onShowPasswordPressed,
                       ),
-                      prefixIcon: Icon(
-                        Icons.lock,
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Obx(
+                      () => controller.registerError
+                          ? Text(
+                              controller.errorMsg,
+                              style: TextStyle(
+                                color: kErrorColor,
+                              ), //Alterar para error text
+                            )
+                          : Container(),
+                    ),
+                    Spacer(),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton.icon(
+                        label: Text('Continuar'),
+                        icon: Icon(
+                          Icons.arrow_forward,
+                          size: 18,
+                        ),
+                        onPressed: controller.onContinuePressed,
                       ),
-                      hintText: 'Senha',
-                      labelText: 'Senha',
                     ),
-                  ),
+                  ],
                 ),
-                SizedBox(
-                  height: 8,
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: controller.heightController,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.height,
+                Column(
+                  children: [
+                    Text(
+                      'Criar conta',
+                      style: Get.theme!.textTheme.headline4!
+                          .copyWith(color: Colors.black54),
                     ),
-                    hintText: 'Altura',
-                    labelText: 'Altura',
-                    suffix: Text('cm'),
-                  ),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: controller.weightController,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.fitness_center,
+                    Divider(),
+                    Spacer(),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: controller.heightController,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.height,
+                        ),
+                        hintText: 'Altura',
+                        labelText: 'Altura',
+                        suffix: Text('cm'),
+                      ),
                     ),
-                    hintText: 'Peso',
-                    labelText: 'Peso',
-                    suffix: Text('kg'),
-                  ),
-                ),
-                Obx(
-                  () => controller.registerError
-                      ? Text(
-                          controller.errorMsg,
-                          style: TextStyle(
-                            color: kErrorColor,
-                          ), //Alterar para error text
-                        )
-                      : Container(),
-                ),
-                Spacer(),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: ElevatedButton.icon(
-                    label: Text('Confirmar'),
-                    icon: Icon(
-                      Icons.arrow_forward,
-                      size: 18,
+                    SizedBox(
+                      height: 16,
                     ),
-                    onPressed: controller.onConfirmPressed,
-                  ),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: controller.weightController,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.fitness_center,
+                        ),
+                        hintText: 'Peso',
+                        labelText: 'Peso',
+                        suffix: Text('kg'),
+                      ),
+                    ),
+                    CheckboxListTile(
+                      value: !controller.isMale,
+                      onChanged: controller.toggleSex,
+                      title: Text('Mulher'),
+                    ),
+                    CheckboxListTile(
+                      value: controller.isMale,
+                      onChanged: controller.toggleSex,
+                      title: Text('Homem'),
+                    ),
+                    Spacer(),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton.icon(
+                        label: Text('Continuar'),
+                        icon: Icon(
+                          Icons.arrow_forward,
+                          size: 18,
+                        ),
+                        onPressed: controller.onConfirmPressed,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

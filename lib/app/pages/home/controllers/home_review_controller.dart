@@ -1,5 +1,5 @@
 import 'package:nutri/app/models/meal_model.dart';
-import 'package:nutri/app/pages/home/models/review_model.dart';
+import 'package:nutri/app/pages/home/models/home_meal_review.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/pages/home/viewmodels/review_card_viewmodel.dart';
 
@@ -9,9 +9,9 @@ class HomeReviewController {
 
   HomeReviewController({required this.reviewViewModel,});
 
-  final _reviewList = <ReviewCardModel>[].obs;
+  final _reviewList = <HomeMealReviewModel>[].obs;
 
-  List<ReviewCardModel> get reviewList => _reviewList;
+  List<HomeMealReviewModel> get reviewList => _reviewList;
   
   void init() async {
     _reviewList.assignAll(await reviewViewModel.fetchReviewList());

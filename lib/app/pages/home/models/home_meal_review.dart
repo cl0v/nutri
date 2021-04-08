@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:nutri/app/models/meal_model.dart';
-import 'package:nutri/app/pages/home/models/meal_card_model.dart';
+import 'package:nutri/app/pages/home/models/home_meal_model.dart';
 
-class ReviewCardModel extends MealCardModel {
+class HomeMealReviewModel extends HomeMealModel {
   //enum
   final bool done;
 
-  ReviewCardModel({
-    required MealCardModel mealCardModel,
+  HomeMealReviewModel({
+    required HomeMealModel mealCardModel,
     required this.done,
   }) : super(
           img: mealCardModel.img,
@@ -23,16 +23,16 @@ class ReviewCardModel extends MealCardModel {
     return map;
   }
 
-  ReviewCardModel.fromMap(Map<String, dynamic> map)
+  HomeMealReviewModel.fromMap(Map<String, dynamic> map)
       : this.done = map['isDone'],
         super.fromMap(map);
 
-  ReviewCardModel.fromMealModel(MealModel meal, bool done)
+  HomeMealReviewModel.fromMealModel(MealModel meal, bool done)
       : this.done = done,
         super(img: meal.img, type: meal.type, title: meal.title);
 
   String toJson() => json.encode(toMap());
 
-  factory ReviewCardModel.fromJson(String source) =>
-      ReviewCardModel.fromMap(json.decode(source));
+  factory HomeMealReviewModel.fromJson(String source) =>
+      HomeMealReviewModel.fromMap(json.decode(source));
 }

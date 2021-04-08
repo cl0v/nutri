@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nutri/app/pages/home/components/food_banner_card_widget.dart';
 import 'package:nutri/app/pages/home/components/main_food_selector_widget.dart';
-import 'package:nutri/app/pages/home/models/menu_model.dart';
+import 'package:nutri/app/pages/home/models/home_meal_menu_model.dart';
 
 class MenuView extends StatelessWidget {
-  final List<MenuModel> menuList;
+  final List<HomeMealMenuModel> menuList;
   final PageController pageController;
   final Function(int) onPageChanged;
 

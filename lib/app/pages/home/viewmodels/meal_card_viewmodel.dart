@@ -1,8 +1,8 @@
-import 'package:nutri/app/pages/home/models/meal_card_model.dart';
+import 'package:nutri/app/pages/home/models/home_meal_model.dart';
 import 'package:nutri/app/repositories/pe_diet_repository.dart';
 
 abstract class IMealCardVM {
-  Future<List<MealCardModel>> fetchMealCardList(String day);
+  Future<List<HomeMealModel>> fetchMealCardList(String day);
 }
 
 class MealCardViewModel implements IMealCardVM {
@@ -12,10 +12,10 @@ class MealCardViewModel implements IMealCardVM {
     required this.diet,
   });
 
-  Future<List<MealCardModel>> fetchMealCardList(day) async {
+  Future<List<HomeMealModel>> fetchMealCardList(day) async {
     return (await diet.fetchDietList(day))
         .map((dietModel) => dietModel.meal)
-        .map((meal) => MealCardModel.fromMealModel(meal))
+        .map((meal) => HomeMealModel.fromMealModel(meal))
         .toList();
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutri/app/pages/home/models/menu_model.dart';
+import 'package:nutri/app/pages/home/models/home_meal_menu_model.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_state_viewmodel.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/pages/home/viewmodels/menu_viewmodel.dart';
@@ -17,11 +17,11 @@ class HomeMenuController {
     required this.homeStateViewModel,
   });
 
-  final menuList = <MenuModel>[].obs;
+  final menuList = <HomeMealMenuModel>[].obs;
 
   late PageController pageController;
 
-  late MenuModel menuItem;
+  late HomeMealMenuModel menuItem;
   init(String day) async {
     // menuItem = menuViewModel.fetchMenuItem(day, 0);
     int menuIndex = await menuViewModel.fetchMenuIndex();

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/pages/home/components/food_banner_card_widget.dart';
-import 'package:nutri/app/pages/home/models/review_model.dart';
+import 'package:nutri/app/pages/home/models/home_meal_review.dart';
 import 'package:nutri/constants.dart';
 
 class ReviewView extends StatelessWidget {
-  final List<ReviewCardModel> items;
+  final List<HomeMealReviewModel> items;
 
   const ReviewView({required this.items});
 
