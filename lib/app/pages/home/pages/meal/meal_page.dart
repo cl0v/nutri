@@ -9,7 +9,8 @@ class MealPage extends GetView<MealController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(controller.mealPageModel.meal.mealTypeToString().toUpperCase()),
+        title: Text(
+            controller.mealCardModel.meal.mealTypeToString().toUpperCase()),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -28,7 +29,7 @@ class MealPage extends GetView<MealController> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
-                        image: AssetImage(controller.mealPageModel.meal.img),
+                        image: AssetImage(controller.mealCardModel.meal.img),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -37,10 +38,10 @@ class MealPage extends GetView<MealController> {
               ),
             ),
             MainFoodSelectorWidget(
-              foodList: controller.mealPageModel.mainFoodList!,
+              foodList: controller.mealCardModel.mainFoodList!,
             ),
             ExtraFoodSelectorWidget(
-              extraList: controller.mealPageModel.extraFoodList!,
+              extraList: controller.mealCardModel.extraFoodList!,
             ),
           ],
         ),
@@ -62,9 +63,7 @@ class MealPage extends GetView<MealController> {
                           (states) => Size(120, 36)),
                       backgroundColor: MaterialStateProperty.resolveWith(
                           (states) => Colors.red)),
-                  onPressed: () {
-                    //TODO: Implement
-                  },
+                  onPressed: controller.onSkipPressed,
                   child: Text('Pulei'),
                 ),
                 ElevatedButton(
@@ -73,9 +72,7 @@ class MealPage extends GetView<MealController> {
                           (states) => Size(120, 36)),
                       backgroundColor: MaterialStateProperty.resolveWith(
                           (states) => Colors.green)),
-                  onPressed: () {
-                    //TODO: Implement
-                  },
+                  onPressed: controller.onDonePressed,
                   child: Text('Concluí'),
                 ),
               ],

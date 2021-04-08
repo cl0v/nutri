@@ -1,4 +1,3 @@
-import 'package:nutri/app/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/home_meal_model.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/pages/home/viewmodels/meal_card_viewmodel.dart';
