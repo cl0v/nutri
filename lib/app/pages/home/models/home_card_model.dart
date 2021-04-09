@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:nutri/app/models/diet_model.dart';
+import 'package:nutri/app/models/meal_model.dart';
 
 enum HomeCardStatus {
   None,
@@ -8,34 +7,36 @@ enum HomeCardStatus {
   Done,
 }
 
-class HomeCardModel extends DietModel {
-  //enum
+class MealCardModel extends MealModel {
   HomeCardStatus status;
 
-  HomeCardModel({
-    required DietModel diet,
+  MealCardModel({
+    required MealModel meal,
     required this.status,
-  }) : super(meal: diet.meal);
+  }) : super(
+          img: meal.img,
+          title: meal.title,
+          type: meal.type,
+        );
 
-  factory HomeCardModel.fromDietModel(DietModel dietModel) {
-    return HomeCardModel(diet: dietModel, status: HomeCardStatus.None);
+  factory MealCardModel.fromMealModel(MealModel mealModel) {
+    return MealCardModel(meal: mealModel, status: HomeCardStatus.None);
   }
 
-  factory HomeCardModel.fromMap(Map<String, dynamic> map) {
-    return HomeCardModel(
-      diet: DietModel.fromMap(map['diet']),
+  factory MealCardModel.fromMap(Map<String, dynamic> map) {
+    return MealCardModel(
+      meal: MealModel.fromMap(map['meal']),
       status: HomeCardStatus.values[map['status']],
     );
   }
 
   @override
   Map<String, dynamic> toMap() {
-    return {'diet': super.toMap(), 'status': status.index};
+    return {'meal': super.toMap(), 'status': status.index};
   }
 
-  factory HomeCardModel.fromJson(String source) =>
-      HomeCardModel.fromMap(json.decode(source));
+  factory MealCardModel.fromJson(String source) =>
+      MealCardModel.fromMap(json.decode(source));
 
   String toJson() => json.encode(toMap());
-
 }

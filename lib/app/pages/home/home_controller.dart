@@ -1,19 +1,19 @@
 import 'package:get/get.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
-import 'package:nutri/app/pages/home/controllers/home_overview_controller.dart';
 import 'package:nutri/app/pages/home/helpers/home_title_helper.dart';
 import 'package:nutri/app/pages/home/models/home_card_model.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_card_viewmodel.dart';
-import 'package:nutri/app/pages/home/viewmodels/meal_card_viewmodel.dart';
 import 'package:nutri/app/repositories/pe_diet_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
 abstract class IHomeController {
-  List<HomeCardModel> homeCardList = [];
   //Recebe essa lista do banco de dados
-  late final HomeTitleController homeTitleController; //Controller do titulo
-  void onBannerTapped(int idx); // Ação ao clicar no banner
-  late final IHomeCardBloc homeCardViewModel;
+  // List<HomeCardModel> homeCardList = [];
+  //Controller do titulo
+  late final HomeTitleController homeTitleController;
+  // Ação ao clicar no banner
+  void onBannerTapped(int idx);
+  late final IMealCardBloc homeCardViewModel;
 }
 
 class HomeController extends GetxController implements IHomeController {
@@ -26,49 +26,24 @@ class HomeController extends GetxController implements IHomeController {
     required this.homeCardViewModel,
   });
 
-  late HomeOverviewController homeOverviewViewController;
-
   final HomeTitleController homeTitleController = HomeTitleController()..init();
 
-  List<HomeCardModel> homeCardList = [];
+  final RxList<MealCardModel> homeCardList = <MealCardModel>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     fetchHomeCardList();
 
-    homeOverviewViewController = HomeOverviewController(
-      mealCardViewModel: MealCardViewModel(
-        diet: diet,
-      ),
-    )..init(homeTitleController.todayDate);
-
-    // _fetchHomeState();
     // ever(homeTitleController.showingDayIndex, _onDayChanged);
   }
 
   fetchHomeCardList() async {
-    homeCardList = await homeCardViewModel.fetchHomeCardList();
+    homeCardList.assignAll(
+      await homeCardViewModel
+          .fetchHomeCardList(homeTitleController.todayAsString),
+    );
   }
-
-  // _fetchHomeState() async {
-  //   homeStateViewModel.setHomeState = await homeStateViewModel.fetchHomeState();
-  // }
-
-  // _onDayChanged(int day) async {
-  //   if (day == DateTime.now().weekday) {
-  //     homeOverviewViewController.isTodayOverview = true;
-  //     homeStateViewModel.changeStateWhithoutSave(
-  //       await homeStateViewModel.fetchHomeState(),
-  //     );
-  //   } else {
-  //     homeOverviewViewController.isTodayOverview = false;
-  //     homeStateViewModel.changeStateWhithoutSave(HomeState.Overview);
-  //   }
-
-  //   homeOverviewViewController
-  //       .changeOverview(homeTitleController.showingDayDate);
-  // }
 
   @override
   void onBannerTapped(int idx) {
@@ -83,7 +58,7 @@ class HomeController extends GetxController implements IHomeController {
   }
 
   @override
-  IHomeCardBloc homeCardViewModel;
+  IMealCardBloc homeCardViewModel;
 }
 
 class HomeTitleController {
@@ -94,13 +69,13 @@ class HomeTitleController {
   RxString _title = 'HOJE'.obs;
   String get title => _title.value ?? 'Carregando';
 
-  String get todayDate =>
-      '${_todayDate.day}/${_todayDate.month}/${_todayDate.year}';
-  String get showingDayDate =>
-      '${_showingDayDate.day}/${_showingDayDate.month}/${_showingDayDate.year}';
+  String get todayAsString =>
+      '${_todayDateTime.day}/${_todayDateTime.month}/${_todayDateTime.year}';
+  String get dayAsString =>
+      '${_showingDateTime.day}/${_showingDateTime.month}/${_showingDateTime.year}';
 
-  DateTime _todayDate = DateTime.now();
-  late DateTime _showingDayDate;
+  DateTime _todayDateTime = DateTime.now();
+  late DateTime _showingDateTime;
 
   bool previewBtnEnabled = false; // Trocar para enabled
   bool nextBtnEnabled = true; // Trocar para enabled
@@ -111,22 +86,22 @@ class HomeTitleController {
 
   int _dayIndex = 0;
 
-  init() {
-    _showingDayDate = DateTime.now();
+  void init() {
+    _showingDateTime = DateTime.now();
   }
 
   Function? onPreviewDayPressed() {
-    _showingDayDate = _showingDayDate.subtract(Duration(days: 1));
+    _showingDateTime = _showingDateTime.subtract(Duration(days: 1));
     _showDay(_dayIndex--);
   }
 
   Function? onNextDayPressed() {
-    _showingDayDate = _showingDayDate.add(Duration(days: 1));
+    _showingDateTime = _showingDateTime.add(Duration(days: 1));
     _showDay(_dayIndex++);
   }
 
   Function? onBackToTodayPressed() {
-    _showingDayDate = _todayDate;
+    _showingDateTime = _todayDateTime;
     _showDay(_dayIndex = 0);
   }
 

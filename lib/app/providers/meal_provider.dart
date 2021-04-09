@@ -5,6 +5,7 @@ import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/models/meal_model.dart';
 
 abstract class IMealProvider {
+  Future<List<MealModel>> fetchMealList(String day);
   Future<MealModel> fetchMeal(String day, MealType mealType);
 }
 
@@ -18,6 +19,10 @@ class MealProvider implements IMealProvider {
   Future<MealModel> fetchMeal(day, mealType) async {
     List<MealModel> meals = await _requestDailyMeals(day);
     return meals.firstWhere((meal) => meal.type == mealType);
+  }
+
+  Future<List<MealModel>> fetchMealList(String day)  {
+    return _requestDailyMeals(day);
   }
 
   Future<List> _loadJson() async =>

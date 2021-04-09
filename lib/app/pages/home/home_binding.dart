@@ -11,9 +11,14 @@ class HomeBinding extends Bindings {
   void dependencies() {
     Get.put<HomeController>(
       HomeController(
-        homeCardViewModel: HomeCardViewModel(),
-        diet: PeDietRepository( //TODO: Diet nao precisa de storage nem fudendoooo
-         //é o home card view model que vai ver se ja tem algo salvo no storage, se nao tiver, builda pela pe diet
+        homeCardViewModel: MealCardViewModel(
+          mealProvider: MealProvider(
+            storage: SharedLocalStorageService(),
+          ),
+        ),
+        diet: PeDietRepository(
+          //TODO: Diet nao precisa de storage nem fudendoooo
+          //é o home card view model que vai ver se ja tem algo salvo no storage, se nao tiver, builda pela pe diet
           foodProvider: FoodProvider(),
           mealProvider: MealProvider(
             storage: SharedLocalStorageService(),

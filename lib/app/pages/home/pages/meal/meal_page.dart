@@ -10,7 +10,7 @@ class MealPage extends GetView<MealController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            controller.dietModel.meal.mealTypeToString().toUpperCase()),
+            controller.dietModel.mealTypeToString().toUpperCase()),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -29,7 +29,7 @@ class MealPage extends GetView<MealController> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
-                        image: AssetImage(controller.dietModel.meal.img),
+                        image: AssetImage(controller.dietModel.img),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -40,9 +40,9 @@ class MealPage extends GetView<MealController> {
             MainFoodSelectorWidget(
               foodList: controller.dietModel.mainFoodList!,
             ),
-            ExtraFoodSelectorWidget(
-              extraList: controller.dietModel.extraFoodList!,
-            ),
+            // ExtraFoodSelectorWidget( //TODO: Esse cara ta dando overflow
+            //   extraList: controller.dietModel.extraFoodList!,
+            // ),
           ],
         ),
       ),

@@ -42,23 +42,21 @@ class HomePage extends GetView<HomeController> {
 
   body() {
     return Obx(
-      () => controller.homeOverviewViewController.overViewList.length > 0
+      () => controller.homeCardList.length > 0
           ? SafeArea(
               child: ListView.builder(
                 itemCount:
-                    controller.homeOverviewViewController.overViewList.length,
+                    controller.homeCardList.length,
                 itemBuilder: (ctx, idx) {
                   return FoodBannerCardWidget(
                     image: controller
-                        .homeOverviewViewController.overViewList[idx].img,
+                        .homeCardList[idx].img,
                     title: controller
-                        .homeOverviewViewController.overViewList[idx].title,
+                        .homeCardList[idx].title,
                     type: controller
-                        .homeOverviewViewController.overViewList[idx]
+                        .homeCardList[idx]
                         .mealTypeToString(),
-                    onBannerTapped: () {
-                      controller.onBannerTapped(idx);
-                    },
+                    onBannerTapped: () => controller.onBannerTapped(idx),
                   );
                 },
               ),

@@ -1,33 +1,27 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:nutri/app/models/diet_model.dart';
 import 'package:nutri/app/models/meal_model.dart';
 import 'package:nutri/app/pages/home/models/home_card_model.dart';
 
 main() {
   test('To map', () {
-    HomeCardModel homeCardModel = HomeCardModel(
-      diet: DietModel(
-          meal: MealModel.fromMap(meal), extraFoodList: [], mainFoodList: []),
+    MealCardModel homeCardModel = MealCardModel(
+      meal: MealModel.fromMap(meal),
       status: HomeCardStatus.None,
     );
     expect(homeCardModel.toMap(), json);
   });
 
   test('From map', () {
-    HomeCardModel homeCardModel = HomeCardModel.fromMap(json);
+    MealCardModel homeCardModel = MealCardModel.fromMap(json);
     expect(homeCardModel.status, HomeCardStatus.None);
   });
 }
 
 var json = {
-  "diet": {
-    "meal": {
-      "type": 0,
-      "img": "assets/images/meals/10.png",
-      "title": "Café",
-    },
-    "mainFoodList": [],
-    "extraFoodList": []
+  "meal": {
+    "type": 0,
+    "img": "assets/images/meals/10.png",
+    "title": "Café",
   },
   "status": 0
 };
