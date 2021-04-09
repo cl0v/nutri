@@ -1,12 +1,41 @@
+import 'dart:convert';
+
 import 'package:nutri/app/models/diet_model.dart';
 
-enum HomeCardStatus{
+enum HomeCardStatus {
+  None,
   Skipped,
   Done,
-  None,
 }
 
 class HomeCardModel extends DietModel {
-  bool isDone = false; //TODO: Alterar para homecardStatus
-  HomeCardModel(meal, this.isDone) : super(meal: meal);
+  //enum
+  HomeCardStatus status;
+
+  HomeCardModel({
+    required DietModel diet,
+    required this.status,
+  }) : super(meal: diet.meal);
+
+  factory HomeCardModel.fromDietModel(DietModel dietModel) {
+    return HomeCardModel(diet: dietModel, status: HomeCardStatus.None);
+  }
+
+  factory HomeCardModel.fromMap(Map<String, dynamic> map) {
+    return HomeCardModel(
+      diet: DietModel.fromMap(map['diet']),
+      status: HomeCardStatus.values[map['status']],
+    );
+  }
+
+  @override
+  Map<String, dynamic> toMap() {
+    return {'diet': super.toMap(), 'status': status.index};
+  }
+
+  factory HomeCardModel.fromJson(String source) =>
+      HomeCardModel.fromMap(json.decode(source));
+
+  String toJson() => json.encode(toMap());
+
 }

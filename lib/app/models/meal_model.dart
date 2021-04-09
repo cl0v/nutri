@@ -31,7 +31,7 @@ class MealModel {
 
   MealModel.fromMap(Map<String, dynamic> map)
       : this.type = MealType.values[map['type']],
-      this.title = map['title'],
+        this.title = map['title'],
         this.img = map['img'];
 
   String toJson() => json.encode(toMap());
@@ -63,5 +63,4 @@ class MealModel {
 
   @override
   int get hashCode => type.hashCode ^ img.hashCode;
-
 }

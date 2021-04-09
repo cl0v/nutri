@@ -10,7 +10,7 @@ class MealPage extends GetView<MealController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            controller.mealCardModel.meal.mealTypeToString().toUpperCase()),
+            controller.dietModel.meal.mealTypeToString().toUpperCase()),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -29,7 +29,7 @@ class MealPage extends GetView<MealController> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
-                        image: AssetImage(controller.mealCardModel.meal.img),
+                        image: AssetImage(controller.dietModel.meal.img),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -38,10 +38,10 @@ class MealPage extends GetView<MealController> {
               ),
             ),
             MainFoodSelectorWidget(
-              foodList: controller.mealCardModel.mainFoodList!,
+              foodList: controller.dietModel.mainFoodList!,
             ),
             ExtraFoodSelectorWidget(
-              extraList: controller.mealCardModel.extraFoodList!,
+              extraList: controller.dietModel.extraFoodList!,
             ),
           ],
         ),

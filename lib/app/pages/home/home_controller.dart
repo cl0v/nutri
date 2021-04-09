@@ -6,9 +6,10 @@ import 'package:nutri/app/pages/home/models/home_card_model.dart';
 import 'package:nutri/app/pages/home/viewmodels/home_card_viewmodel.dart';
 import 'package:nutri/app/pages/home/viewmodels/meal_card_viewmodel.dart';
 import 'package:nutri/app/repositories/pe_diet_repository.dart';
+import 'package:nutri/app/routes/app_pages.dart';
 
 abstract class IHomeController {
-  late final List<HomeCardModel> homeCardList;
+  List<HomeCardModel> homeCardList = [];
   //Recebe essa lista do banco de dados
   late final HomeTitleController homeTitleController; //Controller do titulo
   void onBannerTapped(int idx); // Ação ao clicar no banner
@@ -27,31 +28,26 @@ class HomeController extends GetxController implements IHomeController {
 
   late HomeOverviewController homeOverviewViewController;
 
-
   final HomeTitleController homeTitleController = HomeTitleController()..init();
 
-  late List<HomeCardModel> homeCardList;
+  List<HomeCardModel> homeCardList = [];
 
   @override
   void onInit() {
     super.onInit();
-    init();
-
-    
+    fetchHomeCardList();
 
     homeOverviewViewController = HomeOverviewController(
       mealCardViewModel: MealCardViewModel(
         diet: diet,
       ),
-    );
-
-    homeOverviewViewController.init(homeTitleController.todayDate);
+    )..init(homeTitleController.todayDate);
 
     // _fetchHomeState();
     // ever(homeTitleController.showingDayIndex, _onDayChanged);
   }
 
-  init() async {
+  fetchHomeCardList() async {
     homeCardList = await homeCardViewModel.fetchHomeCardList();
   }
 
@@ -77,6 +73,8 @@ class HomeController extends GetxController implements IHomeController {
   @override
   void onBannerTapped(int idx) {
     // TODO: implement onBannerTapped
+    print('tocado man');
+    Get.toNamed(Routes.MEAL, arguments: {'meal': homeCardList[idx]});
   }
 
   @override

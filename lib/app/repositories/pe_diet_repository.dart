@@ -9,7 +9,7 @@ abstract class IDiet {
   Future<DietModel> fetchDietMeal(String day, MealType mealType);
 }
 
-class PeDietRepository extends IDiet {
+class PeDietRepository extends IDiet { //Pode ser um view model ou repositorio, é o cara responsável por me entregar um modelo DietModel
   final IFoodProvider foodProvider;
   final IMealProvider mealProvider;
 

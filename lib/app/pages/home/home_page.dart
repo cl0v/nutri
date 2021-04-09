@@ -57,8 +57,7 @@ class HomePage extends GetView<HomeController> {
                         .homeOverviewViewController.overViewList[idx]
                         .mealTypeToString(),
                     onBannerTapped: () {
-                      //TODO: Implement
-                      print('banner tocado');
+                      controller.onBannerTapped(idx);
                     },
                   );
                 },

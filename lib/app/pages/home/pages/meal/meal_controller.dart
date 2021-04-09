@@ -1,9 +1,8 @@
 import 'package:get/get.dart';
-
-import 'meal_card_model.dart';
+import 'package:nutri/app/models/diet_model.dart';
 
 abstract class IMealController {
-  late MealCardModel mealCardModel;
+  late DietModel dietModel;
   void onMainFoodTapped(int idx);
   void onExtraFoodTapped(int idx); //TODO: Ajustar para ja receber a lista
   void onDonePressed();
@@ -14,12 +13,12 @@ class MealController extends GetxController implements IMealController {
 
   @override
   void onInit() {
-    mealCardModel = Get.arguments['meal'];
+    dietModel = Get.arguments['meal'];
     super.onInit();
   }
 
   @override
-  late MealCardModel mealCardModel;
+  late DietModel dietModel;
 
   @override
   void onDonePressed() {
