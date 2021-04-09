@@ -1,50 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/pages/home/pages/meal/components/main_food_selector_widget.dart';
 
-import 'meal_controller.dart';
+import 'components/main_food_selector_widget.dart';
+import 'menu_controller.dart';
 
-class MealPage extends GetView<MealController> {
+class MenuPage extends GetView<MenuController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            controller.dietModel.mealTypeToString().toUpperCase()),
+          controller.mealModel.mealTypeToString().toUpperCase(),
+        ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            AspectRatio(
-              aspectRatio: 2.5,
-              child: Container(
-                margin: EdgeInsets.all(4.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      image: DecorationImage(
-                        image: AssetImage(controller.dietModel.img),
-                        fit: BoxFit.cover,
+      body: Obx(
+        () => controller.menuHack
+            ? SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    AspectRatio(
+                      aspectRatio: 2.5,
+                      child: Container(
+                        margin: EdgeInsets.all(4.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              image: DecorationImage(
+                                image: AssetImage(controller.menu!.meal.img),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+
+                    MainFoodSelectorWidget(
+                      foodList: controller.menu!.mainFoodList!,
+                    ),
+
+                    // ExtraFoodSelectorWidget( //TODO: Esse cara ta dando overflow
+                    //   extraList: controller.dietModel.extraFoodList!,
+                    // ),
+                  ],
                 ),
+              )
+            : Center(
+                child: CircularProgressIndicator(),
               ),
-            ),
-            MainFoodSelectorWidget(
-              foodList: controller.dietModel.mainFoodList!,
-            ),
-            // ExtraFoodSelectorWidget( //TODO: Esse cara ta dando overflow
-            //   extraList: controller.dietModel.extraFoodList!,
-            // ),
-          ],
-        ),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,

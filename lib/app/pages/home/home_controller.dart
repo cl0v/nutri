@@ -10,35 +10,35 @@ abstract class IHomeController {
   //Recebe essa lista do banco de dados
   // List<HomeCardModel> homeCardList = [];
   //Controller do titulo
-  late final HomeTitleController homeTitleController;
+  // late final HomeTitleController homeTitleController;
   // Ação ao clicar no banner
   void onBannerTapped(int idx);
   late final IMealCardBloc homeCardViewModel;
 }
 
 class HomeController extends GetxController implements IHomeController {
-  final ILocalStorage storage;
-  final IDiet diet;
+
+  @override
+  IMealCardBloc homeCardViewModel;
 
   HomeController({
-    required this.diet,
-    required this.storage,
     required this.homeCardViewModel,
   });
 
   final HomeTitleController homeTitleController = HomeTitleController()..init();
+  //Criar interface e expor os parametros por aq?
 
   final RxList<MealCardModel> homeCardList = <MealCardModel>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    fetchHomeCardList();
+    _fetchHomeCardList();
 
     // ever(homeTitleController.showingDayIndex, _onDayChanged);
   }
 
-  fetchHomeCardList() async {
+  _fetchHomeCardList() async {
     homeCardList.assignAll(
       await homeCardViewModel
           .fetchHomeCardList(homeTitleController.todayAsString),
@@ -48,17 +48,8 @@ class HomeController extends GetxController implements IHomeController {
   @override
   void onBannerTapped(int idx) {
     // TODO: implement onBannerTapped
-    print('tocado man');
     Get.toNamed(Routes.MEAL, arguments: {'meal': homeCardList[idx]});
   }
-
-  @override
-  set homeTitleController(HomeTitleController _homeTitleController) {
-    // TODO: implement homeTitleController
-  }
-
-  @override
-  IMealCardBloc homeCardViewModel;
 }
 
 class HomeTitleController {

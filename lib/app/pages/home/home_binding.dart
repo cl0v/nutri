@@ -16,15 +16,6 @@ class HomeBinding extends Bindings {
             storage: SharedLocalStorageService(),
           ),
         ),
-        diet: PeDietRepository(
-          //TODO: Diet nao precisa de storage nem fudendoooo
-          //é o home card view model que vai ver se ja tem algo salvo no storage, se nao tiver, builda pela pe diet
-          foodProvider: FoodProvider(),
-          mealProvider: MealProvider(
-            storage: SharedLocalStorageService(),
-          ),
-        ),
-        storage: SharedLocalStorageService(),
       ),
     );
   }

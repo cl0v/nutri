@@ -4,23 +4,20 @@ import 'package:nutri/app/models/meal_model.dart';
 
 import 'food_model.dart';
 
-class DietModel extends MealModel {
+class DietModel {
+  MealModel meal;
   List<FoodModel>? mainFoodList;
   List<FoodModel>? extraFoodList;
 
   DietModel({
-    required MealModel meal,
+    required this.meal,
     this.mainFoodList,
     this.extraFoodList,
-  }) : super(
-          img: meal.img,
-          title: meal.title,
-          type: meal.type,
-        );
+  });
 
   Map<String, dynamic> toMap() {
     return {
-      'meal': super.toMap(),
+      'meal': meal.toMap(),
       'mainFoodList': mainFoodList?.map((x) => x.toMap()).toList() ?? [],
       'extraFoodList': extraFoodList?.map((x) => x.toMap()).toList() ?? [],
     };

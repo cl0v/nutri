@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 
 import 'package:nutri/app/pages/home/home_binding.dart';
 import 'package:nutri/app/pages/home/home_page.dart';
-import 'package:nutri/app/pages/home/pages/meal/meal_binding.dart';
-import 'package:nutri/app/pages/home/pages/meal/meal_page.dart';
+import 'package:nutri/app/pages/home/pages/menu/menu_binding.dart';
+import 'package:nutri/app/pages/home/pages/menu/menu_page.dart';
 import 'package:nutri/app/pages/login/bindings/login_binding.dart';
 import 'package:nutri/app/pages/login/views/login_view.dart';
 import 'package:nutri/app/pages/register/bindings/register_binding.dart';
@@ -24,8 +24,8 @@ class AppPages {
     ),
     GetPage(
       name: Routes.MEAL,
-      page: () => MealPage(),
-      binding: MealBinding(),
+      page: () => MenuPage(),
+      binding: MenuBinding(),
     ),
     GetPage(
       name: Routes.REGISTER,
