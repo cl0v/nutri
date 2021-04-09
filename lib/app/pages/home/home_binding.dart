@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:nutri/app/pages/home/home_controller.dart';
-import 'package:nutri/app/pages/home/viewmodels/home_card_viewmodel.dart';
+import 'package:nutri/app/pages/home/home_card_viewmodel.dart';
 import 'package:nutri/app/providers/food_provider.dart';
 import 'package:nutri/app/providers/meal_provider.dart';
 import 'package:nutri/app/repositories/pe_diet_repository.dart';

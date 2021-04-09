@@ -1,6 +1,5 @@
-import 'package:nutri/app/pages/home/models/home_card_model.dart';
+import 'package:nutri/app/pages/home/home_card_model.dart';
 import 'package:nutri/app/providers/meal_provider.dart';
-import 'package:nutri/app/repositories/pe_diet_repository.dart';
 
 abstract class IMealCardBloc {
   Future<List<MealCardModel>> fetchHomeCardList(String day);

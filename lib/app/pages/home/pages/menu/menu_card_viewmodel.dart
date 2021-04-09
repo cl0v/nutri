@@ -9,7 +9,9 @@ abstract class IMenuCardBloc {
 class MenuCardViewModel implements IMenuCardBloc {
   final IDiet diet;
 
-  MenuCardViewModel({required this.diet});
+  MenuCardViewModel({
+    required this.diet,
+  });
   @override
   Future<MenuCardModel> fetchMenuCardModel(MealModel meal) async {
     var dietModel = await diet.fetchDiet(meal);

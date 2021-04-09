@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/helpers/home_title_helper.dart';
-import 'package:nutri/app/pages/home/models/home_card_model.dart';
-import 'package:nutri/app/pages/home/viewmodels/home_card_viewmodel.dart';
+import 'package:nutri/app/pages/home/home_card_model.dart';
+import 'package:nutri/app/pages/home/home_card_viewmodel.dart';
 import 'package:nutri/app/repositories/pe_diet_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 

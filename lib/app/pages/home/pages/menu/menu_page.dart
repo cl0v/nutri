@@ -40,14 +40,16 @@ class MenuPage extends GetView<MenuController> {
                         ),
                       ),
                     ),
-
                     MainFoodSelectorWidget(
                       foodList: controller.menu!.mainFoodList!,
                     ),
-
-                    // ExtraFoodSelectorWidget( //TODO: Esse cara ta dando overflow
-                    //   extraList: controller.dietModel.extraFoodList!,
-                    // ),
+                    Expanded(
+                      flex:2,
+                      child: ExtraFoodSelectorWidget(
+                        //TODO: Esse cara ta dando overflow
+                        extraList: controller.menu!.extraFoodList!,
+                      ),
+                    ),
                   ],
                 ),
               )

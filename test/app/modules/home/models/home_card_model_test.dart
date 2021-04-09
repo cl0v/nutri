@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/models/meal_model.dart';
-import 'package:nutri/app/pages/home/models/home_card_model.dart';
+import 'package:nutri/app/pages/home/home_card_model.dart';
 
 main() {
   test('To map', () {

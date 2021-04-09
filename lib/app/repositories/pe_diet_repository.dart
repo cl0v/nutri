@@ -1,7 +1,6 @@
 import 'package:nutri/app/models/diet_model.dart';
 import 'package:nutri/app/models/meal_model.dart';
 import 'package:nutri/app/providers/food_provider.dart';
-import 'package:nutri/app/providers/meal_provider.dart';
 
 abstract class IDiet {
   // List<MealType> availableMeals();
@@ -18,8 +17,24 @@ class PeDietRepository extends IDiet {
     required this.foodProvider,
   });
 
-  Future<DietModel> breakfast( meal) async {
-    // var meal = await mealProvider.fetchMeal( MealType.breakfast);
+
+  @override
+  Future<DietModel> fetchDiet(MealModel meal) {
+    switch (meal.type) {
+      case MealType.breakfast:
+        return breakfast(meal);
+      case MealType.lunch:
+        return lunch(meal);
+      case MealType.snack:
+        return snack(meal);
+      case MealType.dinner:
+        return dinner(meal);
+      default:
+        return breakfast(meal);
+    }
+  }
+
+  Future<DietModel> breakfast(meal) async {
     var mainFoodList = await foodProvider.loadDrinks();
     return DietModel(
       meal: meal,
@@ -56,19 +71,4 @@ class PeDietRepository extends IDiet {
     );
   }
 
-  @override
-  Future<DietModel> fetchDiet(MealModel meal) {
-    switch (meal.type) {
-      case MealType.breakfast:
-        return breakfast(meal);
-      case MealType.breakfast:
-        return lunch(meal);
-      case MealType.breakfast:
-        return snack(meal);
-      case MealType.breakfast:
-        return dinner(meal);
-      default:
-        return breakfast(meal);
-    }
-  }
 }
