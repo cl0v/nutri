@@ -56,29 +56,25 @@ class HomePage extends GetView<HomeController> {
     return Obx(
       () => controller.homeCardList.length > 0
           ? SafeArea(
-              child: ListView.builder(
-                itemCount: controller.homeCardList.length,
-                itemBuilder: (ctx, idx) {
-                  return GetBuilder<HomeController>(
-                    initState: (_) {},
-                    builder: (_) {
-                      var meal = controller.homeCardList[idx];
-                      return FoodBannerCardWidget(
-                        image: meal.img,
-                        title: meal.title,
-                        type: meal.mealTypeToString(),
-                        isTapabble: meal.status == MealCardStatus.None,
-                        color: getBannerColor(meal),
-                        onBannerTapped: () => controller.onBannerTapped(idx),
-                      );
-                    },
-                  );
-                },
+              child: Column(
+                children: controller.homeCardList
+                    .map<Widget>(
+                      (mealCard) => Expanded(
+                        child: FoodBannerCardWidget(
+                          image: mealCard.img,
+                          title: mealCard.title,
+                          type: mealCard.mealTypeToString(),
+                          isTapabble: mealCard.status == MealCardStatus.None,
+                          color: getBannerColor(mealCard),
+                          onBannerTapped: () =>
+                              controller.onBannerTapped(mealCard),
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
             )
-          : Center(
-              child: CircularProgressIndicator(),
-            ),
+          : Container(),
     );
   }
 }

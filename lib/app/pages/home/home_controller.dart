@@ -5,7 +5,7 @@ import 'package:nutri/app/pages/home/meal_card_viewmodel.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
 abstract class IHomeController {
-  void onBannerTapped(int idx);
+  void onBannerTapped(MealCardModel mealCard);
   late final IMealCardBloc mealCardViewModel;
 }
 
@@ -43,19 +43,20 @@ class HomeController extends GetxController implements IHomeController {
   }
 
   @override
-  Future<void> onBannerTapped(int idx) async {
-    var buttonsEnabled = homeCardList[idx].status == MealCardStatus.None;
+  Future<void> onBannerTapped(MealCardModel mealCard) async {
+    //TODO: Restringir outros dias de preencher
+    var buttonsEnabled = mealCard.status == MealCardStatus.None;
     if (!buttonsEnabled) return;
     var response = await Get.toNamed(Routes.MEAL, arguments: {
-      'meal': homeCardList[idx],
+      'meal': mealCard,
       'done': buttonsEnabled,
     });
     switch (response) {
       case true:
-        homeCardList[idx].status = MealCardStatus.Done;
+        mealCard.status = MealCardStatus.Done;
         break;
       case false:
-        homeCardList[idx].status = MealCardStatus.Skipped;
+        mealCard.status = MealCardStatus.Skipped;
         break;
       // default:
       // homeCardList[idx].status = MealCardStatus.None;
@@ -64,7 +65,7 @@ class HomeController extends GetxController implements IHomeController {
     update();
     mealCardViewModel.saveMealCard(
       homeTitleController.dayAsString,
-      homeCardList[idx],
+      mealCard,
     );
   }
 }
