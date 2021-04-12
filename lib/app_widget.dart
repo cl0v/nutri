@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       theme: newTheme,
       debugShowCheckedModeBanner: false,
       enableLog: false,
+      
     );
   }
 }

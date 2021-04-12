@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 
-import 'package:nutri/app/pages/home/bindings/home_binding.dart';
+import 'package:nutri/app/pages/home/home_binding.dart';
 import 'package:nutri/app/pages/home/home_page.dart';
+import 'package:nutri/app/pages/home/pages/menu/menu_binding.dart';
+import 'package:nutri/app/pages/home/pages/menu/menu_page.dart';
 import 'package:nutri/app/pages/login/bindings/login_binding.dart';
 import 'package:nutri/app/pages/login/views/login_view.dart';
 import 'package:nutri/app/pages/register/bindings/register_binding.dart';
@@ -21,6 +23,11 @@ class AppPages {
       binding: HomeBinding(),
     ),
     GetPage(
+      name: Routes.MEAL,
+      page: () => MenuPage(),
+      binding: MenuBinding(),
+    ),
+    GetPage(
       name: Routes.REGISTER,
       page: () => RegisterView(),
       binding: RegisterBinding(),
@@ -35,25 +42,5 @@ class AppPages {
       page: () => SplashView(),
       binding: SplashBinding(),
     ),
-    // GetPage(
-    //   name: Routes.QUESTIONS,
-    //   page: () => QuestionsView(),
-    //   binding: QuestionsBinding(),
-    // ),
-    // GetPage(
-    //   name: Routes.PROFILE,
-    //   page: () => ProfileView(),
-    //   binding: ProfileBinding(),
-    // ),
-    // GetPage(
-    //   name: Routes.FOOD_SWIPE,
-    //   page: () => FoodSwipeView(),
-    //   binding: FoodSwipeBinding(),
-    // ),
-    // GetPage(
-    //   name: Routes.FAQ,
-    //   page: () => FaqView(),
-    //   binding: FaqBinding(),
-    // ),
   ];
 }

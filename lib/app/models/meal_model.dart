@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
-
 enum MealType {
   breakfast,
   lunch,
@@ -11,32 +9,30 @@ enum MealType {
 
 class MealModel {
   //enum
-  final MealType meal;
+  final MealType type;
   final String img;
-  final int day;
-  //TODO: Adicionar o titulo da refeição e mostrar no lZugar de qual refeição será
-//TODO: Proxima minor update
+  final String title;
   //FoodCategory foodCategoryRequired
   //FoodCategory extraFoodCategoryRequired
 
   MealModel({
-    required this.meal,
+    required this.type,
     required this.img,
-    this.day = 1,
+    required this.title,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'meal': meal.index,
+      'type': type.index,
       'img': img,
-      'day': day,
+      'title': title,
     };
   }
 
   MealModel.fromMap(Map<String, dynamic> map)
-      : this.meal = MealType.values[map['meal']],
-        this.img = map['img'],
-        this.day = map['day'];
+      : this.type = MealType.values[map['type']],
+        this.title = map['title'],
+        this.img = map['img'];
 
   String toJson() => json.encode(toMap());
 
@@ -44,7 +40,7 @@ class MealModel {
       MealModel.fromMap(json.decode(source));
 
   String mealTypeToString() {
-    switch (meal) {
+    switch (type) {
       case MealType.breakfast:
         return "Café da manhã";
       case MealType.lunch:
@@ -57,24 +53,14 @@ class MealModel {
         return '';
     }
   }
-}
 
-const jsonPath = 'assets/jsons/meal.json';
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
 
-abstract class MealProvider {
-  static Future<List> _loadJson() async =>
-      jsonDecode(await rootBundle.loadString(jsonPath));
-
-  static Future<List<MealModel>> loadMealsFromJson() async {
-    var json = await (_loadJson());
-    return json.map((map) => MealModel.fromMap(map)).toList();
+    return other is MealModel && other.type == type && other.img == img;
   }
 
-  static Future<List<MealModel>> loadMealListByDay(int day) async {
-    var json = await (_loadJson());
-    return json
-        .map((map) => MealModel.fromMap(map))
-        .where((meal) => meal.day == day)
-        .toList();
-  }
+  @override
+  int get hashCode => type.hashCode ^ img.hashCode;
 }

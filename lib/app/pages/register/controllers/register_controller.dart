@@ -24,16 +24,21 @@ class RegisterController extends GetxController {
   RxString _errorMsg = ''.obs;
   String get errorMsg => _errorMsg.value!;
 
+  RxBool _isMale = false.obs;
+  bool get isMale => _isMale.value!;
+  PageController pageController = PageController();
+
   @override
   void onInit() {
     super.onInit();
-    ever(userAuthViewModel.model.registerState, userUserRegisterStateChanged);
+    ever(userAuthViewModel.model.registerState, onUserRegisterStateChanged);
   }
 
-  userUserRegisterStateChanged(state) async {
+  onUserRegisterStateChanged(state) async {
     switch (state) {
       case RegisterState.Created:
-        Get.offAllNamed(Routes.HOME);
+        pageController.nextPage(
+            duration: Duration(microseconds: 1), curve: Curves.linear);
         break;
       case RegisterState.Error:
         _registerError.value = true;
@@ -50,10 +55,18 @@ class RegisterController extends GetxController {
   }
 
   void onConfirmPressed() async {
+    Get.offAllNamed(Routes.HOME);
+  }
+
+  void onContinuePressed() async {
     if (emailController.text != '' && passwordController.text != '') {
       await userAuthViewModel.register(
           emailController.text, passwordController.text);
     }
+  }
+
+  void toggleSex(v) {
+    _isMale.toggle();
   }
 
   void onShowPasswordPressed() => _isObscurePassword.toggle();

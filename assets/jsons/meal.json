@@ -1,144 +1,127 @@
 [
-    {
-      "img": "assets/images/meals/10.png",
-      "meal": 0,
-      "day": 1
-
-    },
-    {
-      "img": "assets/images/meals/11.png",
-      "meal": 1,
-      "day": 1
-
-    },
-    {
-      "img": "assets/images/meals/12.png",
-      "meal": 2,
-      "day": 1
-    },
-    {
-      "img": "assets/images/meals/13.png",
-      "meal": 3,
-      "day": 1
-    },
-    {
-      "img": "assets/images/meals/30.png",
-      "meal": 0,
-      "day": 2
-    },
-    {
-      "img": "assets/images/meals/21.png",
-      "meal": 1,
-      "day": 2
-    },
-    {
-      "img": "assets/images/meals/22.png",
-      "meal": 2,
-      "day": 2
-    },
-    {
-      "img": "assets/images/meals/23.png",
-      "meal": 3,
-      "day": 2
-    },
-    {
-      "img": "assets/images/meals/30.png",
-      "meal": 0,
-      "day": 3
-    },
-    {
-      "img": "assets/images/meals/31.png",
-      "meal": 1,
-      "day": 3
-    },
-    {
-      "img": "assets/images/meals/32.png",
-      "meal": 2,
-      "day": 3
-    },
-    {
-      "img": "assets/images/meals/33.png",
-      "meal": 3,
-      "day": 3
-    },
-    {
-      "img": "assets/images/meals/40.png",
-      "meal": 0,
-      "day": 4
-    },
-    {
-      "img": "assets/images/meals/41.png",
-      "meal": 1,
-      "day": 4
-    },
-    {
-      "img": "assets/images/meals/42.png",
-      "meal": 2,
-      "day": 4
-    },
-    {
-      "img": "assets/images/meals/43.png",
-      "meal": 3,
-      "day": 4
-    },
-    {
-      "img": "assets/images/meals/50.png",
-      "meal": 0,
-      "day": 5
-    },
-    {
-      "img": "assets/images/meals/51.png",
-      "meal": 1,
-      "day": 5
-    },
-    {
-      "img": "assets/images/meals/52.png",
-      "meal": 2,
-      "day": 5
-    },
-    {
-      "img": "assets/images/meals/53.png",
-      "meal": 3,
-      "day": 5
-    },
-    {
-      "img": "assets/images/meals/60.png",
-      "meal": 0,
-      "day": 6
-    },
-    {
-      "img": "assets/images/meals/61.png",
-      "meal": 1,
-      "day": 6
-    },
-    {
-      "img": "assets/images/meals/62.png",
-      "meal": 2,
-      "day": 6
-    },
-    {
-      "img": "assets/images/meals/63.png",
-      "meal": 3,
-      "day": 6
-    },
-    {
-      "img": "assets/images/meals/70.png",
-      "meal": 0,
-      "day": 7
-    },
-    {
-      "img": "assets/images/meals/71.png",
-      "meal": 1,
-      "day": 7
-    },
-    {
-      "img": "assets/images/meals/72.png",
-      "meal": 2,
-      "day": 7
-    },
-    {
-      "img": "assets/images/meals/73.png",
-      "meal": 3,
-      "day": 7
-    }
+  {
+    "img": "assets/images/meals/10.png",
+    "type": 0,
+    "title": "Café"
+  },
+  {
+    "img": "assets/images/meals/11.png",
+    "type": 1,
+    "title": "Peito de Frango grelhado"
+  },
+  {
+    "img": "assets/images/meals/12.png",
+    "type": 2,
+    "title": "Vegetais"
+  },
+  {
+    "img": "assets/images/meals/13.png",
+    "type": 3,
+    "title": "Bife grelhado com vegetais"
+  },
+  {
+    "img": "assets/images/meals/21.png",
+    "type": 1,
+    "title": "Salmão com vegetais"
+  },
+  {
+    "img": "assets/images/meals/22.png",
+    "type": 2,
+    "title": "Ovos cozidos"
+  },
+  {
+    "img": "assets/images/meals/23.png",
+    "type": 3,
+    "title": "Carne de Sol com legumes"
+  },
+  {
+    "img": "assets/images/meals/30.png",
+    "type": 0,
+    "title": "Café preto"
+  },
+  {
+    "img": "assets/images/meals/31.png",
+    "type": 1,
+    "title": "Ovos com Bacon"
+  },
+  {
+    "img": "assets/images/meals/32.png",
+    "type": 2,
+    "title": "Sardinha"
+  },
+  {
+    "img": "assets/images/meals/33.png",
+    "type": 3,
+    "title": "Costela com legumes"
+  },
+  {
+    "img": "assets/images/meals/40.png",
+    "type": 0,
+    "title": "Chá"
+  },
+  {
+    "img": "assets/images/meals/41.png",
+    "type": 1,
+    "title": "Salada Cobb"
+  },
+  {
+    "img": "assets/images/meals/42.png",
+    "type": 2,
+    "title": "Salaminho"
+  },
+  {
+    "img": "assets/images/meals/43.png",
+    "type": 3,
+    "title": "Asa de Frango assada"
+  },
+  {
+    "img": "assets/images/meals/50.png",
+    "type": 0,
+    "title": "Café preto"
+  },
+  {
+    "img": "assets/images/meals/51.png",
+    "type": 1,
+    "title": "Carne grelhada"
+  },
+  {
+    "img": "assets/images/meals/52.png",
+    "type": 2,
+    "title": "Iogurte Grego"
+  },
+  {
+    "img": "assets/images/meals/53.png",
+    "type": 3,
+    "title": "Peito de frango com legumes"
+  },
+  {
+    "img": "assets/images/meals/60.png",
+    "type": 0,
+    "title": "Café com creme"
+  },
+  {
+    "img": "assets/images/meals/61.png",
+    "type": 1,
+    "title": "Carne com queijo cottage"
+  },
+  {
+    "img": "assets/images/meals/63.png",
+    "type": 3,
+    "title": "Bife de fígado"
+  },
+  {
+    "img": "assets/images/meals/70.png",
+    "type": 0,
+    "title": "Refrigerante sem açucar"
+  },
+  {
+    "img": "assets/images/meals/71.png",
+    "type": 1,
+    "title": "Peixe assado"
+  },
+  {
+    "img": "assets/images/meals/73.png",
+    "type": 3,
+    "title": "Omelete"
+  }
 ]
