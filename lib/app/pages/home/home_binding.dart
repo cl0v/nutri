@@ -11,7 +11,7 @@ class HomeBinding extends Bindings {
   void dependencies() {
     Get.put<HomeController>(
       HomeController(
-        homeCardViewModel: MealCardViewModel(
+        mealCardViewModel: MealCardViewModel(
           storage: SharedLocalStorageService(),
           mealProvider: MealProvider(
             storage: SharedLocalStorageService(),

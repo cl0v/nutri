@@ -44,7 +44,7 @@ class MenuPage extends GetView<MenuController> {
                       foodList: controller.menu!.mainFoodList!,
                     ),
                     Expanded(
-                      flex:2,
+                      flex: 2,
                       child: ExtraFoodSelectorWidget(
                         //TODO: Esse cara ta dando overflow
                         extraList: controller.menu!.extraFoodList!,
@@ -69,21 +69,23 @@ class MenuPage extends GetView<MenuController> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                  style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.resolveWith(
-                          (states) => Size(120, 36)),
-                      backgroundColor: MaterialStateProperty.resolveWith(
-                          (states) => Colors.red)),
-                  onPressed: controller.onSkipPressed,
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                    minimumSize: Size(120, 36),
+                  ),
+                  onPressed: controller.buttonsEnabled
+                      ? controller.onSkipPressed
+                      : null,
                   child: Text('Pulei'),
                 ),
                 ElevatedButton(
-                  style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.resolveWith(
-                          (states) => Size(120, 36)),
-                      backgroundColor: MaterialStateProperty.resolveWith(
-                          (states) => Colors.green)),
-                  onPressed: controller.onDonePressed,
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                    minimumSize: Size(120, 36),
+                  ),
+                  onPressed: controller.buttonsEnabled
+                      ? controller.onDonePressed
+                      : null,
                   child: Text('Concluí'),
                 ),
               ],

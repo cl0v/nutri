@@ -1,28 +1,22 @@
 import 'package:get/get.dart';
-import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/pages/home/helpers/home_title_helper.dart';
 import 'package:nutri/app/pages/home/home_card_model.dart';
 import 'package:nutri/app/pages/home/meal_card_viewmodel.dart';
-import 'package:nutri/app/repositories/pe_diet_repository.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
 abstract class IHomeController {
-  //Recebe essa lista do banco de dados
-  // List<HomeCardModel> homeCardList = [];
-  //Controller do titulo
-  // late final HomeTitleController homeTitleController;
-  // Ação ao clicar no banner
   void onBannerTapped(int idx);
-  late final IMealCardBloc homeCardViewModel;
+  late final IMealCardBloc mealCardViewModel;
 }
 
-class HomeController extends GetxController implements IHomeController {
+abstract class IHomeTitleController {}
 
+class HomeController extends GetxController implements IHomeController {
   @override
-  IMealCardBloc homeCardViewModel;
+  IMealCardBloc mealCardViewModel;
 
   HomeController({
-    required this.homeCardViewModel,
+    required this.mealCardViewModel,
   });
 
   final HomeTitleController homeTitleController = HomeTitleController()..init();
@@ -35,20 +29,45 @@ class HomeController extends GetxController implements IHomeController {
     super.onInit();
     _fetchHomeCardList();
 
-    // ever(homeTitleController.showingDayIndex, _onDayChanged);
+    ever(homeTitleController.showingDayIndex, _onDayChanged);
+  }
+
+  _onDayChanged(_) async {
+    homeCardList.assignAll(await mealCardViewModel
+        .fetchMealCardList(homeTitleController.dayAsString));
   }
 
   _fetchHomeCardList() async {
     homeCardList.assignAll(
-      await homeCardViewModel
+      await mealCardViewModel
           .fetchMealCardList(homeTitleController.todayAsString),
     );
   }
 
   @override
-  void onBannerTapped(int idx) {
-    // TODO: implement onBannerTapped
-    Get.toNamed(Routes.MEAL, arguments: {'meal': homeCardList[idx]});
+  Future<void> onBannerTapped(int idx) async {
+    var buttonsEnabled = homeCardList[idx].status == MealCardStatus.None;
+    if (!buttonsEnabled) return;
+    var response = await Get.toNamed(Routes.MEAL, arguments: {
+      'meal': homeCardList[idx],
+      'done': buttonsEnabled,
+    });
+    switch (response) {
+      case true:
+        homeCardList[idx].status = MealCardStatus.Done;
+        break;
+      case false:
+        homeCardList[idx].status = MealCardStatus.Skipped;
+        break;
+      // default:
+      // homeCardList[idx].status = MealCardStatus.None;
+      //FIXME: Essa linha Estou gerando um bug intencional, quando aperto o botao para voltar, ele remove o estado ja concluido
+    }
+    update();
+    mealCardViewModel.saveMealCard(
+      homeTitleController.dayAsString,
+      homeCardList[idx],
+    );
   }
 }
 

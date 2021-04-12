@@ -6,14 +6,14 @@ main() {
   test('To map', () {
     MealCardModel homeCardModel = MealCardModel(
       meal: MealModel.fromMap(meal),
-      status: HomeCardStatus.None,
+      status: MealCardStatus.None,
     );
     expect(homeCardModel.toMap(), json);
   });
 
   test('From map', () {
     MealCardModel homeCardModel = MealCardModel.fromMap(json);
-    expect(homeCardModel.status, HomeCardStatus.None);
+    expect(homeCardModel.status, MealCardStatus.None);
   });
 }
 

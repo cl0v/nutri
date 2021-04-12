@@ -150,11 +150,9 @@ class _ExtraFoodSelectorWidgetState extends State<ExtraFoodSelectorWidget> {
         ),
         SizedBox(
           height: 3,
-        ),
-        Center(
-          child: widget.extraList.length > 1
-              ? Container(
-                  height: 400,
+        ),widget.extraList.length > 1
+              ? Expanded(
+                 
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
@@ -169,7 +167,7 @@ class _ExtraFoodSelectorWidgetState extends State<ExtraFoodSelectorWidget> {
                     ),
                   ))
               : Container(),
-        )
+        
       ],
     );
   }

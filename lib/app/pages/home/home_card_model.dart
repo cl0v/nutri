@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:nutri/app/models/meal_model.dart';
 
-enum HomeCardStatus {
+enum MealCardStatus {
   None,
   Skipped,
   Done,
 }
 
 class MealCardModel extends MealModel {
-  HomeCardStatus status;
+  MealCardStatus status;
 
   MealCardModel({
     required MealModel meal,
@@ -21,13 +21,13 @@ class MealCardModel extends MealModel {
         );
 
   factory MealCardModel.fromMealModel(MealModel mealModel) {
-    return MealCardModel(meal: mealModel, status: HomeCardStatus.None);
+    return MealCardModel(meal: mealModel, status: MealCardStatus.None);
   }
 
   factory MealCardModel.fromMap(Map<String, dynamic> map) {
     return MealCardModel(
       meal: MealModel.fromMap(map['meal']),
-      status: HomeCardStatus.values[map['status']],
+      status: MealCardStatus.values[map['status']],
     );
   }
 

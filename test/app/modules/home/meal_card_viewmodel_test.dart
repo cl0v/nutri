@@ -24,7 +24,7 @@ main() {
   });
   test('fetchMealCard method sucess', () async {
     var meal = await mealCardBloc.fetchMealCardFromDB(day, type);
-    expect(meal!.status, equals(HomeCardStatus.Done));
+    expect(meal!.status, equals(MealCardStatus.Done));
   });
 
   test('fetchMealCard method null case', () async {
@@ -40,7 +40,7 @@ main() {
   test('fetchMealCardFromMealProvider', () async {
     var meal = await mealCardBloc.fetchMealCardFromMealProvider(
         'any', MealType.breakfast);
-    expect(meal.status, equals(HomeCardStatus.None));
+    expect(meal.status, equals(MealCardStatus.None));
   });
 }
 
@@ -53,7 +53,7 @@ MealCardModel mealCardModel = MealCardModel(
     img: 'img',
     title: 'title',
   ),
-  status: HomeCardStatus.Done,
+  status: MealCardStatus.Done,
 );
 
 Map<String, Object> sharedPreferencesInitialValues = {

@@ -19,10 +19,14 @@ class MenuController extends GetxController implements IMenuController {
   late final RxList<MenuCardModel> _menu = <MenuCardModel>[].obs;
   bool get menuHack => _menu.isNotEmpty;
   MenuCardModel? get menu => _menu.first;
+  RxBool _buttonsEnabled = true.obs;
+  bool get buttonsEnabled => _buttonsEnabled.value!;
+  //TODO: Salvar os valores e remover a possibilidade de alteração apos salvo
 
   @override
   void onInit() {
     _mealModel = Get.arguments['meal'];
+    _buttonsEnabled.value = Get.arguments['done'];
     super.onInit();
     init();
   }
@@ -36,7 +40,7 @@ class MenuController extends GetxController implements IMenuController {
 
   @override
   void onDonePressed() {
-    // TODO: implement onDonePressed
+    Get.back(result: true);
   }
 
   @override
@@ -51,6 +55,6 @@ class MenuController extends GetxController implements IMenuController {
 
   @override
   void onSkipPressed() {
-    // TODO: implement onSkipPressed
+    Get.back(result: false);
   }
 }
