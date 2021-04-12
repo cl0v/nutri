@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:nutri/app/models/meal_model.dart';
 
 enum HomeCardStatus {
@@ -39,4 +40,7 @@ class MealCardModel extends MealModel {
       MealCardModel.fromMap(json.decode(source));
 
   String toJson() => json.encode(toMap());
+
+  @override
+  String toString() => 'MealCardModel(status: $status)';
 }

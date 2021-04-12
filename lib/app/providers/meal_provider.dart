@@ -7,6 +7,7 @@ import 'package:nutri/app/models/meal_model.dart';
 abstract class IMealProvider {
   Future<List<MealModel>> fetchMealList(String day);
   Future<MealModel> fetchMeal(String day, MealType mealType);
+  //TODO: Receber esse cara por database 
 }
 
 class MealProvider implements IMealProvider {
