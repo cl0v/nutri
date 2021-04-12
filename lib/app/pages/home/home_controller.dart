@@ -9,8 +9,6 @@ abstract class IHomeController {
   late final IMealCardBloc mealCardViewModel;
 }
 
-abstract class IHomeTitleController {}
-
 class HomeController extends GetxController implements IHomeController {
   @override
   IMealCardBloc mealCardViewModel;
@@ -19,7 +17,7 @@ class HomeController extends GetxController implements IHomeController {
     required this.mealCardViewModel,
   });
 
-  final HomeTitleController homeTitleController = HomeTitleController()..init();
+  final IHomeTitleController homeTitleController = HomeTitleController()..init();
   //Criar interface e expor os parametros por aq?
 
   final RxList<MealCardModel> homeCardList = <MealCardModel>[].obs;
@@ -71,10 +69,20 @@ class HomeController extends GetxController implements IHomeController {
   }
 }
 
-class HomeTitleController {
-  final HomeTitleHelper titleHelper = HomeTitleHelper();
+abstract class IHomeTitleController {
+  String get title;
+  String get todayAsString;
+  String get dayAsString;
+  bool get previewBtnEnabled;
+  bool get nextBtnEnabled;
+  RxInt get showingDayIndex;
+  Function? onPreviewDayPressed();
+  Function? onNextDayPressed();
+  Function? onBackToTodayPressed();
+}
 
-  HomeTitleController();
+class HomeTitleController implements IHomeTitleController {
+  final HomeTitleHelper titleHelper = HomeTitleHelper();
 
   RxString _title = 'HOJE'.obs;
   String get title => _title.value ?? 'Carregando';

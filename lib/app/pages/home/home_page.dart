@@ -62,11 +62,13 @@ class HomePage extends GetView<HomeController> {
                   return GetBuilder<HomeController>(
                     initState: (_) {},
                     builder: (_) {
+                      var meal = controller.homeCardList[idx];
                       return FoodBannerCardWidget(
-                        image: controller.homeCardList[idx].img,
-                        title: controller.homeCardList[idx].title,
-                        type: controller.homeCardList[idx].mealTypeToString(),
-                        color: getBannerColor(controller.homeCardList[idx]),
+                        image: meal.img,
+                        title: meal.title,
+                        type: meal.mealTypeToString(),
+                        isTapabble: meal.status == MealCardStatus.None,
+                        color: getBannerColor(meal),
                         onBannerTapped: () => controller.onBannerTapped(idx),
                       );
                     },
