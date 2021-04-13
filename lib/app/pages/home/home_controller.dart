@@ -17,7 +17,7 @@ class HomeController extends GetxController implements IHomeController {
     required this.mealCardViewModel,
   });
 
-  final IHomeTitleController homeTitleController = HomeTitleController()..init();
+  final IHomeTitleController homeTitleController = HomeTitleController();
   //Criar interface e expor os parametros por aq?
 
   final RxList<MealCardModel> homeCardList = <MealCardModel>[].obs;
@@ -94,7 +94,7 @@ class HomeTitleController implements IHomeTitleController {
       '${_showingDateTime.day}/${_showingDateTime.month}/${_showingDateTime.year}';
 
   DateTime _todayDateTime = DateTime.now();
-  late DateTime _showingDateTime;
+  late DateTime _showingDateTime = DateTime.now();
 
   bool previewBtnEnabled = false; // Trocar para enabled
   bool nextBtnEnabled = true; // Trocar para enabled
@@ -104,10 +104,6 @@ class HomeTitleController implements IHomeTitleController {
   int todayIndex = DateTime.now().weekday;
 
   int _dayIndex = 0;
-
-  void init() {
-    _showingDateTime = DateTime.now();
-  }
 
   Function? onPreviewDayPressed() {
     _showingDateTime = _showingDateTime.subtract(Duration(days: 1));

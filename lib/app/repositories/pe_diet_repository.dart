@@ -1,12 +1,10 @@
 import 'package:nutri/app/models/diet_model.dart';
+import 'package:nutri/app/models/food_model.dart';
 import 'package:nutri/app/models/meal_model.dart';
 import 'package:nutri/app/providers/food_provider.dart';
 
 abstract class IDiet {
-  // List<MealType> availableMeals();
-  // Future<List<DietModel>> fetchDietList(String ;
-  Future<DietModel> fetchDiet(MealModel meal);
-  // Future<DietModel> fetchDietMeal(String  MealType mealType);
+  Future<DietModel> fetchDietFromMeal(MealModel meal);
 }
 
 class PeDietRepository extends IDiet {
@@ -19,7 +17,7 @@ class PeDietRepository extends IDiet {
 
 
   @override
-  Future<DietModel> fetchDiet(MealModel meal) {
+  Future<DietModel> fetchDietFromMeal(MealModel meal) {
     switch (meal.type) {
       case MealType.breakfast:
         return breakfast(meal);
@@ -29,13 +27,11 @@ class PeDietRepository extends IDiet {
         return snack(meal);
       case MealType.dinner:
         return dinner(meal);
-      default:
-        return breakfast(meal);
     }
   }
 
   Future<DietModel> breakfast(meal) async {
-    var mainFoodList = await foodProvider.loadDrinks();
+    var mainFoodList = await foodProvider.loadFoodList(FoodCategory.drink);
     return DietModel(
       meal: meal,
       mainFoodList: mainFoodList,
@@ -43,9 +39,9 @@ class PeDietRepository extends IDiet {
     );
   }
 
-  Future<DietModel> lunch( meal) async {
-    var mainFoodList = await foodProvider.loadMeats();
-    var extraFoodList = await foodProvider.loadVegetables();
+  Future<DietModel> lunch(meal) async {
+    var mainFoodList = await foodProvider.loadFoodList(FoodCategory.meat);
+    var extraFoodList = await foodProvider.loadFoodList(FoodCategory.vegetable);
     return DietModel(
       meal: meal,
       mainFoodList: mainFoodList,
@@ -62,8 +58,8 @@ class PeDietRepository extends IDiet {
   }
 
   Future<DietModel> dinner( meal) async {
-    var mainFoodList = await foodProvider.loadMeats();
-    var extraFoodList = await foodProvider.loadVegetables();
+    var mainFoodList = await foodProvider.loadFoodList(FoodCategory.meat);
+    var extraFoodList = await foodProvider.loadFoodList(FoodCategory.vegetable);
     return DietModel(
       meal: meal,
       mainFoodList: mainFoodList,

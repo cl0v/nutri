@@ -6,20 +6,20 @@ import 'food_model.dart';
 
 class DietModel {
   MealModel meal;
-  List<FoodModel>? mainFoodList;
-  List<FoodModel>? extraFoodList;
+  List<FoodModel> mainFoodList;
+  List<FoodModel> extraFoodList;
 
   DietModel({
     required this.meal,
-    this.mainFoodList,
-    this.extraFoodList,
+    this.mainFoodList = const [],
+    this.extraFoodList = const [],
   });
 
   Map<String, dynamic> toMap() {
     return {
       'meal': meal.toMap(),
-      'mainFoodList': mainFoodList?.map((x) => x.toMap()).toList() ?? [],
-      'extraFoodList': extraFoodList?.map((x) => x.toMap()).toList() ?? [],
+      'mainFoodList': mainFoodList.map((x) => x.toMap()).toList(),
+      'extraFoodList': extraFoodList.map((x) => x.toMap()).toList(),
     };
   }
 
