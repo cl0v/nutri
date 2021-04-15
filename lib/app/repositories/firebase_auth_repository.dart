@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nutri/app/interfaces/repositories/user_auth_inferface.dart';
-import 'package:nutri/app/models/user_auth_model.dart';
+
 
 class FirebaseAuthRepository implements IUserAuth {
   final FirebaseAuth auth;
