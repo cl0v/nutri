@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/models/user_auth_model.dart';
+import 'package:nutri/app/interfaces/repositories/user_auth_inferface.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 import 'package:nutri/app/viewmodels/user_auth_viewmodel.dart';
 
@@ -9,7 +9,7 @@ class LoginController extends GetxController {
     required this.userAuthViewModel,
   });
 
-  UserAuthViewModel userAuthViewModel;
+  IUserAuthLoginBloc userAuthViewModel;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -25,18 +25,17 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    ever(userAuthViewModel.model.loginState, onLoginStateChanged);
+    ever(userAuthViewModel.loginState, onLoginStateChanged);
   }
 
   onLoginStateChanged(state) async {
-    print(state);
     switch (state) {
       case LoginState.Connected:
         Get.offAllNamed(Routes.HOME);
         break;
       case LoginState.Error:
         _loginError.value = true;
-        _errorMsg.value = await userAuthViewModel.getError();
+        _errorMsg.value = await userAuthViewModel.errorMessage();
         break;
       default:
     }

@@ -22,10 +22,6 @@ main() {
     var meal = await mealCardBloc.fetchMealCardFromDB(day, type);
     expect(meal!.type, equals(type));
   });
-  test('fetchMealCard method sucess', () async {
-    var meal = await mealCardBloc.fetchMealCardFromDB(day, type);
-    expect(meal!.status, equals(MealCardStatus.Done));
-  });
 
   test('fetchMealCard method null case', () async {
     var meal = await mealCardBloc.fetchMealCardFromDB(day, MealType.dinner);
@@ -39,7 +35,7 @@ main() {
 
   test('fetchMealCardFromMealProvider', () async {
     var meal = await mealCardBloc.fetchMealCardFromMealProvider(
-        'any', MealType.breakfast);
+        day, MealType.breakfast);
     expect(meal.status, equals(MealCardStatus.None));
   });
 }

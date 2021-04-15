@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/pages/home/helpers/home_title_helper.dart';
+
 import 'package:nutri/app/pages/home/home_card_model.dart';
 import 'package:nutri/app/pages/home/meal_card_viewmodel.dart';
 import 'package:nutri/app/routes/app_pages.dart';
@@ -17,7 +18,8 @@ class HomeController extends GetxController implements IHomeController {
     required this.mealCardViewModel,
   });
 
-  final IHomeTitleController homeTitleController = HomeTitleController()..init();
+  final IHomeTitleController homeTitleController = HomeTitleController()
+    ..init();
   //Criar interface e expor os parametros por aq?
 
   final RxList<MealCardModel> homeCardList = <MealCardModel>[].obs;
@@ -32,7 +34,7 @@ class HomeController extends GetxController implements IHomeController {
 
   _onDayChanged(_) async {
     homeCardList.assignAll(await mealCardViewModel
-        .fetchMealCardList(homeTitleController.dayAsString));
+        .fetchMealCardList(homeTitleController.dateAsString));
   }
 
   _fetchHomeCardList() async {
@@ -51,20 +53,14 @@ class HomeController extends GetxController implements IHomeController {
       'meal': mealCard,
       'done': buttonsEnabled,
     });
-    switch (response) {
-      case true:
-        mealCard.status = MealCardStatus.Done;
-        break;
-      case false:
-        mealCard.status = MealCardStatus.Skipped;
-        break;
-      // default:
-      // homeCardList[idx].status = MealCardStatus.None;
-      //FIXME: Essa linha Estou gerando um bug intencional, quando aperto o botao para voltar, ele remove o estado ja concluido
-    }
+    if (response == null) return;
+    if (response)
+      mealCard.status = MealCardStatus.Done;
+    else
+      mealCard.status = MealCardStatus.Skipped;
     update();
     mealCardViewModel.saveMealCard(
-      homeTitleController.dayAsString,
+      homeTitleController.dateAsString,
       mealCard,
     );
   }
@@ -73,41 +69,49 @@ class HomeController extends GetxController implements IHomeController {
 abstract class IHomeTitleController {
   String get title;
   String get todayAsString;
-  String get dayAsString;
-  bool get previewBtnEnabled;
-  bool get nextBtnEnabled;
+  String get dateAsString;
+  TitleButton get previewButton;
+  // Function? onPreviewDayPressed();
+  TitleButton get nextButton;
+  // Function? onNextDayPressed();
   RxInt get showingDayIndex;
-  Function? onPreviewDayPressed();
-  Function? onNextDayPressed();
-  Function? onBackToTodayPressed();
+  //TODO: Tentar remover [showingDayIndex]
+}
+
+class TitleButton {
+  bool isEnabled;
+  VoidCallback onPressed;
+
+  TitleButton({
+    required this.isEnabled,
+    required this.onPressed,
+  });
 }
 
 class HomeTitleController implements IHomeTitleController {
-  final HomeTitleHelper titleHelper = HomeTitleHelper();
-
   RxString _title = 'HOJE'.obs;
   String get title => _title.value ?? 'Carregando';
 
   String get todayAsString =>
       '${_todayDateTime.day}/${_todayDateTime.month}/${_todayDateTime.year}';
-  String get dayAsString =>
+  String get dateAsString =>
       '${_showingDateTime.day}/${_showingDateTime.month}/${_showingDateTime.year}';
 
   DateTime _todayDateTime = DateTime.now();
-  late DateTime _showingDateTime;
+  late DateTime _showingDateTime = DateTime.now();
 
-  bool previewBtnEnabled = false; // Trocar para enabled
-  bool nextBtnEnabled = true; // Trocar para enabled
+  late TitleButton previewButton;
+  late TitleButton nextButton;
+
+  init() {
+    previewButton =
+        TitleButton(isEnabled: false, onPressed: onPreviewDayPressed);
+    nextButton = TitleButton(isEnabled: true, onPressed: onNextDayPressed);
+  }
 
   RxInt showingDayIndex = DateTime.now().weekday.obs;
 
-  int todayIndex = DateTime.now().weekday;
-
   int _dayIndex = 0;
-
-  void init() {
-    _showingDateTime = DateTime.now();
-  }
 
   Function? onPreviewDayPressed() {
     _showingDateTime = _showingDateTime.subtract(Duration(days: 1));
@@ -119,27 +123,57 @@ class HomeTitleController implements IHomeTitleController {
     _showDay(_dayIndex++);
   }
 
-  Function? onBackToTodayPressed() {
-    _showingDateTime = _todayDateTime;
-    _showDay(_dayIndex = 0);
-  }
-
   _showDay(_) async {
-    _setShowingDayIndex();
+    _updateTitle();
     if (_dayIndex <= 0) {
-      previewBtnEnabled = false;
+      previewButton.isEnabled = false;
     } else {
-      previewBtnEnabled = true;
+      previewButton.isEnabled = true;
     }
     if (_dayIndex >= 6) {
-      nextBtnEnabled = false;
+      nextButton.isEnabled = false;
     } else {
-      nextBtnEnabled = true;
+      nextButton.isEnabled = true;
     }
-    _title.value = titleHelper.getDayTitle(todayIndex, _dayIndex);
   }
 
-  _setShowingDayIndex() {
-    showingDayIndex.value = (todayIndex + _dayIndex - 1) % 7 + 1;
+  _updateTitle() {
+    _title.value =
+        getDayTitle(_showingDateTime.difference(_todayDateTime).inDays);
+
+    showingDayIndex.value = _showingDateTime.difference(_todayDateTime).inDays;
+  }
+
+  String getDayTitle(val) {
+    switch (val) {
+      case 1:
+        return 'AMANHÃ';
+      case -1:
+        return 'ONTEM';
+      case 0:
+        return 'HOJE';
+      default:
+        return _getDayOfTheWeekString(_showingDateTime.weekday);
+    }
+  }
+
+  String _getDayOfTheWeekString(int weekday) {
+    switch (weekday) {
+      case 1:
+        return 'SEGUNDA';
+      case 2:
+        return 'TERÇA';
+      case 3:
+        return 'QUARTA';
+      case 4:
+        return 'QUINTA';
+      case 5:
+        return 'SEXTA';
+      case 6:
+        return 'SÁBADO';
+      case 7:
+        return 'DOMINGO';
+    }
+    return 'HOJE';
   }
 }

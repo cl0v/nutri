@@ -32,7 +32,7 @@ class MenuPage extends GetView<MenuController> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               image: DecorationImage(
-                                image: AssetImage(controller.menu!.meal.img),
+                                image: AssetImage(controller.menu.meal.img),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -40,14 +40,16 @@ class MenuPage extends GetView<MenuController> {
                         ),
                       ),
                     ),
+                    //TODO: Trocar esse cara para ser refeições, que alterarão o banner principal
                     MainFoodSelectorWidget(
-                      foodList: controller.menu!.mainFoodList!,
+                      foodList: controller.menu.mainFoodList,
+                      isTappable: controller.buttonsEnabled,
                     ),
                     Expanded(
                       flex: 2,
                       child: ExtraFoodSelectorWidget(
-                        //TODO: Esse cara ta dando overflow
-                        extraList: controller.menu!.extraFoodList!,
+                        isTappable: controller.buttonsEnabled,
+                        extraList: controller.menu.extraFoodList,
                       ),
                     ),
                   ],

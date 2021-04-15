@@ -5,9 +5,11 @@ import 'package:nutri/app/models/food_model.dart';
 
 class MainFoodSelectorWidget extends StatefulWidget {
   final List<FoodModel> foodList;
+  final bool isTappable;
 
   MainFoodSelectorWidget({
     required this.foodList,
+    required this.isTappable,
   });
 
   @override
@@ -36,23 +38,20 @@ class _MainFoodSelectorWidgetState extends State<MainFoodSelectorWidget> {
               )
             : Container(),
         AspectRatio(
-          aspectRatio: 5,
-          child: widget.foodList.length > 1
-              ? Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: widget.foodList.map((f) {
-                    var idx = widget.foodList.indexOf(f);
-                    return Expanded(
-                      child: FoodSelectableCardWidget(
-                        food: f,
-                        onTap: () => onTap(idx),
-                        selected: idx == _selectedIndex,
-                      ),
-                    );
-                  }).toList())
-              : Container(),
-        ),
+            aspectRatio: 5,
+            child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: widget.foodList.map((f) {
+                  var idx = widget.foodList.indexOf(f);
+                  return Expanded(
+                    child: FoodSelectableCardWidget(
+                      food: f,
+                      onTap: () => widget.isTappable ? onTap(idx) : null,
+                      selected: idx == _selectedIndex,
+                    ),
+                  );
+                }).toList())),
       ],
     );
   }
@@ -100,7 +99,7 @@ class FoodSelectableCardWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18,
+                  fontSize: 16,
                 ),
               ),
             ],
@@ -111,12 +110,13 @@ class FoodSelectableCardWidget extends StatelessWidget {
   }
 }
 
-
 class ExtraFoodSelectorWidget extends StatefulWidget {
   final List<FoodModel> extraList;
+  final bool isTappable;
 
   ExtraFoodSelectorWidget({
     required this.extraList,
+    required this.isTappable,
   });
 
   @override
@@ -129,8 +129,7 @@ class _ExtraFoodSelectorWidgetState extends State<ExtraFoodSelectorWidget> {
   void onTap(int idx) {
     if (selectedIdxList.contains(idx))
       selectedIdxList.remove(idx);
-    else if(selectedIdxList.length < 3)
-      selectedIdxList.add(idx);
+    else if (selectedIdxList.length < 3) selectedIdxList.add(idx);
     setState(() {});
   }
 
@@ -150,24 +149,22 @@ class _ExtraFoodSelectorWidgetState extends State<ExtraFoodSelectorWidget> {
         ),
         SizedBox(
           height: 3,
-        ),widget.extraList.length > 1
-              ? Expanded(
-                 
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      childAspectRatio:
-                          1.5, //TODO: Testar o quanto o item está esticando isso
-                    ),
-                    itemCount: widget.extraList.length,
-                    itemBuilder: (context, idx) => FoodSelectableCardWidget(
-                      food: widget.extraList[idx],
-                      onTap: () => onTap(idx),
-                      selected: selectedIdxList.contains(idx),
-                    ),
-                  ))
-              : Container(),
-        
+        ),
+        Expanded(
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio:
+                  1.5, //TODO: Testar o quanto o item está esticando isso
+            ),
+            itemCount: widget.extraList.length,
+            itemBuilder: (context, idx) => FoodSelectableCardWidget(
+              food: widget.extraList[idx],
+              onTap: () => widget.isTappable ? onTap(idx) : null,
+              selected: selectedIdxList.contains(idx),
+            ),
+          ),
+        )
       ],
     );
   }

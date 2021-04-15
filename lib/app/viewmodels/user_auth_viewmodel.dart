@@ -1,27 +1,47 @@
+import 'package:get/get.dart';
 import 'package:nutri/app/interfaces/repositories/user_auth_inferface.dart';
-import 'package:nutri/app/models/user_auth_model.dart';
+import 'package:nutri/app/repositories/firebase_auth_repository.dart';
 
-class UserAuthViewModel {
+
+abstract class IUserAuthBloc {
+  Future<bool> isUserConnected();
+}
+
+abstract class IUserAuthLoginBloc {
+  Rx<LoginState> get loginState;
+  login(String email, String password);
+  Future<String> errorMessage();
+}
+
+abstract class IUserAuthRegisterBloc{
+  Rx<RegisterState> get registerState;
+
+  register(String email, String password);
+  Future<String> errorMessage();
+}
+
+class UserAuthViewModel implements IUserAuthBloc, IUserAuthLoginBloc, IUserAuthRegisterBloc {
   final IUserAuth auth;
 
   UserAuthViewModel({
     required this.auth,
   });
 
-  UserLoginModel model = UserLoginModel();
+  Rx<LoginState> loginState = LoginState.Idle.obs;
+  Rx<RegisterState> registerState = RegisterState.Idle.obs;
 
   Future<bool> isUserConnected() async {
     return await auth.isUserConnected();
   }
 
   login(String email, String password) async {
-    model.loginState.value = await auth.signIn(email, password);
+    loginState.value = await auth.signIn(email, password);
   }
 
   register(String email, String password) async {
-    model.registerState.value = await auth.signUp(email, password);
+    registerState.value = await auth.signUp(email, password);
   }
 
-  Future<String> getError() async =>
-      model.errorMessage.value = await auth.getErrorMessage();
+  Future<String> errorMessage() async =>
+       await auth.getErrorMessage();
 }

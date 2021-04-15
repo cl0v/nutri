@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nutri/app/models/user_auth_model.dart';
+import 'package:nutri/app/interfaces/repositories/user_auth_inferface.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 import 'package:nutri/app/viewmodels/user_auth_viewmodel.dart';
 
@@ -8,7 +8,8 @@ class RegisterController extends GetxController {
   RegisterController({
     required this.userAuthViewModel,
   });
-  UserAuthViewModel userAuthViewModel;
+  
+  IUserAuthRegisterBloc userAuthViewModel;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -31,7 +32,7 @@ class RegisterController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    ever(userAuthViewModel.model.registerState, onUserRegisterStateChanged);
+    ever(userAuthViewModel.registerState, onUserRegisterStateChanged);
   }
 
   onUserRegisterStateChanged(state) async {
@@ -42,7 +43,7 @@ class RegisterController extends GetxController {
         break;
       case RegisterState.Error:
         _registerError.value = true;
-        _errorMsg.value = await userAuthViewModel.getError();
+        _errorMsg.value = await userAuthViewModel.errorMessage();
         break;
       default:
     }

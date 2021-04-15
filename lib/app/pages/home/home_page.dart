@@ -37,15 +37,15 @@ class HomePage extends GetView<HomeController> {
           children: [
             IconButton(
               icon: Icon(Icons.arrow_back_ios),
-              onPressed: controller.homeTitleController.previewBtnEnabled
-                  ? controller.homeTitleController.onPreviewDayPressed
+              onPressed: controller.homeTitleController.previewButton.isEnabled
+                  ? controller.homeTitleController.previewButton.onPressed
                   : null,
             ),
             Text(controller.homeTitleController.title),
             IconButton(
               icon: Icon(Icons.arrow_forward_ios),
-              onPressed: controller.homeTitleController.nextBtnEnabled
-                  ? controller.homeTitleController.onNextDayPressed
+              onPressed: controller.homeTitleController.nextButton.isEnabled
+                  ? controller.homeTitleController.nextButton.onPressed
                   : null,
             ),
           ],
@@ -60,14 +60,19 @@ class HomePage extends GetView<HomeController> {
                 children: controller.homeCardList
                     .map<Widget>(
                       (mealCard) => Expanded(
-                        child: FoodBannerCardWidget(
-                          image: mealCard.img,
-                          title: mealCard.title,
-                          type: mealCard.mealTypeToString(),
-                          isTapabble: mealCard.status == MealCardStatus.None,
-                          color: getBannerColor(mealCard),
-                          onBannerTapped: () =>
-                              controller.onBannerTapped(mealCard),
+                        child: GetBuilder<HomeController>(
+                          builder: (_) {
+                            return FoodBannerCardWidget(
+                              image: mealCard.img,
+                              title: mealCard.title,
+                              type: mealCard.mealTypeToString(),
+                              isTapabble:
+                                  mealCard.status == MealCardStatus.None,
+                              color: getBannerColor(mealCard),
+                              onBannerTapped: () =>
+                                  controller.onBannerTapped(mealCard),
+                            );
+                          },
                         ),
                       ),
                     )

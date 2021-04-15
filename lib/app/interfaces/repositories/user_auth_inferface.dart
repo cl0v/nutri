@@ -1,4 +1,13 @@
-import 'package:nutri/app/models/user_auth_model.dart';
+enum LoginState {
+  Idle,
+  Connected,
+  Error,
+}
+enum RegisterState {
+  Idle,
+  Created,
+  Error,
+}
 
 abstract class IUserAuth {
   Future<LoginState> signIn(String email, String password);
