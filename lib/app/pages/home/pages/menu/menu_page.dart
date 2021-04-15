@@ -40,6 +40,7 @@ class MenuPage extends GetView<MenuController> {
                         ),
                       ),
                     ),
+                    //TODO: Trocar esse cara para ser refeições, que alterarão o banner principal
                     MainFoodSelectorWidget(
                       foodList: controller.menu.mainFoodList,
                       isTappable: controller.buttonsEnabled,

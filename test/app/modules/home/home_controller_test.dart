@@ -2,26 +2,50 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/pages/home/home_controller.dart';
 
 main() {
-
-  group('', () {
-    
-  });
+  group('', () {});
   group('Title | ', () {
     late IHomeTitleController titleController;
-    test('Title behavior after pressing nextDay HOJE > AMANHÃ', () {
-      titleController = HomeTitleController();
-      expect(titleController.title, 'HOJE');
-      titleController.onNextDayPressed();
-      expect(titleController.title, 'AMANHÃ');
+
+    setUp(() {
+      titleController = HomeTitleController()..init();
     });
 
-    test('Testing backToToday method', () {
-      titleController = HomeTitleController();
+    group('Date as String | ', () {
+      test('TodayAsString behavior', () {
+        var date = DateTime.now();
+        expect(
+          titleController.todayAsString,
+          equals(
+            '${date.day}/${date.month}/${date.year}',
+          ),
+        );
+      });
+
+      test('DateAsString', () {
+        var date = DateTime.now();
+        expect(
+          titleController.dateAsString,
+          equals(
+            '${date.day}/${date.month}/${date.year}',
+          ),
+        );
+      });
+      test('DateAsString after pressing nextDay', () {
+        titleController.nextButton.onPressed();
+        var date = DateTime.now().add(Duration(days: 1));
+        expect(
+          titleController.dateAsString,
+          equals(
+            '${date.day}/${date.month}/${date.year}',
+          ),
+        );
+      });
+    });
+
+    test('Title behavior after pressing nextDay HOJE > AMANHÃ', () {
       expect(titleController.title, 'HOJE');
-      titleController.onNextDayPressed();
+      titleController.nextButton.onPressed();
       expect(titleController.title, 'AMANHÃ');
-      titleController.onBackToTodayPressed();
-      expect(titleController.title, 'HOJE');
     });
   });
 }
