@@ -11,26 +11,34 @@ main() {
     storage: SharedLocalStorageService(),
   );
 
-  test('First meal of the day should be breakfast', () async {
-    var meal = await mealProvider.fetchMeal('01/04/2021', MealType.breakfast);
-    expect(meal.type, equals(MealType.breakfast));
-  });
-  test('Second meal of the day should be lunch', () async {
-    var meal = await mealProvider.fetchMeal('01/04/2021', MealType.lunch);
-    expect(meal.type, equals(MealType.lunch));
-  });
-  test('Thrid meal of the day should be snack', () async {
-    var meal = await mealProvider.fetchMeal('01/04/2021', MealType.snack);
-    expect(meal.type, equals(MealType.snack));
-  });
-  test('Last meal of the day should be dinner', () async {
-    var meal = await mealProvider.fetchMeal('01/04/2021', MealType.dinner);
-    expect(meal.type, equals(MealType.dinner));
+  var day = '01/04/2021';
+
+  group('Fetch meal by category | ', () {
+    test('should be breakfast', () async {
+      var meal = await mealProvider.fetchMeal(day, MealType.breakfast);
+      expect(meal.type, equals(MealType.breakfast));
+    });
+    test('should be lunch', () async {
+      var meal = await mealProvider.fetchMeal(day, MealType.lunch);
+      expect(meal.type, equals(MealType.lunch));
+    });
+    test('should be snack', () async {
+      var meal = await mealProvider.fetchMeal(day, MealType.snack);
+      expect(meal.type, equals(MealType.snack));
+    });
+    test('should be dinner', () async {
+      var meal = await mealProvider.fetchMeal(day, MealType.dinner);
+      expect(meal.type, equals(MealType.dinner));
+    });
   });
 
-  test('The meal should stay saved on prefs after requested', () async {
-    var expected = await mealProvider.fetchMeal('01/04/2021', MealType.dinner);
-    var matcher = await mealProvider.fetchMeal('01/04/2021', MealType.dinner);
-    expect(expected, equals(matcher));
+  group('MealBuilder', () {
+    test('The meal should stay saved on prefs after requested', () async {
+      var expected = await mealProvider.fetchMeal(day, MealType.dinner);
+      var matcher = await mealProvider.fetchMeal(day, MealType.dinner);
+      expect(expected, equals(matcher));
+    });
+
+
   });
 }
