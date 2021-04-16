@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:nutri/app/pages/home/home_card_model.dart';
+import 'package:nutri/app/pages/home/meal_card_model.dart';
 import 'package:nutri/app/pages/home/meal_card_viewmodel.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
@@ -51,7 +51,8 @@ class HomeController extends GetxController implements IHomeController {
     if (!buttonsEnabled) return;
     var response = await Get.toNamed(Routes.MEAL, arguments: {
       'meal': mealCard,
-      'done': buttonsEnabled,
+      'buttonsEnabled': buttonsEnabled,
+      'day': homeTitleController.dateAsString,
     });
     if (response == null) return;
     if (response)
@@ -71,9 +72,7 @@ abstract class IHomeTitleController {
   String get todayAsString;
   String get dateAsString;
   TitleButton get previewButton;
-  // Function? onPreviewDayPressed();
   TitleButton get nextButton;
-  // Function? onNextDayPressed();
   RxInt get showingDayIndex;
   //TODO: Tentar remover [showingDayIndex]
 }
@@ -92,6 +91,8 @@ class HomeTitleController implements IHomeTitleController {
   RxString _title = 'HOJE'.obs;
   String get title => _title.value ?? 'Carregando';
 
+
+  //TODO: Essa chave estar aqui talvez nao seja ideal
   String get todayAsString =>
       '${_todayDateTime.day}/${_todayDateTime.month}/${_todayDateTime.year}';
   String get dateAsString =>

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/models/meal_model.dart';
-import 'package:nutri/app/pages/home/home_card_model.dart';
+import 'package:nutri/app/pages/home/meal_card_model.dart';
 import 'package:nutri/app/pages/home/meal_card_viewmodel.dart';
 import 'package:nutri/app/providers/meal_provider.dart';
 import 'package:nutri/app/services/shared_local_storage_service.dart';

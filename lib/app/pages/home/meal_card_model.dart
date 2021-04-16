@@ -26,15 +26,14 @@ class MealCardModel extends MealModel {
 
   factory MealCardModel.fromMap(Map<String, dynamic> map) {
     return MealCardModel(
-      meal: MealModel.fromMap(map['meal']),
+      meal: MealModel.fromMap(map),
       status: MealCardStatus.values[map['status']],
     );
   }
 
   @override
-  Map<String, dynamic> toMap() {
-    return {'meal': super.toMap(), 'status': status.index};
-  }
+  Map<String, dynamic> toMap() =>
+      super.toMap()..addAll({'status': status.index});
 
   factory MealCardModel.fromJson(String source) =>
       MealCardModel.fromMap(json.decode(source));

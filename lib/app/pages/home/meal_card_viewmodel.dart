@@ -1,6 +1,6 @@
 import 'package:nutri/app/interfaces/services/local_storage_interface.dart';
 import 'package:nutri/app/models/meal_model.dart';
-import 'package:nutri/app/pages/home/home_card_model.dart';
+import 'package:nutri/app/pages/home/meal_card_model.dart';
 import 'package:nutri/app/providers/meal_provider.dart';
 
 abstract class IMealCardBloc {

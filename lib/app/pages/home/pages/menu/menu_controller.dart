@@ -6,8 +6,7 @@ import 'menu_card_viewmodel.dart';
 
 abstract class IMenuController {
   void onMainFoodTapped(int idx);
-  void onExtraFoodTapped(
-      List<int> idxList); //TODO: Ajustar para ja receber a lista
+  void onExtraFoodTapped(List<int> idxList);
   void onDonePressed();
   void onSkipPressed();
 }
@@ -22,14 +21,17 @@ class MenuController extends GetxController implements IMenuController {
   MenuCardModel get menu => _menu.first;
   RxBool _buttonsEnabled = true.obs;
   bool get buttonsEnabled => _buttonsEnabled.value!;
+
+  late final _day;
   //TODO: Salvar os valores e remover a possibilidade de alteração apos salvo
 
   @override
   void onInit() {
     _mealModel = Get.arguments['meal'];
-    _buttonsEnabled.value = Get.arguments['done'];
-    super.onInit();
+    _buttonsEnabled.value = Get.arguments['buttonsEnabled'];
+    _day = Get.arguments['day'];
     init();
+    super.onInit();
   }
 
   init() async {
@@ -60,5 +62,9 @@ class MenuController extends GetxController implements IMenuController {
   @override
   void onSkipPressed() {
     Get.back(result: false);
+  }
+
+  save() {
+    
   }
 }

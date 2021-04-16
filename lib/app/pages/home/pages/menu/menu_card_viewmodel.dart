@@ -4,7 +4,7 @@ import 'package:nutri/app/repositories/pe_diet_repository.dart';
 
 abstract class IMenuCardBloc {
   Future<MenuCardModel> fetchMenuCardModel(MealModel meal);
-  Future saveMenuCardModel(MenuCardModel menu);
+  Future save(MenuCardModel menu);
 }
 
 class MenuCardViewModel implements IMenuCardBloc {
@@ -13,6 +13,8 @@ class MenuCardViewModel implements IMenuCardBloc {
   MenuCardViewModel({
     required this.diet,
   });
+
+  
   
   @override
   Future<MenuCardModel> fetchMenuCardModel(MealModel meal) async {
@@ -20,8 +22,13 @@ class MenuCardViewModel implements IMenuCardBloc {
     return MenuCardModel(diet: dietModel);
   }
 
+  requestMenuCard(String day, MealModel meal){
+    //recebe o meal, verifica se ja existe o menu no banco de dados, caso nao,
+    // cria um, e retorna o menucard
+  }
+
   @override
-  Future saveMenuCardModel(MenuCardModel menu) {
+  Future save(MenuCardModel menu) {
     // TODO: implement saveMenuCardModel
     throw UnimplementedError();
   }
