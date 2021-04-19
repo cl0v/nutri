@@ -5,11 +5,15 @@ import 'package:nutri/app/models/food_model.dart';
 
 class MainFoodSelectorWidget extends StatefulWidget {
   final List<FoodModel> foodList;
+  final int selectedIdx;
   final bool isTappable;
+  final Function onTap;
 
   MainFoodSelectorWidget({
     required this.foodList,
     required this.isTappable,
+    required this.selectedIdx,
+    required this.onTap,
   });
 
   @override
@@ -21,10 +25,16 @@ class _MainFoodSelectorWidgetState extends State<MainFoodSelectorWidget> {
 
   // final controller = Get.find<HomeController>();
   onTap(int idx) {
-    // controller.onMainFoodTapped(idx);
+    widget.onTap(idx);
     setState(() {
       _selectedIndex = idx;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.selectedIdx;
   }
 
   @override
@@ -38,20 +48,22 @@ class _MainFoodSelectorWidgetState extends State<MainFoodSelectorWidget> {
               )
             : Container(),
         AspectRatio(
-            aspectRatio: 5,
-            child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: widget.foodList.map((f) {
-                  var idx = widget.foodList.indexOf(f);
-                  return Expanded(
-                    child: FoodSelectableCardWidget(
-                      food: f,
-                      onTap: () => widget.isTappable ? onTap(idx) : null,
-                      selected: idx == _selectedIndex,
-                    ),
-                  );
-                }).toList())),
+          aspectRatio: 5,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: widget.foodList.map((f) {
+              var idx = widget.foodList.indexOf(f);
+              return Expanded(
+                child: FoodSelectableCardWidget(
+                  food: f,
+                  onTap: () => widget.isTappable ? onTap(idx) : null,
+                  selected: idx == _selectedIndex,
+                ),
+              );
+            }).toList(),
+          ),
+        ),
       ],
     );
   }

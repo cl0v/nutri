@@ -1,69 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nutri/app/pages/home/home_model.dart';
+import 'package:nutri/app/pages/home/home_viewmodel.dart';
 
-import 'package:nutri/app/pages/home/meal_card_model.dart';
-import 'package:nutri/app/pages/home/meal_card_viewmodel.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
+//TODO: Remover o menu viewmodel, o menu será passado por argumento atravez do home controller para o menuController
+//TODO: A dieta será buildada aqui
+
 abstract class IHomeController {
-  void onBannerTapped(MealCardModel mealCard);
-  late final IMealCardBloc mealCardViewModel;
+  void onBannerTapped(HomeModel mealCard);
+  late IHomeBloc homeBloc;
 }
 
 class HomeController extends GetxController implements IHomeController {
   @override
-  IMealCardBloc mealCardViewModel;
+  IHomeBloc homeBloc;
 
   HomeController({
-    required this.mealCardViewModel,
+    required this.homeBloc,
   });
 
   final IHomeTitleController homeTitleController = HomeTitleController()
     ..init();
-  //Criar interface e expor os parametros por aq?
 
-  final RxList<MealCardModel> homeCardList = <MealCardModel>[].obs;
+  final RxList<HomeModel> homeModelList = <HomeModel>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    _fetchHomeCardList();
-
     ever(homeTitleController.showingDayIndex, _onDayChanged);
   }
 
-  _onDayChanged(_) async {
-    homeCardList.assignAll(await mealCardViewModel
-        .fetchMealCardList(homeTitleController.dateAsString));
+  @override
+  void onReady() async{
+    super.onReady();
+    homeModelList.assignAll(await homeBloc.homeModelList());
   }
 
-  _fetchHomeCardList() async {
-    homeCardList.assignAll(
-      await mealCardViewModel
-          .fetchMealCardList(homeTitleController.todayAsString),
-    );
+
+  _onDayChanged(_) async {
+    homeModelList.assignAll(await homeBloc.homeModelList());
   }
 
   @override
-  Future<void> onBannerTapped(MealCardModel mealCard) async {
-    //TODO: Restringir outros dias de preencher
-    var buttonsEnabled = mealCard.status == MealCardStatus.None;
-    if (!buttonsEnabled) return;
+  Future<void> onBannerTapped(HomeModel homeModel) async {
     var response = await Get.toNamed(Routes.MEAL, arguments: {
-      'meal': mealCard,
-      'buttonsEnabled': buttonsEnabled,
-      'day': homeTitleController.dateAsString,
+      'model': homeModel,
     });
     if (response == null) return;
     if (response)
-      mealCard.status = MealCardStatus.Done;
+      homeModel.status = Status.Done;
     else
-      mealCard.status = MealCardStatus.Skipped;
+      homeModel.status = Status.Skipped;
     update();
-    mealCardViewModel.saveMealCard(
-      homeTitleController.dateAsString,
-      mealCard,
-    );
+    //TODO: Removi temporariamente, pois um está sobrescrevendo o outro
+    //TODO: Nao vai funcionar até descomentar essas linhas
+    // mealCardViewModel.saveMealCard(
+    //   homeTitleController.dateAsString,
+    //   mealCard,
+    // );
   }
 }
 
@@ -90,7 +86,6 @@ class TitleButton {
 class HomeTitleController implements IHomeTitleController {
   RxString _title = 'HOJE'.obs;
   String get title => _title.value ?? 'Carregando';
-
 
   //TODO: Essa chave estar aqui talvez nao seja ideal
   String get todayAsString =>

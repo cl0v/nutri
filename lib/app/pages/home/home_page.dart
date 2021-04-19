@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:nutri/app/pages/home/home_model.dart';
 import 'package:nutri/app/pages/home/meal_card_model.dart';
 
 import 'home_controller.dart';
 import 'components/food_banner_card_widget.dart';
 
 class HomePage extends GetView<HomeController> {
-  Color? getBannerColor(MealCardModel model) {
-    switch (model.status) {
-      case MealCardStatus.Done:
+  Color? getBannerColor(Status status) {
+    switch (status) {
+      case Status.Done:
         return Colors.green.withOpacity(.4);
-      case MealCardStatus.Skipped:
+      case Status.Skipped:
         return Colors.red.withOpacity(.4);
       default:
         return null;
@@ -54,23 +55,22 @@ class HomePage extends GetView<HomeController> {
 
   body() {
     return Obx(
-      () => controller.homeCardList.length > 0
+      () => controller.homeModelList.length > 0
           ? SafeArea(
               child: Column(
-                children: controller.homeCardList
+                children: controller.homeModelList
                     .map<Widget>(
-                      (mealCard) => Expanded(
+                      (homeModel) => Expanded(
                         child: GetBuilder<HomeController>(
                           builder: (_) {
                             return FoodBannerCardWidget(
-                              image: mealCard.img,
-                              title: mealCard.title,
-                              type: mealCard.mealTypeToString(),
-                              isTapabble:
-                                  mealCard.status == MealCardStatus.None,
-                              color: getBannerColor(mealCard),
-                              onBannerTapped: () =>
-                                  controller.onBannerTapped(mealCard),
+                              image: homeModel.meal.img,
+                              title: homeModel.meal.title,
+                              type: homeModel.meal.mealTypeToString(),
+                              isTapabble: true,
+                                  // mealCard.status == MealCardStatus.None,
+                              color: getBannerColor(homeModel.status),
+                              onBannerTapped: () => controller.onBannerTapped(homeModel),
                             );
                           },
                         ),

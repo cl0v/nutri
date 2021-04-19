@@ -1,9 +1,7 @@
 import 'package:get/get.dart';
 import 'package:nutri/app/interfaces/repositories/user_auth_inferface.dart';
-import 'package:nutri/app/repositories/firebase_auth_repository.dart';
 
-
-abstract class IUserAuthBloc {
+abstract class IUserAuthConnectionStateBloc {
   Future<bool> isUserConnected();
 }
 
@@ -13,14 +11,17 @@ abstract class IUserAuthLoginBloc {
   Future<String> errorMessage();
 }
 
-abstract class IUserAuthRegisterBloc{
+abstract class IUserAuthRegisterBloc {
   Rx<RegisterState> get registerState;
-
   register(String email, String password);
   Future<String> errorMessage();
 }
 
-class UserAuthViewModel implements IUserAuthBloc, IUserAuthLoginBloc, IUserAuthRegisterBloc {
+class UserAuthViewModel
+    implements
+        IUserAuthConnectionStateBloc,
+        IUserAuthLoginBloc,
+        IUserAuthRegisterBloc {
   final IUserAuth auth;
 
   UserAuthViewModel({
@@ -42,6 +43,5 @@ class UserAuthViewModel implements IUserAuthBloc, IUserAuthLoginBloc, IUserAuthR
     registerState.value = await auth.signUp(email, password);
   }
 
-  Future<String> errorMessage() async =>
-       await auth.getErrorMessage();
+  Future<String> errorMessage() async => await auth.getErrorMessage();
 }

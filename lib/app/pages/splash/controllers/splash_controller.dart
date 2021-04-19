@@ -8,7 +8,7 @@ class SplashController extends GetxController {
     required this.userAuthViewModel,
   });
 
-  final IUserAuthBloc userAuthViewModel;
+  final IUserAuthConnectionStateBloc userAuthViewModel;
 
 
   @override
