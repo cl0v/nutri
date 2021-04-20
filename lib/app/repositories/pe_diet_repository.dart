@@ -5,8 +5,8 @@ import 'package:nutri/app/providers/food_provider.dart';
 import 'package:nutri/app/providers/meal_provider.dart';
 
 abstract class IDiet {
-  Future<DietModel> fetchDietFromMeal(MealModel meal);
-  Future<List<DietModel>> fetchMealList();
+  Future<List<DietModel>> fetchDietList();
+  Future<List<DietModel>> fetchDietListByMealTypeList(List<MealType> typeList);
 }
 
 class PeDietRepository extends IDiet {
@@ -71,9 +71,18 @@ class PeDietRepository extends IDiet {
   }
 
   @override
-  Future<List<DietModel>> fetchMealList() async {
+  Future<List<DietModel>> fetchDietList() async {
     List<DietModel> list = [];
     for (var type in MealType.values) {
+      MealModel meal = await mealProvider.fetchMealByType(type);
+      list.add(await fetchDietFromMeal(meal));
+    }
+    return list;
+  }
+  @override
+  Future<List<DietModel>> fetchDietListByMealTypeList(List<MealType> typeList) async {
+    List<DietModel> list = [];
+    for (var type in typeList) {
       MealModel meal = await mealProvider.fetchMealByType(type);
       list.add(await fetchDietFromMeal(meal));
     }

@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/pages/home/home_model.dart';
 import 'package:nutri/app/pages/home/home_viewmodel.dart';
-
 import 'package:nutri/app/routes/app_pages.dart';
-
-//TODO: Remover o menu viewmodel, o menu será passado por argumento atravez do home controller para o menuController
-//TODO: A dieta será buildada aqui
 
 abstract class IHomeController {
   void onBannerTapped(HomeModel mealCard);
@@ -24,6 +20,8 @@ class HomeController extends GetxController implements IHomeController {
   final IHomeTitleController homeTitleController = HomeTitleController()
     ..init();
 
+  String get day => homeTitleController.todayAsString;
+
   final RxList<HomeModel> homeModelList = <HomeModel>[].obs;
 
   @override
@@ -33,33 +31,28 @@ class HomeController extends GetxController implements IHomeController {
   }
 
   @override
-  void onReady() async{
+  void onReady() async {
     super.onReady();
-    homeModelList.assignAll(await homeBloc.homeModelList());
+    homeModelList.assignAll(await homeBloc.homeModelList(day));
   }
 
-
-  _onDayChanged(_) async {
-    homeModelList.assignAll(await homeBloc.homeModelList());
+//TODO: Nao permitir outro dia seja salvo
+  _onDayChanged(_) async { //TODO: Alterar esse cara para receber um outro dia
+    homeModelList.assignAll(
+        await homeBloc.homeModelList(homeTitleController.dateAsString));
   }
 
   @override
   Future<void> onBannerTapped(HomeModel homeModel) async {
-    var response = await Get.toNamed(Routes.MEAL, arguments: {
+    var result = await Get.toNamed(Routes.MEAL, arguments: {
       'model': homeModel,
     });
-    if (response == null) return;
-    if (response)
-      homeModel.status = Status.Done;
+    if (result == null)
+      return;
     else
-      homeModel.status = Status.Skipped;
+      homeModel = result;
     update();
-    //TODO: Removi temporariamente, pois um está sobrescrevendo o outro
-    //TODO: Nao vai funcionar até descomentar essas linhas
-    // mealCardViewModel.saveMealCard(
-    //   homeTitleController.dateAsString,
-    //   mealCard,
-    // );
+    homeBloc.saveHomeModel(day, homeModel);
   }
 }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:nutri/app/pages/home/home_model.dart';
-import 'package:nutri/app/pages/home/meal_card_model.dart';
 
 import 'home_controller.dart';
 import 'components/food_banner_card_widget.dart';

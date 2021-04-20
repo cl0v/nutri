@@ -25,8 +25,6 @@ class MenuController extends GetxController implements IMenuController {
   @override
   void onExtraFoodTapped(List<int> idxList) {
     homeModel.selected.extraIdxList = idxList;
-
-    // TODO: implement onExtraFoodTapped
   }
 
   @override
@@ -36,11 +34,13 @@ class MenuController extends GetxController implements IMenuController {
 
   @override
   void onDonePressed() async {
-    Get.back(result: true);
+    homeModel.status = Status.Done;
+    Get.back(result: homeModel);
   }
 
   @override
   void onSkipPressed() async {
-    Get.back(result: false);
+    homeModel.status = Status.Skipped;
+    Get.back(result: homeModel);
   }
 }

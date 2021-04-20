@@ -12,11 +12,10 @@ class HomeBinding extends Bindings {
     Get.put<HomeController>(
       HomeController(
         homeBloc: HomeViewModel(
+          storage: SharedLocalStorageService(),
           repository: PeDietRepository(
             foodProvider: FoodProvider(),
-            mealProvider: MealProvider(
-              storage: SharedLocalStorageService(),
-            ),
+            mealProvider: MealProvider(),
           ),
         ),
       ),
