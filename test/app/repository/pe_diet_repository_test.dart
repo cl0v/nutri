@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/models/food_model.dart';
 import 'package:nutri/app/models/meal_model.dart';
 import 'package:nutri/app/providers/food_provider.dart';
+import 'package:nutri/app/providers/meal_provider.dart';
 import 'package:nutri/app/repositories/pe_diet_repository.dart';
 
 main() {
@@ -11,7 +12,8 @@ main() {
   //TODO: Essa é a parte mais importante da regra de negocios do app
   //Aqui que será feito o build das refeições, ou seja, junta o meal, com as opções
   TestWidgetsFlutterBinding.ensureInitialized();
-  IDiet dietRepository = PeDietRepository(foodProvider: FoodProvider());
+  IDiet dietRepository = PeDietRepository(
+      foodProvider: FoodProvider(), mealProvider: MealProvider());
 
   group('fetchDietFromMeal |', () {
     group('Breakfast |', () {
@@ -20,25 +22,25 @@ main() {
         img: 'img',
         title: 'title',
       );
-      var future = dietRepository.fetchDietFromMeal(meal);
+      var future = dietRepository.fetchDietListByMealTypeList([meal.type]);
       test('Meal type should be breakfast', () async {
         var diet = await future;
-        expect(diet.meal.type, equals(MealType.breakfast));
+        expect(diet.first.meal.type, equals(MealType.breakfast));
       });
 
       test('FoodList lenght should be 3', () async {
         var diet = await future;
-        expect(diet.mainFoodList.length, equals(3));
+        expect(diet.first.mainFoodList.length, equals(3));
       });
 
       test('Extra lenght should be 0', () async {
         var diet = await future;
-        expect(diet.extraFoodList.length, equals(0));
+        expect(diet.first.extraFoodList.length, equals(0));
       });
 
       test('FoodList should be category drink', () async {
         var diet = await future;
-        diet.mainFoodList.forEach((element) {
+        diet.first.mainFoodList.forEach((element) {
           expect(element.category, equals(FoodCategory.drink));
         });
       });
@@ -50,26 +52,26 @@ main() {
         img: 'img',
         title: 'title',
       );
-      var future = dietRepository.fetchDietFromMeal(meal);
+      var future = dietRepository.fetchDietListByMealTypeList([meal.type]);
 
       test('Meal type should be lunch', () async {
         var diet = await future;
-        expect(diet.meal.type, equals(MealType.lunch));
+        expect(diet.first.meal.type, equals(MealType.lunch));
       });
 
       test('FoodList lenght should be 3', () async {
         var diet = await future;
-        expect(diet.mainFoodList.length, equals(3));
+        expect(diet.first.mainFoodList.length, equals(3));
       });
 
       test('Extra lenght should be greaterThanOrEqualTo 6', () async {
         var diet = await future;
-        expect(diet.extraFoodList.length, greaterThanOrEqualTo(6));
+        expect(diet.first.extraFoodList.length, greaterThanOrEqualTo(6));
       });
 
       test('FoodList should be category meat', () async {
         var diet = await future;
-        diet.mainFoodList.forEach((element) {
+        diet.first.mainFoodList.forEach((element) {
           expect(element.category, equals(FoodCategory.meat));
         });
       });
@@ -81,21 +83,21 @@ main() {
         img: 'img',
         title: 'title',
       );
-      var future = dietRepository.fetchDietFromMeal(meal);
+      var future = dietRepository.fetchDietListByMealTypeList([meal.type]);
 
       test('Meal type should be snack', () async {
         var diet = await future;
-        expect(diet.meal.type, equals(MealType.snack));
+        expect(diet.first.meal.type, equals(MealType.snack));
       });
 
       test('FoodList lenght should be 0', () async {
         var diet = await future;
-        expect(diet.mainFoodList.length, equals(0));
+        expect(diet.first.mainFoodList.length, equals(0));
       });
 
       test('Extra lenght should be 0', () async {
         var diet = await future;
-        expect(diet.extraFoodList.length, equals(0));
+        expect(diet.first.extraFoodList.length, equals(0));
       });
     });
 
@@ -105,21 +107,21 @@ main() {
         img: 'img',
         title: 'title',
       );
-      var future = dietRepository.fetchDietFromMeal(meal);
+      var future = dietRepository.fetchDietListByMealTypeList([meal.type]);
 
       test('Meal type should be dinner', () async {
         var diet = await future;
-        expect(diet.meal.type, equals(MealType.dinner));
+        expect(diet.first.meal.type, equals(MealType.dinner));
       });
 
       test('FoodList lenght should be 3', () async {
         var diet = await future;
-        expect(diet.mainFoodList.length, equals(3));
+        expect(diet.first.mainFoodList.length, equals(3));
       });
 
       test('Extra lenght should be greaterThanOrEqualTo 6', () async {
         var diet = await future;
-        expect(diet.extraFoodList.length, greaterThanOrEqualTo(6));
+        expect(diet.first.extraFoodList.length, greaterThanOrEqualTo(6));
       });
     });
   });
