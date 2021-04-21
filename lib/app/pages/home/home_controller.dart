@@ -37,13 +37,15 @@ class HomeController extends GetxController implements IHomeController {
   }
 
 //TODO: Nao permitir outro dia seja salvo
-  _onDayChanged(_) async { //TODO: Alterar esse cara para receber um outro dia
+  _onDayChanged(_) async {
+    //TODO: Alterar esse cara para receber um outro dia
     homeModelList.assignAll(
         await homeBloc.homeModelList(homeTitleController.dateAsString));
   }
 
   @override
   Future<void> onBannerTapped(HomeModel homeModel) async {
+    if (!homeTitleController.isToday) return;
     var result = await Get.toNamed(Routes.MEAL, arguments: {
       'model': homeModel,
     });
@@ -60,6 +62,7 @@ abstract class IHomeTitleController {
   String get title;
   String get todayAsString;
   String get dateAsString;
+  bool get isToday;
   TitleButton get previewButton;
   TitleButton get nextButton;
   RxInt get showingDayIndex;
@@ -85,6 +88,8 @@ class HomeTitleController implements IHomeTitleController {
       '${_todayDateTime.day}/${_todayDateTime.month}/${_todayDateTime.year}';
   String get dateAsString =>
       '${_showingDateTime.day}/${_showingDateTime.month}/${_showingDateTime.year}';
+
+  bool get isToday => _todayDateTime.day == _showingDateTime.day;
 
   DateTime _todayDateTime = DateTime.now();
   late DateTime _showingDateTime = DateTime.now();
