@@ -1,238 +1,205 @@
 [
   {
     "title": "Frango",
-    "img": "assets/images/foods/peito de frango.jpg",
+    "img": "assets/images/foods/020.jpg",
     "category": 2
   },
   {
     "title": "Peixe",
-    "img": "assets/images/foods/salmão.jpg",
+    "img": "assets/images/foods/021.jpg",
     "desc": "Esse saboroso peixe é rico em omega 3.",
-    "category": 2,
-    "mainOrExtra": 0
+    "category": 2
   },
   {
     "title": "Carne",
-    "img": "assets/images/foods/picanha.jpg",
+    "img": "assets/images/foods/022.jpg",
     "desc": "Picanha é uma excelente carne para seu dia a dia, pegue a mais magra possível.",
-    "category": 2,
-    "mainOrExtra": 0
+    "category": 2
   },
   {
     "title": "Café Preto",
-    "img": "assets/images/foods/café preto.jpg",
+    "img": "assets/images/foods/011.jpg",
     "desc": "Lembre-se de sempre adoçar com adoçante (Recomendo Stevia).",
-    "category": 1,
-    "mainOrExtra": 0
+    "category": 1
   },
   {
     "title": "Chá",
-    "img": "assets/images/foods/chá.jpg",
+    "img": "assets/images/foods/012.jpg",
     "desc": "Lembre-se de sempre adoçar com adoçante (Recomendo Stevia).",
-    "category": 1,
-    "mainOrExtra": 0
+    "category": 1
   },
   {
     "title": "Ovos",
-    "img": "assets/images/foods/ovos.jpg",
+    "img": "assets/images/foods/061.jpg",
     "desc": "Ovos, o segundo melhor alimento do mundo, rico em proteínas, coma quantos quiser.",
-    "category": 6,
-    "mainOrExtra": 2
+    "category": 6
   },
   {
     "title": "Brócolis",
-    "img": "assets/images/foods/brócolis.jpg",
+    "img": "assets/images/foods/031.jpg",
     "desc": "Brócolis é ótimo para sua saúde.",
-    "category": 3,
-    "mainOrExtra": 1
+    "category": 3
   },
   {
     "title": "Alface",
-    "img": "assets/images/foods/alface.jpg",
+    "img": "assets/images/foods/032.jpg",
     "desc": "Folhas de alface são as alternativas muito saudáveis para seu prato.",
-    "category": 3,
-    "mainOrExtra": 1
+    "category": 3
   },
   {
     "title": "Espinafre",
-    "img": "assets/images/foods/espinafre.jpg",
+    "img": "assets/images/foods/033.jpg",
     "desc": "Folhas de espinafre são as alternativas muito saudáveis para seu prato.",
-    "category": 3,
-    "mainOrExtra": 1
+    "category": 3
   },
   {
     "title": "Tomate",
-    "img": "assets/images/foods/tomate.jpg",
+    "img": "assets/images/foods/040.jpg",
     "desc": "Um pouco de tomate é sempre bom, mas não abuse dessa fruta",
-    "category": 4,
-    "mainOrExtra": 1
+    "category": 4
   },
   {
     "title": "Repolho Roxo",
-    "img": "assets/images/foods/repolho roxo.jpg",
+    "img": "assets/images/foods/034.jpg",
     "desc": "Repolho roxo mt bom",
-    "category": 3,
-    "mainOrExtra": 1
+    "category": 3
   },
   {
     "title": "Couve Flor",
-    "img": "assets/images/foods/couve flor.jpg",
+    "img": "assets/images/foods/035.jpg",
     "desc": "Couve flor faz bem",
-    "category": 3,
-    "mainOrExtra": 1
+    "category": 3
   },
   {
     "title": "Repolho",
-    "img": "assets/images/foods/repolho.jpg",
+    "img": "assets/images/foods/036.jpg",
     "desc": "Repolho roxo mt bom",
-    "category": 3,
-    "mainOrExtra": 1
+    "category": 3
   },
   {
     "title": "Refrigerante sem açucar",
-    "img": "assets/images/foods/refrigerante sem açucar.jpg",
+    "img": "assets/images/foods/013.jpg",
     "desc": "Sim, você pode tomar refrigerante, desde que não tenha açucar.",
-    "category": 1,
-    "mainOrExtra": 0
+    "category": 1
   },
   {
     "title": "Aspargo",
-    "img": "assets/images/foods/aspargo.jpg",
+    "img": "assets/images/foods/037.jpg",
     "desc": "Excelente verdura para sua refeição",
-    "category": 3,
-    "mainOrExtra": 1
+    "category": 3
   },
   {
     "title": "Acelga",
-    "img": "assets/images/foods/acelga.jpg",
+    "img": "assets/images/foods/038.jpg",
     "desc": "Excelente verdura para sua refeição",
-    "category": 3,
-    "mainOrExtra": 1
+    "category": 3
   },
   {
     "title": "Agrião",
-    "img": "assets/images/foods/agriao.jpg",
+    "img": "assets/images/foods/039.jpg",
     "desc": "Excelente verdura para sua refeição",
-    "category": 3,
-    "mainOrExtra": 1
+    "category": 3
   },
   {
     "title": "Couve",
-    "img": "assets/images/foods/couve.jpg",
+    "img": "assets/images/foods/0310.jpg",
     "desc": "Excelente verdura para sua refeição",
-    "category": 3,
-    "mainOrExtra": 1
+    "category": 3
   },
   {
     "title": "Broto de Feijão",
-    "img": "assets/images/foods/broto de feijao.jpg",
+    "img": "assets/images/foods/0311.jpg",
     "desc": "Excelente verdura para sua refeição",
-    "category": 3,
-    "mainOrExtra": 1
+    "category": 3
   },
   {
     "title": "Batata Baroa",
-    "img": "assets/images/foods/batata baroa.jpg",
+    "img": "assets/images/foods/050.jpg",
     "desc": "Excelente legume para sua refeição",
-    "category": 5,
-    "mainOrExtra": 1
+    "category": 5
   },
   {
     "title": "Cenoura",
-    "img": "assets/images/foods/cenoura.jpg",
+    "img": "assets/images/foods/051.jpg",
     "desc": "Excelente legume para sua refeição",
-    "category": 5,
-    "mainOrExtra": 1
+    "category": 5
   },
   {
     "title": "Batata Yacon",
-    "img": "assets/images/foods/batata yacon.jpg",
+    "img": "assets/images/foods/052.jpg",
     "desc": "Excelente legume para sua refeição",
-    "category": 5,
-    "mainOrExtra": 1
+    "category": 5
   },
   {
     "title": "Beterraba",
-    "img": "assets/images/foods/beterraba.jpg",
+    "img": "assets/images/foods/053.jpg",
     "desc": "Excelente legume para sua refeição",
-    "category": 5,
-    "mainOrExtra": 1
+    "category": 5
   },
   {
     "title": "Rabanete",
-    "img": "assets/images/foods/rabanete.jpg",
+    "img": "assets/images/foods/054.jpg",
     "desc": "Excelente legume para sua refeição",
-    "category": 5,
-    "mainOrExtra": 1
+    "category": 5
   },
   {
     "title": "Batata Inglesa",
-    "img": "assets/images/foods/batata inglesa.jpg",
+    "img": "assets/images/foods/055.jpg",
     "desc": "Excelente legume para sua refeição",
-    "category": 5,
-    "mainOrExtra": 1
+    "category": 5
   },
   {
     "title": "Nabo",
-    "img": "assets/images/foods/nabo.jpg",
+    "img": "assets/images/foods/056.jpg",
     "desc": "Excelente legume para sua refeição",
-    "category": 5,
-    "mainOrExtra": 1
+    "category": 5
   },
   {
     "title": "Abóbora",
-    "img": "assets/images/foods/abobora.jpg",
+    "img": "assets/images/foods/044.jpg",
     "desc": "Excelente fruta sem açúcar para sua refeição",
-    "category": 4,
-    "mainOrExtra": 1
+    "category": 4
   },
   {
     "title": "Quiabo",
-    "img": "assets/images/foods/quiabo.jpg",
+    "img": "assets/images/foods/041.jpg",
     "desc": "Excelente fruta sem açúcar para sua refeição",
-    "category": 4,
-    "mainOrExtra": 1
+    "category": 4
   },
   {
     "title": "Abacate",
-    "img": "assets/images/foods/abacate.jpg",
+    "img": "assets/images/foods/042.jpg",
     "desc": "Excelente fruta sem açúcar para sua refeição",
-    "category": 4,
-    "mainOrExtra": 1
+    "category": 4
   },
   {
     "title": "Pepino",
-    "img": "assets/images/foods/pepino.jpg",
+    "img": "assets/images/foods/043.jpg",
     "desc": "Excelente fruta sem açúcar para sua refeição",
-    "category": 4,
-    "mainOrExtra": 1
+    "category": 4
   },
   {
     "title": "Abobrinha",
-    "img": "assets/images/foods/abobrinha.jpg",
+    "img": "assets/images/foods/045.jpg",
     "desc": "Excelente fruta sem açúcar para sua refeição",
-    "category": 4,
-    "mainOrExtra": 1
+    "category": 4
   },
   {
     "title": "Tomate Cereja",
-    "img": "assets/images/foods/tomate cereja.jpg",
+    "img": "assets/images/foods/046.jpg",
     "desc": "Excelente fruta sem açúcar para sua refeição",
-    "category": 4,
-    "mainOrExtra": 1
+    "category": 4
   },
   {
     "title": "Berinjela",
-    "img": "assets/images/foods/berinjela.jpg",
+    "img": "assets/images/foods/047.jpg",
     "desc": "Excelente fruta sem açúcar para sua refeição",
-    "category": 4,
-    "mainOrExtra": 1
+    "category": 4
   },
   {
     "title": "Azeitona",
-    "img": "assets/images/foods/azeitona.jpg",
+    "img": "assets/images/foods/048.jpg",
     "desc": "Excelente fruta sem açúcar para sua refeição",
-    "category": 4,
-    "mainOrExtra": 1
+    "category": 4
   }
 ]

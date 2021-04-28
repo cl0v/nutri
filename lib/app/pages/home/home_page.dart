@@ -77,7 +77,7 @@ class HomePage extends GetView<HomeController> {
                     .toList(),
               ),
             )
-          : Container(),
+          : Center(child: CircularProgressIndicator(),),
     );
   }
 }

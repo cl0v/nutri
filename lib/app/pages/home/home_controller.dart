@@ -40,6 +40,7 @@ class HomeController extends GetxController implements IHomeController {
 
 //TODO: Nao permitir outro dia seja salvo
   _onDayChanged(_) async {
+    homeModelList.assignAll([]);
     homeModelList.assignAll(
         await homeBloc.homeModelList(homeTitleController.dateAsString));
   }
