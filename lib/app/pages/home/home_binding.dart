@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:nutri/app/pages/home/home_controller.dart';
 import 'package:nutri/app/pages/home/home_viewmodel.dart';
+import 'package:nutri/app/repositories/firebase/firebase_firestore_repository.dart';
 import 'package:nutri/app/repositories/food/assets_food_repository.dart';
 import 'package:nutri/app/repositories/meal/firestore_meal_repository.dart';
 import 'package:nutri/app/repositories/pe_diet_repository.dart';
@@ -15,7 +16,9 @@ class HomeBinding extends Bindings {
           storage: SharedLocalStorageService(),
           repository: PeDietRepository(
             foodProvider: AssetsFoodRepository(),
-            mealProvider: FirestoreMealRepository(),
+            mealProvider: FirestoreMealRepository(
+              serverStorage: FirebaseFirestoreRepository()
+            ),
           ),
         ),
       ),

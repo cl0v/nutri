@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/interfaces/repositories/user_auth_inferface.dart';
 import 'package:nutri/app/routes/app_pages.dart';
-import 'package:nutri/app/viewmodels/user_auth_viewmodel.dart';
 
 class RegisterController extends GetxController {
   RegisterController({
-    required this.userAuthViewModel,
+    required this.userAuth,
   });
-  
-  IUserAuthRegisterBloc userAuthViewModel;
+
+  IUserAuth userAuth;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -19,6 +18,8 @@ class RegisterController extends GetxController {
 
   final RxBool _isObscurePassword = true.obs;
   bool get isObscurePassword => _isObscurePassword.value!;
+
+  Rx<RegisterState> registerState = RegisterState.Idle.obs;
 
   RxBool _registerError = false.obs;
   bool get registerError => _registerError.value!;
@@ -32,7 +33,7 @@ class RegisterController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    ever(userAuthViewModel.registerState, onUserRegisterStateChanged);
+    ever(registerState, onUserRegisterStateChanged);
   }
 
   onUserRegisterStateChanged(state) async {
@@ -43,7 +44,7 @@ class RegisterController extends GetxController {
         break;
       case RegisterState.Error:
         _registerError.value = true;
-        _errorMsg.value = await userAuthViewModel.errorMessage();
+        _errorMsg.value = await userAuth.getErrorMessage();
         break;
       default:
     }
@@ -61,8 +62,10 @@ class RegisterController extends GetxController {
 
   void onContinuePressed() async {
     if (emailController.text != '' && passwordController.text != '') {
-      await userAuthViewModel.register(
-          emailController.text, passwordController.text);
+      registerState.value = await userAuth.signUp(
+        emailController.text,
+        passwordController.text,
+      );
     }
   }
 

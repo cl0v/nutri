@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nutri/app/interfaces/repositories/user_auth_inferface.dart';
 
-
 class FirebaseAuthRepository implements IUserAuth {
   final FirebaseAuth auth;
 
-  FirebaseAuthRepository({required this.auth});
+  FirebaseAuthRepository({
+    required this.auth,
+  });
 
   @override
   Future<bool> isUserConnected() async {

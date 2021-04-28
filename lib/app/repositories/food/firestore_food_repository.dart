@@ -1,14 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nutri/app/interfaces/providers/food_interface.dart';
+import 'package:nutri/app/interfaces/repositories/server_storage_interface.dart';
 import 'package:nutri/app/models/food_model.dart';
 
 class FirestoreFoodRepository implements IFoodRepository {
-  final firestore = FirebaseFirestore.instance;
+  final IServerStorage serverStorage;
+
+  FirestoreFoodRepository({required this.serverStorage});
 
   @override
   Future<List<FoodModel>> loadFoodList(FoodCategory category) async {
-    var query = await firestore
-        .collection('foods')
+    var query = await serverStorage
+        .getCollection('foods')
         .where('category', isEqualTo: category.index)
         .limit(9)
         .get();

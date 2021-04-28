@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/interfaces/repositories/user_auth_inferface.dart';
 import 'package:nutri/app/routes/app_pages.dart';
-import 'package:nutri/app/viewmodels/user_auth_viewmodel.dart';
 
 class LoginController extends GetxController {
   LoginController({
-    required this.userAuthViewModel,
+    required this.userAuth,
   });
 
-  IUserAuthLoginBloc userAuthViewModel;
+  IUserAuth userAuth;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   RxBool _isObscurePassword = true.obs;
   bool get isObscurePassword => _isObscurePassword.value!;
+
+  Rx<LoginState> loginState = LoginState.Idle.obs;
 
   RxBool _loginError = false.obs;
   bool get loginError => _loginError.value!;
@@ -25,7 +26,12 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    ever(userAuthViewModel.loginState, onLoginStateChanged);
+    ever(loginState, onLoginStateChanged);
+  }
+
+  @override
+  void onReady() async {
+    super.onReady();
   }
 
   onLoginStateChanged(state) async {
@@ -35,7 +41,7 @@ class LoginController extends GetxController {
         break;
       case LoginState.Error:
         _loginError.value = true;
-        _errorMsg.value = await userAuthViewModel.errorMessage();
+        _errorMsg.value = await userAuth.getErrorMessage();
         break;
       default:
     }
@@ -43,8 +49,10 @@ class LoginController extends GetxController {
 
   onLoginPressed() async {
     //TODO: Conferir se os dados foram preenchidos corretamente
-    return await userAuthViewModel.login(
-        emailController.text, passwordController.text);
+    loginState.value = await userAuth.signIn(
+      emailController.text,
+      passwordController.text,
+    );
   }
 
   onCreateAccountPressed() {
