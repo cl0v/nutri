@@ -4,6 +4,8 @@ import 'package:nutri/app/pages/home/home_model.dart';
 import 'package:nutri/app/pages/home/home_viewmodel.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
+//BUG: Quanto a net cai, da um erro de fude
+
 abstract class IHomeController {
   void onBannerTapped(HomeModel mealCard);
   late IHomeBloc homeBloc;
@@ -38,7 +40,6 @@ class HomeController extends GetxController implements IHomeController {
 
 //TODO: Nao permitir outro dia seja salvo
   _onDayChanged(_) async {
-    //TODO: Alterar esse cara para receber um outro dia
     homeModelList.assignAll(
         await homeBloc.homeModelList(homeTitleController.dateAsString));
   }

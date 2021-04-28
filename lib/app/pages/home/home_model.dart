@@ -88,8 +88,8 @@ class SelectedFoodsModel {
   ///Acompanhamentos selecionados
   List<int> extraIdxList;
   SelectedFoodsModel({
-    required this.mealIdx,
-    required this.extraIdxList,
+     this.mealIdx = 0,
+     this.extraIdxList = const [],
   });
 
   Map<String, dynamic> toMap() {

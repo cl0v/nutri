@@ -89,7 +89,7 @@ class FoodSelectableCardWidget extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
-            image: AssetImage(
+            image: NetworkImage(
               food.img,
             ),
             fit: BoxFit.cover,

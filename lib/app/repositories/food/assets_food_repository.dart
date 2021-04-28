@@ -1,13 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:nutri/app/interfaces/providers/food_interface.dart';
 import 'package:nutri/app/models/food_model.dart';
 
-abstract class IFoodProvider {
-  Future<List<FoodModel>> loadFoodList(FoodCategory category);
-}
-
-class FoodProvider implements IFoodProvider {
+class AssetsFoodRepository implements IFoodRepository {
   Future<List> _loadJson() async =>
       jsonDecode(await rootBundle.loadString('assets/jsons/food_data.json'));
 

@@ -6,8 +6,8 @@ abstract class Routes {
   static const REGISTER = '/register';
   static const LOGIN = '/login';
   static const SPLASH = '/splash';
-  static const MEAL = '/home/meal';
-  // static const QUESTIONS = '/questions';
+  static const MEAL = '/meal';
+  static const ADM = '/adm';
   // static const PROFILE = '/profile';
   // static const FOOD_SWIPE = '/food-swipe';
   // static const PAYMENT = '/payment';

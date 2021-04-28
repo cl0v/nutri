@@ -30,7 +30,7 @@ class MenuPage extends GetView<MenuController> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
-                        image: AssetImage(controller.homeModel.meal.img),
+                        image: NetworkImage(controller.homeModel.meal.img),
                         fit: BoxFit.cover,
                       ),
                     ),

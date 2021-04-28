@@ -11,8 +11,8 @@ enum RegisterState {
 
 abstract class IUserAuth {
   Future<LoginState> signIn(String email, String password);
-  Future<String> getErrorMessage();
   Future<RegisterState> signUp(String email, String password);
-  Future<bool> isUserConnected();
   Future signOut();
+  Future<String> getErrorMessage();
+  Future<bool> isUserConnected();
 }

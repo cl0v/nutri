@@ -1,8 +1,8 @@
+import 'package:nutri/app/interfaces/providers/food_interface.dart';
+import 'package:nutri/app/interfaces/providers/meal_interface.dart';
 import 'package:nutri/app/models/diet_model.dart';
 import 'package:nutri/app/models/food_model.dart';
 import 'package:nutri/app/models/meal_model.dart';
-import 'package:nutri/app/providers/food_provider.dart';
-import 'package:nutri/app/providers/meal_provider.dart';
 
 abstract class IDiet {
   Future<List<DietModel>> fetchDietList();
@@ -11,8 +11,8 @@ abstract class IDiet {
 
 class PeDietRepository extends IDiet {
   //Pode ser um view model ou repositorio, é o cara responsável por me entregar um modelo DietModel
-  final IFoodProvider foodProvider;
-  final IMealProvider mealProvider;
+  final IFoodRepository foodProvider;
+  final IMealRepository mealProvider;
 
   PeDietRepository({
     required this.foodProvider,

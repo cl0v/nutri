@@ -1,10 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:nutri/app/interfaces/providers/food_interface.dart';
 import 'package:nutri/app/models/food_model.dart';
-import 'package:nutri/app/providers/food_provider.dart';
+import 'package:nutri/app/repositories/food/assets_food_repository.dart';
 
 main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  IFoodProvider foodProvider = FoodProvider();
+  IFoodRepository foodProvider = AssetsFoodRepository();
   test('Food Provider drinks', () async {
     var list = await foodProvider.loadFoodList(FoodCategory.drink);
     list.forEach((element) {

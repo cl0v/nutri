@@ -1,12 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:nutri/app/interfaces/providers/meal_interface.dart';
 import 'package:nutri/app/models/meal_model.dart';
-import 'package:nutri/app/providers/meal_provider.dart';
+import 'package:nutri/app/repositories/meal/assets_meal_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({});
-  IMealProvider mealProvider = MealProvider(
+  IMealRepository mealProvider = RepositoryMealProvider(
   );
 
   group('Fetch meal by category | ', () {

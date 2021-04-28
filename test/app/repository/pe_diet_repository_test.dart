@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nutri/app/models/food_model.dart';
 import 'package:nutri/app/models/meal_model.dart';
-import 'package:nutri/app/providers/food_provider.dart';
-import 'package:nutri/app/providers/meal_provider.dart';
+import 'package:nutri/app/repositories/food/assets_food_repository.dart';
+import 'package:nutri/app/repositories/meal/assets_meal_repository.dart';
 import 'package:nutri/app/repositories/pe_diet_repository.dart';
 
 main() {
@@ -13,7 +13,8 @@ main() {
   //Aqui que será feito o build das refeições, ou seja, junta o meal, com as opções
   TestWidgetsFlutterBinding.ensureInitialized();
   IDiet dietRepository = PeDietRepository(
-      foodProvider: FoodProvider(), mealProvider: MealProvider());
+      foodProvider: AssetsFoodRepository(),
+      mealProvider: RepositoryMealProvider());
 
   group('fetchDietFromMeal |', () {
     group('Breakfast |', () {

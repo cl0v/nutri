@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
+import 'package:nutri/app/pages/adm/food_list/food_list_view.dart';
+import 'package:nutri/app/pages/adm/meal_list/meal_list_view.dart';
 
 import 'package:nutri/app/pages/home/home_binding.dart';
 import 'package:nutri/app/pages/home/home_page.dart';
-import 'package:nutri/app/pages/home/pages/menu/menu_binding.dart';
-import 'package:nutri/app/pages/home/pages/menu/menu_page.dart';
 import 'package:nutri/app/pages/login/bindings/login_binding.dart';
 import 'package:nutri/app/pages/login/views/login_view.dart';
+import 'package:nutri/app/pages/menu/menu_binding.dart';
+import 'package:nutri/app/pages/menu/menu_page.dart';
 import 'package:nutri/app/pages/register/bindings/register_binding.dart';
 import 'package:nutri/app/pages/register/views/register_view.dart';
 import 'package:nutri/app/pages/splash/bindings/splash_binding.dart';
@@ -14,7 +16,7 @@ import 'package:nutri/app/pages/splash/views/splash_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.ADM;
 
   static final routes = [
     GetPage(
@@ -26,6 +28,11 @@ class AppPages {
       name: Routes.MEAL,
       page: () => MenuPage(),
       binding: MenuBinding(),
+    ),
+    GetPage(
+      //TODO: Alterar pagina de adm
+      name: Routes.ADM,
+      page: () => FoodListView(),
     ),
     GetPage(
       name: Routes.REGISTER,
