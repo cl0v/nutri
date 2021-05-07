@@ -19,7 +19,7 @@ class FoodListView extends StatelessWidget {
                   var food = controller.foodList[idx];
                   return ListTile(
                     title: Text(food.title),
-                    leading: Image.asset(food.img),
+                    leading: Image.network(food.img),
                   );
                 })
             : Center(

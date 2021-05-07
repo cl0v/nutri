@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nutri/app_widget.dart';
 
+//TODO: Baixar os dados do firebase e salvar em json e as imagens no banco de dados interno
+// Enquanto está na splash screen vai baixando tudo
+
 //BUG: Quando a pessoa nao incia o dia, mas ja olha as refeições de dias seguintes, fica aparecendo o botao de comecar, deveria ser ver hoje
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

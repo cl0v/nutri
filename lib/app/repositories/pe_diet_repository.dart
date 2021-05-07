@@ -19,7 +19,6 @@ class PeDietRepository extends IDiet {
     required this.mealProvider,
   });
 
-  @override
   Future<DietModel> fetchDietFromMeal(MealModel meal) {
     switch (meal.type) {
       case MealType.breakfast:

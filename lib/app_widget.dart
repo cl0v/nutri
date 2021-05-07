@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/routes/app_pages.dart';
-import 'package:nutri/constants.dart';
+import 'package:nutri/app_theme.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -11,50 +11,10 @@ class MyApp extends StatelessWidget {
       title: "Nutri Nest (Nutricionista Virtual)",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      theme: newTheme,
+      theme: AppTheme().appTheme(),
       debugShowCheckedModeBanner: false,
       enableLog: false,
       
     );
   }
 }
-
-var newTheme = ThemeData(
-  inputDecorationTheme: InputDecorationTheme(
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(99.0),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(99.0),
-      borderSide: BorderSide(
-        color: Colors.green,
-        width: 1.0,
-      ),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(99.0),
-      borderSide: BorderSide(
-        color: Colors.grey,
-        width: 1.0,
-      ),
-    ),
-    errorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(99.0),
-      borderSide: BorderSide(
-        color: Colors.red,
-        width: 1.0,
-      ),
-    ),
-  ),
-  brightness: kBrightness,
-  // textButtonTheme: ,
-
-  primaryColorBrightness: kBrightness,
-  accentColorBrightness: kBrightness,
-  textTheme: kTextTheme,
-  primarySwatch: kPrimarySwatch,
-  scaffoldBackgroundColor: kScaffoldBackgroundColor,
-  primaryColor: kPrimaryColor,
-  accentColor: kAccentColor,
-  backgroundColor: kBackgroundColor,
-);

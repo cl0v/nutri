@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:nutri/app/models/firestore/firestore_meal_model.dart';
-import 'package:nutri/app/models/meal_model.dart';
 
 class MealListController extends GetxController {
   RxList<FirestoreMealModel> mealList = <FirestoreMealModel>[].obs;

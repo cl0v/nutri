@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// Verde: #00FF66
+// Roxo: #b500ff
+
 const kSecondaryColor = Color(0xFF8B94BC);
 const kGreenColor = Colors.green;
 const kErrorColor = Color(0xFFE92E30);

@@ -1,26 +1,20 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:nutri/app/interfaces/repositories/server_storage_interface.dart';
 import 'package:nutri/app/models/food_model.dart';
 import 'package:nutri/app/pages/adm/food_list/add_food/add_food_view.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:nutri/app/repositories/firebase/firebase_firestore_repository.dart';
 
 class FoodListController extends GetxController {
   RxList<FoodModel> foodList = <FoodModel>[].obs;
   final firestore = FirebaseFirestore.instance.collection('foods');
   final storage = FirebaseStorage.instance.ref().child('foods/');
 
-  late Directory appDocDir;
-  // FirestoreMealRepository mealRepository = FirestoreMealRepository();
-
   @override
   void onReady() async {
     super.onReady();
-    appDocDir = await getApplicationDocumentsDirectory();
     foodList.assignAll(await loadFoodList());
   }
 
@@ -33,12 +27,12 @@ class FoodListController extends GetxController {
     );
   }
 
-  Future<List> _loadJson() async =>
-      jsonDecode(await rootBundle.loadString('assets/jsons/food_data.json'));
+  final IServerStorage serverStorage = FirebaseFirestoreRepository();
+  Future<List<FoodModel>> loadFoodList() async {
+    var query = await serverStorage.getCollection('foods').get();
+    List<FoodModel> list =
+        query.docs.map((doc) => FoodModel.fromMap(doc.data())).toList();
 
-  Future<List<FoodModel>> loadFoodList() async => (await _loadJson())
-      // .where((map) =>
-      //     map['category'] == FoodModel.getIndexFromCategory(category))
-      .map((map) => FoodModel.fromMap(map))
-      .toList();
+    return list;
+  }
 }

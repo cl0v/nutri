@@ -16,7 +16,7 @@ class FirebaseFirestoreRepository implements IServerStorage {
   }
 
   @override
-  getCollection(String collectionPath) {
+  CollectionReference getCollection(String collectionPath) {
     return firestore.collection(collectionPath);
   }
 

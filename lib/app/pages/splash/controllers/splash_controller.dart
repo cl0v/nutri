@@ -20,10 +20,13 @@ class SplashController extends GetxController {
   @override
   void onReady() async{
     super.onReady();
-     var userConnected = await auth.isUserConnected();
-    if (userConnected) Get.offAllNamed(Routes.HOME);
-    else Get.offAllNamed(Routes.LOGIN);
+  //TODO: Descomentar tudo
+    //  var userConnected = await auth.isUserConnected();
+    // if (userConnected) Get.offAllNamed(Routes.HOME);
+    // else Get.offAllNamed(Routes.LOGIN);
+    Get.offAllNamed(Routes.HOME);
   }
+
 
 
 

@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:nutri/app/pages/adm/food_list/food_list_view.dart';
-import 'package:nutri/app/pages/adm/meal_list/meal_list_view.dart';
 
 import 'package:nutri/app/pages/home/home_binding.dart';
 import 'package:nutri/app/pages/home/home_page.dart';
@@ -29,11 +27,11 @@ class AppPages {
       page: () => MenuPage(),
       binding: MenuBinding(),
     ),
-    GetPage(
-      //TODO: Alterar pagina de adm
-      name: Routes.ADM,
-      page: () => FoodListView(),
-    ),
+    // GetPage(
+    //   //TODO: Alterar pagina de adm
+    //   name: Routes.ADM,
+    //   page: () => FoodListView(),
+    // ),
     GetPage(
       name: Routes.REGISTER,
       page: () => RegisterView(),

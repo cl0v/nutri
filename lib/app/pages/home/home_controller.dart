@@ -5,6 +5,7 @@ import 'package:nutri/app/pages/home/home_viewmodel.dart';
 import 'package:nutri/app/routes/app_pages.dart';
 
 //BUG: Quanto a net cai, da um erro de fude
+//TODO: Baixar todas as imagens enquanto na loading screen
 
 abstract class IHomeController {
   void onBannerTapped(HomeModel mealCard);
